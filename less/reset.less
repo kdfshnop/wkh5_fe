@@ -1,0 +1,59 @@
+/*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ 1. 项目名称：悟空找房SASS系统前端MVC框架
+ 2. 文件名称：reset.less (html标签重定义)
+ 3. 作者：zhaohuagang@lifang.com
+ -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
+
+body {
+    background: @page-background-color ;
+    color: @default-font-color ;
+    font-size: 10px;
+    font-family: microsoft yahei, simsun;
+    overflow-x: hidden;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    vertical-align: middle;
+    box-sizing: border-box;
+}
+
+li {
+    list-style: none;
+}
+
+a {
+    outline: none;
+    &:link {
+        text-decoration: none;
+    }
+    &:visited {
+        text-decoration: none;
+    }
+    &:hover {
+        text-decoration: none;
+    }
+    &:active {
+        text-decoration: none;
+    }
+    &:focus {
+        text-decoration: none;
+    }
+}
+
+p {
+    font-size: 16px;
+}
+
+dl {
+    margin-bottom: 0;
+    dt {
+        font-weight: 400;
+    }
+}
+
+hr {
+    margin: 0;
+    border-top: 1px dotted @line-gray-color ;
+}

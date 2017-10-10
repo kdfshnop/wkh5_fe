@@ -1,0 +1,15 @@
+{
+    "status": 1,
+    "message": "请求成功",
+    "data": [
+            { "id": 1, "desc": "悟空找房App(All)" },
+            { "id": 2, "desc": "悟空找房App(Ios)" },
+            { "id": 3, "desc": "悟空找房App(Android)" },
+            { "id": 4, "desc": "悟空找房H5" },
+            { "id": 5, "desc": "悟空找房PC" },
+            { "id": 6, "desc": "有房有客(All)" },
+            { "id": 7, "desc": "有房有客(Ios)" },
+            { "id": 8, "desc": "有房有客(Android)" },
+            { "id": 9, "desc": "孙行者" }
+        ]
+}

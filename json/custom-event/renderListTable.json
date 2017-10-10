@@ -1,0 +1,45 @@
+{
+    "status": 1,
+    "message": "请求成功",
+    "data": {
+        "items": [ {
+                "eventId":"111",
+                "pageName": "首页",
+                "eventName": "二手房分类入口点击",
+                "pv": "10"
+            },
+            {
+                "eventId":"111",
+                "pageName": "首页",
+                "eventName": "二手房分类入口点击",
+                "pv": "10"
+            }, {
+                "eventId":"111",
+                "pageName": "首页",
+                "eventName": "二手房分类入口点击",
+                "pv": "10"
+            },
+            {
+                "eventId":"111",
+                "pageName": "首页",
+                "eventName": "二手房分类入口点击",
+                "pv": "10"
+            }, {
+                "eventId":"111",
+                "pageName": "首页",
+                "eventName": "二手房分类入口点击",
+                "pv": "10"
+            },
+            {
+                "eventId":"111",
+                "pageName": "首页",
+                "eventName": "二手房分类入口点击",
+                "pv": "10"
+            }],
+        "pageInfo": {
+            "pageIndex": 1,
+            "pageSize": 10,
+            "total": 120
+        }
+    }
+}
