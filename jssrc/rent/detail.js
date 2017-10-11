@@ -9,9 +9,10 @@ class DetailController extends Controller {
         
         /*
             使用requirejs引入组件
-        */
-        require(['../components/test.min'],function(test){
-            console.log(test);
+        */        
+
+        require(['../components/assistant.min'],function(assistant){
+            //assistant.sayHello('岁月神偷！');
         });
     };   
 }

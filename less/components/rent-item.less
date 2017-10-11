@@ -1,0 +1,35 @@
+/*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ 1. 项目名称：yfyk2h5
+ 2. 文件名称：src -> less -> components -> rent-item.less (租房列表中的一项)
+ 3. 作者：tangxuyang@lifang.com
+ -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
+ @import "../variables.less";
+ @import "../mixins.less";
+
+.rent-item {
+    &.box {
+        .left {
+            img {
+                width: 13.05rem;
+                height: 8.7rem;
+            }
+        }
+        .right {
+            margin-left: .5rem;
+            .text-ellipsis();
+            h4 {
+                color: #000;
+                font-size: 1.6rem;                
+                .text-ellipsis();
+            }
+            .base-info {                
+                color: #4E4E4E;
+                font-size: 1.1rem;
+            }
+            .unit-price {                
+                color: #FC4C5A;
+                font-size: 1.6rem;
+            }
+        }
+    }
+}

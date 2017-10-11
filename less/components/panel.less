@@ -5,20 +5,26 @@
  -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
 .wk-panel {
     background-color : #fff ;
+    color: #000;
     /*
     border-top : 1px solid @light-line-gray-color ;
     border-bottom : 1px solid @light-line-gray-color ;
     */
     padding : 0 ;
+    padding-left : 2.5rem ;    
+    padding-bottom: 1rem ;
+
+    &.has-right-padding {
+        padding-right: 2.5rem;
+    }
     /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
     面板header区域
     -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
     .panel-header {
-        border-bottom : 1px solid @light-line-gray-color ;
+        //border-bottom : 1px solid @light-line-gray-color ;
         font-size : 1.6rem ;
         font-weight : normal ;
-        line-height : 22px ;
-        margin-left : 1.5rem ;
+        line-height : 22px ;        
         padding-top : @gap-dimension ;
         padding-bottom : @gap-dimension ;
     }

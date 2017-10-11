@@ -1,0 +1,76 @@
+/*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ 1. 项目名称：wkh5
+ 2. 文件名称：src -> less -> components -> common.less ()
+ 3. 作者：tangxuyang@lifang.com
+ -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
+ @import "../variables.less";
+ @import "../mixins.less";
+
+ .column-container{
+    >dl {
+        font-size: 1.4rem;
+        color: #000;
+    
+        dt {
+            color: #7C7C7C;
+            margin-top: 1.5rem;
+            margin-bottom: .5rem;
+        }
+    
+        dd {
+            line-height: 2rem;
+        }
+     } 
+ }
+   
+ .one-column-container {
+    >dl{                
+        display: flex;
+        color: #000;
+        font-size: 1.4rem;
+        line-height: 2.9rem;
+        dt{
+            margin-right: 1.5rem;
+            color: #7C7C7C;
+            white-space: nowrap;
+        } 
+        dd {
+            .text-ellipsis();
+        }       
+    }
+ }
+
+ .two-column-container {
+     .clearfix();
+
+     >dl{
+         width: 50%;
+         float: left;
+         display: flex;
+         color: #000;
+         font-size: 1.4rem;
+         line-height: 2.9rem;
+         dt{
+             margin-right: 1.5rem;
+             color: #7C7C7C;
+             white-space: nowrap;
+         } 
+         dd {
+             .text-ellipsis();
+         }       
+     }
+
+ }
+
+ .box {
+     display: flex;
+     .left {
+        
+     }
+     .right {
+
+     }
+ }
+
+ 
+
