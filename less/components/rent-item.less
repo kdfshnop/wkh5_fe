@@ -6,25 +6,45 @@
  @import "../variables.less";
  @import "../mixins.less";
 
-.rent-item {
+.rent-item {    
     &.box {
-        .left {
+        border-bottom: 1px solid  #E4E4E4;
+        padding-bottom: 1.5rem;
+        margin-bottom: 1.5rem;  
+        &:last-child{
+            border: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }      
+        .left {                 
+            //flex-basis: 13.05rem;    
+            flex-shrink: 0;
             img {
                 width: 13.05rem;
                 height: 8.7rem;
             }
         }
-        .right {
+        .right {                      
             margin-left: .5rem;
             .text-ellipsis();
             h4 {
                 color: #000;
                 font-size: 1.6rem;                
                 .text-ellipsis();
+                margin-bottom: .8rem;
             }
             .base-info {                
                 color: #4E4E4E;
                 font-size: 1.1rem;
+            }
+            .tags {
+                margin-top: .8rem;
+                margin-bottom: .8rem;
+
+                .tag {
+                    font-size: 1rem;
+                    padding: .3rem .6rem;
+                }
             }
             .unit-price {                
                 color: #FC4C5A;

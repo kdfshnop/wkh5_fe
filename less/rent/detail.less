@@ -4,7 +4,44 @@
 @import "../components/common.less";
 @import "../components/rent-item.less";
 
-body{
-    // background-color: green;
-    // color: blue;
+.panel-header.house-title {
+    font-size: 2rem;
+    color: #4e4e4e;
+    line-height: 1.3;
+    margin-bottom: 1.8rem;
+}
+
+.price-type-area {
+    display: flex;
+    padding: 1.5rem 0;
+    border-top: 1px solid #E4E4E4;
+    border-bottom: 1px solid #E4E4E4;
+    margin-bottom: 2rem;
+    .column-container + .column-container {
+        padding-left: 1.5rem;
+        border-left: 1px solid #E4E4E4;
+    }
+    .price {
+        flex: 2;
+    }    
+    .type {
+        flex: 3;
+    }    
+    .area {
+        flex: 2;
+    }    
+    .column-container {
+        dt {
+            font-size: 1.2rem;
+            margin-top: 0;
+        }
+        dd {
+            color: #FC4C5A;
+            font-size: 1.4rem;
+        }
+    }
+}
+
+.tags {
+    margin: 1rem 0;
 }

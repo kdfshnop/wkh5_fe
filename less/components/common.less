@@ -36,6 +36,21 @@
         } 
         dd {
             .text-ellipsis();
+            flex-grow: 1;
+            &.has-arrow{
+                a{
+                    color: #4081D6;
+                    .text-ellipsis();
+                    display: block;
+                    position: relative;
+                    &::after{
+                        font-family:"iconfont" !important;
+                        content: '\e6a7';
+                        position: absolute;
+                        right: 0;                        
+                    }
+                }
+            }
         }       
     }
  }
@@ -65,11 +80,17 @@
  .box {
      display: flex;
      .left {
-        
+
      }
      .right {
 
      }
+ }
+
+ .has-bottom-border {
+     border-bottom: 1px solid #E4E4E4;
+     margin-bottom: .75rem;
+     padding-bottom: .75rem;
  }
 
  
