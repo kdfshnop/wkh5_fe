@@ -11,8 +11,8 @@ class DetailController extends Controller {
             使用requirejs引入组件
         */        
 
-        require(['../components/assistant.min','../lib/swiper-3.4.2.jquery.min'],function(assistant,Swiper){        
-            var mySwiper = new Swiper ('.swiper-container')        
+        require(['../components/assistant.min','../components/album.min'],function(assistant,album){        
+                
         }); 
     };   
 }

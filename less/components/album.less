@@ -53,8 +53,8 @@
     }    
 }
 
-.preview-image {
-    position: fix;
+.preview-image {    
+    position: fixed;
     left: 0;
     right: 0;
     top: 0;
@@ -64,7 +64,9 @@
 
     justify-content: center;
     align-items: center;
+    z-index: 10000;
     img {
-
+        width: 100%;
+        height: auto;
     }
 }
