@@ -1,0 +1,28 @@
+/*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ 1. 项目名称：悟空找房H5站
+ 2. 文件名称：src -> less -> components ->  tab.less (标签页)
+ 3. 作者：zhaohuagang@lifang.com
+ -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
+.wk-tabs {   
+    .tabs-handle {
+        background-color : #fff ;
+        border-bottom : 1px solid @light-line-gray-color  ;
+         .clearfix() ;
+         padding : 0 @gap-dimension  ;
+        &>li {            
+            float : left ;            
+            border-bottom : 2px solid transparent ;
+            color : @default-font-color ;                         
+            font-size : 1.6rem ;
+            line-height : 45px ;         
+            text-align : center ;
+            &.on {
+                border-bottom-color : @primary-color ;
+                color : @primary-color ;               
+            }          
+        }
+    }
+    .tabs-frame {
+        display : none ;
+    }
+}
