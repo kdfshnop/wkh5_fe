@@ -1,0 +1,70 @@
+/*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ 1. 项目名称：wkh5
+ 2. 文件名称：src -> less -> components -> album.less (顶部相册功能)
+ 3. 作者：tangxuyang@lifang.com
+ -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
+ @import "../variables.less";
+ @import "../mixins.less";
+
+.album {
+    img,video {        
+        height: 56.25vw;        
+    }
+
+    .item {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 56.25vw;
+        // position: relative;
+        .play {
+            width: 50px;
+            height: 50px;
+            .border-radius(50%);
+            background-color: rgba(0,0,0,.3);
+            justify-content: center;
+            align-items: center;
+            display: flex;
+
+            .triangle {
+                width:0;
+                height:0;
+                border-top:14px solid transparent;
+                border-left:20px solid rgba(255,255,255,.8);
+                border-bottom:14px solid transparent;
+                margin-left:4px;
+            }
+        }
+
+        .indicator {
+            position: absolute;
+            right: 15px;
+            bottom: 15px;
+            width: 52px;
+            height: 26px;
+            color: #fff;
+            letter-spacing: 1px;
+            background-color: rgba(0,0,0,.3);
+            text-align: center;
+            padding: 4px 2px;
+            border-radius: 12px;
+            font-size: 12px;
+        }
+    }    
+}
+
+.preview-image {
+    position: fix;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    background-color: #fff;
+    display: flex;
+
+    justify-content: center;
+    align-items: center;
+    img {
+
+    }
+}
