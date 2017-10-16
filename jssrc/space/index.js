@@ -26,6 +26,10 @@ class IndexController extends Controller {
                 classSelf.ellipsis() ;
             }) ;           
         }) ;
+        $(".highlight .optional .switch").click(function(){
+            $(this).siblings(".long-text").removeClass("limit") ;
+            $(this).hide(200) ;
+        }) ;
     }
     /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
     判断自我介绍和成交故事是否需要展开
