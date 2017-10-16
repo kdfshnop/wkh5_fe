@@ -9,16 +9,20 @@
     //
 
     //图片预览    
+    var previewSwiper;
     $('.album .img').click(function(){
        
-        var url = $(this).data('url');        
+        var url = $(this).data('url');   
+        var index = $(this).data('index');     
         var $preview = $('.album').siblings('.preview-image');
         if($preview.length == 0){
-            $preview = $('<div class="preview-image"><img src=""></div>');            
-            $('.album').before($preview);
+            $preview = $('.album .preview-image-template .swiper-container').clone().addClass('preview-image');// $('<div class="preview-image"><img src=""></div>');            
+            $('.album').after($preview);
+            previewSwiper = new Swiper('.preview-image');
         }
 
         $preview.find('img').attr('src',url);
+        previewSwiper.slideTo(index);
         $('body').css('overflow-y','hidden');//去掉垂直滚动条
         $preview.show();
     });
