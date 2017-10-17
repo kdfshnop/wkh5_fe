@@ -1,0 +1,142 @@
+/*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ 1. 项目名称：悟空找房H5前端MVC框架
+ 2. 文件名称：space -> index.less (经纪人个人店铺首页)
+ 3. 作者：zhaohuagang@lifang.com
+ -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
+ @import "../variables.less" ;
+ @import "../mixins.less" ;
+ /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ 载入assistant控件样式
+ -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
+ @import "../components/assistant.less" ;
+ @import "../components/tabs.less" ;
+ @import "../components/esf-item.less" ;
+ @import "../components/xf-item.less" ;
+
+header {   
+    box-shadow : 0 -2px 6px 0 rgba( 0 , 0 , 0 , .2 ) ;
+    background-color : #fff ;
+    font-size : 1.8rem ;
+    line-height : 44px ;
+    position : relative ;
+    text-align : center ;   
+}
+.highlight {
+    padding-top : 1rem ;    
+     .card {
+         border-bottom : 1px solid @lighter-line-gray-color ;
+        .clearfix() ;
+        padding-bottom : .5rem ;
+        dt {            
+            float : left ;
+            height : 6rem ;
+            margin : 0 .125rem ;
+            overflow : hidden ; 
+            width : 6rem ; 
+            img {
+                height : 100% ;
+                width : 100% ;
+            }
+        }
+        dd {
+            .fit-height() ;
+            margin-left : 7.5rem ;
+            padding-right : 1.5rem ;
+            &.company {
+                line-height : 2rem ;
+                margin-bottom : .5rem ;
+            }
+            &.tags {
+                span {
+                    background-color : @tag-background-color ;
+                    .border-radius(3px) ;
+                    display : inline-block ;
+                    font-size : 1rem ;
+                    margin : 0 5px 5px 0 ;
+                    padding : 2px 3px ;
+                }
+            }
+            .agent-name {
+                float : left ;
+                span {
+                    display : inline-block ;                 
+                }
+                .name {
+                    font-size : 1.8rem ;
+                }
+                .good {
+                    background-color : #fbe69a ;
+                    .border-radius(3px) ;
+                    color : #ce8000 ;
+                    font-size : 1.1rem ;
+                    margin-left : 5px ;
+                    padding : 2px 3px ;
+                }
+            }
+            .volume {
+                float : right ;
+                font-size : 1.2rem ; 
+            }
+        }
+    }
+   .panel-item {
+        .clearfix() ;
+        dt , dd {
+            font-size : 1.4rem ;
+            line-height : 20px ;
+        }
+        dt {
+            float : left ;
+            width : 6.5rem ;
+        }
+        dd {                
+            margin-left : 7rem ;
+            padding-right : 1.5rem ;
+            &.switch {
+                display : none ;
+                text-align : center ;
+                .iconfont {
+                    font-size : 1.4rem ;
+                }
+            }
+            &.limit {  //限定高度，主要是自我介绍和成交故事用
+                height : 60px ;
+                overflow : hidden ;                    
+            }
+        }
+    }
+
+    .more {        
+        color : #92a7c3 ;
+        font-size : 1.6rem ;
+        line-height : 44px ;
+        text-align : center ;
+    }
+    .optional {
+        display : none ;
+        dl {
+            &:last-child {
+                border : none ;
+            }
+        }        
+    }
+}
+/*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+新房二手房资讯tab
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
+.wk-tabs {
+    margin-bottom : 5.5rem ;
+    .tabs-handle {
+        padding-top : .5rem ;
+        li {
+            //flex:1 ;
+             //text-align : center ;
+            display : inline-block ; 
+            padding : 0 1rem ;
+        }
+    }
+    .tabs-frame {
+        padding-bottom : 0 ;
+    }
+   
+}

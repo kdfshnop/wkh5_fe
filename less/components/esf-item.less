@@ -1,0 +1,61 @@
+/*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ 1. 项目名称：wkh5
+ 2. 文件名称：esf-item.less (单条二手房源)
+ 3. 作者：zhaohuagang@lifang.com
+ -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
+@import "../variables.less" ;
+@import "../mixins.less" ;
+.esf-item {
+    border-bottom : 1px dotted @light-line-gray-color ;
+    color : @default-font-color ;
+    display : block ;
+    &:last-child {
+        border : none ;
+    }
+    dl {        
+        .clearfix() ;        
+        padding : 1.5rem 1.5rem 1.5rem 0 ;        
+        dt {
+            float : left ;
+            height : 87px ;            
+            width : 131px ;
+            img {
+                height : 100% ;
+                width : 100% ;
+            }
+        }
+        dd {
+            margin-left : 140px ;
+            .fit-height() ;
+            &.title {
+                font-size : 1.6rem ;
+                line-height : 22px ;
+                .text-ellipsis() ;
+            }
+            &.tags {
+                margin-top : 5px ;
+                span {
+                    background-color : @tag-background-color ;
+                    .border-radius(3px) ;
+                    display : block ;
+                    float : left ;
+                    font-size : 1.0rem ;
+                    margin : 0 2px 2px 0 ;
+                    padding : 2px 5px ;
+                    &.selected {
+                        background-color : @primary-color ;
+                        color : #fff ;
+                    }
+                }
+            }
+            .money , .price {
+                float : right ;
+            }       
+            .money {
+                color : @danger-color ;
+                font-size : 1.6rem ;
+                font-weight : 600 ;
+            }
+        }
+    }
+}
