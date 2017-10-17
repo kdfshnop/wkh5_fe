@@ -23,14 +23,14 @@
 
         $preview.find('img').attr('src',url);
         previewSwiper.slideTo(index);
-        $('body').css('overflow-y','hidden');//去掉垂直滚动条
+        $('body').addClass('preview-image-open');//去掉垂直滚动条
         $preview.show();
     });
 
     $('body').on('click','.preview-image',function(){
         var $preview = $('.album').siblings('.preview-image');
         $preview.hide();
-        $('body').css('overflow-y','auto');//
+        $('body').removeClass('preview-image-open');//
     });
     
 

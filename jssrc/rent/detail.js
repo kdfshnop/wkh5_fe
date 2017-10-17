@@ -11,7 +11,7 @@ class DetailController extends Controller {
             使用requirejs引入组件
         */        
 
-        require(['../components/assistant.min','../components/album.min'],function(assistant,album){        
+        require(['../components/assistant.min','../components/album.min','../components/bigdata.min'],function(assistant,album){        
                 
         }); 
 
@@ -34,5 +34,5 @@ class DetailController extends Controller {
 类的初始化
 -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
 $(document).ready(function() {
-    new DetailController(Controller);
+    window.controller = new DetailController;
 });
