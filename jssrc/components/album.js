@@ -3,7 +3,7 @@
  2. 页面名称：components -> swiper(底部助手条)
  3. 作者：tangxuyang@lifang.com
  -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
- define(['../lib/swiper-3.4.2.jquery.min'],function(Swiper){
+ define(['../components/swiper-3.4.2.jquery.min'],function(Swiper){
     var swiper = new Swiper('.album');
 
     //
