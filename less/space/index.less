@@ -12,6 +12,7 @@
  @import "../components/tabs.less" ;
  @import "../components/esf-item.less" ;
  @import "../components/xf-item.less" ;
+ @import "../components/rent-item.less" ;
 
 header {   
     box-shadow : 0 -2px 6px 0 rgba( 0 , 0 , 0 , .2 ) ;
@@ -26,7 +27,7 @@ header {
      .card {
          border-bottom : 1px solid @lighter-line-gray-color ;
         .clearfix() ;
-        padding-bottom : .5rem ;
+        padding-bottom : 1rem ;
         dt {            
             float : left ;
             height : 6rem ;
@@ -73,9 +74,14 @@ header {
                     padding : 2px 3px ;
                 }
             }
-            .volume {
+            .sign {
+                color : @light-font-color ;
                 float : right ;
                 font-size : 1.2rem ; 
+                .iconfont {
+                    color : #39bdd3 ;
+                    margin-left : .5rem ;
+                }
             }
         }
     }
