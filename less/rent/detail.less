@@ -7,15 +7,26 @@
 @import "../components/supporting.less";
 @import "../components/tags.less";
 @import "../components/common.less";
-@import "../components/rent-item.less";
-@import "../swiper-3.4.2.min.css";
+@import "../components/rent-items.less";
+//@import "../swiper-3.4.2.min.css";
 @import "../components/album.less";
+
+.title {
+    .text-ellipsis();
+    font-size: 1.8rem;
+    text-align: center;
+    padding-top: .8rem;
+    padding-bottom: .8rem;
+    box-shadow: 0 2px 6px 0 rgba(0,0,0,0.40);
+}
 
 .panel-header.house-title {
     font-size: 2rem;
     color: #4e4e4e;
     line-height: 1.3;
     margin-bottom: 1.8rem;
+    max-height: 5.4rem;
+    overflow: hidden;    
 }
 
 .price-type-area {
@@ -56,5 +67,30 @@
 .swiper-wrapper {
     img,video {        
         height: 56.25vw;        
+    }
+}
+
+.invalid-rent {//已下架房源底部灰条
+    font-size: 1.4rem;
+    color: #4E4E4E;
+    text-align: center;
+    vertical-align: middle;
+    position: fixed;
+    bottom: 0;  
+    height: 5rem;  
+    width: 100%;
+    padding-top: 1.5rem;
+    padding-bottom: 1.5rem;
+    background-color: #E4E4E4;
+    box-shadow: 0 -2px 6px 0 rgba(0,0,0,0.10);
+}
+
+.external-sellpoint {    
+    overflow: hidden;
+
+    & + .more {
+        color: #4081D6;
+        margin-top: .8rem;
+        font-size: 1.4rem;
     }
 }

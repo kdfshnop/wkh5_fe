@@ -1,0 +1,59 @@
+/*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ 1. 项目名称：wkh5
+ 2. 文件名称：src -> less -> components -> common.less ()
+ 3. 作者：tangxuyang@lifang.com
+ -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
+.map {
+    background-size:100%;
+    background-repeat:no-repeat;
+    height:66.5625vw;
+    width:100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+
+    .location {
+        width: 2rem;
+        height: 2rem;
+        .border-radius(50%);
+        background-color: #fff;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        .inner {
+            width: 1.5rem;
+            height: 1.5rem;
+            .border-radius(50%);
+            background-color: #4081D6;
+        }
+    }
+
+    .address {
+        margin-top: 2.4rem;        
+        position: absolute;
+        top: 50%;
+        width: 98%;
+        .border-radius(4px);
+        //.text-ellipsis();
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        .triangle {            
+            width: 0;
+            height: 0;
+            border-left: .8rem solid transparent;
+            border-right: .8rem solid transparent;
+            border-bottom: 1.2rem solid #fff;
+            position: absolute;
+            top: -1.2rem;
+        }
+        .inner {
+            display: inline-block;
+            background-color: #fff;
+            padding: 1.4rem 2.8rem;
+            .text-ellipsis();
+            font-size: 1.4rem;
+        }
+    }
+}
