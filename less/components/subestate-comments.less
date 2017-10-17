@@ -1,0 +1,41 @@
+/*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ 1. 项目名称：yfyk2h5
+ 2. 文件名称：src -> less -> components -> subestate-comments.less (小区评论)
+ 3. 作者：tangxuyang@lifang.com
+ -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
+ @import "../variables.less";
+ @import "../mixins.less";
+
+ .subestate-comment {
+     margin-top: 1rem;
+     .left {
+        img {
+            width: 3rem;
+            height: 3rem;         
+        }
+        flex-shrink: 0;
+        margin-right: 1rem;
+     }
+     .right {
+        p {
+            //line-height: 1;
+            &.mobile {
+                font-size: 1.2rem;
+                color: #4E4E4E;
+            }
+            &.datetime {
+                font-size: .9rem;
+                color: #999;
+            }
+        }
+
+        .content {
+            line-height: 1.785;
+            margin-top: .9rem;
+            font-size: 1.4rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid #E4E4E4;
+        }
+     }
+     
+ }

@@ -7,8 +7,8 @@
     constructor() {
         super();                 
 
-        require(['../lib/swiper-3.4.2.jquery.min'],function(Swiper){
-            var mySwiper = new Swiper ('.swiper-container')    
+        require(['../components/album.min'],function(Album){
+            
         });                
     };   
 }
