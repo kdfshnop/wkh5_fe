@@ -16,7 +16,7 @@
         var index = $(this).data('index');     
         var $preview = $('.album').siblings('.preview-image');
         if($preview.length == 0){
-            $preview = $('.album .preview-image-template .swiper-container').clone().addClass('preview-image');// $('<div class="preview-image"><img src=""></div>');            
+            $preview = $('.album .preview-image-template .swiper-container').clone().addClass('preview-image');
             $('.album').after($preview);
             previewSwiper = new Swiper('.preview-image');
         }
@@ -27,12 +27,11 @@
         $preview.show();
     });
 
+    //退出预览模式
     $('body').on('click','.preview-image',function(){
         var $preview = $('.album').siblings('.preview-image');
         $preview.hide();
         $('body').removeClass('preview-image-open');//
     });
-    
-
     return {};
  });
