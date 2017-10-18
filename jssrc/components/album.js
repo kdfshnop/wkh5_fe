@@ -4,6 +4,10 @@
  3. 作者：tangxuyang@lifang.com
  -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
  define(['../components/swiper-3.4.2.jquery.min'],function(Swiper){
+
+    //Test.sayHello();
+    //alert(Test.sayHello);
+    //Test.sayHello();
     var swiper = new Swiper('.album');
 
     //
@@ -18,7 +22,9 @@
         if($preview.length == 0){
             $preview = $('.album .preview-image-template .swiper-container').clone().addClass('preview-image');
             $('.album').after($preview);
-            previewSwiper = new Swiper('.preview-image');
+            previewSwiper = new Swiper('.preview-image',{
+                initialSlide: index
+            });
         }
 
         $preview.find('img').attr('src',url);

@@ -6,9 +6,9 @@
  class DetailController extends Controller {
     constructor() {
         super();                 
-
+        let self = this;
         require(['../components/album.min'],function(Album){
-            
+
         });                
     };   
 }

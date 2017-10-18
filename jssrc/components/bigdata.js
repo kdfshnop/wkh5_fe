@@ -4,12 +4,25 @@
  3. 作者：tangxuyang@lifang.com
  -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
 define(function(){
+    function s4() {
+        return ((( 1 + Math.random() ) * 0x10000) | 0 ).toString(16).substring(1) ;
+    }
+    //生成GUID
+    function guid() {
+        return s4() + s4() + "-" + s4() + "-" + s4() + "-" + s4() + "-" + s4() + s4() + s4() ; 
+    } 
+    //从localStorage里面取得cookieId，如果没有用guid填充再返回
+    function getCookieId() {
+        if(!localStorage.cookieId ) localStorage.cookieId = guid() ;
+        return localStorage.cookieId ;
+    }
+
     //获取设备Id
     function getDeviceId(cb){
         //原生优先，然后取localStorage
+        //当前页面都是分享页，没有跟native交互的场景，因此native交互这块先不实现
 
-        
-        cb("2343434");
+        cb(getCookieId());
     }
 
     let ls = {};
@@ -51,11 +64,11 @@ define(function(){
     }
 
     //发送埋点请求
+    let controller;
     let send = function(item){
-        if(window.controller){
+        if(controller){
             let total = getTotal();	
-            let controller = window.controller;	
-            
+                        
             controller.request(controller.apiUrl.bigData,item,{
                 successCallback: function(){
 
@@ -107,6 +120,9 @@ define(function(){
     },true);
 
     return {
+        init: function(c){
+            controller = c;
+        },
         bigData: bigData
     };
 });

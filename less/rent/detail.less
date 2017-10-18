@@ -10,6 +10,7 @@
 @import "../components/rent-items.less";
 //@import "../swiper-3.4.2.min.css";
 @import "../components/album.less";
+@import "../components/map.less";
 
 .title {
     .text-ellipsis();
@@ -95,5 +96,56 @@
         color: #4081D6;
         margin-top: .8rem;
         font-size: 1.4rem;
+    }
+}
+
+
+.subestate {
+    .left {
+        flex-shrink: 0;
+        img {
+            width: 12rem;
+            height: 8rem;
+        }
+        margin-right: 1rem;
+    }
+
+    .right {
+        flex: 1;
+        h4 {
+            font-size: 1.4rem;
+            color: #000;
+            margin-bottom: 1rem;
+            line-height: 2rem;
+        }
+        .text-ellipsis(); 
+        .completed {
+            font-size: 1.4rem;
+            color: #7C7C7C;
+            margin-bottom: 1rem;
+            line-height: 2rem;                                        
+            .text-ellipsis();            
+            position: relative;
+            &::after{
+                font-family:"iconfont" !important;
+                content: '\e6a7';
+                position: absolute;
+                right: 0;   
+                color: #4081D6;  
+                font-size: 1.8rem;                   
+            }                            
+        }
+        .address {
+            font-size: 1.4rem;
+            color: #7C7C7C;
+            line-height: 2rem;
+        }
+    }
+}
+
+.estate-comment {
+    a {
+        text-align: right;
+        padding-right: 1.8rem;
     }
 }

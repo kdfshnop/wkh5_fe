@@ -10,9 +10,13 @@ class DetailController extends Controller {
         /*
             使用requirejs引入组件
         */        
+        let self = this;
+        require(['../components/assistant.min','../components/album.min','../components/bigdata.min'],function(assistant,album, BigData){        
+            BigData.init(self);
 
-        require(['../components/assistant.min','../components/album.min','../components/bigdata.min'],function(assistant,album){        
-                
+            BigData.bigData({
+                name: 'heloll'
+            });
         }); 
 
         //外来房源基本信息
@@ -34,5 +38,5 @@ class DetailController extends Controller {
 类的初始化
 -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
 $(document).ready(function() {
-    window.controller = new DetailController;
+   new DetailController;
 });
