@@ -9,12 +9,12 @@ class IndexController extends Controller {
         /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
         载入组件逻辑
         -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/  
-        require(["../components/assistant.min" , "../components/tabs.min"] , function(assistant){ 
+        require([ "../components/assistant.min" , "../components/tabs.min" ] , function(){ 
             $(".wk-tabs").tabs({
                 "fixedWhenScroll" : false ,
                 "effect" : "fadeIn" ,
                 "duration" : 200
-            }) ; 
+            }) ;            
         }) ;        
         /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
         给dom节点绑定事件
@@ -28,7 +28,7 @@ class IndexController extends Controller {
         let classSelf = this ;
         $(".highlight .more").click(function(){
             $(this).slideUp(200) ;
-            $(this).siblings(".optional").show(200 , function(){
+            $(this).siblings(".optional").fadeIn(200 , function(){
                 classSelf.ellipsis() ;
             }) ;           
         }) ;
