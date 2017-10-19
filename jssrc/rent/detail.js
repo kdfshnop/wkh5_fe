@@ -11,7 +11,7 @@ class DetailController extends Controller {
             使用requirejs引入组件
         */        
         let self = this;
-        require(['../components/assistant.min','../components/album.min','../components/bigdata.min'],function(assistant,album, BigData){        
+        require(['../components/assistant.min','../components/album.min','../components/bigdata.min', '../components/preview-image.min'],function(assistant,album, BigData, PreviewImage){        
             BigData.init(self);
 
             BigData.bigData({
@@ -21,6 +21,9 @@ class DetailController extends Controller {
                 },
                 type: 1
             });
+
+            //评论中图片添加预览功能
+            PreviewImage('.rent-comments');
         }); 
 
         //外来房源基本信息
