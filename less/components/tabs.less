@@ -8,18 +8,23 @@
         background-color : #fff ;
         border-bottom : 1px solid @light-line-gray-color  ;
          .clearfix() ;
+         display : flex ;  
          padding : 0 @gap-dimension  ;
-        &>li {            
-            float : left ;            
-            border-bottom : 2px solid transparent ;
-            color : @default-font-color ;                         
-            font-size : 1.6rem ;
-            line-height : 44px ;         
+        &>li {
+            flex : 1 ;
+            padding : 0 .5rem ;               
             text-align : center ;
-            &.on {
+            &.on>a {
                 border-bottom-color : @primary-color ;
                 color : @primary-color ;               
-            }          
+            }
+            &>a {
+                border-bottom : 2px solid transparent ;
+                color : @default-font-color ;
+                display : inline-block ;
+                font-size : 1.6rem ;
+                line-height : 44px ; 
+            }     
         }
     }
     .tabs-frame {

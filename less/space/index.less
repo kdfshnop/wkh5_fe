@@ -57,6 +57,21 @@ header {
                     padding : 2px 3px ;
                 }
             }
+            &.picts {
+                .clearfix() ;
+                margin-top : 1rem ;
+                img {
+                    display : block ;
+                    float : left ;
+                    margin-right : 2% ;
+                    margin-bottom : .5rem ;
+                    height : 57px ;
+                    width : 32% ;
+                    &:last-child , &:nth-child(3) , &:nth-child(6) , &:nth-child(9) , &:nth-child(12) {
+                        margin-right : 0 ;
+                    }
+                }
+            }
             .agent-name {
                 float : left ;
                 span {
@@ -132,17 +147,7 @@ header {
 -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
 .wk-tabs {
     margin-bottom : 5.5rem ;
-    .tabs-handle {
-        //padding-top : .5rem ;
-        li {
-            //flex:1 ;
-             //text-align : center ;
-            display : inline-block ; 
-            padding : 0 1rem ;
-        }
-    }
     .tabs-frame {
         padding-bottom : 0 ;
-    }
-   
+    }   
 }
