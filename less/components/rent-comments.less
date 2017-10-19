@@ -1,0 +1,80 @@
+@import "../variables.less";
+@import "../mixins.less";
+.rent-comments {
+    //padding-top: 0px;
+    margin-top: -10px;
+    .panel-header {
+        padding-top: 0px;        
+    }
+
+    .panel-body {
+        padding-right: 1.5rem;
+    }
+
+    .rent-comment {
+        
+        //margin-bottom: 1.5rem;
+
+        & + .rent-comment {
+            border-top: 1px solid #E4E4E4;
+            padding-top: 1.5rem;
+        }
+
+        .rent-comment-header {
+            img {
+                width: 3rem;
+                height: 3rem;
+            }
+            color: #999;
+            font-size: 1.6rem;
+        }
+
+        .rent-comment-body　{
+            margin-top: 1.1rem;
+            margin-bottom: 1.5rem;
+            font-size: 1.6rem;
+            color: #4E4E4E;
+        }
+
+        .rent-comment-footer {
+            font-size: 1.4rem;
+            color: #999;
+            margin-bottom: 1.5rem;
+        }
+    }
+
+    .more {
+        background-color: #F6F6F6;
+        .border-radius(3px);
+        color: #92A7C3;
+        font-size: 1.4rem;
+        line-height: 4.5rem;
+        text-align: center;
+        height: 4.5rem;
+        display: block;
+    }
+
+    .no-data {
+        color: #7C7C7C;
+        font-size: 1.4rem;
+        margin-bottom: 1rem;
+    }
+
+    .mobile {
+        margin-right: 1.5rem;
+    }
+
+    .icon-owner {
+        color: #4081D6;
+    }
+
+    .icon-youping {
+        color: #F95355;
+    }
+
+    .imgs {
+        img {
+            width: 33%;
+        }
+    }
+}

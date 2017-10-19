@@ -7,8 +7,8 @@
     constructor() {
         super();                 
         let self = this;
-        require(['../components/album.min'],function(Album){
-
+        require(['../components/album.min','../components/preview-image.min'],function(Album, PreviewImage){
+            PreviewImage('.subestate-comments');
         });                
     };   
 }

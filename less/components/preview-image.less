@@ -1,0 +1,49 @@
+/*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ 1. 项目名称：wkh5
+ 2. 文件名称：src -> less -> components -> preview-image.less (图片预览)
+ 3. 作者：tangxuyang@lifang.com
+ -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
+ @import "../variables.less";
+ @import "../mixins.less";
+ @import "../swiper-3.4.2.min.css";
+
+.preview-image {    
+    position: fixed;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    background-color: #fff;
+    
+    z-index: 10000;
+
+    .swiper-slide {
+        display: flex;
+        
+        justify-content: center;
+        align-items: center; 
+        
+        .indicator {
+            position: absolute;
+            right: 15px;
+            top: 15px;
+            width: 52px;
+            height: 26px;
+            color: #fff;
+            letter-spacing: 1px;
+            background-color: rgba(0,0,0,.3);
+            text-align: center;
+            padding: 4px 2px;
+            border-radius: 12px;
+            font-size: 12px;
+        }
+    }
+    img {
+        width: 100%;
+        height: auto;
+    }
+}
+
+.preview-image-open {
+    overflow: hidden;
+}
