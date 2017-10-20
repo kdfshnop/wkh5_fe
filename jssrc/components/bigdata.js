@@ -91,6 +91,7 @@ define(function(){
     function bigData(data){               
         getDeviceId(function(deviceId){
             data.cookieId = deviceId;
+            data.projectId = 2;
             let total = getTotal();
             data.pNum = total;
             setTotal(total+1);
