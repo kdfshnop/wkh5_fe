@@ -3,14 +3,19 @@
  2. 文件名称：src -> less -> components -> common.less ()
  3. 作者：tangxuyang@lifang.com
  -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
+ @import "../variables.less";
+ @import "../mixins.less";
 .map {
     background-size:100%;
     background-repeat:no-repeat;
     height:66.5625vw;
-    width:100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    width:100%;    
+    // display: flex;
+    // justify-content: center;
+    // align-items: center;
+    .flex();
+    .justify-content(center);
+    .align-items(center);
     position: relative;
 
     .location {
@@ -18,9 +23,12 @@
         height: 2rem;
         .border-radius(50%);
         background-color: #fff;
-        display: flex;
-        justify-content: center;
-        align-items: center;
+        // display: flex;
+        // justify-content: center;
+        // align-items: center;
+        .flex();
+        .justify-content(center);
+        .align-items(center);
         .inner {
             width: 1.5rem;
             height: 1.5rem;
@@ -34,11 +42,14 @@
         position: absolute;
         top: 50%;
         width: 98%;
-        .border-radius(4px);
-        //.text-ellipsis();
-        display: flex;
-        justify-content: center;
-        align-items: center;
+        .border-radius(4px);        
+        left: 1%;      
+        // display: flex;
+        // justify-content: center;
+        // align-items: center;
+        .flex();
+        .justify-content(center);
+        .align-items(center);
         .triangle {            
             width: 0;
             height: 0;
@@ -47,6 +58,8 @@
             border-bottom: 1.2rem solid #fff;
             position: absolute;
             top: -1.2rem;
+            left: 50%;
+            margin-left: -0.8rem;
         }
         .inner {
             display: inline-block;
@@ -54,7 +67,7 @@
             padding: 1.4rem 2.8rem;
             .text-ellipsis();
             font-size: 1.4rem;
-            color: #000;
+            color: #000;            
         }
     }
 }

@@ -1,0 +1,40 @@
+/*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ 1. 项目名称：yfyk2h5
+ 2. 文件名称：src -> less -> mixins -> flex.less(混合 -> flex布局)
+ 3. 作者：tangxuyang@lifang.com
+ -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
+ .flex() {
+    display: -webkit-flex;
+    display: flex;         
+}
+
+.flex(@flex) {
+    -webkit-flex: @flex;
+    flex: @flex;
+}
+
+.flex-shrink(@shrink) {
+    -webkit-flex-shrink: @shrink;
+    flex-shrink: @shrink;
+}
+
+
+.justify-content(@content) {
+    -webkit-justify-content: @content;
+    justify-content: @content;
+}
+
+.align-items(@align) {
+    -webkit-align-items: @align;
+    align-items: @align;
+}
+
+.flex-grow(@grow) {
+    -webkit-flex-grow: @grow;
+    flex-grow: @grow;
+}
+
+.flex-basis(@basis) {
+    -webkit-flex-basis: @basis;
+    flex-basis: @basis;
+}

@@ -1,1 +1,1 @@
-div,html,html body{height:100%}div{display:flex;align-items:center;justify-content:center}div video{width:100%}
+div,html,html body{height:100%}div{display:-webkit-flex;display:flex;-webkit-align-items:center;align-items:center;-webkit-justify-content:center;justify-content:center}div video{width:100%}

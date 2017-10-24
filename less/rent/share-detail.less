@@ -5,8 +5,6 @@
  -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
 @import "../components/assistant.less";
 @import "../components/supporting.less";
-@import "../components/tags.less";
-@import "../components/common.less";
 @import "../components/rent-items.less";
 //@import "../swiper-3.4.2.min.css";
 @import "../components/album.less";
@@ -35,7 +33,9 @@
 }
 
 .price-type-area {
-    display: flex;
+    // display: -webkit-flex;
+    // display: flex;
+    .flex();
     padding: 1.5rem 0;
     border-top: 1px solid #E4E4E4;
     border-bottom: 1px solid #E4E4E4;
@@ -45,13 +45,14 @@
         border-left: 1px solid #E4E4E4;
     }
     .price {
-        flex: 2;
+        //flex: 2;
+        .flex(2);
     }    
     .type {
-        flex: 3;
+        .flex(3);
     }    
     .area {
-        flex: 2;
+        .flex(2);
     }    
     .column-container {
         dt {
@@ -103,7 +104,8 @@
 
 .subestate {
     .left {
-        flex-shrink: 0;
+        //flex-shrink: 0;
+        .flex-shrink(0);
         img {
             width: 12rem;
             height: 8rem;
@@ -112,7 +114,8 @@
     }
 
     .right {
-        flex: 1;
+        //flex: 1;
+        .flex(1);
         h4 {
             font-size: 1.4rem;
             color: #000;
