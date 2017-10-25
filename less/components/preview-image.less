@@ -18,10 +18,12 @@
     z-index: 10000;
 
     .swiper-slide {
-        display: flex;
-        
-        justify-content: center;
-        align-items: center; 
+        // display: flex;        
+        // justify-content: center;
+        // align-items: center; 
+        .flex();
+        .justify-content(center);
+        .align-items(center);
         
         .indicator {
             position: absolute;
@@ -37,11 +39,12 @@
             border-radius: 12px;
             font-size: 12px;
         }
-    }
-    img {
-        width: 100%;
-        height: auto;
-    }
+
+        img {
+            width: 100%;
+            height: auto;            
+        }
+    }    
 }
 
 .preview-image-open {
