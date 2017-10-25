@@ -73,8 +73,19 @@
     }
 
     .imgs {
-        img {
-            width: 33%;
+        height: 22vw;
+        .flex();
+        .img {
+            & + .img {
+                margin-left: 5px;
+            }
+            .flex(1);
+            overflow: hidden;
+            img {                
+                width: 100%;
+                height: 100%;
+            }
         }
+        
     }
 }
