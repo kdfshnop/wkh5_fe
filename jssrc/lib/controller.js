@@ -126,7 +126,7 @@ class Controller {
             beforeSend : beforeSendCallback ,            
             error : function(e) {
                 isShowErrorTips && $.tips("调用数据接口失败！请测试您的数据接口！", 2) ;
-                errorCallback(e) ;
+                errorCallback(e) ;                
             },
             success : function(data) {                
                 if (data.status.toString() === "1")  successCallback(data) ;

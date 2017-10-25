@@ -72,7 +72,8 @@ define(function(){
             controller.request(controller.apiUrl.bigData,item,{
                 successCallback: function(){
 
-                }
+                },
+                isShowErrorTips: false,
             });            
         }
         
