@@ -111,6 +111,11 @@ class Controller {
         let beforeSendCallback = params.beforeSendCallback || $.noop ;
         let successCallback = params.successCallback || $.noop ;
         let exceptionCallback = params.exceptionCallback || $.noop ;
+        let isShowErrorTips = true;
+        if(typeof params.isShowErrorTips != 'undefined'){
+            isShowErrorTips = params.isShowErrorTips;
+        } 
+
         if (this.showLoadingTips) $.tips(loadingTips) ;
         let options = {
             url : apiUrl ,
@@ -120,7 +125,7 @@ class Controller {
             contentType : contentType ,
             beforeSend : beforeSendCallback ,            
             error : function(e) {
-                $.tips("调用数据接口失败！请测试您的数据接口！", 2) ;
+                isShowErrorTips && $.tips("调用数据接口失败！请测试您的数据接口！", 2) ;
                 errorCallback(e) ;
             },
             success : function(data) {                
@@ -135,7 +140,7 @@ class Controller {
             $.ajax(options) ;
         } 
         catch (e) {
-            $.tips("错误名称：" + e.name + "\n错误描述：" + e.message, 3) ;
+            isShowErrorTips && $.tips("错误名称：" + e.name + "\n错误描述：" + e.message, 3) ;
         }
         /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
         整个try-catch块结束
