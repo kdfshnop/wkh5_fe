@@ -17,7 +17,7 @@ class DetailController extends Controller {
             BigData.bigData({
                 pageName: '1204',
                 pageParam: {
-                    rent_house_id: 'rent_house_id'
+                    rent_house_id: $('#houseId').val()
                 },
                 type: 1
             });
