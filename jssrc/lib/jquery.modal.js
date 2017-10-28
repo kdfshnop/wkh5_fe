@@ -16,6 +16,17 @@
         ]
     }) ;
 -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
+function addListener(){
+    $('body').on('touchmove',function(e){
+        e = e || window.e;
+        e.preventDefault();
+        e.stopPropagation();
+    })
+}
+
+function removeListener(){
+    $('body').off('touchmove');
+}
 $.modal = function(params) {
     /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
     不定义title的话title就是警告
@@ -54,6 +65,8 @@ $.modal.show = function(id) {
     $("#" + id + "Mask").fadeIn(200) ;
     $("#" + id).css({ "left" : parseInt(($(window).width() - $("#" + id).width()) / 2 , 10) , "top" :  parseInt(($(window).height() - $("#" + id).height()) / 2 , 10) }).delay(200).slideDown(200) ;    
     $('body').addClass('modal-open');
+    $('html').addClass('modal-open');
+    addListener();
 } ;
 /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
 隐藏modal，不影响遮罩层
@@ -69,6 +82,8 @@ $.modal.hide = function(id) {
 $.modal.close = function(id) {    
     $("#" + id + ", #" + id + "Mask").remove() ;    
     $('body').removeClass('modal-open');
+    $('html').removeClass('modal-open');
+    removeListener();
 } ;
 /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
 alert框的定义，注意id如果不定义，就是由wkModal + 时间戳字符串来构造，避免重复

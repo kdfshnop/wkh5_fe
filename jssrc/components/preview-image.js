@@ -12,6 +12,18 @@
 
  define(['../components/swiper-3.4.2.jquery.min'],function(Swiper){
 
+    function addListener(){
+        $('body').on('touchmove',function(e){
+            e = e || window.e;
+            e.preventDefault();
+            e.stopPropagation();
+        })
+    }
+
+    function removeListener(){
+        $('body').off('touchmove');
+    }
+
     return function(container){
         let swiper = $(container).data('preview-swiper');            
         if(!swiper){
@@ -48,11 +60,15 @@
                     $('#' + id).on('click',function(){                                     
                         $(this).hide();
                         $('body').removeClass('preview-image-open');//
+                        $('html').removeClass('preview-image-open');
+                        removeListener();
                     });
                 }
 
                 swiper.slideTo(index);
                 $('body').addClass('preview-image-open');//去掉垂直滚动条
+                $('html').addClass('preview-image-open');
+                addListener();
                 $preview.show();                
             });            
         } else {
