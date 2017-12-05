@@ -50,6 +50,17 @@ body{
       }
       }
     }
+    >.active-color-top{
+      color: @primary-color;
+      >span{
+        transform: rotate(180deg);
+        -ms-transform: rotate(180deg); /* IE 9 */
+        -webkit-transform: rotate(180deg); /* Safari and Chrome */
+        >i{
+          background-color: @primary-color;
+        }
+      }
+    }
   }
 }
 /*<!--房源总数-->*/
@@ -128,17 +139,21 @@ body{
     >ul{
       .flex();
       flex-direction: row;
-      height: 4.4rem;
+      height: 4.2rem;
       width: 100%;
       >li{
         .flex(1);
-        line-height: 4.4rem;
+        /*line-height: 4.4rem;*/
         text-align: center;
         >span{
-          line-height: 4.4rem;
+          line-height: 4.2rem;
           font-size: 1.6rem;
           color: #000000;
           display: inline-block;
+        }
+        >.active-color-dic{
+          color: @primary-color;
+          border-bottom:3px solid @primary-color;
         }
       }
     }
