@@ -3,7 +3,8 @@
 2. 文件名称：rent -> list.less (租房详情页)
 3. 作者：liyang@lifang.com
 -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
-
+@import "../variables.less";
+@import "../mixins.less";
 @import "../components/rent-list.less";
 
 body{
@@ -13,7 +14,10 @@ body{
 .rent-list{
   width: 100%;
   height: 4.5rem;
-  background-color: #FFFFFF;
+  background-color: @default-color;
+  position: fixed;
+  top: 0;
+  z-index: 10;
   >ul{
     flex-direction: row;
     display: -webkit-flex;
@@ -46,13 +50,25 @@ body{
       }
       }
     }
+    >.active-color-top{
+      color: @primary-color;
+      >span{
+        transform: rotate(180deg);
+        -ms-transform: rotate(180deg); /* IE 9 */
+        -webkit-transform: rotate(180deg); /* Safari and Chrome */
+        >i{
+          background-color: @primary-color;
+        }
+      }
+    }
   }
 }
 /*<!--房源总数-->*/
 .total-num{
   width: 100%;
   height: 3rem;
-  background-color: #FFFFFF;
+  margin-top: 4.5rem;
+  background-color: @default-color;
   position: relative;
   &:after{
     content: '';
@@ -61,7 +77,7 @@ body{
     bottom: 0;
     height: 1px;
     width: 100%;
-    border-top: 1px solid #E4E4E4;
+    border-top: 1px solid @light-line-gray-color;
     -webkit-transform:scaleY(0.5) ;
   }
   &:before{
@@ -71,12 +87,12 @@ body{
     top:0;
     height: 1px;
     width: 100%;
-    border-top: 1px solid #E4E4E4;
+    border-top: 1px solid @light-line-gray-color;
     -webkit-transform:scaleY(0.5) ;
   }
   >p{
     font-size: 1.2rem;
-    color: #4E4E4E;
+    color: @default-font-color;
     line-height: 3rem;
     text-align: center;
     >span{
@@ -84,6 +100,116 @@ body{
      /* line-height: 31px;*/
     }
   }
+}
+/*区域模块样式*/
+.dic{
+  width: 100%;
+  max-height:44.4rem ;
+  background-color: @tag-background-color;
+  position: fixed;
+  top:4.5rem;
+  z-index: 11;
+  &:after{
+    content: '';
+    width: 100%;
+    height: 1px;
+    position: absolute;
+    top:0;
+    left: 0;
+    /*border-top: 1px solid @light-line-gray-color;*/
+    box-shadow: 0 2px 6px 0 rgba(0,0,0,0.15);
+    /*   transform: -webkit-scaleY(0.5);*/
+  }
+  .tabs{
+    background-color: @default-color;
+    height: 4.4rem;
+    width: 100%;
+    position: relative;
+    &:after{
+      content: '';
+      width: 100%;
+      height: 1px;
+      position: absolute;
+      bottom: -1px;
+      left: 0;
+      border-top: 1px solid @light-line-gray-color;
+     /* box-shadow: 0 2px 6px 0 rgba(0,0,0,0.15);*/
+         transform: -webkit-scaleY(0.5);
+    }
+    >ul{
+      .flex();
+      flex-direction: row;
+      height: 4.2rem;
+      width: 100%;
+      >li{
+        .flex(1);
+        /*line-height: 4.4rem;*/
+        text-align: center;
+        >span{
+          line-height: 4.2rem;
+          font-size: 1.6rem;
+          color: #000000;
+          display: inline-block;
+        }
+        >.active-color-dic{
+          color: @primary-color;
+          border-bottom:3px solid @primary-color;
+        }
+      }
+    }
+  }
+  .content{
+    width: 100%;
+    max-height: 40rem;
+    >.dic-content{
+      width: 100%;
+      max-height: 40rem;
+      .flex();
+      flex-direction: row;
+      >.content-left{
+        .flex(1);
+        max-height: 40rem;
+        overflow-y:scroll;
+        >ul{
+          >li{
+            width: 100%;
+            height: 4.4rem;
+            line-height: 4.4rem;
+            font-size: 1.5rem;
+            color: #000000;
+            padding-left: 1.5rem;
+          }
+        }
+      }
+      >.content-right{
+        .flex(1);
+        max-height: 40rem;
+        overflow-y:scroll;
+        background-color: @default-color;
+        >ul{
+          >li{
+            width: 100%;
+            height: 4.4rem;
+            line-height: 4.4rem;
+            font-size: 1.5rem;
+            color: #000000;
+            padding-left: 1.5rem;
+          }
+        }
+      }
+    }
+  }
+
+}
+/*背景罩层*/
+.bac{
+  width: 100%;
+  position: fixed;
+  top:4.5rem;
+  bottom: 0;
+  z-index: 10;
+  opacity: 0.5;
+  background-color: #000000;
 }
 
 
