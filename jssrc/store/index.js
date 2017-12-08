@@ -34,19 +34,17 @@ class IndexController extends Controller{
     addEventListener(){
         // 页面滚动实现tab及以上固定;
         $(window).scroll(function(){
-            if($(this).scrollTop()>=10){
-                $('.hd').addClass('move');
-                $('.tabs-handle').addClass('fixed');     
+            if($(this).scrollTop()>=4){
+                $('.hd').addClass('move');    
             }else{
-                $('.hd').removeClass('move');
-                $('.tabs-handle').removeClass('fixed');
+                $('.hd').removeClass('move');  
             }
         });
         // 当点击tab是让固定定位消失;
         $(".wk-tabs .tabs-handle li").click(function(){
             // 让滚动top值为0;
             $(window).scrollTop('0');
-        })
+        });
     }
 }
 /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------

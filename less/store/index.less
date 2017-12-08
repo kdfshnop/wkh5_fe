@@ -7,20 +7,42 @@
 @import "../mixins.less" ;
 @import "../components/tabs.less";
 @import "../components/esf-items.less";
+// 头部动画
 .hd{
-    background: url("http://img.wkzf.com/b262848128334e3daab102eb97e1b747") no-repeat;
-    background-color: white;
-    background-size: 100% 100%;
-    color: white;
-    height:12rem;
-    padding-left: 3rem;
-    transition: 5s cubic-bezier(.35,0,.25,1);   
-    -webkit-transition: .5s cubic-bezier(.35,0,.25,1);
+    .animation{
+        background: url("http://img.wkzf.com/b262848128334e3daab102eb97e1b747") no-repeat;
+        background-color: white;
+        background-size: 100% 100%;
+        color: white;
+        height:12rem;
+        padding-left: 3rem;
+        transition: .5s cubic-bezier(.35,0,.25,1);   
+        -webkit-transition: .5s cubic-bezier(.35,0,.25,1);
+        .store{
+            font-size: 2.4rem;
+            padding-bottom: 2.5rem;
+            padding-top: 2.65rem;
+            transition: .5s cubic-bezier(.35,0,.25,1);   
+            -webkit-transition: .5s cubic-bezier(.35,0,.25,1);
+        }
+        .near-price{
+            vertical-align: baseline; 
+            .nearby-house{
+                font-size: 1.4rem;
+                margin-right: 1.5rem;
+            }
+            .house-price{
+                font-size: 2.4rem;
+            }
+        }
+    }
     &.move{
-        height:7rem;
         position:fixed;
         top:0;
-        width:100%; 
+        width:100%;
+        .animation{
+            height:7rem;
+        } 
         .store{
             height: 0;
             overflow: hidden;
@@ -29,7 +51,7 @@
         }
         .near-price{
             line-height: 7rem;
-            transition: 5s cubic-bezier(.35,0,.25,1);   
+            transition: .5s cubic-bezier(.35,0,.25,1);   
             -webkit-transition: .5s cubic-bezier(.35,0,.25,1);
             .nearby-house{
                 font-size: 1.8rem;
@@ -38,31 +60,7 @@
                 font-size: 1.8rem;
             }
         }
-    }
-    .store{
-        font-size: 2.4rem;
-        padding-bottom: 2.5rem;
-        padding-top: 2.65rem;
-        transition: 5s cubic-bezier(.35,0,.25,1);   
-        -webkit-transition: .5s cubic-bezier(.35,0,.25,1);
-    }
-    .near-price{
-        vertical-align: baseline; 
-        .nearby-house{
-            font-size: 1.4rem;
-            margin-right: 1.5rem;
-    }
-        .house-price{
-            font-size: 2.4rem;
-        }
-    }
-    
-}
-// nav固定;
-.fixed{
-    position:fixed;
-    top:7rem;
-    width:100%;
+    }   
 }
 // 房源列表;
 .house-list{
