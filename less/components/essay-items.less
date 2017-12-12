@@ -1,0 +1,88 @@
+/*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ 1. 项目名称：wkh5
+ 2. 文件名称：less -> components -> essay-items.less (资讯条目)
+ 3. 作者：zhaohuagang@lifang.com
+ -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
+ @import "../variables.less" ;
+ @import "../mixins.less" ;
+.essay-item {
+    background-color : #fff ;
+    color : @default-font-color ;
+    display : block ;         
+    padding : 1.5rem ;
+    .cover {
+        height : 195px ;
+        overflow : hidden ;
+        position : relative ;
+        .play {
+            background-color : rgba( 0 , 0 , 0 , .4 ) ;
+            .border-radius(100px) ;
+            height : 50px ;
+            left : 50% ;
+            line-height : 50px ;
+            margin : -25px 0 0 -25px ;
+            position : absolute ;
+            text-align : center ;
+            top : 50% ;
+            width : 50px ;
+            i {
+                display : inline-block ;
+                .triangle-next( 13px , #fff ) ;
+                margin-left : 12px ; 
+            }
+        }
+    }
+    .summary {
+        .clearfix() ;
+        &.has-thumb {
+            dt {
+                display : block ;
+            }
+            dd {
+                margin-right : 13.5rem ;
+            }
+        }
+        dt {
+            display : none ;
+            float : right ;
+            height : 70px ;                
+            overflow : hidden ;
+            width : 10.5rem ;
+        }
+        dd {
+            //margin-right : 0 ;
+            &.title {
+                font-size : 1.6rem ;
+                font-weight : 400 ;
+                padding-bottom : 1rem ;
+            }
+        }             
+        .digest {
+            font-size : 1.4rem ;
+            line-height : 22px ;
+        }
+    }
+    .thumbs {
+        .clearfix() ;
+        li {
+            float : left ;
+            height : 70px ;
+            margin-right : 2% ;
+            overflow : hidden ;                 
+            width : 32% ;
+            &:last-child {
+                margin-right : 0 ;
+            }
+        }
+    }
+    .outline {
+        .clearfix() ;
+        div {
+            color : @light-font-color ;
+            font-size : 1.4rem ;
+        }
+        .pv {
+            color : @default-font-color ;
+        }
+    }
+}
