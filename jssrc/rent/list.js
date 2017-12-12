@@ -461,7 +461,7 @@ class ListController extends Controller {
          $('.rent-list > ul > li').click(function () {
              $(this).siblings().removeClass('active-color-top');  /* 点击li标签改变其样式*/
              $(this).toggleClass('active-color-top');
-             $(this).siblings().children('span').removeClass('direction');  /*点击li标签事件改变子标签span的样式（后面会选中条件查询之后恢复样式）*/
+             $(this).siblings().children('span').removeClass('direction');  /*点击li标签事件改变子标签span箭头的样式（后面会选中条件查询之后恢复样式）*/
              $(this).children('span').toggleClass('direction');
              let list = $('.rent-list > ul > li > span');   /*根据span标签的样式判断底部罩层是否显示*/
              $('.bac').hide();
