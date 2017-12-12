@@ -1,0 +1,47 @@
+/*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ 1. 项目名称：yfyk2h5
+ 2. 文件名称：src -> less -> components -> essay-category.less (文章类别)
+ 3. 作者：zhaohuagang@lifang.com
+ -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
+ .essay-category {
+     background-color : #fff ;
+     border-bottom : 1px solid @lighter-line-gray-color ;
+     padding : 0 1rem ;
+     overflow-x : scroll ;
+     div {
+         .clearfix() ;
+         a , span {
+            border-bottom : 2px solid transparent ;
+            color : @default-font-color ;
+            display : block ;
+            float : left ; 
+            font-size : 1.6rem ;
+            line-height : 45px ;
+            margin : 0 15px ;
+            &.on {
+                border-bottom-color : @primary-color ;
+                color : @primary-color ;
+            }
+        }
+     }     
+ }
+
+ .essay-subcategory {
+     display : none ;
+     padding : 10px 15px ;
+     overflow-x : scroll ; 
+     div {
+         .clearfix() ;         
+         a {
+            background-color : @title-background-color ;
+            .border-radius(2px) ;
+            color : @light-font-color ;
+            display : block ;
+            float : left ;
+            font-size : 1.4rem ;
+            line-height : 24px ;
+            margin-right : 15px ;
+            padding : 0 10px ;
+        }
+     }     
+ }
