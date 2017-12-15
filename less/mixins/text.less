@@ -3,15 +3,12 @@
  2. 文件名称：src -> less -> mixins -> text.less(混合 -> 文本类)
  3. 作者：zhaohuagang@guanaihui.com
  -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
-.text-ellipsis() {
-    /*
-    *截取文本用省略号追加在后面
-    */
+.text-ellipsis() {    
     overflow : hidden ;
     white-space : nowrap ;
     text-overflow : ellipsis ;        
 }
-.text-ellipsis(@lines : 1) {    
+.paragraph-ellipsis(@lines : 1) {    
     overflow : hidden ;
     text-overflow : ellipsis ;
     display : -webkit-box !important ;
