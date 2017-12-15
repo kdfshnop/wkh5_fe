@@ -11,3 +11,11 @@
     white-space : nowrap ;
     text-overflow : ellipsis ;        
 }
+.text-ellipsis(@lines : 1) {    
+    overflow : hidden ;
+    text-overflow : ellipsis ;
+    display : -webkit-box !important ;
+    word-break : break-all ;
+    -webkit-box-orient : vertical ;
+    -webkit-line-clamp : @lines ;      
+}
