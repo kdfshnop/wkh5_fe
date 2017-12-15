@@ -9,7 +9,7 @@
   .source-title {
     font-size : 2rem ;
     margin : 1.5rem 0  ;
-    .text-ellipsis(2) ;
+    .paragraph-ellipsis(2) ;
   }
   .outline {
     position: relative;
@@ -186,7 +186,7 @@
     .clearfix() ;
     padding-right: 1.5rem;
     &.panel-body {
-      padding-bottom: 1rem;
+      padding-bottom: 0.8rem;
       >img {
         display : block ;
         float : left ;
@@ -237,6 +237,16 @@
   }
   .hr {
     margin : @gap-dimension 0 ;
+  }
+  >.echart{
+
+ /*   padding-right: 1.5rem;*/
+    #main{
+      margin-left: -1rem;
+      margin-top: -4rem;
+      margin-bottom: -1rem;
+     /* padding-right: 1.5rem;*/
+    }
   }
 }
 .similar {
