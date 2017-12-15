@@ -51,7 +51,7 @@
       >.bd {
         color : @danger-color ;
         font-size : 1.4rem ;
-        font-weight : 600 ;
+        font-weight : 500 ;
       }
     }
     .layout , .area {
@@ -115,6 +115,8 @@
         >.icon-next {
           display: inline-block;
           float : right ;
+          font-size : 1.6rem ;
+          font-weight: 600;
         }
       }
     }
@@ -129,6 +131,31 @@
       color: #000000;
       letter-spacing: 1px;
       line-height: 2rem;
+      &{
+        overflow: hidden;
+        text-overflow: ellipsis;
+        display: -webkit-box;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: 5;
+     /*   line-height: 20px;
+        max-height: 100px;*/
+      }
+    }
+     span {
+      display : block ;
+      font-size : 1.4rem ;
+      &.hd {
+        color : @light-font-color ;
+        line-height : 2rem ;
+      }
+    }
+    >div{
+      >div{
+        >.hd{
+          margin-top: 1rem;
+        }
+      }
+
     }
   }
 }
@@ -161,6 +188,9 @@
         .icon-next {
           color :  @primary-color;
           float : right ;
+          display: inline-block;
+          font-size : 1.6rem ;
+          font-weight: 600;
         }
       }
     }
@@ -175,6 +205,13 @@
       >span {
         color : @primary-color ;
         float : right ;
+        font-size : 1.6rem ;
+        font-weight: 400;
+        >i{
+          display: inline-block;
+          font-size : 1.6rem ;
+          font-weight: 600;
+        }
       }
     }
   }
