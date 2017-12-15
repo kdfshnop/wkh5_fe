@@ -8,7 +8,19 @@
 class DetailController extends Controller {
     constructor() {
         super();
-
+        $('.more').hide();
+        let rowNum=Math.round($(".base-info").height()/parseFloat($(".base-info").css('line-height')));
+        if(rowNum > 5){
+            $(".base-info").addClass('word-line');
+            $('.more').show();
+        }else {
+            $(".base-info").removeClass('word-line');
+            $('.more').hide();
+        }
+        $('.more').click(function () {
+            $(".base-info").removeClass('word-line');
+            $('.more').hide();
+        })
     }
 }
 

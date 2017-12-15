@@ -9,15 +9,15 @@
   .source-title {
     font-size : 2rem ;
     margin : 1.5rem 0  ;
-/*    .text-ellipsis(2) ;*/
+    .text-ellipsis(2) ;
   }
   .outline {
     position: relative;
-/*    &:after{
+    &:after{
       content: '';
       height: 1px;
       width: 100%;
-      border-top: 1px solid @lighter-line-gray-color;
+      border-top: 1px solid @light-line-gray-color;
       transform:scaleY(0.5);
       -webkit-transform:scaleY(0.5);
       position: absolute;
@@ -28,15 +28,15 @@
       content: '';
       height: 1px;
       width: 100%;
-      border-top: 1px solid @lighter-line-gray-color;
+      border-top: 1px solid @light-line-gray-color;
       transform:scaleY(0.5);
       -webkit-transform:scaleY(0.5);
       position: absolute;
       top: 0;
       left: 0;
-    }*/
-    border-top : 1px solid @lighter-line-gray-color ;
-    border-bottom: 1px solid @lighter-line-gray-color;
+    }
+/*    border-top : 1px solid @light-line-gray-color ;
+    border-bottom: 1px solid @light-line-gray-color;*/
     .flex() ;
     padding : 1.5rem 0 ;
     >div {
@@ -55,7 +55,19 @@
       }
     }
     .layout , .area {
-      border-left : 1px solid @lighter-line-gray-color ;
+      position: relative;
+      &:before{
+        content: '';
+        height: 100%;
+        width: 1px;
+        border-left: 1px solid @light-line-gray-color;
+        transform:scaleY(0.5);
+        -webkit-transform:scaleX(.5);
+        position: absolute;
+        top: 0;
+        left: 0;
+      }
+     /* border-left : 1px solid @light-line-gray-color ;*/
       padding-left : 1.5rem ;
     }
     .money {
@@ -126,19 +138,27 @@
 .summary {
   .panel-body {
     padding-right: 1.5rem;
-    >p{
-      font-size: 1.4rem;
-      color: #000000;
-      letter-spacing: 1px;
-      line-height: 2rem;
-      &{
-        overflow: hidden;
-        text-overflow: ellipsis;
-        display: -webkit-box;
-        -webkit-box-orient: vertical;
-        -webkit-line-clamp: 5;
-     /*   line-height: 20px;
-        max-height: 100px;*/
+    >div{
+      >p{
+        font-size: 1.4rem;
+        color: #000000;
+        letter-spacing: 1px;
+        line-height: 2rem;
+        &.word-line{
+          overflow: hidden;
+          text-overflow: ellipsis;
+          display: -webkit-box;
+          -webkit-box-orient: vertical;
+          -webkit-line-clamp: 5;
+          /*  line-height: 20px;
+            max-height: 100px;*/
+        }
+      }
+      >.more{
+        font-size: 1.4rem;
+        color: @primary-color;
+        letter-spacing: 0;
+        margin-top: 1rem;
       }
     }
      span {
