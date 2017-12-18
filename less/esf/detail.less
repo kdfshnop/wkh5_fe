@@ -1,9 +1,16 @@
+
+/*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+1. 项目名称：悟空找房h5
+2. 文件名称：esf -> detail.less (租房详情页)
+3. 作者：liyang@lifang.com
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
+
+
 @import "../variables.less" ;
 @import "../mixins.less" ;
 @import "../components/map.less" ;
-/*page {
-  padding-bottom : 120rpx ;
-}*/
+@import "../components/assistant.less" ;
+
 .highlight {
   padding-right: 1.5rem;
   .source-title {
@@ -35,8 +42,6 @@
       top: 0;
       left: 0;
     }
-/*    border-top : 1px solid @light-line-gray-color ;
-    border-bottom: 1px solid @light-line-gray-color;*/
     .flex() ;
     padding : 1.5rem 0 ;
     >div {
@@ -235,6 +240,27 @@
       }
     }
   }
+  div.total-item{
+    >p{
+      line-height: 2.6rem;
+    }
+    >div{
+      >span{
+        display: block;
+        font-size: 1.4rem;
+        color: #7C7C7C;
+        letter-spacing: 0;
+        line-height: 2rem;
+        margin: 0.5rem 0;
+      }
+      >p{
+        font-size: 1.4rem;
+        color: @primary-color;
+        letter-spacing: 0;
+      }
+    }
+  }
+
   .hr {
     margin : @gap-dimension 0 ;
   }
@@ -242,7 +268,6 @@
 
  /*   padding-right: 1.5rem;*/
     #main{
-      margin-left: -1rem;
       margin-top: -4rem;
       margin-bottom: -1rem;
      /* padding-right: 1.5rem;*/

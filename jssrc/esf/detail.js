@@ -21,7 +21,7 @@ class DetailController extends Controller {
             $(".base-info").removeClass('word-line');
             $('.more').hide();
         });
-        let myChart = echarts.init(document.getElementById('main'),{ width: '88%' });
+        let myChart = echarts.init(document.getElementById('main'),{ width: '85%' });
         // 指定图表的配置项和数据
         let option = {
             xAxis: {
@@ -43,6 +43,16 @@ class DetailController extends Controller {
                     }
                 },
                 axisTick: {show: false},// 去除y轴上的刻度线
+                axisLabel:{
+                    formatter: function(value, index) {
+                        if (value == 0) {
+                            return "";
+                        } else {
+                            return value / 10000 + '万';
+                        }
+                    }
+                },
+
                 /*name:'单位：万'*/ // y轴名称单位
             },
             series: [{
@@ -50,7 +60,7 @@ class DetailController extends Controller {
                 type: 'line',
                 lineStyle:{
                     normal:{
-                        color:'#92A7C3', // 线条颜色
+                        color:'#92A7C3', // 折线条颜色
                     }
 
                 },
@@ -59,17 +69,9 @@ class DetailController extends Controller {
                         color: "#92A7C3" //图标颜色
                     }
                 },
-                data: [0.5, 2.0, 3.6, 1.0, 1.0, 2.0],
+                data: [50000, 200000, 360000, 100000, 100000, 200000],
 
             }],
-/*            media: [
-                {
-                    legend:{
-                        left:'center',
-                        top:'middle'
-                    }
-                }
-            ]*/
         };
         myChart.setOption(option);
     }
