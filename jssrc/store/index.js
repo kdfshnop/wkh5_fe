@@ -35,14 +35,16 @@ class IndexController extends Controller{
         /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
         页面滚动的时候banner条的变动
         -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
-        $(window).on("scroll" , ()=> {            
+        $(window).on("scroll" , ()=> {
+            let $header = $("header") ;
+            let $storeName = $("header .banner .store-name") ;
             if ($(window).scrollTop() >= 20 ) {                
-                if( ! $("header").hasClass("fixed")) $("header").addClass("fixed") ;                
-                $("header .banner .store-name").hide() ;
+                if( ! $header.hasClass("fixed")) $header.addClass("fixed") ;                
+                $storeName.hide() ;
             }
             else if ($(window).scrollTop() < 20) {
-                if($("header").hasClass("fixed")) $("header").removeClass("fixed") ;
-                $("header .banner .store-name").show() ;
+                if( $header.hasClass("fixed") ) $header.removeClass("fixed") ;
+                $storeName.show() ;
             }
         }) ;        
     } ;
