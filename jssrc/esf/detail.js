@@ -24,6 +24,18 @@ class DetailController extends Controller {
         let myChart = echarts.init(document.getElementById('main'),{ width: '85%' });
         // 指定图表的配置项和数据
         let option = {
+            tooltip: {      // 提示框
+                trigger: 'item',
+                triggerOn: 'click',
+                position: 'top',
+                backgroundColor: '#92A7C3',
+                padding: 4,
+                textStyle: {
+                    color: '#fff',
+                    fontSize: '12'
+                },
+                formatter: '{c}元'
+            },
             xAxis: {
                 data: ["7 月","8 月","9 月","10 月","11 月","12 月"],  // X坐标数据
                 splitLine: {show: false}, // 控制网格线是否显示
