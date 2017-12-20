@@ -10,12 +10,21 @@
 @import "../mixins.less" ;
 @import "../components/map.less" ;
 @import "../components/assistant.less" ;
+@import "../components/album.less" ;
 
+body{
+  background-color: #F0F0F0;
+}
+.all-dis{
+  padding-bottom: 55px;
+ /* padding-top: 1.5rem;*/
+}
 .highlight {
   padding-right: 1.5rem;
+  padding-top: 1.5rem;
   .source-title {
     font-size : 2rem ;
-    margin : 1.5rem 0  ;
+    margin-bottom: 1.5rem;
     .paragraph-ellipsis(2) ;
   }
   .outline {
@@ -94,6 +103,7 @@
       font-size : 1.2rem ;
       margin-right: 0.6rem;
       padding :0.5rem;
+      height: 2.3rem;
     }
   }
   .cols2-fields , .cols1-fields {
@@ -258,7 +268,7 @@
       }
       >p{
         font-size: 1.4rem;
-      /*  color: @primary-color;*/
+        color: @primary-color;
         letter-spacing: 0;
       }
     }
@@ -278,6 +288,7 @@
   }
 }
 .similar {
+
   .esf-item:last-child {
     border : none ;
   }
