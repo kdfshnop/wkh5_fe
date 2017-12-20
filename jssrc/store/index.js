@@ -39,11 +39,13 @@ class IndexController extends Controller{
             let $header = $("header") ;
             let $storeName = $("header .banner .store-name") ;
             if ($(window).scrollTop() >= 20 ) {                
-                if( ! $header.hasClass("fixed")) $header.addClass("fixed") ;                
+                if( ! $header.hasClass("fixed")) $header.addClass("fixed") ;
+                $(".tabs-frame").addClass("header-margin") ;           
                 $storeName.hide() ;
             }
             else if ($(window).scrollTop() < 20) {
                 if( $header.hasClass("fixed") ) $header.removeClass("fixed") ;
+                $(".tabs-frame").removeClass("header-margin") ; 
                 $storeName.show() ;
             }
         }) ;        
@@ -82,6 +84,29 @@ class IndexController extends Controller{
         let dtNode = $(document.createElement("DT")).append("<a href=\"#\"><img src=\"" + agent.agentHeadImgUrl + "?x-oss-process=image/resize,w_120\" class=\"lazy\"><div class=\"summary\"><p class=\"name\">" + agent.agentName + "</p><p class=\"seniority\">加入悟空：" + agent.serviceYears + "</p></div></a>") ;
         dlNode.append(telNode).append(wechatNode).append(dtNode) ;
         return dlNode ;
+    } ;
+    /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+    上拉加载实例化
+    -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
+    pullload() {
+        //二手房
+        $(".tabs-frame.esf-items").pullload({
+            apiUrl : this.apiUrl.store.house ,                
+            callback : function(data) {                    
+                $.each(data.data , function(){
+                       
+                }) ;
+             }
+        }) ;
+        //经纪人
+        $(".tabs-frame.agent-items").pullload({
+            apiUrl : this.apiUrl.store.agent ,                
+            callback : function(data) {                    
+                $.each(data.data , function(){
+                       
+                }) ;
+             }
+        }) ;
     } ;
 }
 /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------

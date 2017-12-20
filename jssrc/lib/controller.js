@@ -52,7 +52,14 @@ class Controller {
         系统各个模块API地址
         -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
         this.apiUrl = {
-            "bigData" : this.apiPrefix + "buriedPoint/sendData.rest"
+            "bigData" : this.apiPrefix + "buriedPoint/sendData.rest" ,
+            "store" : {
+                "agent" : this.apiPrefix + "api/store/agent" ,
+                "house" : this.apiPrefix + "api/store/house" ,
+            } ,
+            "esf" : {
+                "chart" : this.apiPrefix + "api/esf/detail/chart"
+            }
         } ;
         /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
         整个基类逻辑结束
