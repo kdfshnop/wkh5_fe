@@ -21,9 +21,21 @@ class DetailController extends Controller {
             $(".base-info").removeClass('word-line');
             $('.more').hide();
         });
-        let myChart = echarts.init(document.getElementById('main'),{ width: '88%' });
+        let myChart = echarts.init(document.getElementById('main'),{ width: '85%' });
         // 指定图表的配置项和数据
         let option = {
+            tooltip: {      // 提示框
+                trigger: 'item',
+                triggerOn: 'click',
+                position: 'top',
+                backgroundColor: '#92A7C3',
+                padding: 4,
+                textStyle: {
+                    color: '#fff',
+                    fontSize: '12'
+                },
+                formatter: '{c}元'
+            },
             xAxis: {
                 data: ["7 月","8 月","9 月","10 月","11 月","12 月"],  // X坐标数据
                 splitLine: {show: false}, // 控制网格线是否显示
@@ -43,6 +55,16 @@ class DetailController extends Controller {
                     }
                 },
                 axisTick: {show: false},// 去除y轴上的刻度线
+                axisLabel:{
+                    formatter: function(value, index) {
+                        if (value == 0) {
+                            return "";
+                        } else {
+                            return value / 10000 + '万';
+                        }
+                    }
+                },
+
                 /*name:'单位：万'*/ // y轴名称单位
             },
             series: [{
@@ -50,7 +72,7 @@ class DetailController extends Controller {
                 type: 'line',
                 lineStyle:{
                     normal:{
-                        color:'#92A7C3', // 线条颜色
+                        color:'#92A7C3', // 折线条颜色
                     }
 
                 },
@@ -59,17 +81,9 @@ class DetailController extends Controller {
                         color: "#92A7C3" //图标颜色
                     }
                 },
-                data: [0.5, 2.0, 3.6, 1.0, 1.0, 2.0],
+                data: [50000, 200000, 360000, 100000, 100000, 200000],
 
             }],
-/*            media: [
-                {
-                    legend:{
-                        left:'center',
-                        top:'middle'
-                    }
-                }
-            ]*/
         };
         myChart.setOption(option);
     }
