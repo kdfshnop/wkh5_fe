@@ -15,18 +15,26 @@ class IndexController extends Controller{
         -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/ 
         require([ "../components/bigdata.min"  ,"../components/tabs.min"] , (BigData)=>{
             /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
-            tabs实例化
+            tabs实例化,onSwap的时候要将切换到的tab的拖动加载容器requestable设置为true，其他tab拖动加载容器设置为false
             -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
             $(".wk-tabs").tabs({
                 "fixedWhenScroll" : false ,
                 "effect" : "fadeIn" ,
-                "duration" : 200
+                "duration" : 200 ,
+                "onSwap" : (index)=> {
+                    $(".tabs-frame .list-container").attr( "data-requestable" , "false" ) ;
+                    $(".tabs-frame").eq(index).find(".list-container").attr( "data-requestable" , "true" ) ;
+                }
             }) ;
         }) ;
         /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
         给dom节点绑定事件
         -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
         this.addEventListener() ;
+        /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+        上拉加载实例化
+        -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
+        this.pullload() ;
     }
     /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
     给dom节点绑定事件
@@ -89,21 +97,26 @@ class IndexController extends Controller{
     上拉加载实例化
     -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
     pullload() {
+        let self = this ;
         //二手房
-        $(".tabs-frame.esf-items").pullload({
-            apiUrl : this.apiUrl.store.house ,                
-            callback : function(data) {                    
-                $.each(data.data , function(){
-                       
+        $(".tabs-frame.esf-items .list-container").pullload({
+            apiUrl : this.apiUrl.store.house ,
+            queryStringObject : { "storeId" : $("#storeId").val() } ,          
+            callback : function(data) {
+                if( ! data.data) return ;          
+                $.each(data.data , (index , esf)=> {
+                    $(".tabs-frame.esf-items .list-container").append(self.createEsf(esf)) ;
                 }) ;
-             }
+            }
         }) ;
         //经纪人
-        $(".tabs-frame.agent-items").pullload({
-            apiUrl : this.apiUrl.store.agent ,                
-            callback : function(data) {                    
-                $.each(data.data , function(){
-                       
+        $(".tabs-frame.agent-items .list-container").pullload({
+            apiUrl : this.apiUrl.store.agent ,  
+            queryStringObject : { "storeId" : $("#storeId").val() } ,                 
+            callback : function(data) {
+                if( ! data.data) return ;
+                $.each(data.data , (index , agent)=> {
+                    $(".tabs-frame.agent-items .list-container").append(self.createAgent(agent)) ;
                 }) ;
              }
         }) ;
