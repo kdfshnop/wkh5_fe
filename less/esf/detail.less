@@ -18,6 +18,13 @@ body{
 .all-dis{
   padding-bottom: 55px;
 }
+.icon-back{
+  color: @default-color;
+  position: absolute;
+  top: 2rem;
+  left: 1.5rem;
+  z-index: 1;
+}
 .highlight {
   padding-right: 1.5rem;
   padding-top: 1.5rem;
@@ -231,6 +238,7 @@ body{
     }
     &.total-item {
       line-height: 2.6rem;
+      color: #000000;
       >p , >span {
         font-size : 1.6rem ;
       }
@@ -267,6 +275,9 @@ body{
         font-size: 1.4rem;
         color: @primary-color;
         letter-spacing: 0;
+        >a{
+          color: @primary-color;
+        }
       }
     }
   }
@@ -279,7 +290,7 @@ body{
       width: 100%;
       height:20rem;
       margin-top: -4rem;
-      margin-bottom: -1rem;
+     /* margin-bottom: -3rem;*/
     }
   }
 }

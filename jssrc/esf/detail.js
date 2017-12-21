@@ -8,6 +8,26 @@
 class DetailController extends Controller {
     constructor() {
         super();
+        // 初始化
+         this.fiveLine();
+        // 获取小区加密Id
+        let  encryptsubestateid = $('#estateName').attr('data-encryptsubestateid');
+        // 请求接口
+         let that = this;
+         this.request(this.apiUrl.community.chart,{subEstateId:encryptsubestateid},{successCallback(data){
+             if (data.status == 1){
+                 let dataRes = data;
+                 let echartData =  that.recombineM(dataRes.data);
+                 that.echartFun(echartData) ;
+             }
+
+          }});
+    }
+
+    /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+    判断文本是否大于5行
+    -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
+    fiveLine(){
         $('.more').hide();
         let rowNum=Math.round($(".base-info").height()/parseFloat($(".base-info").css('line-height')));
         if(rowNum > 5){
@@ -21,7 +41,37 @@ class DetailController extends Controller {
             $(".base-info").removeClass('word-line');
             $('.more').hide();
         });
-        let myChart = echarts.init(document.getElementById('main'),{ width: '82%' });
+    }
+    /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+    处理得到的数据的函数  处理月份和数据
+    -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
+    recombineM(data) {
+        let echartData = {
+            monthList: [],
+            seriesData: []
+        };
+        if (data) {
+            data.forEach((item) => {
+                let month = item.date.split('-')[1];
+                if (month.indexOf('0') == 0) {
+                    echartData.monthList.push(month.charAt(1))
+                } else {
+                    echartData.monthList.push(month)
+                }
+                echartData.seriesData.push(item.unitPrice)
+            });
+        }
+        return echartData ;
+    }
+    /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+   折线图函数异步操作
+   -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
+    echartFun(echartData){
+        let sortArray = echartData.seriesData.sort(function(a, b) {
+            return parseFloat(a) - parseFloat(b);
+        });
+        let maxPrice = Math.ceil((sortArray[sortArray.length - 1] / 10000) + 1) * 10000;
+        let myChart = echarts.init(document.getElementById('main'),{ width: '88%' });
         // 指定图表的配置项和数据
         let option = {
             tooltip: {      // 提示框
@@ -36,8 +86,14 @@ class DetailController extends Controller {
                 },
                 formatter: '{c}元'
             },
+            grid: {
+                bottom: 20,
+                left: '5%',
+                right: '5%',
+                containLabel: true,
+            },
             xAxis: {
-                data: ["1月","2月","3月","4月","5月","6月","7月","8月","9月","10月","11月","12月"],  // X坐标数据
+                data: echartData.monthList ,  // X坐标数据
                 splitLine: {show: false}, // 控制网格线是否显示
                 axisTick: {show: false},  // 去除x轴上的刻度线
                 position: 'bottom',
@@ -80,6 +136,10 @@ class DetailController extends Controller {
                         }
                     }
                 },
+                min:0,
+                max:maxPrice,
+                splitNumber: 4,
+                interval: maxPrice / 4
             },
             series: [{
                 name: '销量',
@@ -100,7 +160,7 @@ class DetailController extends Controller {
                         color: '#92A7C3'
                     }
                 },
-                data: [50000, 200000, 360000, 100000, 100000, 200000,50000, 200000, 360000, 100000, 100000, 200000],
+                data: echartData.seriesData,
 
             }],
         };
