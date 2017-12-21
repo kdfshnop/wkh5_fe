@@ -54,11 +54,11 @@ class Controller {
         this.apiUrl = {
             "bigData" : this.apiPrefix + "buriedPoint/sendData.rest" ,
             "store" : {
-                "agent" : this.apiPrefix + "api/store/agent" ,
-                "house" : this.apiPrefix + "api/store/house" ,
+                "agent" : this.apiPrefix + "api/store/index/agent" ,
+                "house" : this.apiPrefix + "api/store/index/house"
             } ,
-            "esf" : {
-                "chart" : this.apiPrefix + "api/esf/detail/chart"
+            "community" : {
+                "chart" : this.apiPrefix + "api/community/detail/chart"
             }
         } ;
         /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
