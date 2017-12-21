@@ -1,0 +1,39 @@
+/*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ 1. 项目名称：wkh5
+ 2. 文件名称：src -> less -> components -> downloadApp.less (下载条)
+ 3. 作者：zhaohuagang@lifang.com
+ -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
+.download-app {
+     background-color : #fff ;
+     border-bottom : 1px solid @lighter-line-gray-color ;
+     .clearfix() ;
+     height : 50px ;
+     padding : 8px ;
+     &>dl {
+         .clearfix() ;
+         float : left ;
+         dt {             
+             float : left ;
+             line-height : 1 ;
+             width : 3.2rem ;
+             i {                
+                color : @primary-color ;
+                font-size : 3.2rem ;
+            }            
+         }
+         dd {             
+             font-size : 1rem ;
+             margin-left : 3.5rem ;
+         }
+     }
+     &>a {
+         .border-radius(3px) ;
+         border : 1px solid @primary-color ;
+         color : @primary-color ;
+         line-height : 25px ;
+         float : right ;
+         margin : 3px 7px 0 0  ;
+         text-align : center ;
+         width : 80px ;
+     }     
+ }
