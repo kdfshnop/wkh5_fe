@@ -22,6 +22,9 @@ class DetailController extends Controller {
              }
 
           }});
+        require(['../components/album.min','../components/preview-image.min'],function(Album, PreviewImage){
+            PreviewImage('.album');
+        });
     }
 
     /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -54,9 +57,9 @@ class DetailController extends Controller {
             data.forEach((item) => {
                 let month = item.date.split('-')[1];
                 if (month.indexOf('0') == 0) {
-                    echartData.monthList.push(month.charAt(1))
+                    echartData.monthList.push(month.charAt(1)+'月')
                 } else {
-                    echartData.monthList.push(month)
+                    echartData.monthList.push(month+'月')
                 }
                 echartData.seriesData.push(item.unitPrice)
             });

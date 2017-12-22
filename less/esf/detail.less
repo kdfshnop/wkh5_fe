@@ -11,17 +11,19 @@
 @import "../components/map.less" ;
 @import "../components/assistant.less" ;
 @import "../components/album.less" ;
+@import "../components/esf-items.less" ;
+@import "../components/download-app.less" ;
 
 body{
   background-color: #F0F0F0;
 }
 .all-dis{
-  padding-bottom: 55px;
+  padding-bottom: 50px;
 }
 .icon-back{
   color: @default-color;
   position: absolute;
-  top: 2rem;
+  top: 6rem;
   left: 1.5rem;
   z-index: 1;
 }
@@ -325,4 +327,12 @@ hr{
     letter-spacing: 1px;
     line-height: 50px;
   }
+}
+.esf-more{
+  margin-top: -1.5rem;
+ >a{
+   display: block;
+   font-size: 1.4rem;
+   color: @primary-color;
+ }
 }
