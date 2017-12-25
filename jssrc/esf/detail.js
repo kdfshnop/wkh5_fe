@@ -23,7 +23,7 @@ class DetailController extends Controller {
              }
 
           }});
-        require(['../components/assistant.min','../components/album.min','../components/preview-image.min','../components/bigdata.min'],function(assistant,Album, PreviewImage, BigData){
+        require(['../components/assistant.min','../components/album.min','../components/preview-image.min','../components/bigdata.min'],function(assistant, Album, PreviewImage, BigData){
             BigData.init(that);
             BigData.bigData({
                 pageName: '1067',
@@ -81,6 +81,15 @@ class DetailController extends Controller {
         });
         let maxPrice = Math.ceil((sortArray[sortArray.length - 1] / 10000) + 1) * 10000;
         let myChart = echarts.init(document.getElementById('main'),{ width: '88%' });
+        let that = this;
+        // 给折线图dome增加埋点
+        let houseId =  $('#estateName').attr('data-houseid');
+        let subestateid =  $('#estateName').attr('data-subestateid') ;
+        let echartBigData = {
+            eventName: "1067014",
+            eventParam: { house_id : houseId , estate_id: subestateid},
+            type: 2
+        };
         // 指定图表的配置项和数据
         let option = {
             tooltip: {      // 提示框
@@ -93,7 +102,14 @@ class DetailController extends Controller {
                     color: '#fff',
                     fontSize: '12'
                 },
-                formatter: '{c}元'
+                formatter:function (params, ticket, callback) {
+                    let paramsValue =  params.value + "元";
+                    console.log(paramsValue);
+                    that.request(that.apiUrl.bigData , echartBigData ,function () {
+
+                    });
+                    return paramsValue;
+                }
             },
             grid: {
                 bottom: 20,
@@ -174,18 +190,11 @@ class DetailController extends Controller {
             }],
         };
         myChart.setOption(option);
-        // 给折线图dome增加埋点
-        let houseId =  $('#estateName').attr('data-houseid');
-        let subestateid =  $('#estateName').attr('data-subestateid') ;
-        let echartBigData = {
-            eventName: "1067014",
-            eventParam: { house_id : houseId , estate_id: subestateid},
-            type: 2
-        };
-        console.log(JSON.stringify(houseId));
-        console.log(JSON.stringify(echartBigData));
-        $('#main > div:eq(1)').attr('data-bigdata',JSON.stringify(echartBigData));
+
+        /*$('#main > div:eq(1)').attr('data-bigdata',encodeURIComponent(JSON.stringify(echartBigData)));*/
     }
+
+
 }
 
 
