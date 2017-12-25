@@ -1,0 +1,51 @@
+/*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ 1. 项目名称：悟空找房数据决策
+ 2. 文件名称：seo -> error.less (错误页面)
+ 3. 作者：zhaohuagang@lifang.com
+ -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
+
+@import "../variables.less" ;
+@import "../mixins.less" ;
+@import "../components/download-app.less" ;
+
+body {
+    background-color : #465a73 ;    
+}
+.bg {
+    bottom : 0 ;
+    left : 0 ;
+    position : absolute ;
+    width : 100% ;
+    z-index : 1 ;
+}
+.container {
+    left : 0 ;     
+    position : absolute ;
+    top : 120px ;
+    width : 100% ;
+    z-index : 500 ;
+    dt , dd {
+        text-align : center ;
+    }
+    dt {
+        color : #fff ;
+        font-size : 2.6rem ;
+        font-weight : 400 ;
+        margin-bottom : 25px ;
+    }
+    dd {
+        color : #fff ;
+        font-size : 1.2rem ;
+        a {
+            border : 1px solid #fff ;
+            .border-radius(100px) ;
+            color : #fff ;
+            display : inline-block ;
+            font-size : 1.5rem ;
+            line-height : 40px ;
+            margin-bottom : 10px ;
+            text-align : center ;
+            width : 165px ;
+        }
+    }
+}
