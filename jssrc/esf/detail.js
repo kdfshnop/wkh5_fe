@@ -12,6 +12,7 @@ class DetailController extends Controller {
          this.fiveLine();
         // 获取小区加密Id
         let  encryptsubestateid = $('#estateName').attr('data-encryptsubestateid');
+
         // 请求接口
          let that = this;
          this.request(this.apiUrl.community.chart,{subEstateId:encryptsubestateid},{successCallback(data){
@@ -22,7 +23,7 @@ class DetailController extends Controller {
              }
 
           }});
-        require(['../components/album.min','../components/preview-image.min','../components/bigdata.min',],function(Album, PreviewImage, BigData,){
+        require(['../components/assistant.min','../components/album.min','../components/preview-image.min','../components/bigdata.min'],function(assistant,Album, PreviewImage, BigData){
             BigData.init(that);
             BigData.bigData({
                 pageName: '1067',
@@ -96,8 +97,8 @@ class DetailController extends Controller {
             },
             grid: {
                 bottom: 20,
-                left: '5%',
-                right: '5%',
+                left: '3%',
+                right: '10%',
                 containLabel: true,
             },
             xAxis: {
@@ -173,6 +174,17 @@ class DetailController extends Controller {
             }],
         };
         myChart.setOption(option);
+        // 给折线图dome增加埋点
+        let houseId =  $('#estateName').attr('data-houseid');
+        let subestateid =  $('#estateName').attr('data-subestateid') ;
+        let echartBigData = {
+            eventName: "1067014",
+            eventParam: { house_id : houseId , estate_id: subestateid},
+            type: 2
+        };
+        console.log(JSON.stringify(houseId));
+        console.log(JSON.stringify(echartBigData));
+        $('#main > div:eq(1)').attr('data-bigdata',JSON.stringify(echartBigData));
     }
 }
 
