@@ -68,7 +68,7 @@ define(function(){
     let send = function(item){
         if(controller){
             let total = getTotal();	
-                        
+             console.log(item) ;
             controller.request(controller.apiUrl.bigData,item,{
                 successCallback: function(){
 

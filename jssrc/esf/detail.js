@@ -22,7 +22,12 @@ class DetailController extends Controller {
              }
 
           }});
-        require(['../components/album.min','../components/preview-image.min'],function(Album, PreviewImage){
+        require(['../components/album.min','../components/preview-image.min','../components/bigdata.min',],function(Album, PreviewImage, BigData,){
+            BigData.init(that);
+            BigData.bigData({
+                pageName: '1067',
+                type: 1
+            });
             PreviewImage('.album');
         });
     }
