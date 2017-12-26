@@ -104,7 +104,6 @@ class DetailController extends Controller {
                 },
                 formatter:function (params, ticket, callback) {
                     let paramsValue =  params.value + "元";
-                    console.log(paramsValue);
                     that.request(that.apiUrl.bigData , echartBigData ,function () {
 
                     });
