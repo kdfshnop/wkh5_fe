@@ -1,0 +1,121 @@
+/*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ 1. 项目名称：悟空找房H5前端MVC框架
+ 2. 文件名称：store -> index.less (门店首页)
+ 3. 作者：zhaohuagang@lifang.com
+ -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
+ @import "../variables.less" ;
+ @import "../mixins.less" ;
+ /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ 载入控件样式
+ -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
+ @import "../components/esf-items.less" ;
+
+ body {
+     background-color : #fff ;
+ }
+ .wk-tabs {
+    header {
+        background-color : #fff ;
+        &.fixed {
+            left : 0 ;
+            position : fixed ;
+            top : 0 ;
+            width : 100% ;
+            z-index : 9999 ;
+        }
+        .banner {
+            background-image : url("../../images/store/banner.jpg") ; 
+            background-repeat : no-repeat ;
+            background-position : 0 center ;
+            background-size : 100% auto ;                 
+            padding : 10px 30px ;
+            overflow : hidden ;
+            dt , dd  {
+                color : #fff ;
+                line-height : 50px ;
+                &.store-name {
+                    font-size : 2.4rem ;
+                    .text-ellipsis() ;
+                }
+                &.market {
+                    .hd {
+                        font-size : 1.4rem ;
+                        margin-right : 1.5rem ;
+                    }
+                    .bd {
+                        font-size : 2.4rem ;
+                    }
+                }
+            }
+        }
+    }
+    .tabs-frame {
+        /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+        单条经纪人样式
+        -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
+       .agent {
+            border-bottom : 1px solid @light-line-gray-color ;
+            .clearfix() ;
+            padding : 1.5rem 0 ;
+            &:last-child {
+                border : none ;
+            }
+            dt {                
+                margin-right : 12rem ;                
+                &.no-wechat {
+                    margin-right : 6rem ;
+                }
+                a {
+                    .clearfix() ;
+                    display : block ;
+                    img {
+                        display : block ;
+                        float : left ;
+                        height : 6rem ;
+                        width : 6rem ;
+                    }
+                    .summary {
+                        margin-left : 7.5rem ;
+                        .name {
+                            color : #000 ;
+                            font-size : 1.6rem ;
+                            line-height : 3.5rem ;
+                        }
+                        .seniority {
+                            color : @light-font-color ;
+                            font-size : 1.4rem ;
+                        }
+                    }
+                }               
+            }        
+            .tel , .wechat {
+                float : right ;
+                margin-top : 1rem ;
+                text-align : center ;
+                width : 6rem ;
+                span {
+                    display : block ;
+                    .iconfont {
+                        font-size : 2rem ;
+                    }
+                }
+                .memo {
+                    font-size : 1.1rem ;
+                    line-height : 2rem ;
+                }
+            }
+            .tel a {            
+                color : @primary-color ;
+                display : block ;
+            }
+            .wechat {
+                border-right : 1px solid @primary-color ;
+                color : @success-color ;
+            }
+            
+        }
+    }
+    /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+    经纪人样式结束
+    -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
+ }

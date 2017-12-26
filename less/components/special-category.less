@@ -1,0 +1,69 @@
+/*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ 1. 项目名称：yfyk2h5
+ 2. 文件名称：src -> less -> components -> special-category.less (特殊类别)
+ 3. 作者：zhaohuagang@lifang.com
+ -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
+ .special-category {
+     .panel-header {
+         .clearfix() ;
+         padding-right : 1.5rem ;
+         h2 {
+             font-size : 1.6rem ;
+             font-weight : 400 ;
+             float : left ;
+             img {
+                 display : inline-block ;
+                 height : 1.6rem ;
+                 width : 1.6rem ;
+             }
+         }
+         a {
+             color : @default-font-color ;
+             float : right ;
+         }
+     }
+     .panel-body {
+         overflow-x : scroll ;
+         .cards {             
+             dl {
+                 border : 1px solid @light-line-gray-color ;
+                 .border-radius(5px) ;
+                 box-shadow : 1px 1px 10px #eee ;
+                 display : inline-block ;
+                 height : 165px ;
+                 margin-right : 10px ;
+                 padding : 1.5rem ;
+                 width : 140px ;
+                 dt {
+                     .border-radius(100px) ;
+                     .center-block() ;
+                     height : 50px ;
+                     overflow : hidden ;
+                     width : 50px ;                     
+                 }
+                 dd {
+                     font-size : 1.4rem ;
+                     font-weight : 400 ;
+                     text-align : center ;
+                     .text-ellipsis() ;
+                     &.title {                        
+                         margin-top : .3rem ;
+                     }           
+                     &.subtitle {
+                         color : @light-font-color ;                         
+                     }
+                     a {
+                         border : 1px solid @primary-color ;
+                         .border-radius(3px) ;
+                         color : @primary-color ;
+                         display : block ;
+                         font-size : 1.2rem ;
+                         line-height : 25px ;
+                         margin-top : .5rem ;
+                     }
+
+                 }
+             }
+         }
+     }
+ }

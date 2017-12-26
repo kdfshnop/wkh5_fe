@@ -1,0 +1,338 @@
+
+/*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+1. 项目名称：悟空找房h5
+2. 文件名称：esf -> detail.less (租房详情页)
+3. 作者：liyang@lifang.com
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
+
+
+@import "../variables.less" ;
+@import "../mixins.less" ;
+@import "../components/map.less" ;
+@import "../components/assistant.less" ;
+@import "../components/album.less" ;
+@import "../components/esf-items.less" ;
+@import "../components/download-app.less" ;
+
+body{
+  background-color: #F0F0F0;
+}
+.all-dis{
+  padding-bottom: 50px;
+}
+.icon-back{
+  color: @default-color;
+  position: absolute;
+  top: 6rem;
+  left: 1.5rem;
+  z-index: 1;
+}
+.highlight {
+  padding-right: 1.5rem;
+  padding-top: 1.5rem;
+  .source-title {
+    font-size : 2rem ;
+    margin-bottom: 1.5rem;
+    .paragraph-ellipsis(2) ;
+  }
+  .outline {
+    position: relative;
+    &:after{
+      content: '';
+      height: 1px;
+      width: 100%;
+      border-top: 1px solid @light-line-gray-color;
+      transform:scaleY(0.5);
+      -webkit-transform:scaleY(0.5);
+      position: absolute;
+      bottom: 0;
+      left: 0;
+    }
+    &:before{
+      content: '';
+      height: 1px;
+      width: 100%;
+      border-top: 1px solid @light-line-gray-color;
+      transform:scaleY(0.5);
+      -webkit-transform:scaleY(0.5);
+      position: absolute;
+      top: 0;
+      left: 0;
+    }
+    .flex() ;
+    padding : 1.5rem 0 ;
+    >div {
+      >span {
+        display : block ;
+      }
+      >.hd {
+        color : @light-font-color ;
+        font-size : 1.2rem ;
+        line-height : 180% ;
+      }
+      >.bd {
+        color : @danger-color ;
+        font-size : 1.4rem ;
+        font-weight : 500 ;
+      }
+    }
+    .layout , .area {
+      position: relative;
+      &:before{
+        content: '';
+        height: 100%;
+        width: 1px;
+        border-left: 1px solid @light-line-gray-color;
+        transform:scaleY(0.5);
+        -webkit-transform:scaleX(.5);
+        position: absolute;
+        top: 0;
+        left: 0;
+      }
+      padding-left : 1.5rem ;
+    }
+    .money {
+      .flex(2) ;
+    }
+    .layout {
+      .flex(3) ;
+    }
+    .area {
+      .flex(2) ;
+    }
+  }
+  .tags {
+    padding: 1.5rem 0 0.8rem 0;
+    >span {
+      .border-radius(6px) ;
+      background-color : #F0F0F0 ;
+      display : inline-block ;
+      font-size : 1.2rem ;
+      margin-right: 0.6rem;
+      padding :0.5rem;
+      height: 2.3rem;
+    }
+  }
+  .cols2-fields , .cols1-fields {
+    >div {
+      padding : 0.6rem 0 ;
+      >.hd , >.bd {
+        display : block ;
+        .clearfix() ;
+        font-size : 1.4rem ;
+        line-height : 1.6rem ;
+      }
+      >.hd {
+        color : @light-font-color ;
+        float : left ;
+      /*  width : 4.5rem ;*/
+      }
+      >.bd {
+        color : @default-font-color ;
+        margin-left : 3.5rem ;
+      }
+    }
+  }
+  .cols2-fields {
+    .clearfix() ;
+    >div {
+      float : left ;
+      width : 50% ;
+    }
+  }
+  .cols1-fields {
+    >.estateName{
+      > a.bd {
+        display: block;
+        color : @primary-color ;
+        .clearfix() ;
+        >.icon-next {
+          display: inline-block;
+          float : right ;
+          font-size : 1.6rem ;
+          font-weight: 600;
+        }
+      }
+    }
+
+  }
+}
+.summary {
+  .panel-body {
+    padding-right: 1.5rem;
+    >div{
+      >p{
+        font-size: 1.4rem;
+        color: #000000;
+        letter-spacing: 1px;
+        line-height: 2rem;
+        &.word-line{
+          overflow: hidden;
+          text-overflow: ellipsis;
+          display: -webkit-box;
+          -webkit-box-orient: vertical;
+          -webkit-line-clamp: 5;
+          /*  line-height: 20px;
+            max-height: 100px;*/
+        }
+      }
+      >.more{
+        font-size: 1.4rem;
+        color: @primary-color;
+        letter-spacing: 0;
+        margin-top: 1rem;
+      }
+    }
+     span {
+      display : block ;
+      font-size : 1.4rem ;
+      &.hd {
+        color : @light-font-color ;
+        line-height : 2rem ;
+      }
+    }
+    >div{
+      >div{
+        >.hd{
+          margin-top: 1rem;
+        }
+      }
+
+    }
+  }
+}
+.estate {
+  a {
+    display: block;
+    .clearfix() ;
+    padding-right: 1.5rem;
+    &.panel-body {
+      padding-bottom: 0.8rem;
+      >img {
+        display : block ;
+        float : left ;
+        height : 8rem ;
+        width : 12rem ;
+      }
+      .name, .outline , .address {
+        display : block ;
+        font-size : 1.4rem ;
+        line-height : 2rem ;
+        margin-left : 13rem ;
+      }
+      .outline , .address {
+        margin-top: 1rem;
+        color : @light-font-color ;
+      }
+      .outline {
+        .fit-height() ;
+        .icon-next {
+          color :  @primary-color;
+          float : right ;
+          display: inline-block;
+          font-size : 1.6rem ;
+          font-weight: 600;
+        }
+      }
+       .name {
+        color: #000000;
+      }
+    }
+    &.total-item {
+      line-height: 2.6rem;
+      color: #000000;
+      >p , >span {
+        font-size : 1.6rem ;
+      }
+      >p {
+        float : left ;
+      }
+      >span {
+        color : @primary-color ;
+        float : right ;
+        font-size : 1.6rem ;
+        font-weight: 400;
+        >i{
+          display: inline-block;
+          font-size : 1.6rem ;
+          font-weight: 600;
+        }
+      }
+    }
+  }
+  div.total-item{
+    >p{
+      line-height: 2.6rem;
+    }
+    >div{
+      >span{
+        display: block;
+        font-size: 1.4rem;
+        color: #7C7C7C;
+        letter-spacing: 0;
+        line-height: 2rem;
+        margin: 0.5rem 0;
+      }
+      >p{
+        font-size: 1.4rem;
+        color: @primary-color;
+        letter-spacing: 0;
+        >a{
+          color: @primary-color;
+        }
+      }
+    }
+  }
+
+  .hr {
+    margin : @gap-dimension 0 ;
+  }
+  >.echart{
+    #main{
+      width: 100%;
+      height:20rem;
+      margin-top: -4rem;
+     /* margin-bottom: -3rem;*/
+    }
+  }
+}
+.similar {
+
+  .esf-item:last-child {
+    border : none ;
+  }
+}
+.loadfail-container {
+  height : 100% ;
+}
+hr{
+  border:0;
+  border-top:1px solid #eee;
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+.no-sell{
+  width: 100%;
+  height: 50px;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: @light-line-gray-color;
+  z-index: 19999999;
+  >p{
+    text-align: center;
+    font-size: 1.4rem;
+    color: #7C7C7C;
+    letter-spacing: 1px;
+    line-height: 50px;
+  }
+}
+.esf-more{
+  margin-top: -0.5rem;
+ >a{
+   display: block;
+   font-size: 1.4rem;
+   color: @primary-color;
+ }
+}

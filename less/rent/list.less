@@ -1,0 +1,429 @@
+/*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+1. 项目名称：悟空找房h5
+2. 文件名称：rent -> list.less (租房详情页)
+3. 作者：liyang@lifang.com
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
+@import "../variables.less";
+@import "../mixins.less";
+@import "../components/rent-list.less";
+
+body{
+  background-color: #F0F0F0;
+}
+/*<!--条件选择-->*/
+.rent-list{
+  width: 100%;
+  height: 4.5rem;
+  background-color: @default-color;
+  position: fixed;
+  top: 0;
+  z-index: 10;
+  >ul{
+    flex-direction: row;
+    display: -webkit-flex;
+    >li{
+      flex: 1;
+      line-height: 4.5rem;
+      text-align: center;
+      font-size: 1.4rem;
+      color: #999999;
+      letter-spacing: 0;
+      >span{
+        display: inline-block;
+        width: .9rem;
+        height: .4025rem;
+        /* border: 1px solid; */
+        position: relative;
+        overflow: hidden;
+        margin-left: 0.5rem;
+      >i{
+        display: inline-block;
+        width: .6rem;
+        height: .6rem;
+        background-color: #999;
+        transform: rotate(45deg);
+        -ms-transform: rotate(45deg);
+        -webkit-transform: rotate(45deg);
+        position: absolute;
+        left: 0.1rem;
+        bottom: 0.05rem;
+      }
+      }
+    }
+    >.active-color-top{
+      color: @primary-color;
+      >.direction{
+        transform: rotate(180deg);
+        -ms-transform: rotate(180deg); /* IE 9 */
+        -webkit-transform: rotate(180deg); /* Safari and Chrome */
+        >i{
+          background-color: @primary-color;
+        }
+      }
+    }
+  }
+}
+/*<!--房源总数-->*/
+.total-num{
+  width: 100%;
+  height: 3rem;
+  margin-top: 4.5rem;
+  background-color: @default-color;
+  position: relative;
+  &:after{
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    height: 1px;
+    width: 100%;
+    border-top: 1px solid @light-line-gray-color;
+    -webkit-transform:scaleY(0.5) ;
+  }
+  &:before{
+    content: '';
+    position: absolute;
+    left: 0;
+    top:0;
+    height: 1px;
+    width: 100%;
+    border-top: 1px solid @light-line-gray-color;
+    -webkit-transform:scaleY(0.5) ;
+  }
+  >p{
+    font-size: 1.2rem;
+    color: @default-font-color;
+    line-height: 3rem;
+    text-align: center;
+    >span{
+      color: #FC4C5A;
+      font-size: 1.2rem;
+      line-height: 3rem;
+     /* line-height: 31px;*/
+    }
+  }
+}
+/*区域模块样式*/
+.dic{
+  width: 100%;
+  max-height:44.4rem ;
+  background-color: @tag-background-color;
+  position: fixed;
+  top:4.5rem;
+  z-index: 11;
+  &:after{
+    content: '';
+    width: 100%;
+    height: 1px;
+    position: absolute;
+    top:0;
+    left: 0;
+    /*border-top: 1px solid @light-line-gray-color;*/
+    box-shadow: 0 2px 4px 0 rgba(0,0,0,0.15);
+    /*   transform: -webkit-scaleY(0.5);*/
+  }
+  .tabs{
+    background-color: @default-color;
+    height: 4.4rem;
+    width: 100%;
+    position: relative;
+    &:after{
+      content: '';
+      width: 100%;
+      height: 1px;
+      position: absolute;
+      bottom: -1px;
+      left: 0;
+      border-top: 1px solid @light-line-gray-color;
+     /* box-shadow: 0 2px 6px 0 rgba(0,0,0,0.15);*/
+         transform: -webkit-scaleY(0.5);
+    }
+    >ul{
+      .flex();
+      flex-direction: row;
+      height: 4.2rem;
+      width: 100%;
+      >li{
+        .flex(1);
+        /*line-height: 4.4rem;*/
+        text-align: center;
+        >span{
+          line-height: 4.2rem;
+          font-size: 1.6rem;
+          color: #000000;
+          display: inline-block;
+        }
+        >.active-color-dic{
+          color: @primary-color;
+          border-bottom:3px solid @primary-color;
+        }
+      }
+    }
+  }
+  .content{
+    width: 100%;
+    max-height: 40rem;
+    >.dic-content{
+      width: 100%;
+      max-height: 40rem;
+      .flex();
+      flex-direction: row;
+      >.content-left{
+        .flex(1);
+        max-height: 40rem;
+        overflow-y:scroll;
+        >ul{
+          >li{
+            width: 100%;
+            height: 4.4rem;
+            line-height: 4.4rem;
+            font-size: 1.5rem;
+            color: #000000;
+            padding-left: 1.5rem;
+          }
+        }
+      }
+      >.content-right{
+        .flex(1);
+        max-height: 40rem;
+        overflow-y:scroll;
+        background-color: @default-color;
+        >ul{
+          >li{
+            width: 100%;
+            height: 4.4rem;
+            line-height: 4.4rem;
+            font-size: 1.5rem;
+            color: #000000;
+            padding-left: 1.5rem;
+          }
+        }
+      }
+    }
+  }
+
+}
+
+/*价格模块样式*/
+.price-total{
+  width: 100%;
+  max-height:44.4rem ;
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+  background-color: @default-color;
+  position: fixed;
+  top:4.5rem;
+  z-index: 11;
+  &:after{
+    content: '';
+    width: 100%;
+    height: 1px;
+    position: absolute;
+    top:0;
+    left: 0;
+    /*border-top: 1px solid @light-line-gray-color;*/
+    box-shadow: 0 2px 4px 0 rgba(0,0,0,0.15);
+    /*   transform: -webkit-scaleY(0.5);*/
+  }
+  >.price-list{
+    >ul{
+      >li{
+        font-size: 1.5rem;
+        color: #000000;
+        letter-spacing: 0;
+        line-height: 4.4rem;
+        text-align: center;
+      }
+    }
+  }
+  >.writ-price{
+    padding-bottom: 1.5rem;
+    padding-top: 1.5rem;
+    position: relative;
+    text-align: center;
+    &:before{
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0;
+      height: 1px;
+      width: 100%;
+      border-top: 1px solid @light-line-gray-color;
+      -webkit-transform:scaleY(0.5) ;
+    }
+     >input{
+       width: 28.98%;
+       height: 3.3rem;
+       background: @title-background-color;
+       border-radius: 0.4rem;
+       border: none;
+       outline: none;
+       text-align: center;
+       color: #92A7C3;
+       &:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+         color: #92A7C3; opacity:1;
+       }
+
+       &::-moz-placeholder { /* Mozilla Firefox 19+ */
+         color: #92A7C3;opacity:1;
+       }
+
+       &:-ms-input-placeholder{
+         color: #92A7C3;opacity:1;
+       }
+
+       &::-webkit-input-placeholder{
+         color: #92A7C3;opacity:1;
+       }
+     }
+    >button{
+      width: 31%;
+      height: 3.3rem;
+      margin-left:1rem ;
+      background: @primary-color;
+      border-radius: 0.4rem;
+      font-size: 1.4rem;
+      color: @default-color;
+      letter-spacing: 0;
+      line-height: 1.2rem;
+      border: none;
+      outline: none;
+    }
+    >span{
+      color: @light-font-color;
+      /*width: 0.052%;*/
+     /* text-align: center;
+      display: inline-block;*/
+    }
+  }
+}
+
+/*房型模块样式*/
+.house-type{
+  width: 100%;
+  max-height:44.4rem ;
+  padding: 1.5rem  1rem;
+  background-color: @default-color;
+  position: fixed;
+  top:4.5rem;
+  z-index: 11;
+  &:after{
+    content: '';
+    width: 100%;
+    height: 1px;
+    position: absolute;
+    top:0;
+    left: 0;
+    /*border-top: 1px solid @light-line-gray-color;*/
+    box-shadow: 0 2px 4px 0 rgba(0,0,0,0.15);
+    /*   transform: -webkit-scaleY(0.5);*/
+  }
+  >.house-list{
+    >ul{
+      width: 100%;
+      text-align: center;
+      position: relative;
+      left: 0.2rem;
+      >li{
+        width: 31%;
+        height: 3.3rem;
+        background: @tag-background-color;
+        border-radius: 0.4rem;
+        display: inline-block;
+        font-size: 1.2rem;
+        color: #000000;
+        letter-spacing: 0;
+        line-height: 3.3rem;
+        text-align: center;
+        margin-bottom: 0.9rem;
+        margin-right: 0.3rem;
+      }
+      >.active-house{
+        background-color:@default-color ;
+        border: 1px solid @primary-color;
+        color:@primary-color;
+      }
+    }
+  }
+  >.house-conf{
+    width: 100%;
+    padding: 2rem 0 0.5rem 0;
+    text-align: center;
+    margin-top: 1.1rem;
+    position: relative;
+    &:before{
+      content: '';
+      width: 100%;
+      height: 1px;
+      position: absolute;
+      top:0;
+      left: 0;
+      border-top: 1px solid @light-line-gray-color;
+         transform: -webkit-scaleY(0.5);
+    }
+    >button{
+      width: 15.5rem;
+      height: 3.6rem;
+      background: @primary-color;
+      border-radius: 0.4rem;
+      outline: none;
+      border: none;
+      font-size: 1.3rem;
+      color: @default-color;
+      letter-spacing: 0;
+    }
+  }
+}
+
+/*更多模块样式*/
+.more{
+  width: 100%;
+  max-height:44.4rem ;
+  padding: 1.5rem  1rem;
+  background-color: @default-color;
+  position: fixed;
+  top:4.5rem;
+  z-index: 11;
+  &:after{
+    content: '';
+    width: 100%;
+    height: 1px;
+    position: absolute;
+    top:0;
+    left: 0;
+    /*border-top: 1px solid @light-line-gray-color;*/
+    box-shadow: 0 2px 4px 0 rgba(0,0,0,0.15);
+    /*   transform: -webkit-scaleY(0.5);*/
+  }
+  >.more-spec,>.area,>.decoration{
+    >p{
+      font-size: 1.4rem;
+    }
+    >ul{
+      width: 100%;
+      /*text-align: center;*/
+      >li{
+        display: inline-block;
+        background-color: @tag-background-color;
+        padding: 0 0.5rem;
+        border-radius: 0.3rem;
+        line-height: 2rem;
+        text-align: center;
+        font-size: 1rem;
+        color: #000000;
+      }
+    }
+  }
+}
+/*背景罩层*/
+.bac{
+  width: 100%;
+  position: fixed;
+  top:4.5rem;
+  bottom: 0;
+  z-index: 10;
+  opacity: 0.5;
+  background-color: #000000;
+}
+
+
