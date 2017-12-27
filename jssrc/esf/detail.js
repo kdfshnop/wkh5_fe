@@ -10,6 +10,10 @@ class DetailController extends Controller {
         super();
         // 初始化
          this.fiveLine();
+        $('#sourceTitle').click(function () {
+            console.log(231231);
+            console.log(window.history)
+        })
         // 获取小区加密Id
         let  encryptsubestateid = $('#estateName').attr('data-encryptsubestateid');
 
@@ -189,8 +193,6 @@ class DetailController extends Controller {
             }],
         };
         myChart.setOption(option);
-
-        /*$('#main > div:eq(1)').attr('data-bigdata',encodeURIComponent(JSON.stringify(echartBigData)));*/
     }
 
 
