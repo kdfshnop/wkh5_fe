@@ -13,7 +13,7 @@ class DetailController extends Controller {
         $('#sourceTitle').click(function () {
             console.log(231231);
             console.log(window.history)
-        })
+        });
         // 获取小区加密Id
         let  encryptsubestateid = $('#estateName').attr('data-encryptsubestateid');
 
@@ -27,13 +27,13 @@ class DetailController extends Controller {
              }
 
           }});
-        require(['../components/assistant.min','../components/album.min','../components/preview-image.min','../components/bigdata.min'],function(assistant, Album, PreviewImage, BigData){
+        require(['../components/assistant.min','../components/album.min','../components/bigdata.min'],function(assistant, Album, BigData){
             BigData.init(that);
             BigData.bigData({
                 pageName: '1067',
                 type: 1
             });
-            PreviewImage('.album');
+           /* PreviewImage('.album');*/
         });
     }
 
