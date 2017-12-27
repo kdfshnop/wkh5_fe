@@ -112,6 +112,7 @@ class IndexController extends Controller{
             callback : function(data) {
                 if( ! data.data) return ;          
                 $.each(data.data , (index , esf)=> {
+                    esf.url = "/shanghai/esf/" + esf.encryptHouseId + ".html" ;
                     $(".tabs-frame.esf-items .list-container").append(self.createEsf(esf)) ;
                 }) ;
             }
