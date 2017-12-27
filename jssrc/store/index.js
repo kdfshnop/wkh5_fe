@@ -9,7 +9,7 @@ class IndexController extends Controller{
         /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
         给第一个tabs-handle选项添加on样式
         -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/         
-        $(".wk-tabs .tabs-handle li").first().addClass("on") ;        
+        $(".wk-tabs .tabs-handle li").eq(0).addClass("on") ;        
         /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
         载入组件逻辑
         -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/ 
@@ -32,7 +32,7 @@ class IndexController extends Controller{
                 "fixedWhenScroll" : false ,
                 "effect" : "fadeIn" ,
                 "duration" : 200 ,
-                "onSwap" : (index)=> {
+                 "onSwap" : (index)=> {
                     $(".tabs-frame .list-container").attr( "data-requestable" , "false" ) ;
                     $(".tabs-frame").eq(index).find(".list-container").attr( "data-requestable" , "true" ) ;
                 }
@@ -71,7 +71,7 @@ class IndexController extends Controller{
         /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
         添加微信按钮事件绑定
         -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
-        $(".tabs-frame.agent-items .wechat").click(()=>{
+        $(".tabs-frame.agent-items .wechat").click(function(){
             $.modal({
                 "id" : "addWechatModal" ,
                 "title" : "扫码加微信" ,
@@ -105,18 +105,7 @@ class IndexController extends Controller{
         dlNode.append(tagNode) ;
         aNode.append(dlNode) ;
         return aNode ;
-    } ;
-    /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
-    绘制单条经纪人dom节点的方法，请参照ejs模板内容
-    -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
-    createAgent(agent) {
-        let dlNode = $(document.createElement("DL")).addClass("agent") ;
-        let telNode = $(document.createElement("DD")).addClass("tel").append("<span><i class=\"iconfont icon-tel\"></i></span><span class=\"memo\">电话咨询</span>") ;
-        let wechatNode = $(document.createElement("DD")).addClass("wechat").append("<span><i class=\"iconfont icon-wechat\"></i></span><span class=\"memo\">添加微信</span>") ;
-        let dtNode = $(document.createElement("DT")).append("<a href=\"#\"><img src=\"" + agent.agentHeadImgUrl + "?x-oss-process=image/resize,w_120\" class=\"lazy\"><div class=\"summary\"><p class=\"name\">" + agent.agentName + "</p><p class=\"seniority\">加入悟空：" + agent.serviceYears + "</p></div></a>") ;
-        dlNode.append(telNode).append(wechatNode).append(dtNode) ;
-        return dlNode ;
-    } ;
+    } ;    
     /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
     上拉加载实例化
     -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
@@ -133,17 +122,7 @@ class IndexController extends Controller{
                 }) ;
             }
         }) ;
-        //经纪人
-        $(".tabs-frame.agent-items .list-container").pullload({
-            apiUrl : this.apiUrl.store.agent ,  
-            queryStringObject : { "storeId" : $("#storeId").val() } ,                 
-            callback : function(data) {
-                if( ! data.data) return ;
-                $.each(data.data , (index , agent)=> {
-                    $(".tabs-frame.agent-items .list-container").append(self.createAgent(agent)) ;
-                }) ;
-             }
-        }) ;
+       
     } ;
 }
 /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
