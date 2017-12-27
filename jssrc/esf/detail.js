@@ -10,14 +10,11 @@ class DetailController extends Controller {
         super();
         // 初始化
          this.fiveLine();
-        $('#sourceTitle').click(function () {
-            console.log(231231);
-            console.log(window.history)
-        })
         // 获取小区加密Id
         let  encryptsubestateid = $('#estateName').attr('data-encryptsubestateid');
-
-        // 请求接口
+        /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+        请求接口 获取折线图参数
+        -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
          let that = this;
          this.request(this.apiUrl.community.chart,{subEstateId:encryptsubestateid},{successCallback(data){
              if (data.status == 1){
@@ -25,15 +22,16 @@ class DetailController extends Controller {
                  let echartData =  that.recombineM(dataRes.data);
                  that.echartFun(echartData) ;
              }
-
           }});
-        require(['../components/assistant.min','../components/album.min','../components/preview-image.min','../components/bigdata.min'],function(assistant, Album, PreviewImage, BigData){
+        /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+        页面埋点和相册需要的模块
+        -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
+        require(['../components/assistant.min','../components/album.min','../components/bigdata.min'],function(assistant, Album, BigData){
             BigData.init(that);
             BigData.bigData({
                 pageName: '1067',
                 type: 1
             });
-            PreviewImage('.album');
         });
     }
 
@@ -194,8 +192,6 @@ class DetailController extends Controller {
         };
         myChart.setOption(option);
     }
-
-
 }
 
 
