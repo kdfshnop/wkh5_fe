@@ -115,7 +115,8 @@ class IndexController extends Controller{
         //二手房
         $(".tabs-frame.esf-items .list-container").pullload({
             apiUrl : this.apiUrl.store.house ,
-            queryStringObject : { "storeId" : $("#storeId").val() } ,          
+            queryStringObject : { "storeId" : $("#storeId").val() } ,   
+            threshold : 10 ,       
             callback : function(data) {
                 if( ! data.data) return ;          
                 $.each(data.data , (index , esf)=> {
