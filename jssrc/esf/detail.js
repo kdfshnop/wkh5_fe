@@ -30,6 +30,8 @@ class DetailController extends Controller {
             BigData.init(that);
             BigData.bigData({
                 pageName: '1067',
+                house_id: $('#estateName').attr('data-houseid'),
+                boutique: $('#estateName').attr('data-boutique'),
                 type: 1
             });
         });
