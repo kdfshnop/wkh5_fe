@@ -29,12 +29,12 @@ class DetailController extends Controller {
         require(['../components/assistant.min','../components/album.min','../components/bigdata.min'],function(assistant, Album, BigData){
             BigData.init(that);
             BigData.bigData({
-                pageName: '1067',
-                pageParam:{
-                    house_id: $('#estateName').attr('data-houseid'),
-                    boutique: $('#estateName').attr('data-boutique'),
+                "pageName": "1067",
+                "pageParam":{
+                    "house_id": $('#estateName').attr('data-houseid'),
+                    "boutique": $('#estateName').attr('data-boutique'),
                 },
-                type: 1
+                "type": 1
             });
         });
     }
