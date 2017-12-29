@@ -35,6 +35,9 @@ class IndexController extends Controller{
                  "onSwap" : (index)=> {
                     $(".tabs-frame .list-container").attr( "data-requestable" , "false" ) ;
                     $(".tabs-frame").eq(index).find(".list-container").attr( "data-requestable" , "true" ) ;
+                    $("html,body").animate({
+                        scrollTop : "0px"
+                    } , 100) ;
                 }
             }) ;
         }) ;
