@@ -92,9 +92,9 @@ class DetailController extends Controller {
         let houseId =  $('#estateName').attr('data-houseid');
         let subestateid =  $('#estateName').attr('data-subestateid') ;
         let echartBigData = {
-            eventName: "1067014",
-            eventParam: { house_id : houseId , estate_id: subestateid},
-            type: 2
+            "eventName": "1067014",
+            "eventParam": { "house_id" : houseId , "estate_id": subestateid },
+            "type": 2
         };
         // 指定图表的配置项和数据
         let option = {
