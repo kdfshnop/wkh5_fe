@@ -21,12 +21,13 @@ class ListController extends Controller {
         $('.price-total').hide();
         $('.house-type').hide();
         $('.more').hide();
+        $('.content-hight').height($('.dic').height() - $('.tabs').height());
     }
     /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
  条件选择的区域选择的点击效果函数
  -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
      choseFun(){
-        /* 区域选择点击事件*/
+        /* 条件选择点击事件*/
          $('.rent-list > ul > li').click(function () {
              $(this).siblings().removeClass('active-color-top');  /* 点击li标签改变其样式*/
              $(this).toggleClass('active-color-top');
@@ -69,8 +70,8 @@ class ListController extends Controller {
          });
          /*区域与地铁选择点击事件*/
          $('.tabs > ul > li').click(function () {
-            $(this).siblings().children('span').removeClass('active-color-dic');
-             $(this).children('span').addClass('active-color-dic');
+            $(this).siblings().removeClass('active-color-dic');
+             $(this).addClass('active-color-dic');
              let indexP = $(this).index();
              if (indexP == 0){      /*判断区域模块显示或隐藏*/
                  $('.metro-content').slideUp();

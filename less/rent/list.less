@@ -14,10 +14,11 @@ body{
 .rent-list{
   width: 100%;
   height: 4.5rem;
-  background-color: @default-color;
+  background-color: @tag-background-color;
   position: fixed;
   top: 0;
-  z-index: 10;
+  z-index: 12;
+  box-shadow: 0 2px 6px 0 rgba(0,0,0,0.15);
   >ul{
     flex-direction: row;
     display: -webkit-flex;
@@ -106,22 +107,11 @@ body{
 /*区域模块样式*/
 .dic{
   width: 100%;
-  max-height:44.4rem ;
+  max-height:80% ;
   background-color: @tag-background-color;
   position: fixed;
   top:4.5rem;
   z-index: 11;
-  &:after{
-    content: '';
-    width: 100%;
-    height: 1px;
-    position: absolute;
-    top:0;
-    left: 0;
-    /*border-top: 1px solid @light-line-gray-color;*/
-    box-shadow: 0 2px 4px 0 rgba(0,0,0,0.15);
-    /*   transform: -webkit-scaleY(0.5);*/
-  }
   .tabs{
     background-color: @default-color;
     height: 4.4rem;
@@ -141,19 +131,15 @@ body{
     >ul{
       .flex();
       flex-direction: row;
-      height: 4.2rem;
+      height: 4.4rem;
       width: 100%;
       >li{
         .flex(1);
-        /*line-height: 4.4rem;*/
         text-align: center;
-        >span{
-          line-height: 4.2rem;
-          font-size: 1.6rem;
-          color: #000000;
-          display: inline-block;
-        }
-        >.active-color-dic{
+        line-height: 4.4rem;
+        font-size: 1.6rem;
+        color: #000000;
+        &.active-color-dic{
           color: @primary-color;
           border-bottom:3px solid @primary-color;
         }
@@ -162,15 +148,15 @@ body{
   }
   .content{
     width: 100%;
-    max-height: 40rem;
+    /*max-height: 40rem;*/
     >.dic-content{
       width: 100%;
-      max-height: 40rem;
+      /*max-height: 40rem;*/
       .flex();
       flex-direction: row;
       >.content-left{
         .flex(1);
-        max-height: 40rem;
+        /*max-height: 40rem;*/
         overflow-y:scroll;
         >ul{
           >li{
@@ -185,7 +171,7 @@ body{
       }
       >.content-right{
         .flex(1);
-        max-height: 40rem;
+        /*max-height: 40rem;*/
         overflow-y:scroll;
         background-color: @default-color;
         >ul{
@@ -214,17 +200,6 @@ body{
   position: fixed;
   top:4.5rem;
   z-index: 11;
-  &:after{
-    content: '';
-    width: 100%;
-    height: 1px;
-    position: absolute;
-    top:0;
-    left: 0;
-    /*border-top: 1px solid @light-line-gray-color;*/
-    box-shadow: 0 2px 4px 0 rgba(0,0,0,0.15);
-    /*   transform: -webkit-scaleY(0.5);*/
-  }
   >.price-list{
     >ul{
       >li{
@@ -307,17 +282,6 @@ body{
   position: fixed;
   top:4.5rem;
   z-index: 11;
-  &:after{
-    content: '';
-    width: 100%;
-    height: 1px;
-    position: absolute;
-    top:0;
-    left: 0;
-    /*border-top: 1px solid @light-line-gray-color;*/
-    box-shadow: 0 2px 4px 0 rgba(0,0,0,0.15);
-    /*   transform: -webkit-scaleY(0.5);*/
-  }
   >.house-list{
     >ul{
       width: 100%;
@@ -378,39 +342,77 @@ body{
 /*更多模块样式*/
 .more{
   width: 100%;
-  max-height:44.4rem ;
+  max-height:80% ;
   padding: 1.5rem  1rem;
   background-color: @default-color;
   position: fixed;
   top:4.5rem;
   z-index: 11;
-  &:after{
-    content: '';
-    width: 100%;
-    height: 1px;
-    position: absolute;
-    top:0;
-    left: 0;
-    /*border-top: 1px solid @light-line-gray-color;*/
-    box-shadow: 0 2px 4px 0 rgba(0,0,0,0.15);
-    /*   transform: -webkit-scaleY(0.5);*/
-  }
+  overflow-y:scroll ;
   >.more-spec,>.area,>.decoration{
+    padding-bottom: 0.5rem;
+    position: relative;
+    &:after{
+      content: '';
+      height: 1px;
+      width: 100%;
+      border-top: 1px solid @light-line-gray-color;;
+      transform: -webkit-scaleY(0.5);
+      position: absolute;
+      bottom: 0;
+      right: 0;
+      left: 0;
+    }
     >p{
-      font-size: 1.4rem;
+      font-size: 1.5rem;
+      color: @default-font-color;
+      letter-spacing: 0;
+      line-height: 1.4rem;
+      margin-bottom: 1rem;
     }
     >ul{
       width: 100%;
       /*text-align: center;*/
       >li{
+        width: 22%;
         display: inline-block;
         background-color: @tag-background-color;
-        padding: 0 0.5rem;
         border-radius: 0.3rem;
-        line-height: 2rem;
+        line-height: 3.3rem;
         text-align: center;
-        font-size: 1rem;
-        color: #000000;
+        font-size: 1.2rem;
+        color: #4E4E4E;
+        margin-bottom: 1rem;
+        &:not(:last-child){
+          margin-right: 1.5%;
+        }
+      }
+    }
+  }
+  >.area,>.decoration{
+    padding-top: 1rem;
+  }
+  >.butt-group{
+    width: 100%;
+    text-align: center;
+    >p{
+       width: 45%;
+       display: inline-block;
+       margin-top: 2.5rem;
+      line-height: 3.6rem;
+      border-radius: 0.4rem;
+      font-size: 1.3rem;
+      &.canl{
+        border: 1px solid @primary-color;
+        color: @primary-color;
+        letter-spacing: 0;
+        left: 3.6rem;
+        margin-right: 2rem;
+      }
+      &.conf{
+        background: @primary-color;
+        color: @default-color;
+        letter-spacing: 0;
       }
     }
   }
@@ -424,6 +426,26 @@ body{
   z-index: 10;
   opacity: 0.5;
   background-color: #000000;
+}
+/*排序*/
+.sort{
+  width: 6.8rem;
+  height: 2.9rem;
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  z-index: 10;
+  background: @default-color;
+  box-shadow: 0 3px 8px 0 rgba(0,0,0,0.30);
+  border-radius: 100px;
+  text-align: right;
+  padding-right: 1.4rem;;
+  >span{
+    font-size: 1.2rem;
+    color: @default-font-color;
+    letter-spacing: 0.92px;
+    line-height: 2.9rem;
+  }
 }
 
 
