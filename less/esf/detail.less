@@ -109,8 +109,9 @@ body{
       display : inline-block ;
       font-size : 1.2rem ;
       margin-right: 0.6rem;
-      padding :0.5rem;
-      height: 2.3rem;
+      line-height: 2.3rem;
+      padding: 0 0.5rem;
+     /* height: 2.3rem;*/
     }
   }
   .cols2-fields , .cols1-fields {
@@ -339,7 +340,11 @@ hr{
    color: @primary-color;
  }
 }
-
+.similar-house{
+  >a:first-child{
+   margin-top: -1.5rem;
+  }
+}
 .preview-image {
   z-index: 29999999 !important;
 }

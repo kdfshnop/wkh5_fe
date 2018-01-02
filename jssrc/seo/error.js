@@ -15,7 +15,7 @@ class ErrorController extends Controller {
     countdown() {
         $(".container .countdown").text(this.remainer) ;
         window.setInterval( ()=> {            
-            this.remainer -- ;
+            if(this.remainer) this.remainer -- ;
             $(".container .countdown").text(this.remainer) ;
             if( this.remainer === 0 ) window.location.href = "/" ;
         } , 1000 ) ;

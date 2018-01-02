@@ -35,6 +35,9 @@ class IndexController extends Controller{
                  "onSwap" : (index)=> {
                     $(".tabs-frame .list-container").attr( "data-requestable" , "false" ) ;
                     $(".tabs-frame").eq(index).find(".list-container").attr( "data-requestable" , "true" ) ;
+                    $("html,body").animate({
+                        scrollTop : "0px"
+                    } , 100) ;
                 }
             }) ;
         }) ;
@@ -51,6 +54,13 @@ class IndexController extends Controller{
     给dom节点绑定事件
     -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
     addEventListener() {
+        /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+        点返回按钮要返回M站首页
+        -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
+        $('.icon-back').unbind() ;
+        $('.icon-back').on('click',function(){
+            window.location.href = "/" ;
+        }) ;
         /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
         页面滚动的时候banner条的变动
         -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
@@ -108,10 +118,12 @@ class IndexController extends Controller{
         //二手房
         $(".tabs-frame.esf-items .list-container").pullload({
             apiUrl : this.apiUrl.store.house ,
-            queryStringObject : { "storeId" : $("#storeId").val() } ,          
+            queryStringObject : { "storeId" : $("#storeId").val() } ,   
+            threshold : 50 ,       
             callback : function(data) {
                 if( ! data.data) return ;          
                 $.each(data.data , (index , esf)=> {
+                    esf.url = "/shanghai/esf/" + esf.encryptHouseId + ".html" ;
                     $(".tabs-frame.esf-items .list-container").append(self.createEsf(esf)) ;
                 }) ;
             }
