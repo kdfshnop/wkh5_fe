@@ -23,12 +23,19 @@ body{
     flex-direction: row;
     display: -webkit-flex;
     >li{
-      flex: 1;
+      /*flex: 1;*/
+      width: 9.375rem;
       line-height: 4.5rem;
       text-align: center;
       font-size: 1.4rem;
       color: #999999;
       letter-spacing: 0;
+      >p{
+        display: inline-block;
+        font-size: 1.6rem;
+        max-width: 79%;
+        .text-ellipsis() ;
+      }
       >span{
         display: inline-block;
         width: .9rem;
@@ -338,7 +345,42 @@ body{
     }
   }
 }
-
+.sort-chose{
+  background: @default-color;
+  width: 100%;
+  z-index: 14;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  >ul{
+    width: 100%;
+    >li{
+      width: 100%;
+      height: 4.5rem;
+      line-height: 4.5rem;
+      text-align: center;
+      position: relative;
+      &:not(:first-child):before{
+        content: '';
+        height: 1px;
+        width: 100%;
+        position: absolute;
+        left: 0;
+        top: 0;
+        border-top: 1px solid @light-line-gray-color;
+        transform: -webkit-scaleY(0.5);
+      }
+    }
+  }
+}
+/*价格和排序选择后样式*/
+.chosed{
+  color: @primary-color !important;
+}
+.bacchosed{
+  background-color: @primary-color !important;
+}
 /*更多模块样式*/
 .more{
   width: 100%;
@@ -434,12 +476,15 @@ body{
   position: fixed;
   bottom: 2rem;
   right: 2rem;
-  z-index: 10;
+  z-index: 9;
   background: @default-color;
   box-shadow: 0 3px 8px 0 rgba(0,0,0,0.30);
   border-radius: 100px;
   text-align: right;
-  padding-right: 1.4rem;;
+  padding-right: 1.4rem;
+  >.icon-paixu{
+    font-size: 1.2rem;
+  }
   >span{
     font-size: 1.2rem;
     color: @default-font-color;
@@ -447,5 +492,44 @@ body{
     line-height: 2.9rem;
   }
 }
-
+/*搜索条件之后没有房源的样式*/
+.no-rent-item {
+  /*background-color: @default-color;*/
+  text-align: center;
+  margin-top: 4.5rem;
+  > .show-no {
+    padding-top: 2.5rem;
+    padding-bottom: 2.5rem;
+    background-color: @default-color;
+    > .disc-one {
+      font-size: 1.6rem;
+      color: #000000;
+      letter-spacing: -0.2px;
+    }
+    >.disc-two{
+      font-size: 1.6rem;
+      color: @light-font-color;
+      letter-spacing: -0.2px;
+    }
+    >.clear{
+      width: 92%;
+      background: #F0F0F0;
+      border-radius: 6px;
+      font-size: 1.4rem;
+      color: #92A7C3;
+      line-height: 4.5rem;
+      height: 4.5rem;
+      display: inline-block;
+      margin-top: 2.5rem;
+    }
+  }
+  >.guess-like{
+    margin-top: 1rem;
+    padding: 0 0 0 1.5rem;
+    background-color: @default-color;
+    >.panel-header{
+      text-align: left;
+    }
+  }
+}
 
