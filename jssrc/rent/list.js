@@ -650,20 +650,10 @@ class ListController extends Controller {
                     $('#searchInput').val('');
                     $('.icon-close').hide();
                     $('#showResult').empty();
-                    $('.have-result').show();
+                    /*$('.have-result').show();*/
                     $('.no-result').hide();
                     if (JSON.parse(localStorage.getItem('searchHistory'))) {  // Storage取值渲染
-                        let searchHistory = JSON.parse(localStorage.getItem('searchHistory')).reverse();
-                        let listSearchHistory = '';
-                        searchHistory.forEach(function (item,index) {
-                            if (index == 0){
-                                listSearchHistory = `<li><p>${item.key}</p><span>乱七八糟</span></li>`
-                            }else {
-                                listSearchHistory = listSearchHistory + `<li><p>${item.key}</p><span>乱七八糟</span></li>`
-                            }
-                        });
-                        $('#resultHistory').empty();
-                        $('#resultHistory').append(listSearchHistory);
+                        $('.have-result').show();
                     }else {
                         $('.have-result').hide();
                     }
@@ -889,9 +879,9 @@ class ListController extends Controller {
                 let listSearchHistory = '';
                 searchHistory.forEach(function (item,index) {
                     if (index == 0){
-                        listSearchHistory = `<li data-subEstateid="${item.id}"><p>${item.key}</p><span>${item.address}</span></li>`
+                        listSearchHistory = `<li data-subEstateid="${item.id}" data-name="${item.key}" data-address="${item.address}"><p>${item.key}</p><span>${item.address}</span></li>`
                     }else {
-                        listSearchHistory = listSearchHistory + `<li data-subEstateid="${item.id}"><p>${item.key}</p><span>${item.address}</span></li>`
+                        listSearchHistory = listSearchHistory + `<li data-subEstateid="${item.id}" data-name="${item.key}" data-address="${item.address}"><p>${item.key}</p><span>${item.address}</span></li>`
                     }
                 });
                 $('#resultHistory').empty();
@@ -900,14 +890,18 @@ class ListController extends Controller {
                 $('#resultHistory >li').click(function () {
                     let saveLocalStorage =[];
                     JSON.parse( localStorage.getItem('searchHistory')) ?  saveLocalStorage = JSON.parse( localStorage.getItem('searchHistory')) : saveLocalStorage = [];
+                    let ind =$(this).index();
                     let singleData = {
                         "key":$(this).attr('data-name'),
                         "id": $(this).attr('data-subEstateid'),
                         "address": $(this).attr('data-address')
                     };
-                    let ind =$(this).index();
-                    saveLocalStorage.slice(ind,1);
-                    saveLocalStorage[0] = singleData;
+                    saveLocalStorage.forEach(function (item,index) {
+                        if (item.id == singleData.id){
+                            saveLocalStorage.splice(index,1)
+                        }
+                    });
+                    saveLocalStorage.push(singleData);
                     localStorage.setItem("searchHistory",JSON.stringify(saveLocalStorage));
                     let subEstateid = $(this).attr('data-subEstateid');
                     let  conditionString = "ta-0-ta-0-ta-0-ta-0-la-0";
