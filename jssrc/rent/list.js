@@ -10,19 +10,20 @@ class ListController extends Controller {
         super();
         this.readyFun();
         let that = this;
-        let cityid = 3;
-        $.cookie('cityId') ?  cityid = $.cookie('cityId'): cityid = 3;
+        let cityid = 43;
+        $.cookie('cityId') ?  cityid = $.cookie('cityId'): cityid = 43;
         let url =  location.href.slice(0,location.href.lastIndexOf('/')+1);
         let conditionQuery = location.href.slice(location.href.lastIndexOf('/')+1,location.href.length);
         let condition ='';
+        if (conditionQuery == "rent"){
+            conditionQuery = "ta-0-ta-0-ta-0-ta-0-la-0";
+            url = url +"rent/"
+        }
         if (conditionQuery.indexOf('?') == -1){
             condition = conditionQuery
         }else {
-            console.log(conditionQuery.indexOf('?'));
             condition = conditionQuery.slice(0,conditionQuery.indexOf('?'));
         }
-
-        console.log(condition);
         let conditionObject = this.parseCondition({condition:condition});  // 转成对象
         this.choseFun(conditionObject,url);
         /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -94,8 +95,9 @@ class ListController extends Controller {
                             $('.dic').slideToggle();
                             delete(conditionObject['di']);  // 删除areas的对象
                             delete(conditionObject['to']);  // 删除town的对象
+                            delete(conditionObject['li']);  // 删除地铁线路的对象
+                            delete(conditionObject['st']);  // 删除地铁线路的对象
                             let conditionString = that.objectToString(conditionObject);
-                            console.log(conditionString);
                             window.location= url + conditionString;
                         }else {
                             dataDic.forEach(function (item) {    //
@@ -377,9 +379,6 @@ class ListController extends Controller {
                 }
             }});
 
-
-
-
         this.firstGivePage(conditionObject,this);
 
         /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -419,50 +418,60 @@ class ListController extends Controller {
         $('#selfPrConf').click(function () {
             let lowPr = $('#lowPr').val();
             let topPr=  $('#topPr').val();
-            if(lowPr && topPr){
-                $('#price>p').html(lowPr+'-'+topPr);
-                $('#price').find('i').addClass('bacchosed');
-                $('#price').addClass('active-color-top');
-                delete(conditionObject['pr']);  // 删除价格选择的参数的对象
-                let cp = {"cp":lowPr+"to"+topPr};
-                Object.assign(conditionObject, cp); // 合并对象
-                let conditionString = that.objectToString(conditionObject); // 转换成字符串
-                console.log(conditionString);
-                window.location = url + conditionString; // 跳转的URL
-            } else if (lowPr == '' && topPr){
-                $('#price>p').html(topPr+'以下');
-                $('#price').find('i').addClass('bacchosed');
-                $('#price').addClass('active-color-top');
-                delete(conditionObject['pr']);  // 删除价格选择的参数的对象
-                let cp = {"cp":"0"+"to"+topPr};
-                Object.assign(conditionObject, cp); // 合并对象
-                let conditionString = that.objectToString(conditionObject); // 转换成字符串
-                console.log(conditionString);
-                window.location = url + conditionString; // 跳转的URL
-            } else if(topPr == '' && lowPr){
-                $('#price>p').html(lowPr+'以上');
-                $('#price').find('i').addClass('bacchosed');
-                $('#price').addClass('active-color-top');
-                delete(conditionObject['pr']);  // 删除价格选择的参数的对象
-                let cp = {"cp":lowPr+"to"+"0"};
-                Object.assign(conditionObject, cp); // 合并对象
-                let conditionString = that.objectToString(conditionObject); // 转换成字符串
-                console.log(conditionString);
-                window.location = url + conditionString; // 跳转的URL
+            if (lowPr > topPr) {
+               $('.wrong').show();
+               setTimeout(function () {
+                   $('.wrong').hide();
+               },2000)
             }else {
-                $('#price>p').html("租金");
-                $('#price').find('i').removeClass('bacchosed');
-                $('#price').removeClass('active-color-top');
-                $('#price').removeClass('chosed');
-                delete(conditionObject['pr']);  // 删除价格选择的参数的对象
-                delete(conditionObject['cp']);  // 删除价格自定义参数的对象
-                let conditionString = that.objectToString(conditionObject); // 转换成字符串
-                console.log(conditionString);
-                window.location = url + conditionString; // 跳转的URL
+                $('.wrong').hide();
+                if(lowPr && topPr){
+                    $('#price>p').html(lowPr+'-'+topPr);
+                    $('#price').find('i').addClass('bacchosed');
+                    $('#price').addClass('active-color-top');
+                    delete(conditionObject['pr']);  // 删除价格选择的参数的对象
+                    let cp = {"cp":lowPr+"to"+topPr};
+                    Object.assign(conditionObject, cp); // 合并对象
+                    let conditionString = that.objectToString(conditionObject); // 转换成字符串
+                    console.log(conditionString);
+                    window.location = url + conditionString; // 跳转的URL
+                } else if (lowPr == '' && topPr){
+                    $('#price>p').html(topPr+'以下');
+                    $('#price').find('i').addClass('bacchosed');
+                    $('#price').addClass('active-color-top');
+                    delete(conditionObject['pr']);  // 删除价格选择的参数的对象
+                    let cp = {"cp":"0"+"to"+topPr};
+                    Object.assign(conditionObject, cp); // 合并对象
+                    let conditionString = that.objectToString(conditionObject); // 转换成字符串
+                    console.log(conditionString);
+                    window.location = url + conditionString; // 跳转的URL
+                } else if(topPr == '' && lowPr){
+                    $('#price>p').html(lowPr+'以上');
+                    $('#price').find('i').addClass('bacchosed');
+                    $('#price').addClass('active-color-top');
+                    delete(conditionObject['pr']);  // 删除价格选择的参数的对象
+                    let cp = {"cp":lowPr+"to"+"0"};
+                    Object.assign(conditionObject, cp); // 合并对象
+                    let conditionString = that.objectToString(conditionObject); // 转换成字符串
+                    console.log(conditionString);
+                    window.location = url + conditionString; // 跳转的URL
+                }else {
+                    $('#price>p').html("租金");
+                    $('#price').find('i').removeClass('bacchosed');
+                    $('#price').removeClass('active-color-top');
+                    $('#price').removeClass('chosed');
+                    delete(conditionObject['pr']);  // 删除价格选择的参数的对象
+                    delete(conditionObject['cp']);  // 删除价格自定义参数的对象
+                    let conditionString = that.objectToString(conditionObject); // 转换成字符串
+                    console.log(conditionString);
+                    window.location = url + conditionString; // 跳转的URL
+                }
+                $('.bac').hide();
+                $('#price').children('span').removeClass('direction');
+                $('.price-total').slideToggle();
             }
-            $('.bac').hide();
-            $('#price').children('span').removeClass('direction');
-            $('.price-total').slideToggle();
+
+
 
         });
         /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -608,7 +617,12 @@ class ListController extends Controller {
                     $(`.sort-chose>ul>li:eq(${index})`).removeClass('chosed');
                     $(`.sort-chose>ul>li:eq(${index})`).addClass('chosed')
                 }
-            })
+            });
+            if (soSting != 'so-0') {
+                $('.sort').addClass('sort-change')
+            }else {
+                $('.sort').removeClass('sort-change')
+            }
         }
         $('.sort-chose>ul>li').click(function () {
             $('.bac').css({'z-index': '10', 'top': '4.5rem'});
@@ -723,7 +737,7 @@ class ListController extends Controller {
         搜索初步渲染
         -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
         if (JSON.parse(localStorage.getItem('searchHistory')) && conditionQuery.indexOf('?') > 0) {
-            let firtName = JSON.parse(localStorage.getItem('searchHistory'))[0].key;
+            let firtName = JSON.parse(localStorage.getItem('searchHistory')).reverse()[0].key;
             $('#searchInput').val(firtName)
         }
         /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -741,18 +755,10 @@ class ListController extends Controller {
     条件选择的初始化函数
     -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
     readyFun() {
-        /* $('.dic').hide();*/
-        /*$('.bac').hide();*/
-        /*$('.price-total').hide();*/
-        /* $('.house-type').hide();*/
-        /*$('.more').hide();*/
-        /*$('.sort-chose').hide();*/
         setTimeout(function () {
             $('.total-num').hide();
             $('.all-control').css("margin-top","10rem");
         },1500);
-
-       /* $('.house-list > ul > li:eq(0)').addClass('active-house');*/
         $('.content-hight').height($(window).height()*0.7 - $('.tabs').height());
     }
 
@@ -763,7 +769,6 @@ class ListController extends Controller {
         let self = this;
             /* 条件选择点击事件*/
         $('.rent-list > ul > li').click(function () {
-            self.firstGivePage(conditionObject,self);
             $(this).siblings().removeClass('active-color-top');
             $(this).toggleClass('active-color-top');
             let listI =  $('.rent-list > ul > li > span >i');  // 获取检索箭头的  i标签
@@ -785,6 +790,7 @@ class ListController extends Controller {
                 }
             });
             let indexP = $(this).index();
+            /*alert("indexP"+indexP);*/
             /*根据点击li标签的位置判断相应的模块响应出现*/
             if (indexP == 0) {     /*判断区域模块的显示*/
                 $('.dic').stop();
@@ -811,6 +817,7 @@ class ListController extends Controller {
                 $('.house-type').slideUp();
                 $('.more').slideToggle();
             }
+            /*self.firstGivePage(conditionObject,self);*/
         });
         /*区域与地铁选择点击事件*/
         $('.tabs > ul > li').click(function () {
@@ -891,6 +898,17 @@ class ListController extends Controller {
                 $('#resultHistory').append(listSearchHistory);
                 // 历史搜索点击
                 $('#resultHistory >li').click(function () {
+                    let saveLocalStorage =[];
+                    JSON.parse( localStorage.getItem('searchHistory')) ?  saveLocalStorage = JSON.parse( localStorage.getItem('searchHistory')) : saveLocalStorage = [];
+                    let singleData = {
+                        "key":$(this).attr('data-name'),
+                        "id": $(this).attr('data-subEstateid'),
+                        "address": $(this).attr('data-address')
+                    };
+                    let ind =$(this).index();
+                    saveLocalStorage.slice(ind,1);
+                    saveLocalStorage[0] = singleData;
+                    localStorage.setItem("searchHistory",JSON.stringify(saveLocalStorage));
                     let subEstateid = $(this).attr('data-subEstateid');
                     let  conditionString = "ta-0-ta-0-ta-0-ta-0-la-0";
                     window.location = url + conditionString + "?subEstateId=" + subEstateid;
@@ -912,111 +930,6 @@ class ListController extends Controller {
             $('.decoration > ul >li').removeClass('active-house');
         })
     }
-    /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
-    获取城市区域之后渲染到页面
-    -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
-    giveAreasData(dataAreas){
-        console.log(dataAreas.data);
-        let dataDic = dataAreas.data;
-        let dicAreas = "<li >不限</li>";
-        dataDic.forEach(function (item) {   // 循环渲染地铁线路
-            dicAreas += `<li data-id ="${item.id}" data-di="di-${item.id}">${item.name}</li>`
-        });
-        $('#dicAreas').append(dicAreas);
-        $('#dicAreas>li').click(function () {           // 点击areas更换相应的town
-            let dataAreasId = $(this).attr("data-id");  // areas的id 后面循环对比需要
-            let dataAreasDi = $(this).attr("data-di");  // 需要传给后台pinURL的参数  areas
-            let dataAreasName = $(this).html();        // 获取中文地铁线路名称
-            $(this).siblings().removeClass('areas-subway');
-            $(this).addClass('areas-subway');
-            if(dataAreasName == "不限") {
-                $('#dic>p').html("区域") ;
-                $('.bac').hide();
-                $('#dic').children('span').removeClass('direction');
-                $('#dic').find('i').removeClass('bacchosed');
-                $('#dic').removeClass('active-color-top');
-                $('#dic').removeClass('chosed');
-                $('.dic').slideToggle();
-            }else {
-                dataDic.forEach(function (item) {    //
-                    if(dataAreasId == item.id && item.townList){
-                        let townList ="<li>不限</li>" ;
-                        item.townList.forEach(function (item) {  // 循环渲染town
-                            townList += `<li data-id ="${item.id}" data-to="to-${item.id}">${item.name}</li>`
-                        });
-                        $('#town').empty();
-                        $('#town').append(townList);
-                    }
-                });
-                $('#town >li').click(function () {  // town的点击获取
-                    $(this).siblings().removeClass('chosed');
-                    $(this).addClass('chosed');
-                    let dataTownId = $(this).attr("data-id");      // 站点的id
-                    let dataTownTo =  $(this).attr("data-to");   // 需要传给后台pinURL的参数  town
-                    let dataTownName = $(this).html();   // 获取中文town名称
-                    if (dataTownName == "不限") {
-                        $('#dic > p').html(dataAreasName);
-                    } else {
-                        $('#dic > p').html(dataTownName);
-                    }
-                    $('.bac').hide();
-                    $('#dic').children('span').removeClass('direction');
-                    $('#dic').find('i').addClass('bacchosed');
-                    $('#dic').addClass('chosed');
-                    $('.dic').slideToggle();
-                })
-
-            }
-        })
-    }
-    /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
-    获取地铁之后渲染到页面
-    -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
-    giveSubwayData(dataSubway,url) {
-        console.log(dataSubway.data);
-        let subwayLine = dataSubway.data;
-        let metroLine = '';
-        subwayLine.forEach(function (item) {   // 循环渲染地铁线路
-            metroLine += `<li data-id ="${item.id}" data-li="li-${item.id}">${item.name}</li>`
-        });
-        $('#metroLine').append(metroLine);
-        $('#metroLine > li').click(function () {   // 点击地铁线路更换相应的站点
-            let dataLineId = $(this).attr("data-id");  // 地铁线路的id 后面循环对比需要
-            let dataLineLi = $(this).attr("data-li"); // 需要传给后台pinURL的参数  地铁线路
-            let dataLineName = $(this).html();    // 获取中文地铁线路名称
-            $(this).siblings().removeClass('areas-subway');
-            $(this).addClass('areas-subway');
-            subwayLine.forEach(function (item) {
-                if ( dataLineId == item.id && item.subList){
-                    let metroStation ="<li>不限</li>" ;
-                   item.subList.forEach(function (item) { // 循环渲染地铁站点
-                       metroStation += `<li data-id ="${item.id}" data-st="st-${item.id}">${item.name}</li>`
-                   });
-                    $('#metroStation').empty();
-                    $('#metroStation').append(metroStation);
-                }
-            });
-            $('#metroStation > li').click(function () {   // 站点的点击
-                $(this).siblings().removeClass('chosed');
-                $(this).addClass('chosed');
-                let dataStationId = $(this).attr("data-id");      // 站点的id
-                let dataStationSt =  $(this).attr("data-st");   // 需要传给后台pinURL的参数  站点
-                let dataStationName = $(this).html();  // 获取中文地铁站点名称
-                if ($(this).html() == "不限") {     // 判断赋值给检索title
-                    $('#dic > p').html(dataLineName);
-                    window.location= url+dataLineLi;
-                } else {
-                    $('#dic > p').html(dataStationName);
-                    window.location= url+dataLineLi+"-"+dataStationSt;
-                }
-                $('.bac').hide();
-                $('#dic').children('span').removeClass('direction');
-                $('#dic').find('i').addClass('bacchosed');
-                $('#dic').addClass('chosed');
-                $('.dic').slideToggle();
-            })
-        });
-    }
 
     /*++-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
     首次渲染 所选择的条件
@@ -1026,37 +939,36 @@ class ListController extends Controller {
         if (conditionObject['la']) {
             let conditionPr = $('.house-list>ul>li');
             let laString = '';
+            let numberD = [0,1,2,3,4,5];
             if (conditionObject['la'].length > 1) {
                 console.log(conditionObject['la']);
-                conditionObject['la'].forEach(function (item, index) {
-                    if (index == 0) {
-                        laString = "la-" + item
-                    } else {
-                        laString = laString + ',' + "la-" + item
-                    }
+                conditionObject['la'].forEach(function (item) {
+                    $(`.house-list>ul>li:eq(${item})`).addClass('active-house');
+                    numberD.forEach(function (itemN,indexN) {
+                        if (item == itemN){
+                            numberD.splice(indexN,1);
+                        }
+                    })
+                });
+                numberD.forEach(function (item) {
+                    $(`.house-list>ul>li:eq(${item})`).removeClass('active-house');
                 });
                 $('#type >p').html('多选');
                 $('#type').find('i').addClass('bacchosed');
                 $('#type').addClass('chosed');
             } else {
-                laString = self.objectToString({"la": conditionObject['la']}); // 对象转换成字符串
+                if (conditionObject['la'] == 0){
+                    $('#type >p').html('户型');
+                    $('#type').find('i').removeClass('bacchosed');
+                    $('#type').removeClass('chosed');
+                }else {
+                    $('#type >p').html($(`.house-list>ul>li:eq(${conditionObject['la']})`).html());
+                    $('#type').find('i').addClass('bacchosed');
+                    $('#type').addClass('chosed');
+                }
+                $(`.house-list>ul>li:eq(${conditionObject['la']})`).addClass('active-house');
+                $(`.house-list>ul>li:eq(${conditionObject['la']})`).siblings().removeClass('active-house');
             }
-            let conditionArray = laString.split(',');
-            conditionPr.each(function (index, item) {  // 循环对比属性
-                conditionArray.forEach(function (item) {
-                    if (item == $(`.house-list>ul>li:eq(${index})`).attr('data-la')) {
-                        $(`.house-list>ul>li:eq(${index})`).addClass('active-house');
-                        if (index > 0 && conditionArray.length == 1) {
-                            $('#type >p').html($(`.house-list>ul>li:eq(${index})`).html());
-                            $('#type').find('i').addClass('bacchosed');
-                            $('#type').addClass('chosed');
-                        }
-                    }else {
-                        $(`.house-list>ul>li:eq(${index})`).removeClass('active-house');
-                    }
-                });
-
-            })
         }else {
             $(`.house-list>ul>li:eq(0)`).addClass('active-house');
         }

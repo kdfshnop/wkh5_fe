@@ -580,6 +580,14 @@ body{
     line-height: 2.9rem;
   }
 }
+.sort-change{
+  >.icon-paixu{
+    color:@primary-color !important;
+  }
+  >span{
+    color:@primary-color !important;
+  }
+}
 /*搜索条件之后没有房源的样式*/
 .no-rent-item {
   /*background-color: @default-color;*/
@@ -738,5 +746,22 @@ margin-top: 4.8rem;
         }
       }
     }
+
+  }
+}
+
+.wrong{
+  position: fixed;
+  top: 45%;
+  left: 27%;
+  background-color: #000;
+  z-index: 14;
+  opacity: 0.5;
+  display: none;
+  padding: 1rem;
+  border-radius: 6px;
+  >p{
+    color: @default-color;
+    font-size: 1.4rem;
   }
 }
