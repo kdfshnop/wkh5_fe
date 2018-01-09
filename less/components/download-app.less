@@ -5,10 +5,15 @@
  -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
 .download-app {
      background-color : #fff ;
-     border-bottom : 1px solid @lighter-line-gray-color ;
+     border-top : 1px solid @lighter-line-gray-color ;
+     bottom : 0 ; 
      .clearfix() ;
-     height : 50px ;
-     padding : 8px ;
+     height : 60px ;
+     left : 0 ; 
+     padding : 10px 15px ;
+     position : fixed ;
+     width : 100% ;
+     z-index : 1000 ;
      &>dl {
          .clearfix() ;
          float : left ;
@@ -18,22 +23,29 @@
              width : 3.2rem ;
              i {                
                 color : @primary-color ;
-                font-size : 3.2rem ;
+                font-size : 3.8rem ;
             }            
          }
          dd {             
-             font-size : 1rem ;
-             margin-left : 3.5rem ;
+             font-size : 1.4rem ;
+             margin-left : 3.8rem ;
          }
      }
-     &>a {
-         .border-radius(3px) ;
-         border : 1px solid @primary-color ;
-         color : @primary-color ;
-         line-height : 25px ;
-         float : right ;
-         margin : 3px 7px 0 0  ;
-         text-align : center ;
-         width : 80px ;
+     &>.pull-right {
+         line-height : 40px ;     
+         a {
+            .border-radius(3px) ;
+            border : 1px solid @primary-color ;
+            color : @primary-color ;
+            display : inline-block ;
+            line-height : 25px ;
+            margin-right : 12px ;
+            text-align : center ;
+            width : 80px ;
+        }
+        i {
+            color : #979797 ;
+            font-size : 1.4rem ;
+        }
      }     
  }
