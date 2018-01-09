@@ -10,14 +10,25 @@ class ListController extends Controller {
         super();
         this.readyFun();
         let that = this;
+        let cityid = 3;
+        $.cookie('cityId') ?  cityid = $.cookie('cityId'): cityid = 3;
         let url =  location.href.slice(0,location.href.lastIndexOf('/')+1);
-        let condition = location.href.slice(location.href.lastIndexOf('/')+1,location.href.length);
+        let conditionQuery = location.href.slice(location.href.lastIndexOf('/')+1,location.href.length);
+        let condition ='';
+        if (conditionQuery.indexOf('?') == -1){
+            condition = conditionQuery
+        }else {
+            console.log(conditionQuery.indexOf('?'));
+            condition = conditionQuery.slice(0,conditionQuery.indexOf('?'));
+        }
+
+        console.log(condition);
         let conditionObject = this.parseCondition({condition:condition});  // 转成对象
-        this.choseFun(conditionObject);
+        this.choseFun(conditionObject,url);
         /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
         请求接口 获取城市区域
         -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
-        this.request(this.apiUrl.rent.list.cityAreas,{houseType:3,cityId:3},{successCallback(data){
+        this.request(this.apiUrl.rent.list.cityAreas,{houseType:3,cityId:cityid},{successCallback(data){
                 if (data.status == 1){
                     let dataRes = data;
                     let dataDic = dataRes.data;
@@ -201,7 +212,7 @@ class ListController extends Controller {
         /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
         请求接口 获取地铁
         -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
-        this.request(this.apiUrl.rent.list.citySubway,{cityId:3},{successCallback(data){
+        this.request(this.apiUrl.rent.list.citySubway,{cityId:cityid},{successCallback(data){
                 if (data.status == 1) {
                     let dataRes = data;
                     let subwayLine = dataRes.data;
@@ -617,29 +628,112 @@ class ListController extends Controller {
         搜索
         -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
 
-        $('#searchInput').keyup(function () {
+        $('#searchInput').keyup(function (event) {
             if ($(this).val()) {
                 $('.icon-close').show();
                 $('.have-result').hide();
                 $('.icon-close').click(function () {
                     $('#searchInput').val('');
                     $('.icon-close').hide();
+                    $('#showResult').empty();
+                    $('.have-result').show();
+                    $('.no-result').hide();
+                    if (JSON.parse(localStorage.getItem('searchHistory'))) {  // Storage取值渲染
+                        let searchHistory = JSON.parse(localStorage.getItem('searchHistory')).reverse();
+                        let listSearchHistory = '';
+                        searchHistory.forEach(function (item,index) {
+                            if (index == 0){
+                                listSearchHistory = `<li><p>${item.key}</p><span>乱七八糟</span></li>`
+                            }else {
+                                listSearchHistory = listSearchHistory + `<li><p>${item.key}</p><span>乱七八糟</span></li>`
+                            }
+                        });
+                        $('#resultHistory').empty();
+                        $('#resultHistory').append(listSearchHistory);
+                    }else {
+                        $('.have-result').hide();
+                    }
                 });
+                let saveLocalStorage = [];
+
                 let sendData={
                     key:$(this).val(),
-                    cityId:43,
+                    cityId:cityid,
                     pageName:"renthouselist"
                 };
-                console.log(sendData);
-               that.request(that.apiUrl.rent.list.acWord,sendData,{successCallback(data){
-                   let renthouselistData = data.data;
-                   if (renthouselistData){
-                      $('#showResult')
-                   }
-                   console.log(JSON.stringify(data))
-                   }})
+             /*setTimeout(function () {*/
+                 that.request(that.apiUrl.rent.list.acWord,sendData,{successCallback(data){
+                         let renthouselistData = data.data;
+                         if (renthouselistData.secondHouseList) {
+                             $('.show-result').show();
+                             $('.no-result').hide();
+                             let titleName ='';
+                             let addreName = '';
+                             let searchaAcWord = '';
+                             renthouselistData.secondHouseList.forEach(function (item,index) {  // 循环出搜索结果
+                                 titleName = item.displayname.replace(item.markname,`<span>${item.markname}</span>`);
+                                 addreName = item.address.replace(item.markname,`<span>${item.markname}</span>`);
+                                 if (index == 0){
+                                     searchaAcWord = `<li data-subEstateid="${item.subEstateId}" data-name="${item.displayname}" data-address="${item.address}"><p>${titleName}</p><span>${addreName}</span></li>`
+                                 }else {
+                                     searchaAcWord = searchaAcWord +`<li data-subEstateid="${item.subEstateId}" data-name="${item.displayname}" data-address="${item.address}"><p>${titleName}</p><span>${addreName}</span></li>`
+                                 }
+                             }) ;
+                             $('#showResult').empty();
+                             $('#showResult').append(searchaAcWord);
+                         } else {
+                             $('.no-result').show();
+                             $('.show-result').hide();
+                         }
+                         // 搜索条目点击跳转 和储存
+                         $('#showResult >li').click(function () {
+                             JSON.parse( localStorage.getItem('searchHistory')) ?  saveLocalStorage = JSON.parse( localStorage.getItem('searchHistory')) : saveLocalStorage = [];
+                             let singleData={
+                                 "key":$(this).attr('data-name'),
+                                 "id": $(this).attr('data-subEstateid'),
+                                 "address": $(this).attr('data-address')
+                             };
+                             saveLocalStorage.push(singleData);
+                             localStorage.setItem("searchHistory",JSON.stringify(saveLocalStorage));
+                             let subEstateid = $(this).attr('data-subEstateid');
+                             let  conditionString = "ta-0-ta-0-ta-0-ta-0-la-0";
+                             window.location = url + conditionString + "?subEstateId=" + subEstateid;
+                         });
+                     }});
+                 if (event.keyCode == 13){ //enter存值  ta-0-ta-0-ta-0-ta-0-la-0
+                     JSON.parse( localStorage.getItem('searchHistory')) ?  saveLocalStorage = JSON.parse( localStorage.getItem('searchHistory')) : saveLocalStorage = [];
+                     let singleData={
+                         "key":$('#showResult>li:eq(0)').attr('data-name'),
+                         "id": $('#showResult>li:eq(0)').attr('data-subEstateid'),
+                         "address": $('#showResult>li:eq(0)').attr('data-address')
+                     };
+                     saveLocalStorage.push(singleData);
+                     localStorage.setItem("searchHistory",JSON.stringify(saveLocalStorage));
+                     let  conditionString = "ta-0-ta-0-ta-0-ta-0-la-0";
+                     let subEstateId = $('#showResult>li:eq(0)').attr('data-subEstateid');
+                     window.location = url + conditionString+'?subEstateId='+ subEstateId;
+                 }
+
+        /*     },1000);*/
+
+
             }
-        })
+        });
+        /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+        搜索初步渲染
+        -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
+        if (JSON.parse(localStorage.getItem('searchHistory')) && conditionQuery.indexOf('?') > 0) {
+            let firtName = JSON.parse(localStorage.getItem('searchHistory'))[0].key;
+            $('#searchInput').val(firtName)
+        }
+        /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+        清除搜索
+        -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
+
+        $('#clearOption').click(function () {
+            let  conditionString = "ta-0-ta-0-ta-0-ta-0-la-0";
+            window.location = url + conditionString;
+        });
 
     }
 
@@ -665,7 +759,7 @@ class ListController extends Controller {
     /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
     条件选择的区域选择的点击效果函数
     -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
-    choseFun(conditionObject) {
+    choseFun(conditionObject,url) {
         let self = this;
             /* 条件选择点击事件*/
         $('.rent-list > ul > li').click(function () {
@@ -781,7 +875,34 @@ class ListController extends Controller {
             $('.rent-search').addClass('active-search');
             $('.rent-search').siblings('ul').addClass('on-hide');
             $('.all-control').addClass('on-hide');
-            $('body').css('background-color','#F0F0F0')
+            $('body').css('background-color','#F0F0F0');
+            if (JSON.parse(localStorage.getItem('searchHistory'))) {  // Storage取值渲染
+                $('.have-result').show();
+                let searchHistory = JSON.parse(localStorage.getItem('searchHistory')).reverse();
+                let listSearchHistory = '';
+                searchHistory.forEach(function (item,index) {
+                    if (index == 0){
+                        listSearchHistory = `<li data-subEstateid="${item.id}"><p>${item.key}</p><span>${item.address}</span></li>`
+                    }else {
+                        listSearchHistory = listSearchHistory + `<li data-subEstateid="${item.id}"><p>${item.key}</p><span>${item.address}</span></li>`
+                    }
+                });
+                $('#resultHistory').empty();
+                $('#resultHistory').append(listSearchHistory);
+                // 历史搜索点击
+                $('#resultHistory >li').click(function () {
+                    let subEstateid = $(this).attr('data-subEstateid');
+                    let  conditionString = "ta-0-ta-0-ta-0-ta-0-la-0";
+                    window.location = url + conditionString + "?subEstateId=" + subEstateid;
+                });
+            }else {
+                $('.have-result').hide();
+            }
+        });
+        /*清楚历史*/
+        $('#clearHistory').click(function () {
+            localStorage.removeItem('searchHistory');
+            $('.have-result').hide();
         });
         /*更多的清楚搜索*/
         $('#cancelMore').click(function () {
@@ -906,6 +1027,7 @@ class ListController extends Controller {
             let conditionPr = $('.house-list>ul>li');
             let laString = '';
             if (conditionObject['la'].length > 1) {
+                console.log(conditionObject['la']);
                 conditionObject['la'].forEach(function (item, index) {
                     if (index == 0) {
                         laString = "la-" + item
@@ -935,6 +1057,8 @@ class ListController extends Controller {
                 });
 
             })
+        }else {
+            $(`.house-list>ul>li:eq(0)`).addClass('active-house');
         }
 
         //租房价格初次选中渲染
