@@ -947,7 +947,7 @@ class ListController extends Controller {
                 $('#type').addClass('chosed');
             } else {
                 if (conditionObject['la'] == 0){
-                    $('#type >p').html('不限');
+                    $('#type >p').html('户型');
                     $('#type').find('i').removeClass('bacchosed');
                     $('#type').removeClass('chosed');
                 }else {
