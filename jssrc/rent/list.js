@@ -15,13 +15,17 @@ class ListController extends Controller {
         let url =  location.href.slice(0,location.href.lastIndexOf('/')+1);
         let conditionQuery = location.href.slice(location.href.lastIndexOf('/')+1,location.href.length);
         let condition ='';
+        if (conditionQuery == "rent"){
+            conditionQuery = "ta-0-ta-0-ta-0-ta-0-la-0";
+            url = url +"rent/"
+        }
         if (conditionQuery.indexOf('?') == -1){
             condition = conditionQuery
         }else {
             console.log(conditionQuery.indexOf('?'));
             condition = conditionQuery.slice(0,conditionQuery.indexOf('?'));
         }
-
+        console.log("conditionQuery"+conditionQuery);
         console.log(condition);
         let conditionObject = this.parseCondition({condition:condition});  // 转成对象
         this.choseFun(conditionObject,url);
@@ -741,18 +745,10 @@ class ListController extends Controller {
     条件选择的初始化函数
     -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
     readyFun() {
-        /* $('.dic').hide();*/
-        /*$('.bac').hide();*/
-        /*$('.price-total').hide();*/
-        /* $('.house-type').hide();*/
-        /*$('.more').hide();*/
-        /*$('.sort-chose').hide();*/
         setTimeout(function () {
             $('.total-num').hide();
             $('.all-control').css("margin-top","10rem");
         },1500);
-
-       /* $('.house-list > ul > li:eq(0)').addClass('active-house');*/
         $('.content-hight').height($(window).height()*0.7 - $('.tabs').height());
     }
 
@@ -911,111 +907,6 @@ class ListController extends Controller {
             $('.area > ul >li').removeClass('active-house');
             $('.decoration > ul >li').removeClass('active-house');
         })
-    }
-    /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
-    获取城市区域之后渲染到页面
-    -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
-    giveAreasData(dataAreas){
-        console.log(dataAreas.data);
-        let dataDic = dataAreas.data;
-        let dicAreas = "<li >不限</li>";
-        dataDic.forEach(function (item) {   // 循环渲染地铁线路
-            dicAreas += `<li data-id ="${item.id}" data-di="di-${item.id}">${item.name}</li>`
-        });
-        $('#dicAreas').append(dicAreas);
-        $('#dicAreas>li').click(function () {           // 点击areas更换相应的town
-            let dataAreasId = $(this).attr("data-id");  // areas的id 后面循环对比需要
-            let dataAreasDi = $(this).attr("data-di");  // 需要传给后台pinURL的参数  areas
-            let dataAreasName = $(this).html();        // 获取中文地铁线路名称
-            $(this).siblings().removeClass('areas-subway');
-            $(this).addClass('areas-subway');
-            if(dataAreasName == "不限") {
-                $('#dic>p').html("区域") ;
-                $('.bac').hide();
-                $('#dic').children('span').removeClass('direction');
-                $('#dic').find('i').removeClass('bacchosed');
-                $('#dic').removeClass('active-color-top');
-                $('#dic').removeClass('chosed');
-                $('.dic').slideToggle();
-            }else {
-                dataDic.forEach(function (item) {    //
-                    if(dataAreasId == item.id && item.townList){
-                        let townList ="<li>不限</li>" ;
-                        item.townList.forEach(function (item) {  // 循环渲染town
-                            townList += `<li data-id ="${item.id}" data-to="to-${item.id}">${item.name}</li>`
-                        });
-                        $('#town').empty();
-                        $('#town').append(townList);
-                    }
-                });
-                $('#town >li').click(function () {  // town的点击获取
-                    $(this).siblings().removeClass('chosed');
-                    $(this).addClass('chosed');
-                    let dataTownId = $(this).attr("data-id");      // 站点的id
-                    let dataTownTo =  $(this).attr("data-to");   // 需要传给后台pinURL的参数  town
-                    let dataTownName = $(this).html();   // 获取中文town名称
-                    if (dataTownName == "不限") {
-                        $('#dic > p').html(dataAreasName);
-                    } else {
-                        $('#dic > p').html(dataTownName);
-                    }
-                    $('.bac').hide();
-                    $('#dic').children('span').removeClass('direction');
-                    $('#dic').find('i').addClass('bacchosed');
-                    $('#dic').addClass('chosed');
-                    $('.dic').slideToggle();
-                })
-
-            }
-        })
-    }
-    /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
-    获取地铁之后渲染到页面
-    -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
-    giveSubwayData(dataSubway,url) {
-        console.log(dataSubway.data);
-        let subwayLine = dataSubway.data;
-        let metroLine = '';
-        subwayLine.forEach(function (item) {   // 循环渲染地铁线路
-            metroLine += `<li data-id ="${item.id}" data-li="li-${item.id}">${item.name}</li>`
-        });
-        $('#metroLine').append(metroLine);
-        $('#metroLine > li').click(function () {   // 点击地铁线路更换相应的站点
-            let dataLineId = $(this).attr("data-id");  // 地铁线路的id 后面循环对比需要
-            let dataLineLi = $(this).attr("data-li"); // 需要传给后台pinURL的参数  地铁线路
-            let dataLineName = $(this).html();    // 获取中文地铁线路名称
-            $(this).siblings().removeClass('areas-subway');
-            $(this).addClass('areas-subway');
-            subwayLine.forEach(function (item) {
-                if ( dataLineId == item.id && item.subList){
-                    let metroStation ="<li>不限</li>" ;
-                   item.subList.forEach(function (item) { // 循环渲染地铁站点
-                       metroStation += `<li data-id ="${item.id}" data-st="st-${item.id}">${item.name}</li>`
-                   });
-                    $('#metroStation').empty();
-                    $('#metroStation').append(metroStation);
-                }
-            });
-            $('#metroStation > li').click(function () {   // 站点的点击
-                $(this).siblings().removeClass('chosed');
-                $(this).addClass('chosed');
-                let dataStationId = $(this).attr("data-id");      // 站点的id
-                let dataStationSt =  $(this).attr("data-st");   // 需要传给后台pinURL的参数  站点
-                let dataStationName = $(this).html();  // 获取中文地铁站点名称
-                if ($(this).html() == "不限") {     // 判断赋值给检索title
-                    $('#dic > p').html(dataLineName);
-                    window.location= url+dataLineLi;
-                } else {
-                    $('#dic > p').html(dataStationName);
-                    window.location= url+dataLineLi+"-"+dataStationSt;
-                }
-                $('.bac').hide();
-                $('#dic').children('span').removeClass('direction');
-                $('#dic').find('i').addClass('bacchosed');
-                $('#dic').addClass('chosed');
-                $('.dic').slideToggle();
-            })
-        });
     }
 
     /*++-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
