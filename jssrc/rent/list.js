@@ -10,8 +10,8 @@ class ListController extends Controller {
         super();
         this.readyFun();
         let that = this;
-        let cityid = 3;
-        $.cookie('cityId') ?  cityid = $.cookie('cityId'): cityid = 3;
+        let cityid = 43;
+        $.cookie('cityId') ?  cityid = $.cookie('cityId'): cityid = 43;
         let url =  location.href.slice(0,location.href.lastIndexOf('/')+1);
         let conditionQuery = location.href.slice(location.href.lastIndexOf('/')+1,location.href.length);
         let condition ='';
