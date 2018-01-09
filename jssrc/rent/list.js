@@ -22,11 +22,8 @@ class ListController extends Controller {
         if (conditionQuery.indexOf('?') == -1){
             condition = conditionQuery
         }else {
-            console.log(conditionQuery.indexOf('?'));
             condition = conditionQuery.slice(0,conditionQuery.indexOf('?'));
         }
-        console.log("conditionQuery"+conditionQuery);
-        console.log(condition);
         let conditionObject = this.parseCondition({condition:condition});  // 转成对象
         this.choseFun(conditionObject,url);
         /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -772,7 +769,6 @@ class ListController extends Controller {
         let self = this;
             /* 条件选择点击事件*/
         $('.rent-list > ul > li').click(function () {
-            self.firstGivePage(conditionObject,self);
             $(this).siblings().removeClass('active-color-top');
             $(this).toggleClass('active-color-top');
             let listI =  $('.rent-list > ul > li > span >i');  // 获取检索箭头的  i标签
@@ -794,6 +790,7 @@ class ListController extends Controller {
                 }
             });
             let indexP = $(this).index();
+            alert("indexP"+indexP);
             /*根据点击li标签的位置判断相应的模块响应出现*/
             if (indexP == 0) {     /*判断区域模块的显示*/
                 $('.dic').stop();
@@ -820,6 +817,7 @@ class ListController extends Controller {
                 $('.house-type').slideUp();
                 $('.more').slideToggle();
             }
+            self.firstGivePage(conditionObject,self);
         });
         /*区域与地铁选择点击事件*/
         $('.tabs > ul > li').click(function () {
