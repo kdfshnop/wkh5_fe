@@ -620,7 +620,12 @@ class ListController extends Controller {
                     $(`.sort-chose>ul>li:eq(${index})`).removeClass('chosed');
                     $(`.sort-chose>ul>li:eq(${index})`).addClass('chosed')
                 }
-            })
+            });
+            if (soSting != 'so-0') {
+                $('.sort').addClass('sort-change')
+            }else {
+                $('.sort').removeClass('sort-change')
+            }
         }
         $('.sort-chose>ul>li').click(function () {
             $('.bac').css({'z-index': '10', 'top': '4.5rem'});
@@ -925,37 +930,36 @@ class ListController extends Controller {
         if (conditionObject['la']) {
             let conditionPr = $('.house-list>ul>li');
             let laString = '';
+            let numberD = [0,1,2,3,4,5];
             if (conditionObject['la'].length > 1) {
                 console.log(conditionObject['la']);
-                conditionObject['la'].forEach(function (item, index) {
-                    if (index == 0) {
-                        laString = "la-" + item
-                    } else {
-                        laString = laString + ',' + "la-" + item
-                    }
+                conditionObject['la'].forEach(function (item) {
+                    $(`.house-list>ul>li:eq(${item})`).addClass('active-house');
+                    numberD.forEach(function (itemN,indexN) {
+                        if (item == itemN){
+                            numberD.splice(indexN,1);
+                        }
+                    })
+                });
+                numberD.forEach(function (item) {
+                    $(`.house-list>ul>li:eq(${item})`).removeClass('active-house');
                 });
                 $('#type >p').html('多选');
                 $('#type').find('i').addClass('bacchosed');
                 $('#type').addClass('chosed');
             } else {
-                laString = self.objectToString({"la": conditionObject['la']}); // 对象转换成字符串
+                if (conditionObject['la'] == 0){
+                    $('#type >p').html('不限');
+                    $('#type').find('i').removeClass('bacchosed');
+                    $('#type').removeClass('chosed');
+                }else {
+                    $('#type >p').html($(`.house-list>ul>li:eq(${conditionObject['la']})`).html());
+                    $('#type').find('i').addClass('bacchosed');
+                    $('#type').addClass('chosed');
+                }
+                $(`.house-list>ul>li:eq(${conditionObject['la']})`).addClass('active-house');
+                $(`.house-list>ul>li:eq(${conditionObject['la']})`).siblings().removeClass('active-house');
             }
-            let conditionArray = laString.split(',');
-            conditionPr.each(function (index, item) {  // 循环对比属性
-                conditionArray.forEach(function (item) {
-                    if (item == $(`.house-list>ul>li:eq(${index})`).attr('data-la')) {
-                        $(`.house-list>ul>li:eq(${index})`).addClass('active-house');
-                        if (index > 0 && conditionArray.length == 1) {
-                            $('#type >p').html($(`.house-list>ul>li:eq(${index})`).html());
-                            $('#type').find('i').addClass('bacchosed');
-                            $('#type').addClass('chosed');
-                        }
-                    }else {
-                        $(`.house-list>ul>li:eq(${index})`).removeClass('active-house');
-                    }
-                });
-
-            })
         }else {
             $(`.house-list>ul>li:eq(0)`).addClass('active-house');
         }
