@@ -98,8 +98,9 @@ class ListController extends Controller {
                             $('.dic').slideToggle();
                             delete(conditionObject['di']);  // 删除areas的对象
                             delete(conditionObject['to']);  // 删除town的对象
+                            delete(conditionObject['li']);  // 删除地铁线路的对象
+                            delete(conditionObject['st']);  // 删除地铁线路的对象
                             let conditionString = that.objectToString(conditionObject);
-                            console.log(conditionString);
                             window.location= url + conditionString;
                         }else {
                             dataDic.forEach(function (item) {    //
@@ -380,9 +381,6 @@ class ListController extends Controller {
                     })
                 }
             }});
-
-
-
 
         this.firstGivePage(conditionObject,this);
 
