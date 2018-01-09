@@ -418,7 +418,7 @@ class ListController extends Controller {
         $('#selfPrConf').click(function () {
             let lowPr = $('#lowPr').val();
             let topPr=  $('#topPr').val();
-            if (lowPr > topPr){
+            if (lowPr > topPr) {
                $('.wrong').show();
                setTimeout(function () {
                    $('.wrong').hide();
@@ -737,7 +737,7 @@ class ListController extends Controller {
         搜索初步渲染
         -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
         if (JSON.parse(localStorage.getItem('searchHistory')) && conditionQuery.indexOf('?') > 0) {
-            let firtName = JSON.parse(localStorage.getItem('searchHistory'))[0].key;
+            let firtName = JSON.parse(localStorage.getItem('searchHistory')).reverse()[0].key;
             $('#searchInput').val(firtName)
         }
         /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -817,7 +817,7 @@ class ListController extends Controller {
                 $('.house-type').slideUp();
                 $('.more').slideToggle();
             }
-            self.firstGivePage(conditionObject,self);
+            /*self.firstGivePage(conditionObject,self);*/
         });
         /*区域与地铁选择点击事件*/
         $('.tabs > ul > li').click(function () {
@@ -898,6 +898,17 @@ class ListController extends Controller {
                 $('#resultHistory').append(listSearchHistory);
                 // 历史搜索点击
                 $('#resultHistory >li').click(function () {
+                    let saveLocalStorage =[];
+                    JSON.parse( localStorage.getItem('searchHistory')) ?  saveLocalStorage = JSON.parse( localStorage.getItem('searchHistory')) : saveLocalStorage = [];
+                    let singleData = {
+                        "key":$(this).attr('data-name'),
+                        "id": $(this).attr('data-subEstateid'),
+                        "address": $(this).attr('data-address')
+                    };
+                    let ind =$(this).index();
+                    saveLocalStorage.slice(ind,1);
+                    saveLocalStorage[0] = singleData;
+                    localStorage.setItem("searchHistory",JSON.stringify(saveLocalStorage));
                     let subEstateid = $(this).attr('data-subEstateid');
                     let  conditionString = "ta-0-ta-0-ta-0-ta-0-la-0";
                     window.location = url + conditionString + "?subEstateId=" + subEstateid;
