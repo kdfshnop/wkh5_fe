@@ -52,6 +52,13 @@ class Controller {
             } ,
             "community" : {
                 "chart" : this.apiPrefix + "api/community/detail/chart"
+            },
+            "rent" : {
+                "list" : {
+                    "cityAreas": this.apiPrefix + "api/rent/list/areas",
+                    "citySubway" : this.apiPrefix + "api/rent/list/subway",
+                    "acWord" : this.apiPrefix + "api/rent/list/acWord",
+                }
             }
         } ;
         /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------

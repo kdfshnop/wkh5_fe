@@ -5,29 +5,38 @@
 -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
 @import "../variables.less";
 @import "../mixins.less";
-@import "../components/rent-list.less";
+@import "../components/rent-items.less";
 
 body{
-  background-color: #F0F0F0;
+  background-color: @default-color;
 }
+
 /*<!--条件选择-->*/
 .rent-list{
   width: 100%;
-  height: 4.5rem;
-  background-color: @default-color;
+  /*height: 4.5rem;*/
+  background-color: @tag-background-color;
   position: fixed;
   top: 0;
-  z-index: 10;
+  z-index: 12;
+  box-shadow: 0 2px 6px 0 rgba(0,0,0,0.15);
   >ul{
     flex-direction: row;
     display: -webkit-flex;
     >li{
-      flex: 1;
+      /*flex: 1;*/
+      width: 9.375rem;
       line-height: 4.5rem;
       text-align: center;
       font-size: 1.4rem;
       color: #999999;
       letter-spacing: 0;
+      >p{
+        display: inline-block;
+        font-size: 1.6rem;
+        max-width: 79%;
+        .text-ellipsis() ;
+      }
       >span{
         display: inline-block;
         width: .9rem;
@@ -52,22 +61,73 @@ body{
     }
     >.active-color-top{
       color: @primary-color;
-      >.direction{
-        transform: rotate(180deg);
-        -ms-transform: rotate(180deg); /* IE 9 */
-        -webkit-transform: rotate(180deg); /* Safari and Chrome */
-        >i{
-          background-color: @primary-color;
+    }
+  }
+  >.rent-search{
+    padding: 1rem 1.5rem 0 1.5rem;
+    >i{
+      display: inline-block;
+      width: 2rem;
+      height: 1.4rem;
+      font-size: 1.3rem;
+      font-weight: 300;
+    }
+    >.search-input{
+      display: inline-block;
+      margin-left: 0.5rem;
+      width: 88%;
+      position: relative;
+      >.icon-search{
+        display: inline-block;
+        width: 28px;
+        height: 25px;
+        position: absolute;
+        left: 1.5rem;
+        top: 0.75rem;
+      }
+      >.icon-close{
+        display: none;
+        width: 28px;
+        height: 25px;
+        color: #000;
+        position: absolute;
+        right: 0.5rem;
+        top: 0.75rem;
+      }
+      >input{
+        height: 3rem;
+        width: 100%;
+        background: @default-color;
+        border-radius: 6px;
+        border:  none;
+        outline: none;
+        padding-left: 3.4rem;
+        &:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+          color: #7C7C7C; opacity:1;
+        }
+
+        &::-moz-placeholder { /* Mozilla Firefox 19+ */
+          color: #7C7C7C;opacity:1;
+        }
+
+        &:-ms-input-placeholder{
+          color: #7C7C7C;opacity:1;
+        }
+
+        &::-webkit-input-placeholder{
+          color: #7C7C7C;opacity:1;
         }
       }
     }
   }
 }
+.all-control{
+  margin-top: 8.5rem;
+}
 /*<!--房源总数-->*/
 .total-num{
   width: 100%;
   height: 3rem;
-  margin-top: 4.5rem;
   background-color: @default-color;
   position: relative;
   &:after{
@@ -80,7 +140,7 @@ body{
     border-top: 1px solid @light-line-gray-color;
     -webkit-transform:scaleY(0.5) ;
   }
-  &:before{
+ /* &:before{
     content: '';
     position: absolute;
     left: 0;
@@ -89,7 +149,7 @@ body{
     width: 100%;
     border-top: 1px solid @light-line-gray-color;
     -webkit-transform:scaleY(0.5) ;
-  }
+  }*/
   >p{
     font-size: 1.2rem;
     color: @default-font-color;
@@ -106,22 +166,11 @@ body{
 /*区域模块样式*/
 .dic{
   width: 100%;
-  max-height:44.4rem ;
+ /* max-height:80% ;*/
   background-color: @tag-background-color;
   position: fixed;
-  top:4.5rem;
+  top:8.5rem;
   z-index: 11;
-  &:after{
-    content: '';
-    width: 100%;
-    height: 1px;
-    position: absolute;
-    top:0;
-    left: 0;
-    /*border-top: 1px solid @light-line-gray-color;*/
-    box-shadow: 0 2px 4px 0 rgba(0,0,0,0.15);
-    /*   transform: -webkit-scaleY(0.5);*/
-  }
   .tabs{
     background-color: @default-color;
     height: 4.4rem;
@@ -141,19 +190,15 @@ body{
     >ul{
       .flex();
       flex-direction: row;
-      height: 4.2rem;
+      height: 4.4rem;
       width: 100%;
       >li{
         .flex(1);
-        /*line-height: 4.4rem;*/
         text-align: center;
-        >span{
-          line-height: 4.2rem;
-          font-size: 1.6rem;
-          color: #000000;
-          display: inline-block;
-        }
-        >.active-color-dic{
+        line-height: 4.4rem;
+        font-size: 1.6rem;
+        color: #000000;
+        &.active-color-dic{
           color: @primary-color;
           border-bottom:3px solid @primary-color;
         }
@@ -162,15 +207,15 @@ body{
   }
   .content{
     width: 100%;
-    max-height: 40rem;
-    >.dic-content{
+    /*max-height: 40rem;*/
+    >.dic-content,.metro-content{
       width: 100%;
-      max-height: 40rem;
+      /*max-height: 40rem;*/
       .flex();
       flex-direction: row;
       >.content-left{
         .flex(1);
-        max-height: 40rem;
+        /*max-height: 40rem;*/
         overflow-y:scroll;
         >ul{
           >li{
@@ -185,7 +230,7 @@ body{
       }
       >.content-right{
         .flex(1);
-        max-height: 40rem;
+        /*max-height: 40rem;*/
         overflow-y:scroll;
         background-color: @default-color;
         >ul{
@@ -212,19 +257,8 @@ body{
   padding-right: 1.5rem;
   background-color: @default-color;
   position: fixed;
-  top:4.5rem;
+  top:8.5rem;
   z-index: 11;
-  &:after{
-    content: '';
-    width: 100%;
-    height: 1px;
-    position: absolute;
-    top:0;
-    left: 0;
-    /*border-top: 1px solid @light-line-gray-color;*/
-    box-shadow: 0 2px 4px 0 rgba(0,0,0,0.15);
-    /*   transform: -webkit-scaleY(0.5);*/
-  }
   >.price-list{
     >ul{
       >li{
@@ -305,19 +339,8 @@ body{
   padding: 1.5rem  1rem;
   background-color: @default-color;
   position: fixed;
-  top:4.5rem;
+  top:8.5rem;
   z-index: 11;
-  &:after{
-    content: '';
-    width: 100%;
-    height: 1px;
-    position: absolute;
-    top:0;
-    left: 0;
-    /*border-top: 1px solid @light-line-gray-color;*/
-    box-shadow: 0 2px 4px 0 rgba(0,0,0,0.15);
-    /*   transform: -webkit-scaleY(0.5);*/
-  }
   >.house-list{
     >ul{
       width: 100%;
@@ -338,11 +361,7 @@ body{
         margin-bottom: 0.9rem;
         margin-right: 0.3rem;
       }
-      >.active-house{
-        background-color:@default-color ;
-        border: 1px solid @primary-color;
-        color:@primary-color;
-      }
+
     }
   }
   >.house-conf{
@@ -375,42 +394,155 @@ body{
   }
 }
 
+/*排序样式*/
+.sort-chose{
+  background: @default-color;
+  width: 100%;
+  z-index: 14;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  >ul{
+    width: 100%;
+    >li{
+      width: 100%;
+      height: 4.5rem;
+      line-height: 4.5rem;
+      text-align: center;
+      position: relative;
+      &:not(:first-child):before{
+        content: '';
+        height: 1px;
+        width: 100%;
+        position: absolute;
+        left: 0;
+        top: 0;
+        border-top: 1px solid @light-line-gray-color;
+        transform: -webkit-scaleY(0.5);
+      }
+    }
+  }
+}
+/*价格和排序选择后样式*/
+.chosed{
+  color: @primary-color !important;
+}
+.bacchosed{
+  background-color: @primary-color !important;
+}
+.areas-subway{
+  background-color: @default-color !important;
+}
+.active-house{
+  background-color:@default-color !important;
+  border: 1px solid @primary-color !important;
+  color:@primary-color !important;
+}
+/*搜索框启用的样式*/
+.active-search{
+  background-color: @default-color !important;
+  width: 100% !important;
+  padding-bottom: 1rem !important;
+  >.search-input{
+    width: 88% !important;
+    height: 2.8rem !important;
+    >.icon-search{
+      display: none !important;
+    }
+    >input{
+      background-color: #F0F0F0 !important;
+      padding-left: 1rem !important;
+    }
+  }
+
+}
+.on-hide{
+  display: none !important;
+}
+/*箭头指向*/
+.direction{
+  transform: rotate(180deg);
+  -ms-transform: rotate(180deg); /* IE 9 */
+  -webkit-transform: rotate(180deg); /* Safari and Chrome */
+  >i{
+    background-color: @primary-color !important;
+  }
+}
 /*更多模块样式*/
 .more{
   width: 100%;
-  max-height:44.4rem ;
+  max-height:80% ;
   padding: 1.5rem  1rem;
   background-color: @default-color;
   position: fixed;
-  top:4.5rem;
+  top:8.5rem;
   z-index: 11;
-  &:after{
-    content: '';
-    width: 100%;
-    height: 1px;
-    position: absolute;
-    top:0;
-    left: 0;
-    /*border-top: 1px solid @light-line-gray-color;*/
-    box-shadow: 0 2px 4px 0 rgba(0,0,0,0.15);
-    /*   transform: -webkit-scaleY(0.5);*/
-  }
+  overflow-y:scroll ;
   >.more-spec,>.area,>.decoration{
+    padding-bottom: 0.5rem;
+    position: relative;
+    &:after{
+      content: '';
+      height: 1px;
+      width: 100%;
+      border-top: 1px solid @light-line-gray-color;;
+      transform: -webkit-scaleY(0.5);
+      position: absolute;
+      bottom: 0;
+      right: 0;
+      left: 0;
+    }
     >p{
-      font-size: 1.4rem;
+      font-size: 1.5rem;
+      color: @default-font-color;
+      letter-spacing: 0;
+      line-height: 1.4rem;
+      margin-bottom: 1rem;
     }
     >ul{
       width: 100%;
       /*text-align: center;*/
       >li{
+        width: 22%;
         display: inline-block;
         background-color: @tag-background-color;
-        padding: 0 0.5rem;
         border-radius: 0.3rem;
-        line-height: 2rem;
+        line-height: 3.3rem;
         text-align: center;
-        font-size: 1rem;
-        color: #000000;
+        font-size: 1.2rem;
+        color: #4E4E4E;
+        margin-bottom: 1rem;
+        &:not(:last-child){
+          margin-right: 1.5%;
+        }
+      }
+    }
+  }
+  >.area,>.decoration{
+    padding-top: 1rem;
+  }
+  >.butt-group{
+    width: 100%;
+    text-align: center;
+    >p{
+       width: 45%;
+       display: inline-block;
+       margin-top: 2.5rem;
+      line-height: 3.6rem;
+      border-radius: 0.4rem;
+      font-size: 1.3rem;
+      &.canl{
+        border: 1px solid @primary-color;
+        color: @primary-color;
+        letter-spacing: 0;
+        left: 3.6rem;
+        margin-right: 2rem;
+      }
+      &.conf{
+        background: @primary-color;
+        color: @default-color;
+        letter-spacing: 0;
       }
     }
   }
@@ -425,5 +557,186 @@ body{
   opacity: 0.5;
   background-color: #000000;
 }
+/*排序*/
+.sort{
+  width: 6.8rem;
+  height: 2.9rem;
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  z-index: 9;
+  background: @default-color;
+  box-shadow: 0 3px 8px 0 rgba(0,0,0,0.30);
+  border-radius: 100px;
+  text-align: right;
+  padding-right: 1.4rem;
+  >.icon-paixu{
+    font-size: 1.2rem;
+  }
+  >span{
+    font-size: 1.2rem;
+    color: @default-font-color;
+    letter-spacing: 0.92px;
+    line-height: 2.9rem;
+  }
+}
+/*搜索条件之后没有房源的样式*/
+.no-rent-item {
+  /*background-color: @default-color;*/
+  text-align: center;
+  margin-top: 4.5rem;
+  > .show-no {
+    padding-top: 2.5rem;
+    padding-bottom: 2.5rem;
+    background-color: @default-color;
+    > .disc-one {
+      font-size: 1.6rem;
+      color: #000000;
+      letter-spacing: -0.2px;
+    }
+    >.disc-two{
+      font-size: 1.6rem;
+      color: @light-font-color;
+      letter-spacing: -0.2px;
+    }
+    >.clear{
+      width: 92%;
+      background: #F0F0F0;
+      border-radius: 6px;
+      font-size: 1.4rem;
+      color: #92A7C3;
+      line-height: 4.5rem;
+      height: 4.5rem;
+      display: inline-block;
+      margin-top: 2.5rem;
+    }
+  }
+  >.guess-like{
+    margin-top: 1rem;
+    padding: 0 0 0 1.5rem;
+    background-color: @default-color;
+    >.panel-header{
+      text-align: left;
+    }
+  }
+}
+.rent-items{
+  padding-left: 1.5rem;
+  margin-top: 0.5rem;
+}
 
-
+.search-result{
+margin-top: 4.8rem;
+  >.no-result{
+     background-color: @default-color;
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+    padding-top: 1rem;
+    padding-bottom: 1.5rem;
+    >p{
+      font-size: 1.6rem;
+      color: @default-font-color;
+      letter-spacing: 0;
+    }
+    >span{
+      font-size: 1.2rem;
+      color: @light-font-color;
+      letter-spacing: 0;
+      line-height: 1.2rem;
+    }
+  }
+  > .have-result {
+    > p {
+      height: 2.7rem;
+      line-height: 2.7rem;
+      width: 100%;
+      padding-left: 1.5rem;
+      font-size: 1.4rem;
+      color: @light-font-color;
+      letter-spacing: 0;
+    }
+    > .result-history {
+       background-color: @default-color;
+      >ul{
+        >li{
+          height: 6rem;
+          padding-top: 1rem;
+          padding-left: 1.5rem;
+          padding-right: 1.5rem;
+          position: relative;
+          &:after{
+            content: '';
+            height: 1px;
+            width: 100%;
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            border-top: 1px solid @light-line-gray-color;
+            -webkit-transform:scaleY(0.5) ;
+          }
+         >p{
+           font-size: 1.6rem;
+           color: @default-font-color;
+           letter-spacing: 0;
+         }
+          >span{
+            font-size: 1.2rem;
+            color: @light-font-color;
+            letter-spacing: 0;
+            line-height: 1.2rem;
+          }
+        }
+      }
+      >p{
+        height: 4.5rem;
+        line-height: 4.5rem;
+        text-align: center;
+        font-size: 1.4rem;
+        color: #92A7C3;
+      }
+    }
+  }
+  > .show-result {
+    background-color: @default-color;
+    > ul {
+      padding-left: 1.5rem;
+      > li {
+        height: 4rem;
+        padding-right: 1.5rem;
+        position: relative;
+        padding-top: 0.4rem;
+        &:not(:first-child):before{
+          content: '';
+          height: 1px;
+          width: 100%;
+          position: absolute;
+          top: 0;
+          left: 0;
+          border-top: 1px solid @light-line-gray-color;
+          -webkit-transform:scaleY(0.5) ;
+        }
+        >p{
+          font-size: 1.2rem;
+          color: @default-font-color;
+          letter-spacing: 0;
+          >span{
+            color: @primary-color;
+            position: relative;
+            top: -1px;
+          }
+        }
+        >span{
+          font-size: 1rem;
+          color: @light-font-color;
+          letter-spacing: 0;
+          line-height: 1.2rem;
+          >span{
+            color: @primary-color;
+            position: relative;
+            top: -1px;
+          }
+        }
+      }
+    }
+  }
+}
