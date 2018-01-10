@@ -728,7 +728,8 @@ class ListController extends Controller {
         -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
         if (JSON.parse(localStorage.getItem('searchHistory')) && conditionQuery.indexOf('?') > 0) {
             let firtName = JSON.parse(localStorage.getItem('searchHistory')).reverse()[0].key;
-            $('#searchInput').val(firtName)
+            $('#searchInput').val(firtName);
+            $('.icon-close').show();
         }
         /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
         清除搜索
@@ -865,7 +866,11 @@ class ListController extends Controller {
             $('.bac').show();
             $('.sort-chose').slideToggle();
         });
-
+        $('.bac').click(function () {
+            $('.bac').css({'z-index': '10', 'top': '4.5rem'});
+            $('.bac').hide();
+            $('.sort-chose').slideToggle();
+        });
 
         /*搜索框的点击*/
         $('#searchInput').click(function () {
