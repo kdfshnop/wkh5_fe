@@ -16,15 +16,19 @@ class ListController extends Controller {
         let conditionQuery = location.href.slice(location.href.lastIndexOf('/')+1,location.href.length);
         let condition ='';
         console.log(conditionQuery);
-        if (conditionQuery == "rent" || conditionQuery ==""){
+        if (conditionQuery == "rent" ){
             conditionQuery = "la-0";
             url = url +"rent/"
+        }else if (conditionQuery ==""){
+            conditionQuery = "la-0";
+            url = url
         }
         if (conditionQuery.indexOf('?') == -1) {
             condition = conditionQuery
         }else {
             condition = conditionQuery.slice(0,conditionQuery.indexOf('?'));
         }
+        console.log()
         let conditionObject = this.parseCondition({condition:condition});  // 转成对象
         this.choseFun(conditionObject,url);
         /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -519,6 +523,7 @@ class ListController extends Controller {
                  Object.assign(conditionObject, houseListObj); // 合并对象
                  let conditionString = that.objectToString(conditionObject); // 转换成字符串
                  console.log(conditionString);
+                 console.log(url + conditionString)
                  window.location.href = url + conditionString; // 跳转的URL
              } if (noHouseListArray.length == 5 && houseListArray[0]== 0) {
                  $('#type').find('i').removeClass('bacchosed');
