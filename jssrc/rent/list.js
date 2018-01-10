@@ -16,6 +16,7 @@ class ListController extends Controller {
         let url =  location.href.slice(0,location.href.lastIndexOf('/')+1);
         let conditionQuery = location.href.slice(location.href.lastIndexOf('/')+1,location.href.length);
         let condition ='';
+        let subEstateId ='';
         console.log(conditionQuery);
         if (conditionQuery == "rent" ){
             conditionQuery = "la-0";
@@ -739,7 +740,7 @@ class ListController extends Controller {
                      saveLocalStorage.push(singleData);
                      localStorage.setItem("searchHistory",JSON.stringify(saveLocalStorage));
                      let  conditionString = "ta-0-ta-0-ta-0-ta-0-la-0";
-                     let subEstateId = $('#showResult>li:eq(0)').attr('data-subEstateid');
+                       subEstateId = $('#showResult>li:eq(0)').attr('data-subEstateid');
                      window.location.href = url + conditionString+'?subEstateId='+ subEstateId;
                  }
             }
@@ -771,7 +772,98 @@ class ListController extends Controller {
             let  conditionString = "ta-0-ta-0-ta-0-ta-0-la-0";
             window.location.href = url + conditionString;
         });
+        /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+        对参数转译成服务端需要的参数
+        -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
 
+        let conditionData={};
+        if (condition) {
+            let conditionString = condition;
+            let newConditionString  = conditionString.replace("to","townId").replace("li","subwayLine").replace("st","subwayStation");
+            let conditionObj =  that.parseCondition({condition:newConditionString});
+            let spaceAreaStart =[{"start":0,"end":50},{"start":50,"end":70},{"start":70,"end":90},{"start":90,"end":110},{"start":"110","end":"130"},{"start":"130","end":"150"},{"start":"150","end":"0"}]
+            conditionData = {
+                "cityId":cityid,
+                "bedRoomSumLists":[],
+                "renovations":[],
+                "spaceAreas":[]
+            };
+            if(conditionObj['la'] && conditionObj['la'].length == 1){  // 判断是对象还是数组
+                if(conditionObj['la'] == 0){
+                    conditionData['bedRoomSumLists'] =[];
+                }else {
+                    conditionData['bedRoomSumLists'].push(conditionObj.la)
+                }
+            }else {
+                conditionData['bedRoomSumLists'] = conditionObj['la']
+            }
+            delete(conditionObj['la']);
+            if (conditionObj['pr']) {   // 价格选择
+                if(conditionObj['pr'].constructor == Array) {
+                    conditionData["rentPriceStart"]= conditionObj['pr'][0];
+                    conditionData["rentPriceEnd"]= conditionObj['pr'][1]
+                }else {
+                    conditionData["rentPriceStart"]= conditionObj['pr']
+                }
+            }
+            delete(conditionObj['pr']);
+            if (conditionObj['cp']){  // 价格自定义
+                let cpArray = conditionObj['cp'].split("townId");
+                if (cpArray[0] == 0){
+                    conditionData["rentPriceEnd"]= cpArray[1]  //价格
+                }else if(cpArray[1] == 0){
+                    conditionData["rentPriceStart"]= cpArray[0] //价格
+                }else {
+                    conditionData["rentPriceStart"]= cpArray[0];
+                    conditionData["rentPriceEnd"]= cpArray[1]
+                }
+            }
+            delete(conditionObj['cp']);
+            if (conditionObj['ta']){
+                conditionData["isSubWay"] = conditionObj['ta'][0];  // 近地铁 0 任意  1 是
+                conditionData["priceDown"] = conditionObj['ta'][1]; // 降价  0 否  1 是
+                conditionData["isNewOnStore"] = conditionObj['ta'][2]; // 新上 0：否 1：是，
+                conditionData["orientation"] = conditionObj['ta'][3]; // 房屋朝向 1南北通透 0任意
+            }
+            delete(conditionObj['ta']);
+            if (conditionObj['ar']) {   // 面积选择
+                if(conditionObj['ar'].length == 1) {
+                    conditionData["spaceAreas"].push(spaceAreaStart[conditionObj['ar']])
+                }else {
+                    conditionObj['ar'].forEach(function (item) {
+                        conditionData["spaceAreas"].push(spaceAreaStart[item])
+                    });
+                }
+            }
+            delete(conditionObj['ar']);
+            if (conditionObj['dt']) {
+                if (conditionObj['dt'].length == 1){
+                    conditionData["renovations"].push(conditionObj['dt'])
+                }else {
+                    conditionData["renovations"] = conditionObj['dt'];   // 装修状况
+                }
+
+            }
+            delete(conditionObj['dt']);
+            if (conditionObj['so']) {
+                conditionData["orderType"] = conditionObj['so'];   // 装修状况
+            }
+            delete(conditionObj['so']);
+            if (conditionObj['di']){
+                conditionData["districtId"] =conditionObj['di']
+            }
+            delete(conditionObj['di']);
+            if (subEstateId){
+                conditionData["subEstateId"] = subEstateId
+            }
+            Object.assign(conditionData,conditionObj) ;
+        }else {
+            conditionData = {
+                "cityId":cityid,
+            };
+        }
+
+        this.pullload(conditionData);
     }
 
     /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -920,7 +1012,7 @@ class ListController extends Controller {
             $('.rent-search').addClass('active-search');
             $('.rent-search').siblings('ul').addClass('on-hide');
             $('.all-control').addClass('on-hide');
-            $('.icon-close').addClass('clear-icon-close');
+            $('.search-result').show();
             $('body').css('background-color','#F0F0F0');
             if (JSON.parse(localStorage.getItem('searchHistory'))) {  // Storage取值渲染
                 $('.have-result').show();
@@ -1139,7 +1231,7 @@ class ListController extends Controller {
         return result ;
     }
     /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
-   把对象处理成字符串
+     把对象处理成字符串
    -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
     objectToString(obj) {
 
@@ -1180,7 +1272,74 @@ class ListController extends Controller {
 
         });
         return conditionString
+    };
+
+    creatRent(item){
+        let houseTag=[];
+        if (item.houseTag.isSubwayHouse) {
+            houseTag.push("近地铁")
+        }  if (item.houseTag.isPriceDown) {
+            houseTag.push("降价")
+        }  if (item.houseTag.isNewHouse) {
+            houseTag.push("新上")
+        }  if(item.houseTag.isHardcover == 1){
+            houseTag.push("精装")
+        } if(item.houseTag.isHardcover == 2){
+            houseTag.push("豪装")
+        } if(item.houseTag.isSouth){
+            houseTag.push("朝南")
+        }
+        let houseTagList = '';
+        if (houseTag){
+            houseTag.forEach(function (item,index) {
+                if (index == 0){
+                    houseTagList =  `<span class="tag">${item}</span>`
+                }else {
+                    houseTagList += `<span class="tag">${item}</span>`
+                }
+            })
+        }
+      let domeRent=  `<a  class="rent-item box" href=" ${item.url }">
+            <div class="left">
+                <img src="${item.firstImageUrl}" alt="${ item.estateName} " class="lazy">
+            </div>
+            <div class="right">
+                <h4> ${item.houseTitle}</h4>
+                <p class="base-info">                    
+                   ${item.houseTypeStr} ${item.spaceArea}㎡ | ${item.districtAndTownName}
+                </p>
+                <p class="tags">${houseTagList}</p>
+                <p class="unit-price"> ${item.rentPriceStr} 元/月</p>
+            </div>
+        </a>`;
+
+        return domeRent
     }
+
+    /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+     上拉加载实例化
+     -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
+    pullload(conditionObject) {
+        let self = this ;
+        //租房列表
+        $(".rent-items").pullload({
+            apiUrl : this.apiUrl.rent.list.rentHouseList ,
+            requestType: "post",
+            queryStringObject : conditionObject ,
+           /* apiDataType:"application/json",*/
+            threshold : 50 ,
+            callback : function(data) {
+                console.log("data"+JSON.stringify(data));
+                if( ! data.data) return ;
+
+                $.each(data.data , (index , rent)=> {
+                    rent.url = "/shanghai/rent/" + rent.encryptHouseId + ".html" ;
+                    $(".rent-items").append(self.creatRent(rent)) ;
+                }) ;
+            }
+        }) ;
+
+    } ;
 }
 
 

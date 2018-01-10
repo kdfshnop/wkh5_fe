@@ -58,6 +58,7 @@ class Controller {
                     "cityAreas": this.apiPrefix + "api/rent/list/areas",
                     "citySubway" : this.apiPrefix + "api/rent/list/subway",
                     "acWord" : this.apiPrefix + "api/rent/list/acWord",
+                    "rentHouseList" : this.apiPrefix +"api/rent/list/rentHouseList"
                 }
             }
         } ;
