@@ -676,7 +676,6 @@ class ListController extends Controller {
                     cityId:cityid,
                     pageName:"renthouselist"
                 };
-             /*setTimeout(function () {*/
                  that.request(that.apiUrl.rent.list.acWord,sendData,{successCallback(data){
                          let renthouselistData = data.data;
                          if (renthouselistData.secondHouseList) {
@@ -728,10 +727,6 @@ class ListController extends Controller {
                      let subEstateId = $('#showResult>li:eq(0)').attr('data-subEstateid');
                      window.location.href = url + conditionString+'?subEstateId='+ subEstateId;
                  }
-
-        /*     },1000);*/
-
-
             }
         });
 
@@ -893,9 +888,15 @@ class ListController extends Controller {
             $('.sort-chose').slideToggle();
         });
         $('.bac').click(function () {
+            $('.dic').slideUp();
+            $('.price-total').slideUp();
+            $('.house-type').slideUp();
+            $('.more').slideUp();
+            $('.rent-list > ul > li').children('span').removeClass('direction');
+            $('.rent-list > ul > li').removeClass('active-color-top');
             $('.bac').css({'z-index': '10', 'top': '4.5rem'});
             $('.bac').hide();
-            $('.sort-chose').slideToggle();
+            $('.sort-chose').hide();
         });
 
         /*搜索框的点击*/
