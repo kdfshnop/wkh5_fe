@@ -793,9 +793,11 @@ class ListController extends Controller {
             $(this).children('span').toggleClass('direction');
             let list = $('.rent-list > ul > li > span');  // 获取检索当中的span标签   后面判断指向 （根据class判断指向）
             $('.bac').hide();
+            $('#sort').show();
             list.each(function (index, item) {   //根据span标签的样式指向判断底部罩层是否显示
                 if (item.classList.length == 1) {
                     $('.bac').show();
+                    $('#sort').hide();
                 }
             });
             let indexP = $(this).index();
@@ -1107,18 +1109,20 @@ class ListController extends Controller {
    -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
     objectToString(obj) {
         alert("进入对象转字符串函数");
-        let conditionKeyArray = Object.keys(obj);
-        let conditionValueArray = Object.values(obj);
+        let conditionKeyArray = [];
+        let conditionValueArray =[];
+            for(let key in obj) {
+                conditionKeyArray.push(key);
+                conditionValueArray.push(obj[key]);
+            }
+         /*   conditionKeyArray = Object.keys(obj);
+            conditionValueArray = Object.values(obj);  */
         let conditionString = '';
         alert('conditionKeyArray'+JSON.stringify(conditionKeyArray));
-        alert('conditionValueArray'+JSON.stringify(conditionValueArray));
         conditionKeyArray.forEach((itemUp, index) => {
-            alert("进入keys循环");
             if (index == 0) {
-                alert("index == 0");
                 if (conditionValueArray[index].constructor == Array){
                     conditionValueArray[index].forEach(function (item,index) {
-                        alert("1进入values循环");
                         if (index == 0){
                             conditionString = itemUp + '-'+ item
                         }else {
@@ -1131,10 +1135,8 @@ class ListController extends Controller {
                 }
 
             } else {
-                alert("index !== 0");
                 if (conditionValueArray[index].constructor == Array){
                     conditionValueArray[index].forEach(function (item,index) {
-                        alert("2进入values循环");
                             conditionString = conditionString + '-'+ itemUp + '-'+ item
                     })
                 }else {
