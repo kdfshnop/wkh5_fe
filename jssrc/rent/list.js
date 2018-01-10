@@ -872,7 +872,7 @@ class ListController extends Controller {
     readyFun() {
         setTimeout(function () {
             $('.total-num').hide();
-            $('.all-control').css("padding-top","1.5rem");
+            $('.all-control').css("margin-top","8.5rem");
         },1500);
         $('.content-hight').height($(window).height()*0.7 - $('.tabs').height());
     }
@@ -1273,6 +1273,9 @@ class ListController extends Controller {
         });
         return conditionString
     };
+    /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+     创建dome
+   -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
 
     creatRent(item){
         let houseTag=[];
@@ -1299,9 +1302,9 @@ class ListController extends Controller {
                 }
             })
         }
-      let domeRent=  `<a  class="rent-item box" href=" ${item.url }">
+        let domeRent=  `<a  class="rent-item box" href=" ${item.url }">
             <div class="left">
-                <img src="${item.firstImageUrl}" alt="${ item.estateName} " class="lazy">
+                <img src="${item.firstImageUrl}?x-oss-process=image/resize,w_120" alt="${ item.estateName} " class="lazy">
             </div>
             <div class="right">
                 <h4> ${item.houseTitle}</h4>
@@ -1312,7 +1315,6 @@ class ListController extends Controller {
                 <p class="unit-price"> ${item.rentPriceStr} 元/月</p>
             </div>
         </a>`;
-
         return domeRent
     }
 
