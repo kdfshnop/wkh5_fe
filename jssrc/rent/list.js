@@ -655,9 +655,9 @@ class ListController extends Controller {
 
         $('#searchInput').keyup(function (event) {
             if ($(this).val()) {
-                $('.icon-close').show();
+                $('.conone').show();
                 $('.have-result').hide();
-                $('.clear-icon-close').click(function () {
+                $('.conone').click(function () {
                     $('#searchInput').val('');
                     $('.icon-close').hide();
                     $('#showResult').empty();
@@ -735,13 +735,15 @@ class ListController extends Controller {
             }
         });
 
-        $('.icon-close').click(function () {
+        $('.contwo').click(function () {
             $('#searchInput').val('');
             $('.icon-close').hide();
             $('#showResult').empty();
             /*$('.have-result').show();*/
             $('.no-result').hide();
              $('.have-result').hide();
+            let conditionString = that.objectToString(conditionObject); // 转换成字符串
+             window.location.href = url + conditionString
         });
         /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
         搜索初步渲染
@@ -749,7 +751,7 @@ class ListController extends Controller {
         if (JSON.parse(localStorage.getItem('searchHistory')) && conditionQuery.indexOf('?') > 0) {
             let firtName = JSON.parse(localStorage.getItem('searchHistory')).reverse()[0].key;
             $('#searchInput').val(firtName);
-            $('.icon-close').show();
+            $('.contwo').show();
         }
         /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
         清除搜索
