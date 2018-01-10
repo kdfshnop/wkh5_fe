@@ -98,7 +98,7 @@ class ListController extends Controller {
                             delete(conditionObject['li']);  // 删除地铁线路的对象
                             delete(conditionObject['st']);  // 删除地铁线路的对象
                             let conditionString = that.objectToString(conditionObject);
-                            window.location.href= url + conditionString;
+                            window.location.href = url + conditionString;
                         }else {
                             dataDic.forEach(function (item) {    //
                                 if (conditionObject["di"]){
@@ -158,7 +158,9 @@ class ListController extends Controller {
                                     delete(conditionObject['to']);  // 删除town的对象
                                     let conditionString = that.objectToString(conditionObject); // 转换成字符串
                                     console.log(conditionString);
-                                    window.location.href= url + conditionString;  // 跳转的URL
+                                    alert("conditionString"+conditionString);
+                                    alert("window.location.href"+url + conditionString);
+                                    window.location.href = url + conditionString;  // 跳转的URL
                                 } else {
                                     $('#dic > p').html(dataTownName);
                                     let areasTownString = dataAreasDi + '-' + dataTownTo;  // 字符串链接
@@ -166,6 +168,8 @@ class ListController extends Controller {
                                     Object.assign(conditionObject, areasTownObj);   // 合并对象
                                     let conditionString = that.objectToString(conditionObject); // 转换成字符串
                                     console.log(conditionString);
+                                    alert("conditionString"+conditionString);
+                                    alert("window.location.href"+url + conditionString);
                                     window.location.href = url + conditionString;  // 跳转的URL
                                 }
                                 $('.bac').hide();
@@ -193,7 +197,10 @@ class ListController extends Controller {
                             delete(conditionObject['to']);  // 删除town的对象
                             let conditionString = that.objectToString(conditionObject); // 转换成字符串
                             console.log(conditionString);
-                            window.location.href= url + conditionString;  // 跳转的URL
+                            alert("conditionString"+conditionString);
+                            alert("window.location.href"+url + conditionString);
+                            window.location.href = url + conditionString;  // 跳转的URL
+
                         } else {
                             $('#dic > p').html(dataTownName);
                             let areasTownString = dataAreasDi + '-' + dataTownTo;  // 字符串链接
@@ -735,7 +742,7 @@ class ListController extends Controller {
         清除搜索
         -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
 
-        $('#clearOption').click(function () {
+        $('.clearOption').click(function () {
             let  conditionString = "ta-0-ta-0-ta-0-ta-0-la-0";
             window.location.href = url + conditionString;
         });
@@ -743,12 +750,12 @@ class ListController extends Controller {
     }
 
     /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
-    条件选择的初始化函数
+    条件选择的初始化函数  padding-top: 1.5rem;
     -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
     readyFun() {
         setTimeout(function () {
             $('.total-num').hide();
-            $('.all-control').css("margin-top","10rem");
+            $('.all-control').css("padding-top","1.5rem");
         },1500);
         $('.content-hight').height($(window).height()*0.7 - $('.tabs').height());
     }
