@@ -830,7 +830,7 @@ class ListController extends Controller {
             }
             $('.sort-chose').hide();
             $('.bac').css({'z-index': '10', 'top': '4.5rem'});
-            /*self.firstGivePage(conditionObject,self);*/
+            self.firstGivePage(conditionObject,self);
         });
         /*区域与地铁选择点击事件*/
         $('.tabs > ul > li').click(function () {
