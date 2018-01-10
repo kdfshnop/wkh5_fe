@@ -425,7 +425,8 @@ class ListController extends Controller {
         $('#selfPrConf').click(function () {
             let lowPr = $('#lowPr').val();
             let topPr=  $('#topPr').val();
-            if (lowPr > topPr) {
+            console.log(lowPr+"===="+topPr);
+            if (parseInt(lowPr) > parseInt(topPr)) {
                $('.wrong').show();
                setTimeout(function () {
                    $('.wrong').hide();
