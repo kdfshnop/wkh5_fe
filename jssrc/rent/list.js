@@ -160,9 +160,10 @@ class ListController extends Controller {
                                     $('#dic > p').html(dataAreasName);
                                     let dataAreasDiObj =  that.parseCondition({condition:dataAreasDi});  // 转换成对象
                                     Object.assign(conditionObject,dataAreasDiObj); // 合并对象
-                                    alert("conditionObject"+conditionObject);
+                                    alert("conditionObject"+JSON.stringify(conditionObject));
                                     delete(conditionObject['to']);  // 删除town的对象
                                     let conditionString = that.objectToString(conditionObject); // 转换成字符串
+                                    alert('conditionString'+conditionString);
                                     console.log(conditionString);
                                     window.location.href = url + conditionString;  // 跳转的URL
                                 } else {
@@ -170,8 +171,9 @@ class ListController extends Controller {
                                     let areasTownString = dataAreasDi + '-' + dataTownTo;  // 字符串链接
                                     let areasTownObj = that.parseCondition({condition: areasTownString}); // 转换成对象
                                     Object.assign(conditionObject, areasTownObj);   // 合并对象
-                                    alert("conditionObject"+conditionObject);
+                                    alert("conditionObject"+JSON.stringify(conditionObject));
                                     let conditionString = that.objectToString(conditionObject); // 转换成字符串
+                                    alert('conditionString'+conditionString);
                                     console.log(conditionString);
                                     window.location.href = url + conditionString;  // 跳转的URL
                                 }
@@ -197,9 +199,10 @@ class ListController extends Controller {
                             $('#dic > p').html(dataAreasName);
                             let dataAreasDiObj =  that.parseCondition({condition:dataAreasDi});  // 转换成对象
                             Object.assign(conditionObject,dataAreasDiObj); // 合并对象
-                            alert("conditionObject"+conditionObject);
+                            alert("conditionObject"+JSON.stringify(conditionObject));
                             delete(conditionObject['to']);  // 删除town的对象
                             let conditionString = that.objectToString(conditionObject); // 转换成字符串
+                            alert('conditionString'+conditionString);
                             console.log(conditionString);
                             window.location.href = url + conditionString;  // 跳转的URL
 
@@ -208,8 +211,9 @@ class ListController extends Controller {
                             let areasTownString = dataAreasDi + '-' + dataTownTo;  // 字符串链接
                             let areasTownObj = that.parseCondition({condition: areasTownString}); // 转换成对象
                             Object.assign(conditionObject, areasTownObj);   // 合并对象
-                            alert("conditionObject"+conditionObject);
+                            alert("conditionObject"+JSON.stringify(conditionObject));
                             let conditionString = that.objectToString(conditionObject); // 转换成字符串
+                            alert('conditionString'+conditionString);
                             console.log(conditionString);
                             window.location.href = url + conditionString;  // 跳转的URL
                         }
@@ -556,7 +560,8 @@ class ListController extends Controller {
                     }else {
                         tagString  = tagString +'-'+"ta-1"
                     }
-                }else {
+                }
+                else {
                     if(index == 0) {
                         tagString = "ta-0"
                     }else {
@@ -600,8 +605,9 @@ class ListController extends Controller {
             }else {
                 delete(conditionObject['dt'])
             }
+            console.log(tagString+'tagString');
             Object.assign(moreDta, tagObj, areaObj, decorationObj); // 合并对象
-            if (areaObj['ar'] || decorationObj['dt'] || tagString != "ta-0-ta-0-ta-0-ta-0"){
+            if (areaObj['ar'] || decorationObj['dt'] || tagObj['ta']){
                 $('#more').find('i').addClass('bacchosed');
                 $("#more").removeClass('active-color-top');
                 $("#more").addClass('chosed')
@@ -615,6 +621,7 @@ class ListController extends Controller {
             $('.more').slideToggle();
             Object.assign(conditionObject, tagObj,areaObj,decorationObj); // 合并对象
             let conditionString = that.objectToString(conditionObject); // 转换成字符串
+            console.log(url + conditionString);
             window.location.href = url + conditionString; // 跳转的URL
         });
         /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -819,6 +826,7 @@ class ListController extends Controller {
                 $('.house-type').slideUp();
                 $('.more').slideToggle();
             }
+            $('.sort-chose').hide();
             /*self.firstGivePage(conditionObject,self);*/
         });
         /*区域与地铁选择点击事件*/
