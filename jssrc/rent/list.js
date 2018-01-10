@@ -827,6 +827,7 @@ class ListController extends Controller {
                 $('.more').slideToggle();
             }
             $('.sort-chose').hide();
+            $('.bac').css({'z-index': '10', 'top': '4.5rem'});
             /*self.firstGivePage(conditionObject,self);*/
         });
         /*区域与地铁选择点击事件*/
@@ -1105,16 +1106,19 @@ class ListController extends Controller {
    把对象处理成字符串
    -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
     objectToString(obj) {
+        alert("进入对象转字符串函数");
         let conditionKeyArray = Object.keys(obj);
         let conditionValueArray = Object.values(obj);
         let conditionString = '';
-        console.log(conditionKeyArray);
-        console.log(conditionValueArray);
-        conditionKeyArray.forEach((item, index) => {
-            let itemUp = item;
+        alert('conditionKeyArray'+JSON.stringify(conditionKeyArray));
+        alert('conditionValueArray'+JSON.stringify(conditionValueArray));
+        conditionKeyArray.forEach((itemUp, index) => {
+            alert("进入keys循环");
             if (index == 0) {
+                alert("index == 0");
                 if (conditionValueArray[index].constructor == Array){
                     conditionValueArray[index].forEach(function (item,index) {
+                        alert("1进入values循环");
                         if (index == 0){
                             conditionString = itemUp + '-'+ item
                         }else {
@@ -1123,21 +1127,24 @@ class ListController extends Controller {
 
                     })
                 }else {
-                    conditionString = item + '-' + conditionValueArray[index]
+                    conditionString = itemUp + '-' + conditionValueArray[index]
                 }
 
             } else {
+                alert("index !== 0");
                 if (conditionValueArray[index].constructor == Array){
                     conditionValueArray[index].forEach(function (item,index) {
+                        alert("2进入values循环");
                             conditionString = conditionString + '-'+ itemUp + '-'+ item
                     })
                 }else {
-                    conditionString = conditionString + '-' + item + '-' + conditionValueArray[index]
+                    conditionString = conditionString + '-' + itemUp + '-' + conditionValueArray[index]
                 }
 
             }
 
         });
+        alert("conditionString"+conditionString);
         return conditionString
     }
 }
