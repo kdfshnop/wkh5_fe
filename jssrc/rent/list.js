@@ -547,6 +547,7 @@ class ListController extends Controller {
             let  tagObj={};
             let areaObj={};
             let decorationObj = {};
+            let areaArray = [];
             tag.each(function (index,item) {
                 if(item.classList.length == 1){ // 根据标签样式判断是否有选择
                     if(index == 0) {
@@ -565,9 +566,22 @@ class ListController extends Controller {
             });
             area.each(function (index,item) {
                 if(item.classList.length == 1){
-                    areaString = $(`.area > ul >li:eq(${index})`).attr('data-ar');
+                    areaArray.push(index)
                 }
             });
+            if (areaArray){
+                if (areaArray.length >1){
+                    areaArray.forEach(function (item,index) {
+                        if (index == 0){
+                            areaString = $(`.area > ul >li:eq(${item})`).attr('data-ar')
+                        }else {
+                            areaString = areaString +"-"+$(`.area > ul >li:eq(${item})`).attr('data-ar')
+                        }
+                    })
+                }else {
+                    areaString = $(`.area > ul >li:eq(${areaArray[0]})`).attr('data-ar')
+                }
+            }
             decoration.each(function (index,item) {
                 if(item.classList.length == 1){    // 判断哪些有样式 建立数组
                     decorationArray.push(index);
@@ -851,7 +865,7 @@ class ListController extends Controller {
         });
         /*更多 面积的点击*/
         $('.area > ul >li').click(function () {
-            $(this).siblings().removeClass('active-house');
+           /* $(this).siblings().removeClass('active-house');*/
             $(this).toggleClass('active-house');
         });
         /*更多 装修的点击*/
@@ -1055,14 +1069,26 @@ class ListController extends Controller {
         }
         //面积 初次选中渲染
         if (conditionObject['ar']) {
-            let conditionAr = $('.area >ul>li');
-            let conditionString = self.objectToString({"ar": conditionObject['ar']}); // 对象转换成字符串
-            conditionAr.each(function (index,item) {
-                if (conditionString == $(`.area>ul>li:eq(${index})`).attr('data-ar')){
-                    $(`.area>ul>li:eq(${index})`).addClass('active-house')
-                }else {
-                    $(`.area>ul>li:eq(${index})`).removeClass('active-house')
-                }
+            let numberD = [0,1,2,3,4,5,6];
+            if (conditionObject['ar'].length > 1){
+                conditionObject['ar'].forEach(function (item,index) {
+                    $(`.area>ul>li:eq(${item})`).addClass('active-house');
+                    numberD.forEach(function (itemD,indexD) {
+                        if (item  == itemD){
+                            numberD.splice(indexD,1);
+                        }
+                    })
+                })
+            }else {
+                $(`.area>ul>li:eq(${conditionObject['ar']})`).addClass('active-house');
+                numberD.forEach(function (itemD,indexD) {
+                    if (conditionObject['ar']  == itemD){
+                        numberD.splice(indexD,1);
+                    }
+                })
+            }
+            numberD.forEach(function (item) {
+                $(`.area>ul>li:eq(${item})`).removeClass('active-house')
             })
         }
         //装修 初次选中渲染
