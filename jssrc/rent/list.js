@@ -657,7 +657,7 @@ class ListController extends Controller {
             if ($(this).val()) {
                 $('.icon-close').show();
                 $('.have-result').hide();
-                $('.icon-close').click(function () {
+                $('.clear-icon-close').click(function () {
                     $('#searchInput').val('');
                     $('.icon-close').hide();
                     $('#showResult').empty();
@@ -733,6 +733,15 @@ class ListController extends Controller {
 
 
             }
+        });
+
+        $('.icon-close').click(function () {
+            $('#searchInput').val('');
+            $('.icon-close').hide();
+            $('#showResult').empty();
+            /*$('.have-result').show();*/
+            $('.no-result').hide();
+             $('.have-result').hide();
         });
         /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
         搜索初步渲染
@@ -892,6 +901,7 @@ class ListController extends Controller {
             $('.rent-search').addClass('active-search');
             $('.rent-search').siblings('ul').addClass('on-hide');
             $('.all-control').addClass('on-hide');
+            $('.icon-close').addClass('clear-icon-close');
             $('body').css('background-color','#F0F0F0');
             if (JSON.parse(localStorage.getItem('searchHistory'))) {  // Storage取值渲染
                 $('.have-result').show();
