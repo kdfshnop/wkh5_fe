@@ -15,11 +15,12 @@ class ListController extends Controller {
         let url =  location.href.slice(0,location.href.lastIndexOf('/')+1);
         let conditionQuery = location.href.slice(location.href.lastIndexOf('/')+1,location.href.length);
         let condition ='';
-        if (conditionQuery == "rent"){
-            conditionQuery = "ta-0-ta-0-ta-0-ta-0-la-0";
+        console.log(conditionQuery);
+        if (conditionQuery == "rent" || conditionQuery ==""){
+            conditionQuery = "la-0";
             url = url +"rent/"
         }
-        if (conditionQuery.indexOf('?') == -1){
+        if (conditionQuery.indexOf('?') == -1) {
             condition = conditionQuery
         }else {
             condition = conditionQuery.slice(0,conditionQuery.indexOf('?'));
@@ -155,21 +156,19 @@ class ListController extends Controller {
                                     $('#dic > p').html(dataAreasName);
                                     let dataAreasDiObj =  that.parseCondition({condition:dataAreasDi});  // 转换成对象
                                     Object.assign(conditionObject,dataAreasDiObj); // 合并对象
+                                    alert("conditionObject"+conditionObject);
                                     delete(conditionObject['to']);  // 删除town的对象
                                     let conditionString = that.objectToString(conditionObject); // 转换成字符串
                                     console.log(conditionString);
-                                    alert("conditionString"+conditionString);
-                                    alert("window.location.href"+url + conditionString);
                                     window.location.href = url + conditionString;  // 跳转的URL
                                 } else {
                                     $('#dic > p').html(dataTownName);
                                     let areasTownString = dataAreasDi + '-' + dataTownTo;  // 字符串链接
                                     let areasTownObj = that.parseCondition({condition: areasTownString}); // 转换成对象
                                     Object.assign(conditionObject, areasTownObj);   // 合并对象
+                                    alert("conditionObject"+conditionObject);
                                     let conditionString = that.objectToString(conditionObject); // 转换成字符串
                                     console.log(conditionString);
-                                    alert("conditionString"+conditionString);
-                                    alert("window.location.href"+url + conditionString);
                                     window.location.href = url + conditionString;  // 跳转的URL
                                 }
                                 $('.bac').hide();
@@ -194,11 +193,10 @@ class ListController extends Controller {
                             $('#dic > p').html(dataAreasName);
                             let dataAreasDiObj =  that.parseCondition({condition:dataAreasDi});  // 转换成对象
                             Object.assign(conditionObject,dataAreasDiObj); // 合并对象
+                            alert("conditionObject"+conditionObject);
                             delete(conditionObject['to']);  // 删除town的对象
                             let conditionString = that.objectToString(conditionObject); // 转换成字符串
                             console.log(conditionString);
-                            alert("conditionString"+conditionString);
-                            alert("window.location.href"+url + conditionString);
                             window.location.href = url + conditionString;  // 跳转的URL
 
                         } else {
@@ -206,6 +204,7 @@ class ListController extends Controller {
                             let areasTownString = dataAreasDi + '-' + dataTownTo;  // 字符串链接
                             let areasTownObj = that.parseCondition({condition: areasTownString}); // 转换成对象
                             Object.assign(conditionObject, areasTownObj);   // 合并对象
+                            alert("conditionObject"+conditionObject);
                             let conditionString = that.objectToString(conditionObject); // 转换成字符串
                             console.log(conditionString);
                             window.location.href = url + conditionString;  // 跳转的URL
@@ -815,7 +814,7 @@ class ListController extends Controller {
                 $('.house-type').slideUp();
                 $('.more').slideToggle();
             }
-            self.firstGivePage(conditionObject,self);
+            /*self.firstGivePage(conditionObject,self);*/
         });
         /*区域与地铁选择点击事件*/
         $('.tabs > ul > li').click(function () {
@@ -947,7 +946,7 @@ class ListController extends Controller {
             let laString = '';
             let numberD = [0,1,2,3,4,5];
             if (conditionObject['la'].length > 1) {
-                console.log(conditionObject['la']);
+               /* console.log(conditionObject['la']);*/
                 conditionObject['la'].forEach(function (item) {
                     $(`.house-list>ul>li:eq(${item})`).addClass('active-house');
                     numberD.forEach(function (itemN,indexN) {
@@ -963,6 +962,7 @@ class ListController extends Controller {
                 $('#type').find('i').addClass('bacchosed');
                 $('#type').addClass('chosed');
             } else {
+                console.log(conditionObject['la']);
                 if (conditionObject['la'] == 0){
                     $('#type >p').html('户型');
                     $('#type').find('i').removeClass('bacchosed');
@@ -1009,7 +1009,10 @@ class ListController extends Controller {
         } else {
             $(`.price-list>ul>li:eq(0)`).addClass('chosed');
         }
-        let taString = self.objectToString({'ta':conditionObject['ta']}); // 对象转换成字符串
+        let taString = "ta-0-ta-0-ta-0-ta-0" ;
+        if (conditionObject['ta']){
+           taString = self.objectToString({'ta':conditionObject['ta']}); // 对象转换成字符串
+        }
         if (taString !="ta-0-ta-0-ta-0-ta-0" || conditionObject['ar'] || conditionObject['dt']){
             $('#more').find('i').addClass('bacchosed');
             $('#more').addClass('chosed');
@@ -1092,6 +1095,8 @@ class ListController extends Controller {
         let conditionKeyArray = Object.keys(obj);
         let conditionValueArray = Object.values(obj);
         let conditionString = '';
+        console.log(conditionKeyArray);
+        console.log(conditionValueArray);
         conditionKeyArray.forEach((item, index) => {
             let itemUp = item;
             if (index == 0) {
