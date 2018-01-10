@@ -15,10 +15,10 @@
 @import "../components/download-app.less" ;
 
 body{
-  background-color: #F0F0F0;
+  background-color: #F0F0F0;  
 }
 .all-dis{
-  padding-bottom: 50px;
+  padding-bottom: 120px;
 }
 .icon-back{
   color: @default-color;
@@ -147,7 +147,13 @@ body{
         display: block;
         color : @primary-color ;
         .clearfix() ;
+        span {
+          display : block ;
+          margin-right : 2rem ;
+          .text-ellipsis() ;
+        }        
         >.icon-next {
+          color : @default-font-color ;
           display: inline-block;
           float : right ;
           font-size : 1.6rem ;
@@ -231,7 +237,7 @@ body{
       .outline {
         .fit-height() ;
         .icon-next {
-          color :  @primary-color;
+          color :  @default-font-color;
           float : right ;
           display: inline-block;
           font-size : 1.6rem ;
@@ -239,7 +245,8 @@ body{
         }
       }
        .name {
-        color: #000000;
+        color: #000000 ;
+        .text-ellipsis() ;
       }
     }
     &.total-item {
