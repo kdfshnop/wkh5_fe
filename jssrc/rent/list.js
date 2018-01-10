@@ -160,10 +160,8 @@ class ListController extends Controller {
                                     $('#dic > p').html(dataAreasName);
                                     let dataAreasDiObj =  that.parseCondition({condition:dataAreasDi});  // 转换成对象
                                     Object.assign(conditionObject,dataAreasDiObj); // 合并对象
-                                    alert("conditionObject"+JSON.stringify(conditionObject));
                                     delete(conditionObject['to']);  // 删除town的对象
                                     let conditionString = that.objectToString(conditionObject); // 转换成字符串
-                                    alert('conditionString'+conditionString);
                                     console.log(conditionString);
                                     window.location.href = url + conditionString;  // 跳转的URL
                                 } else {
@@ -171,9 +169,7 @@ class ListController extends Controller {
                                     let areasTownString = dataAreasDi + '-' + dataTownTo;  // 字符串链接
                                     let areasTownObj = that.parseCondition({condition: areasTownString}); // 转换成对象
                                     Object.assign(conditionObject, areasTownObj);   // 合并对象
-                                    alert("conditionObject"+JSON.stringify(conditionObject));
                                     let conditionString = that.objectToString(conditionObject); // 转换成字符串
-                                    alert('conditionString'+conditionString);
                                     console.log(conditionString);
                                     window.location.href = url + conditionString;  // 跳转的URL
                                 }
@@ -199,10 +195,8 @@ class ListController extends Controller {
                             $('#dic > p').html(dataAreasName);
                             let dataAreasDiObj =  that.parseCondition({condition:dataAreasDi});  // 转换成对象
                             Object.assign(conditionObject,dataAreasDiObj); // 合并对象
-                            alert("conditionObject"+JSON.stringify(conditionObject));
                             delete(conditionObject['to']);  // 删除town的对象
                             let conditionString = that.objectToString(conditionObject); // 转换成字符串
-                            alert('conditionString'+conditionString);
                             console.log(conditionString);
                             window.location.href = url + conditionString;  // 跳转的URL
 
@@ -211,9 +205,7 @@ class ListController extends Controller {
                             let areasTownString = dataAreasDi + '-' + dataTownTo;  // 字符串链接
                             let areasTownObj = that.parseCondition({condition: areasTownString}); // 转换成对象
                             Object.assign(conditionObject, areasTownObj);   // 合并对象
-                            alert("conditionObject"+JSON.stringify(conditionObject));
                             let conditionString = that.objectToString(conditionObject); // 转换成字符串
-                            alert('conditionString'+conditionString);
                             console.log(conditionString);
                             window.location.href = url + conditionString;  // 跳转的URL
                         }
@@ -1108,7 +1100,7 @@ class ListController extends Controller {
    把对象处理成字符串
    -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
     objectToString(obj) {
-        alert("进入对象转字符串函数");
+
         let conditionKeyArray = [];
         let conditionValueArray =[];
             for(let key in obj) {
@@ -1118,7 +1110,6 @@ class ListController extends Controller {
          /*   conditionKeyArray = Object.keys(obj);
             conditionValueArray = Object.values(obj);  */
         let conditionString = '';
-        alert('conditionKeyArray'+JSON.stringify(conditionKeyArray));
         conditionKeyArray.forEach((itemUp, index) => {
             if (index == 0) {
                 if (conditionValueArray[index].constructor == Array){
@@ -1146,7 +1137,6 @@ class ListController extends Controller {
             }
 
         });
-        alert("conditionString"+conditionString);
         return conditionString
     }
 }
