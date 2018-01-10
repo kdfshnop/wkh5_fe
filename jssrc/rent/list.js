@@ -11,6 +11,7 @@ class ListController extends Controller {
         this.readyFun();
         let that = this;
         let cityid = 43;
+        $.cookie('cityId',cityid);
         $.cookie('cityId') ?  cityid = $.cookie('cityId'): cityid = 43;
         let url =  location.href.slice(0,location.href.lastIndexOf('/')+1);
         let conditionQuery = location.href.slice(location.href.lastIndexOf('/')+1,location.href.length);
@@ -28,7 +29,7 @@ class ListController extends Controller {
         }else {
             condition = conditionQuery.slice(0,conditionQuery.indexOf('?'));
         }
-        console.log()
+        console.log();
         let conditionObject = this.parseCondition({condition:condition});  // 转成对象
         this.choseFun(conditionObject,url);
         /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
