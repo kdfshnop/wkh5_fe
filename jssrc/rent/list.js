@@ -1081,6 +1081,7 @@ class ListController extends Controller {
     首次渲染 所选择的条件
     -----------------------------------------------------------------------------------------------------------------------------------------------------------------------++*/
     firstGivePage(conditionObject,self) {
+     /*   console.log(4323421432423);*/
         // 租房房型初次选中渲染
         if (conditionObject['la']) {
             let conditionPr = $('.house-list>ul>li');
@@ -1118,6 +1119,7 @@ class ListController extends Controller {
             }
         }else {
             $(`.house-list>ul>li:eq(0)`).addClass('active-house');
+            $(`.house-list>ul>li:eq(0)`).siblings().removeClass('active-house')
         }
 
         //租房价格初次选中渲染
