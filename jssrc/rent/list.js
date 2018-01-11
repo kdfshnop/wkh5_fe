@@ -779,7 +779,7 @@ class ListController extends Controller {
 
             }
         });
-
+        /* 删除搜索框并跳转*/
         $('.contwo').click(function () {
             $('#searchInput').val('');
             $('.icon-close').hide();
@@ -790,7 +790,7 @@ class ListController extends Controller {
             let conditionString = that.objectToString(conditionObject); // 转换成字符串
              window.location.href = url + conditionString
         });
-
+         /*删除搜索框不跳转*/
         $('.conone').click(function () {
             $('#searchInput').val('');
             $('.icon-close').hide();
@@ -1064,6 +1064,7 @@ class ListController extends Controller {
             $('.rent-search').siblings('ul').addClass('on-hide');
             $('.all-control').addClass('on-hide');
             $('.search-result').show();
+            $('.show-result').hide();
             $('.back').hide();
             $('.fanhui').show();
             $('.contwo').hide();
@@ -1122,6 +1123,7 @@ class ListController extends Controller {
             $('.back').show();
             $(this).hide();
             $('.contwo').hide();
+            $('.show-result').hide();
             $('#searchInput').val('');
         });
         /*返回到首页*/
@@ -1386,7 +1388,7 @@ class ListController extends Controller {
                 }
             })
         }
-        let domeRent=  `<a  class="rent-item box" href=" ${item.url }">
+        let domeRent=  `<a  class="rent-item box" href=" ${item.url}">
             <div class="left">
                 <img src="${item.firstImageUrl}?x-oss-process=image/resize,w_120" alt="${ item.estateName} " class="lazy">
             </div>
@@ -1420,7 +1422,6 @@ class ListController extends Controller {
            /* apiDataType:"application/json",*/
             threshold : 50 ,
             callback : function(data) {
-                console.log("data"+JSON.stringify(data));
                 if( ! data.data) return ;
                 $.each(data.data , (index , rent)=> {
                     rent.url = "/shanghai/rent/" + rent.encryptHouseId + ".html" ;
