@@ -15,8 +15,9 @@ class ListController extends Controller {
         $.cookie('cityId') ?  cityid = $.cookie('cityId'): cityid = 43;
         let url =  location.href.slice(0,location.href.lastIndexOf('/')+1);
         let conditionQuery = location.href.slice(location.href.lastIndexOf('/')+1,location.href.length);
-        let condition ='';
-        let subEstateId ='';
+        let condition ='';  // condition字符串
+        let valueSearch =''; // 检索的value值
+        let queryString = '';// ?后面的参数
         console.log(conditionQuery);
         if (conditionQuery == "rent" ){
             conditionQuery = "la-0";
@@ -29,6 +30,8 @@ class ListController extends Controller {
             condition = conditionQuery
         }else {
             condition = conditionQuery.slice(0,conditionQuery.indexOf('?'));
+            queryString = conditionQuery.slice(conditionQuery.indexOf('?')+1).split("=");
+            console.log("queryString"+queryString);
         }
         console.log();
         let conditionObject = this.parseCondition({condition:condition});  // 转成对象
@@ -704,9 +707,9 @@ class ListController extends Controller {
                                  titleName = item.displayname.replace(item.markname,`<span>${item.markname}</span>`);
                                  addreName = item.address.replace(item.markname,`<span>${item.markname}</span>`);
                                  if (index == 0){
-                                     searchaAcWord = `<li data-subEstateid="${item.subEstateId}" data-name="${item.displayname}" data-address="${item.address}"><p>${titleName}</p><span>${addreName}</span></li>`
+                                     searchaAcWord = `<li data-type="${item.type}" data-value="${item.value}" data-name="${item.displayname}" data-address="${item.address}"><p>${titleName}</p><span>${addreName}</span></li>`
                                  }else {
-                                     searchaAcWord = searchaAcWord +`<li data-subEstateid="${item.subEstateId}" data-name="${item.displayname}" data-address="${item.address}"><p>${titleName}</p><span>${addreName}</span></li>`
+                                     searchaAcWord = searchaAcWord +`<li data-type="${item.type}" data-value="${item.value}" data-name="${item.displayname}" data-address="${item.address}"><p>${titleName}</p><span>${addreName}</span></li>`
                                  }
                              }) ;
                              $('#showResult').empty();
@@ -720,28 +723,31 @@ class ListController extends Controller {
                              JSON.parse( localStorage.getItem('searchHistory')) ?  saveLocalStorage = JSON.parse( localStorage.getItem('searchHistory')) : saveLocalStorage = [];
                              let singleData={
                                  "key":$(this).attr('data-name'),
-                                 "id": $(this).attr('data-subEstateid'),
+                                 "id": $(this).attr('data-value'),
                                  "address": $(this).attr('data-address')
                              };
                              saveLocalStorage.push(singleData);
                              localStorage.setItem("searchHistory",JSON.stringify(saveLocalStorage));
                              let subEstateid = $(this).attr('data-subEstateid');
                              let  conditionString = "ta-0-ta-0-ta-0-ta-0-la-0";
-                             window.location.href = url + conditionString + "?subEstateId=" + subEstateid;
+                             valueSearch = $(this).attr('data-value');
+                             let typeS = $(this).attr('data-type');
+                             window.location.href = url + conditionString + that.checkType(typeS,valueSearch);
                          });
                      }});
                  if (event.keyCode == 13){ //enter存值  ta-0-ta-0-ta-0-ta-0-la-0
                      JSON.parse( localStorage.getItem('searchHistory')) ?  saveLocalStorage = JSON.parse( localStorage.getItem('searchHistory')) : saveLocalStorage = [];
                      let singleData={
                          "key":$('#showResult>li:eq(0)').attr('data-name'),
-                         "id": $('#showResult>li:eq(0)').attr('data-subEstateid'),
+                         "id": $('#showResult>li:eq(0)').attr('data-value'),
                          "address": $('#showResult>li:eq(0)').attr('data-address')
                      };
                      saveLocalStorage.push(singleData);
                      localStorage.setItem("searchHistory",JSON.stringify(saveLocalStorage));
                      let  conditionString = "ta-0-ta-0-ta-0-ta-0-la-0";
-                       subEstateId = $('#showResult>li:eq(0)').attr('data-subEstateid');
-                     window.location.href = url + conditionString+'?subEstateId='+ subEstateId;
+                     valueSearch = $('#showResult>li:eq(0)').attr('data-value');
+                     let typeS = $('#showResult>li:eq(0)').attr('data-type');
+                     window.location.href = url + conditionString + that.checkType(typeS,valueSearch);
                  }
             }
         });
@@ -853,8 +859,8 @@ class ListController extends Controller {
                 conditionData["districtId"] =conditionObj['di']
             }
             delete(conditionObj['di']);
-            if (subEstateId){
-                conditionData["subEstateId"] = subEstateId
+            if (queryString){
+                conditionData[queryString[0]] = queryString[1]
             }
             Object.assign(conditionData,conditionObj) ;
         }else {
@@ -1342,6 +1348,26 @@ class ListController extends Controller {
         }) ;
 
     } ;
+    /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+     判断search板块
+     -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
+   checkType(type,value){
+       let typeSearch = '';
+       if (type == 1){
+           typeSearch = "?districtId="+value;
+       }else if (type == 2){
+           typeSearch = "?townId="+value;
+       }else if (type == 3){
+           typeSearch = "?subwayLine="+value;
+       }else if (type == 4){
+           typeSearch = "?subwayStation="+value;
+       }else if (type == 5){
+           typeSearch = "?subEstateId="+value;
+       }
+       return typeSearch
+
+   }
+
 }
 
 
