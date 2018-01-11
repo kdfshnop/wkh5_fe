@@ -11,19 +11,29 @@ class ListController extends Controller {
         this.readyFun();
         let that = this;
         let cityid = 43;
+        $.cookie('cityId',cityid);
         $.cookie('cityId') ?  cityid = $.cookie('cityId'): cityid = 43;
         let url =  location.href.slice(0,location.href.lastIndexOf('/')+1);
         let conditionQuery = location.href.slice(location.href.lastIndexOf('/')+1,location.href.length);
-        let condition ='';
-        if (conditionQuery == "rent"){
-            conditionQuery = "ta-0-ta-0-ta-0-ta-0-la-0";
+        let condition ='';  // condition字符串
+        let valueSearch =''; // 检索的value值
+        let queryString = '';// ?后面的参数
+        console.log(conditionQuery);
+        if (conditionQuery == "rent" ){
+            conditionQuery = "la-0";
             url = url +"rent/"
+        }else if (conditionQuery ==""){
+            conditionQuery = "la-0";
+            url = url
         }
-        if (conditionQuery.indexOf('?') == -1){
+        if (conditionQuery.indexOf('?') == -1) {
             condition = conditionQuery
         }else {
             condition = conditionQuery.slice(0,conditionQuery.indexOf('?'));
+            queryString = conditionQuery.slice(conditionQuery.indexOf('?'));
+            console.log("queryString"+queryString);
         }
+        console.log();
         let conditionObject = this.parseCondition({condition:condition});  // 转成对象
         this.choseFun(conditionObject,url);
         /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -98,7 +108,7 @@ class ListController extends Controller {
                             delete(conditionObject['li']);  // 删除地铁线路的对象
                             delete(conditionObject['st']);  // 删除地铁线路的对象
                             let conditionString = that.objectToString(conditionObject);
-                            window.location.href= url + conditionString;
+                            window.location.href = url + conditionString+queryString;
                         }else {
                             dataDic.forEach(function (item) {    //
                                 if (conditionObject["di"]){
@@ -158,7 +168,7 @@ class ListController extends Controller {
                                     delete(conditionObject['to']);  // 删除town的对象
                                     let conditionString = that.objectToString(conditionObject); // 转换成字符串
                                     console.log(conditionString);
-                                    window.location.href= url + conditionString;  // 跳转的URL
+                                    window.location.href = url + conditionString+queryString;  // 跳转的URL
                                 } else {
                                     $('#dic > p').html(dataTownName);
                                     let areasTownString = dataAreasDi + '-' + dataTownTo;  // 字符串链接
@@ -166,7 +176,7 @@ class ListController extends Controller {
                                     Object.assign(conditionObject, areasTownObj);   // 合并对象
                                     let conditionString = that.objectToString(conditionObject); // 转换成字符串
                                     console.log(conditionString);
-                                    window.location.href = url + conditionString;  // 跳转的URL
+                                    window.location.href = url + conditionString+queryString;  // 跳转的URL
                                 }
                                 $('.bac').hide();
                                 $('#dic').children('span').removeClass('direction');
@@ -193,7 +203,8 @@ class ListController extends Controller {
                             delete(conditionObject['to']);  // 删除town的对象
                             let conditionString = that.objectToString(conditionObject); // 转换成字符串
                             console.log(conditionString);
-                            window.location.href= url + conditionString;  // 跳转的URL
+                            window.location.href = url + conditionString+queryString;  // 跳转的URL
+
                         } else {
                             $('#dic > p').html(dataTownName);
                             let areasTownString = dataAreasDi + '-' + dataTownTo;  // 字符串链接
@@ -201,7 +212,7 @@ class ListController extends Controller {
                             Object.assign(conditionObject, areasTownObj);   // 合并对象
                             let conditionString = that.objectToString(conditionObject); // 转换成字符串
                             console.log(conditionString);
-                            window.location.href = url + conditionString;  // 跳转的URL
+                            window.location.href = url + conditionString + queryString;  // 跳转的URL
                         }
                         $('.bac').hide();
                         $('#dic').children('span').removeClass('direction');
@@ -324,7 +335,7 @@ class ListController extends Controller {
                                 delete(conditionObject['st']);  // 删除站点的对象
                                 let conditionString = that.objectToString(conditionObject);   // 转换成字符串
                                 console.log(conditionString);
-                                window.location.href = url + conditionString;  // 跳转的URL
+                                window.location.href = url + conditionString+queryString;  // 跳转的URL
                             } else {
                                 $('#dic > p').html(dataStationName); // 判断赋值给检索title
                                 let lineStationString = dataLineLi + '-' + dataStationSt; // 合并字符串
@@ -332,7 +343,7 @@ class ListController extends Controller {
                                 Object.assign(conditionObject, lineStationObj); // 合并对象
                                 let conditionString = that.objectToString(conditionObject); // 转换成字符串
                                 console.log(conditionString);
-                                window.location.href = url + conditionString; // 跳转的URL
+                                window.location.href = url + conditionString+queryString; // 跳转的URL
                             }
                             $('.bac').hide();
                             $('#dic').children('span').removeClass('direction');
@@ -360,7 +371,7 @@ class ListController extends Controller {
                             delete(conditionObject['st']);  // 删除站点的对象
                             let conditionString = that.objectToString(conditionObject);   // 转换成字符串
                             console.log(conditionString);
-                            window.location.href = url + conditionString;  // 跳转的URL
+                            window.location.href = url + conditionString+queryString;  // 跳转的URL
                         } else {
                             $('#dic > p').html(dataStationName); // 判断赋值给检索title
                             let lineStationString = dataLineLi + '-' + dataStationSt; // 合并字符串
@@ -368,7 +379,7 @@ class ListController extends Controller {
                             Object.assign(conditionObject, lineStationObj); // 合并对象
                             let conditionString = that.objectToString(conditionObject); // 转换成字符串
                             console.log(conditionString);
-                            window.location.href = url + conditionString; // 跳转的URL
+                            window.location.href = url + conditionString+queryString; // 跳转的URL
                         }
                         $('.bac').hide();
                         $('#dic').children('span').removeClass('direction');
@@ -398,7 +409,7 @@ class ListController extends Controller {
                 delete(conditionObject['pr']);  // 删除价格参数的对象
                 let conditionString = that.objectToString(conditionObject); // 对象转换成字符串
                 console.log(conditionString);
-                window.location.href = url + conditionString; // 跳转的URL
+                window.location.href = url + conditionString+queryString; // 跳转的URL
             }else {
                 $('#price>p').html($(this).html().replace(/\s|\xA0/g,""));
                 $('#price').find('i').addClass('bacchosed');
@@ -407,34 +418,34 @@ class ListController extends Controller {
                 let dataPriceObj = that.parseCondition({condition: dataPrice}); // 转换成对象
                 Object.assign(conditionObject, dataPriceObj); // 合并对象
                 let conditionString = that.objectToString(conditionObject); // 转换成字符串
-                console.log(conditionString);
-                window.location.href = url + conditionString; // 跳转的URL
+                window.location.href = url + conditionString+ queryString; // 跳转的URL
             }
             $('.price-total').slideToggle();
         });
         /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
         租房价格自定义函数
         -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
-        $('#selfPrConf').click(function () {
+        $('#selfPrConf').click(function (event) {
+            event.preventDefault();
             let lowPr = $('#lowPr').val();
             let topPr=  $('#topPr').val();
-            if (lowPr > topPr) {
-               $('.wrong').show();
-               setTimeout(function () {
-                   $('.wrong').hide();
-               },2000)
-            }else {
                 $('.wrong').hide();
                 if(lowPr && topPr){
-                    $('#price>p').html(lowPr+'-'+topPr);
-                    $('#price').find('i').addClass('bacchosed');
-                    $('#price').addClass('active-color-top');
-                    delete(conditionObject['pr']);  // 删除价格选择的参数的对象
-                    let cp = {"cp":lowPr+"to"+topPr};
-                    Object.assign(conditionObject, cp); // 合并对象
-                    let conditionString = that.objectToString(conditionObject); // 转换成字符串
-                    console.log(conditionString);
-                    window.location.href = url + conditionString; // 跳转的URL
+                    if (parseInt(lowPr) > parseInt(topPr)) {
+                        $('.wrong').show();
+                        setTimeout(function () {
+                            $('.wrong').hide();
+                        },2000)}else {
+                        $('#price>p').html(lowPr+'-'+topPr);
+                        $('#price').find('i').addClass('bacchosed');
+                        $('#price').addClass('active-color-top');
+                        delete(conditionObject['pr']);  // 删除价格选择的参数的对象
+                        let cp = {"cp":lowPr+"to"+topPr};
+                        Object.assign(conditionObject, cp); // 合并对象
+                        let conditionString = that.objectToString(conditionObject); // 转换成字符串
+                        console.log(conditionString);
+                        window.location.href = url + conditionString+ queryString; // 跳转的URL
+                    }
                 } else if (lowPr == '' && topPr){
                     $('#price>p').html(topPr+'以下');
                     $('#price').find('i').addClass('bacchosed');
@@ -454,7 +465,7 @@ class ListController extends Controller {
                     Object.assign(conditionObject, cp); // 合并对象
                     let conditionString = that.objectToString(conditionObject); // 转换成字符串
                     console.log(conditionString);
-                    window.location.href = url + conditionString; // 跳转的URL
+                    window.location.href = url + conditionString + queryString; // 跳转的URL
                 }else {
                     $('#price>p').html("租金");
                     $('#price').find('i').removeClass('bacchosed');
@@ -464,15 +475,11 @@ class ListController extends Controller {
                     delete(conditionObject['cp']);  // 删除价格自定义参数的对象
                     let conditionString = that.objectToString(conditionObject); // 转换成字符串
                     console.log(conditionString);
-                    window.location.href = url + conditionString; // 跳转的URL
+                    window.location.href = url + conditionString + queryString; // 跳转的URL
                 }
                 $('.bac').hide();
                 $('#price').children('span').removeClass('direction');
                 $('.price-total').slideToggle();
-            }
-
-
-
         });
         /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
         房型传参
@@ -513,7 +520,8 @@ class ListController extends Controller {
                  Object.assign(conditionObject, houseListObj); // 合并对象
                  let conditionString = that.objectToString(conditionObject); // 转换成字符串
                  console.log(conditionString);
-                 window.location.href = url + conditionString; // 跳转的URL
+                 console.log(url + conditionString);
+                 window.location.href = url + conditionString + queryString; // 跳转的URL
              } if (noHouseListArray.length == 5 && houseListArray[0]== 0) {
                  $('#type').find('i').removeClass('bacchosed');
                  $('#type').removeClass('active-color-top');
@@ -538,6 +546,7 @@ class ListController extends Controller {
             let  tagObj={};
             let areaObj={};
             let decorationObj = {};
+            let areaArray = [];
             tag.each(function (index,item) {
                 if(item.classList.length == 1){ // 根据标签样式判断是否有选择
                     if(index == 0) {
@@ -545,7 +554,8 @@ class ListController extends Controller {
                     }else {
                         tagString  = tagString +'-'+"ta-1"
                     }
-                }else {
+                }
+                else {
                     if(index == 0) {
                         tagString = "ta-0"
                     }else {
@@ -555,9 +565,22 @@ class ListController extends Controller {
             });
             area.each(function (index,item) {
                 if(item.classList.length == 1){
-                    areaString = $(`.area > ul >li:eq(${index})`).attr('data-ar');
+                    areaArray.push(index)
                 }
             });
+            if (areaArray){
+                if (areaArray.length >1){
+                    areaArray.forEach(function (item,index) {
+                        if (index == 0){
+                            areaString = $(`.area > ul >li:eq(${item})`).attr('data-ar')
+                        }else {
+                            areaString = areaString +"-"+$(`.area > ul >li:eq(${item})`).attr('data-ar')
+                        }
+                    })
+                }else {
+                    areaString = $(`.area > ul >li:eq(${areaArray[0]})`).attr('data-ar')
+                }
+            }
             decoration.each(function (index,item) {
                 if(item.classList.length == 1){    // 判断哪些有样式 建立数组
                     decorationArray.push(index);
@@ -589,8 +612,9 @@ class ListController extends Controller {
             }else {
                 delete(conditionObject['dt'])
             }
+            console.log(tagString+'tagString');
             Object.assign(moreDta, tagObj, areaObj, decorationObj); // 合并对象
-            if (areaObj['ar'] || decorationObj['dt'] || tagString != "ta-0-ta-0-ta-0-ta-0"){
+            if (areaObj['ar'] || decorationObj['dt'] || tagObj['ta']){
                 $('#more').find('i').addClass('bacchosed');
                 $("#more").removeClass('active-color-top');
                 $("#more").addClass('chosed')
@@ -604,7 +628,8 @@ class ListController extends Controller {
             $('.more').slideToggle();
             Object.assign(conditionObject, tagObj,areaObj,decorationObj); // 合并对象
             let conditionString = that.objectToString(conditionObject); // 转换成字符串
-            window.location.href = url + conditionString; // 跳转的URL
+            console.log(url + conditionString);
+            window.location.href = url + conditionString+ queryString; // 跳转的URL
         });
         /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
         排序
@@ -636,7 +661,7 @@ class ListController extends Controller {
             Object.assign(conditionObject, soObj); // 合并对象
             let conditionString = that.objectToString(conditionObject); // 转换成字符串
             console.log(conditionString);
-            window.location.href = url + conditionString; // 跳转的URL
+            window.location.href = url + conditionString+ queryString; // 跳转的URL
         });
         /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
         搜索
@@ -644,9 +669,9 @@ class ListController extends Controller {
 
         $('#searchInput').keyup(function (event) {
             if ($(this).val()) {
-                $('.icon-close').show();
+                $('.conone').show();
                 $('.have-result').hide();
-                $('.icon-close').click(function () {
+                $('.conone').click(function () {
                     $('#searchInput').val('');
                     $('.icon-close').hide();
                     $('#showResult').empty();
@@ -665,7 +690,6 @@ class ListController extends Controller {
                     cityId:cityid,
                     pageName:"renthouselist"
                 };
-             /*setTimeout(function () {*/
                  that.request(that.apiUrl.rent.list.acWord,sendData,{successCallback(data){
                          let renthouselistData = data.data;
                          if (renthouselistData.secondHouseList) {
@@ -678,9 +702,9 @@ class ListController extends Controller {
                                  titleName = item.displayname.replace(item.markname,`<span>${item.markname}</span>`);
                                  addreName = item.address.replace(item.markname,`<span>${item.markname}</span>`);
                                  if (index == 0){
-                                     searchaAcWord = `<li data-subEstateid="${item.subEstateId}" data-name="${item.displayname}" data-address="${item.address}"><p>${titleName}</p><span>${addreName}</span></li>`
+                                     searchaAcWord = `<li data-type="${item.type}" data-value="${item.value}" data-name="${item.displayname}" data-address="${item.address}"><p>${titleName}</p><span>${addreName}</span></li>`
                                  }else {
-                                     searchaAcWord = searchaAcWord +`<li data-subEstateid="${item.subEstateId}" data-name="${item.displayname}" data-address="${item.address}"><p>${titleName}</p><span>${addreName}</span></li>`
+                                     searchaAcWord = searchaAcWord +`<li data-type="${item.type}" data-value="${item.value}" data-name="${item.displayname}" data-address="${item.address}"><p>${titleName}</p><span>${addreName}</span></li>`
                                  }
                              }) ;
                              $('#showResult').empty();
@@ -694,34 +718,54 @@ class ListController extends Controller {
                              JSON.parse( localStorage.getItem('searchHistory')) ?  saveLocalStorage = JSON.parse( localStorage.getItem('searchHistory')) : saveLocalStorage = [];
                              let singleData={
                                  "key":$(this).attr('data-name'),
-                                 "id": $(this).attr('data-subEstateid'),
-                                 "address": $(this).attr('data-address')
+                                 "id": $(this).attr('data-value'),
+                                 "address": $(this).attr('data-address'),
+                                 "type":$(this).attr('data-type'),
                              };
-                             saveLocalStorage.push(singleData);
-                             localStorage.setItem("searchHistory",JSON.stringify(saveLocalStorage));
-                             let subEstateid = $(this).attr('data-subEstateid');
-                             let  conditionString = "ta-0-ta-0-ta-0-ta-0-la-0";
-                             window.location.href = url + conditionString + "?subEstateId=" + subEstateid;
+                             if (saveLocalStorage.length >4){
+                                 saveLocalStorage.reverse().splice(4)
+                             }
+
+                             let saveLocal= saveLocalStorage.reverse();
+                             saveLocal.push(singleData);
+                             localStorage.setItem("searchHistory",JSON.stringify(saveLocal));
+                             let conditionString = that.objectToString(conditionObject); // 转换成字符串
+                             valueSearch = $(this).attr('data-value');
+                             let typeS = $(this).attr('data-type');
+                             window.location.href = url + conditionString + that.checkType(typeS,valueSearch);
                          });
                      }});
                  if (event.keyCode == 13){ //enter存值  ta-0-ta-0-ta-0-ta-0-la-0
                      JSON.parse( localStorage.getItem('searchHistory')) ?  saveLocalStorage = JSON.parse( localStorage.getItem('searchHistory')) : saveLocalStorage = [];
                      let singleData={
                          "key":$('#showResult>li:eq(0)').attr('data-name'),
-                         "id": $('#showResult>li:eq(0)').attr('data-subEstateid'),
-                         "address": $('#showResult>li:eq(0)').attr('data-address')
+                         "id": $('#showResult>li:eq(0)').attr('data-value'),
+                         "address": $('#showResult>li:eq(0)').attr('data-address'),
+                         "type":$('#showResult>li:eq(0)').attr('data-type'),
                      };
-                     saveLocalStorage.push(singleData);
-                     localStorage.setItem("searchHistory",JSON.stringify(saveLocalStorage));
-                     let  conditionString = "ta-0-ta-0-ta-0-ta-0-la-0";
-                     let subEstateId = $('#showResult>li:eq(0)').attr('data-subEstateid');
-                     window.location.href = url + conditionString+'?subEstateId='+ subEstateId;
+                     if (saveLocalStorage.length >4){
+                         saveLocalStorage.reverse().splice(4)
+                     }
+                     let saveLocal= saveLocalStorage.reverse();
+                     saveLocal.push(singleData);
+                     localStorage.setItem("searchHistory",JSON.stringify(saveLocal));
+                     let conditionString = that.objectToString(conditionObject); // 转换成字符串
+                     valueSearch = $('#showResult>li:eq(0)').attr('data-value');
+                     let typeS = $('#showResult>li:eq(0)').attr('data-type');
+                     window.location.href = url + conditionString + that.checkType(typeS,valueSearch);
                  }
-
-        /*     },1000);*/
-
-
             }
+        });
+
+        $('.contwo').click(function () {
+            $('#searchInput').val('');
+            $('.icon-close').hide();
+            $('#showResult').empty();
+            /*$('.have-result').show();*/
+            $('.no-result').hide();
+             $('.have-result').hide();
+            let conditionString = that.objectToString(conditionObject); // 转换成字符串
+             window.location.href = url + conditionString
         });
         /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
         搜索初步渲染
@@ -729,26 +773,119 @@ class ListController extends Controller {
         if (JSON.parse(localStorage.getItem('searchHistory')) && conditionQuery.indexOf('?') > 0) {
             let firtName = JSON.parse(localStorage.getItem('searchHistory')).reverse()[0].key;
             $('#searchInput').val(firtName);
-            $('.icon-close').show();
+            $('.contwo').show();
         }
         /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
         清除搜索
         -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
 
-        $('#clearOption').click(function () {
-            let  conditionString = "ta-0-ta-0-ta-0-ta-0-la-0";
-            window.location.href = url + conditionString;
+        $('.clearOption').click(function () {
+            let conditionString = that.objectToString(conditionObject); // 转换成字符串
+            window.location.href = url + conditionString ;
         });
+        /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+        对参数转译成服务端需要的参数
+        -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
 
+        let conditionData={};
+        if (condition) {
+            let conditionString = condition;
+            let newConditionString  = conditionString.replace("to","townId").replace("li","subwayLine").replace("st","subwayStation");
+            let conditionObj =  that.parseCondition({condition:newConditionString});
+            let spaceAreaStart =[{"start":0,"end":50},{"start":50,"end":70},{"start":70,"end":90},{"start":90,"end":110},{"start":"110","end":"130"},{"start":"130","end":"150"},{"start":"150","end":"0"}]
+            conditionData = {
+                "cityId":cityid,
+                "bedRoomSumLists":[],
+                "renovations":[],
+                "spaceAreas":[]
+            };
+            if(conditionObj['la'] && conditionObj['la'].length == 1){  // 判断是对象还是数组
+                if(conditionObj['la'] == 0){
+                    conditionData['bedRoomSumLists'] =[];
+                }else {
+                    conditionData['bedRoomSumLists'].push(conditionObj.la)
+                }
+            }else {
+                conditionData['bedRoomSumLists'] = conditionObj['la']
+            }
+            delete(conditionObj['la']);
+            if (conditionObj['pr']) {   // 价格选择
+                if(conditionObj['pr'].constructor == Array) {
+                    conditionData["rentPriceStart"]= conditionObj['pr'][0];
+                    conditionData["rentPriceEnd"]= conditionObj['pr'][1]
+                }else {
+                    conditionData["rentPriceStart"]= conditionObj['pr']
+                }
+            }
+            delete(conditionObj['pr']);
+            if (conditionObj['cp']){  // 价格自定义
+                let cpArray = conditionObj['cp'].split("townId");
+                    conditionData["rentPriceStart"]= cpArray[0];
+                    conditionData["rentPriceEnd"]= cpArray[1]
+            }
+            delete(conditionObj['cp']);
+            if (conditionObj['ta']){
+                conditionData["isSubWay"] = conditionObj['ta'][0];  // 近地铁 0 任意  1 是
+                conditionData["priceDown"] = conditionObj['ta'][1]; // 降价  0 否  1 是
+                conditionData["isNewOnStore"] = conditionObj['ta'][2]; // 新上 0：否 1：是，
+                conditionData["orientation"] = conditionObj['ta'][3]; // 房屋朝向 1南北通透 0任意
+            }
+            delete(conditionObj['ta']);
+            if (conditionObj['ar']) {   // 面积选择
+                if(conditionObj['ar'].length == 1) {
+                    conditionData["spaceAreas"].push(spaceAreaStart[conditionObj['ar']])
+                }else {
+                    conditionObj['ar'].forEach(function (item) {
+                        conditionData["spaceAreas"].push(spaceAreaStart[item])
+                    });
+                }
+            }
+            delete(conditionObj['ar']);
+            if (conditionObj['dt']) {
+                if (conditionObj['dt'].length == 1){
+                    conditionData["renovations"].push(conditionObj['dt'])
+                }else {
+                    conditionData["renovations"] = conditionObj['dt'];   // 装修状况
+                }
+
+            }
+            delete(conditionObj['dt']);
+            if (conditionObj['so']) {
+                conditionData["orderType"] = conditionObj['so'];   // 装修状况
+            }
+            delete(conditionObj['so']);
+            if (conditionObj['di']){
+                conditionData["districtId"] =conditionObj['di']
+            }
+            delete(conditionObj['di']);
+            if (this.GetRequest()['districtId']){  // 查询？后面参数异步请求
+                conditionData['districtId'] = this.GetRequest()['districtId'];
+            }else if (this.GetRequest()['townId']){
+                conditionData['townId'] = this.GetRequest()['townId'];
+            }else if (this.GetRequest()['subwayLine']){
+                conditionData['subwayLine'] = this.GetRequest()['subwayLine'];
+            }else if (this.GetRequest()['subwayStation']){
+                conditionData['subwayStation'] = this.GetRequest()['subwayStation'];
+            }else if (this.GetRequest()['subEstateId']){
+                conditionData['subEstateId'] = this.GetRequest()['subEstateId'];
+            }
+            Object.assign(conditionData,conditionObj) ;
+        }else {
+            conditionData = {
+                "cityId":cityid,
+            };
+        }
+
+        this.pullload(conditionData);
     }
 
     /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
-    条件选择的初始化函数
+    条件选择的初始化函数  padding-top: 1.5rem;
     -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
     readyFun() {
         setTimeout(function () {
             $('.total-num').hide();
-            $('.all-control').css("margin-top","10rem");
+            $('.all-control').css("margin-top","8.5rem");
         },1500);
         $('.content-hight').height($(window).height()*0.7 - $('.tabs').height());
     }
@@ -775,9 +912,11 @@ class ListController extends Controller {
             $(this).children('span').toggleClass('direction');
             let list = $('.rent-list > ul > li > span');  // 获取检索当中的span标签   后面判断指向 （根据class判断指向）
             $('.bac').hide();
+            $('#sort').show();
             list.each(function (index, item) {   //根据span标签的样式指向判断底部罩层是否显示
                 if (item.classList.length == 1) {
                     $('.bac').show();
+                    $('#sort').hide();
                 }
             });
             let indexP = $(this).index();
@@ -808,6 +947,8 @@ class ListController extends Controller {
                 $('.house-type').slideUp();
                 $('.more').slideToggle();
             }
+            $('.sort-chose').hide();
+            $('.bac').css({'z-index': '10', 'top': '4.5rem'});
             self.firstGivePage(conditionObject,self);
         });
         /*区域与地铁选择点击事件*/
@@ -829,7 +970,7 @@ class ListController extends Controller {
         });
         /*更多 面积的点击*/
         $('.area > ul >li').click(function () {
-            $(this).siblings().removeClass('active-house');
+           /* $(this).siblings().removeClass('active-house');*/
             $(this).toggleClass('active-house');
         });
         /*更多 装修的点击*/
@@ -867,9 +1008,16 @@ class ListController extends Controller {
             $('.sort-chose').slideToggle();
         });
         $('.bac').click(function () {
+            $('.dic').slideUp();
+            $('.price-total').slideUp();
+            $('.house-type').slideUp();
+            $('.more').slideUp();
+            $('.rent-list > ul > li').children('span').removeClass('direction');
+            $('.rent-list > ul > li').removeClass('active-color-top');
             $('.bac').css({'z-index': '10', 'top': '4.5rem'});
             $('.bac').hide();
-            $('.sort-chose').slideToggle();
+            $('.sort').show();
+            $('.sort-chose').hide();
         });
 
         /*搜索框的点击*/
@@ -877,6 +1025,7 @@ class ListController extends Controller {
             $('.rent-search').addClass('active-search');
             $('.rent-search').siblings('ul').addClass('on-hide');
             $('.all-control').addClass('on-hide');
+            $('.search-result').show();
             $('body').css('background-color','#F0F0F0');
             if (JSON.parse(localStorage.getItem('searchHistory'))) {  // Storage取值渲染
                 $('.have-result').show();
@@ -884,9 +1033,9 @@ class ListController extends Controller {
                 let listSearchHistory = '';
                 searchHistory.forEach(function (item,index) {
                     if (index == 0){
-                        listSearchHistory = `<li data-subEstateid="${item.id}" data-name="${item.key}" data-address="${item.address}"><p>${item.key}</p><span>${item.address}</span></li>`
+                        listSearchHistory = `<li data-type="${item.type}" data-value="${item.id}" data-name="${item.key}" data-address="${item.address}"><p>${item.key}</p><span>${item.address}</span></li>`
                     }else {
-                        listSearchHistory = listSearchHistory + `<li data-subEstateid="${item.id}" data-name="${item.key}" data-address="${item.address}"><p>${item.key}</p><span>${item.address}</span></li>`
+                        listSearchHistory = listSearchHistory + `<li data-type="${item.type}" data-value="${item.id}" data-name="${item.key}" data-address="${item.address}"><p>${item.key}</p><span>${item.address}</span></li>`
                     }
                 });
                 $('#resultHistory').empty();
@@ -898,8 +1047,10 @@ class ListController extends Controller {
                     let ind =$(this).index();
                     let singleData = {
                         "key":$(this).attr('data-name'),
-                        "id": $(this).attr('data-subEstateid'),
-                        "address": $(this).attr('data-address')
+                        "id": $(this).attr('data-value'),
+                        "address": $(this).attr('data-address'),
+                        "type":$(this).attr('data-type'),
+
                     };
                     saveLocalStorage.forEach(function (item,index) {
                         if (item.id == singleData.id){
@@ -908,9 +1059,10 @@ class ListController extends Controller {
                     });
                     saveLocalStorage.push(singleData);
                     localStorage.setItem("searchHistory",JSON.stringify(saveLocalStorage));
-                    let subEstateid = $(this).attr('data-subEstateid');
-                    let  conditionString = "ta-0-ta-0-ta-0-ta-0-la-0";
-                    window.location.href = url + conditionString + "?subEstateId=" + subEstateid;
+                    let conditionString = self.objectToString(conditionObject); // 转换成字符串
+                    let valueSearch = $(this).attr('data-value');
+                    let typeS = $(this).attr('data-type');
+                    window.location.href = url + conditionString + self.checkType(typeS,valueSearch);
                 });
             }else {
                 $('.have-result').hide();
@@ -934,13 +1086,14 @@ class ListController extends Controller {
     首次渲染 所选择的条件
     -----------------------------------------------------------------------------------------------------------------------------------------------------------------------++*/
     firstGivePage(conditionObject,self) {
+     /*   console.log(4323421432423);*/
         // 租房房型初次选中渲染
         if (conditionObject['la']) {
             let conditionPr = $('.house-list>ul>li');
             let laString = '';
             let numberD = [0,1,2,3,4,5];
             if (conditionObject['la'].length > 1) {
-                console.log(conditionObject['la']);
+               /* console.log(conditionObject['la']);*/
                 conditionObject['la'].forEach(function (item) {
                     $(`.house-list>ul>li:eq(${item})`).addClass('active-house');
                     numberD.forEach(function (itemN,indexN) {
@@ -956,6 +1109,7 @@ class ListController extends Controller {
                 $('#type').find('i').addClass('bacchosed');
                 $('#type').addClass('chosed');
             } else {
+                console.log(conditionObject['la']);
                 if (conditionObject['la'] == 0){
                     $('#type >p').html('户型');
                     $('#type').find('i').removeClass('bacchosed');
@@ -970,6 +1124,7 @@ class ListController extends Controller {
             }
         }else {
             $(`.house-list>ul>li:eq(0)`).addClass('active-house');
+            $(`.house-list>ul>li:eq(0)`).siblings().removeClass('active-house')
         }
 
         //租房价格初次选中渲染
@@ -1002,7 +1157,10 @@ class ListController extends Controller {
         } else {
             $(`.price-list>ul>li:eq(0)`).addClass('chosed');
         }
-        let taString = self.objectToString({'ta':conditionObject['ta']}); // 对象转换成字符串
+        let taString = "ta-0-ta-0-ta-0-ta-0" ;
+        if (conditionObject['ta']){
+           taString = self.objectToString({'ta':conditionObject['ta']}); // 对象转换成字符串
+        }
         if (taString !="ta-0-ta-0-ta-0-ta-0" || conditionObject['ar'] || conditionObject['dt']){
             $('#more').find('i').addClass('bacchosed');
             $('#more').addClass('chosed');
@@ -1019,18 +1177,34 @@ class ListController extends Controller {
                     $(`.more-spec > ul >li:eq(${index})`).removeClass('active-house')
                 }
             })
+        }else {
+            $('.more-spec > ul >li').removeClass('active-house')
         }
         //面积 初次选中渲染
         if (conditionObject['ar']) {
-            let conditionAr = $('.area >ul>li');
-            let conditionString = self.objectToString({"ar": conditionObject['ar']}); // 对象转换成字符串
-            conditionAr.each(function (index,item) {
-                if (conditionString == $(`.area>ul>li:eq(${index})`).attr('data-ar')){
-                    $(`.area>ul>li:eq(${index})`).addClass('active-house')
-                }else {
-                    $(`.area>ul>li:eq(${index})`).removeClass('active-house')
-                }
+            let numberD = [0,1,2,3,4,5,6];
+            if (conditionObject['ar'].length > 1){
+                conditionObject['ar'].forEach(function (item,index) {
+                    $(`.area>ul>li:eq(${item})`).addClass('active-house');
+                    numberD.forEach(function (itemD,indexD) {
+                        if (item  == itemD){
+                            numberD.splice(indexD,1);
+                        }
+                    })
+                })
+            }else {
+                $(`.area>ul>li:eq(${conditionObject['ar']})`).addClass('active-house');
+                numberD.forEach(function (itemD,indexD) {
+                    if (conditionObject['ar']  == itemD){
+                        numberD.splice(indexD,1);
+                    }
+                })
+            }
+            numberD.forEach(function (item) {
+                $(`.area>ul>li:eq(${item})`).removeClass('active-house')
             })
+        }else {
+            $('.area>ul>li').removeClass('active-house')
         }
         //装修 初次选中渲染
         if (conditionObject['dt']) {
@@ -1055,6 +1229,8 @@ class ListController extends Controller {
             numberD.forEach(function (item) {
                 $(`.decoration> ul >li:eq(${item -1})`).removeClass('active-house');
             })
+        }else {
+            $('.decoration> ul >li').removeClass('active-house');
         }
     }
     /*++-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -1079,14 +1255,20 @@ class ListController extends Controller {
         return result ;
     }
     /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
-   把对象处理成字符串
+     把对象处理成字符串
    -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
     objectToString(obj) {
-        let conditionKeyArray = Object.keys(obj);
-        let conditionValueArray = Object.values(obj);
+
+        let conditionKeyArray = [];
+        let conditionValueArray =[];
+            for(let key in obj) {
+                conditionKeyArray.push(key);
+                conditionValueArray.push(obj[key]);
+            }
+         /*   conditionKeyArray = Object.keys(obj);
+            conditionValueArray = Object.values(obj);  */
         let conditionString = '';
-        conditionKeyArray.forEach((item, index) => {
-            let itemUp = item;
+        conditionKeyArray.forEach((itemUp, index) => {
             if (index == 0) {
                 if (conditionValueArray[index].constructor == Array){
                     conditionValueArray[index].forEach(function (item,index) {
@@ -1098,7 +1280,7 @@ class ListController extends Controller {
 
                     })
                 }else {
-                    conditionString = item + '-' + conditionValueArray[index]
+                    conditionString = itemUp + '-' + conditionValueArray[index]
                 }
 
             } else {
@@ -1107,14 +1289,127 @@ class ListController extends Controller {
                             conditionString = conditionString + '-'+ itemUp + '-'+ item
                     })
                 }else {
-                    conditionString = conditionString + '-' + item + '-' + conditionValueArray[index]
+                    conditionString = conditionString + '-' + itemUp + '-' + conditionValueArray[index]
                 }
 
             }
 
         });
         return conditionString
+    };
+    /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+     创建dome
+   -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
+
+    creatRent(item){
+        let houseTag=[];
+        if (item.houseTag.isSubwayHouse) {
+            houseTag.push("近地铁")
+        }  if (item.houseTag.isPriceDown) {
+            houseTag.push("降价")
+        }  if (item.houseTag.isNewHouse) {
+            houseTag.push("新上")
+        }  if(item.houseTag.isHardcover == 1){
+            houseTag.push("精装")
+        } if(item.houseTag.isHardcover == 2){
+            houseTag.push("豪装")
+        } if(item.houseTag.isSouth){
+            houseTag.push("朝南")
+        }
+        let houseTagList = '';
+        if (houseTag){
+            houseTag.forEach(function (item,index) {
+                if (index == 0){
+                    houseTagList =  `<span class="tag">${item}</span>`
+                }else {
+                    houseTagList += `<span class="tag">${item}</span>`
+                }
+            })
+        }
+        let domeRent=  `<a  class="rent-item box" href=" ${item.url }">
+            <div class="left">
+                <img src="${item.firstImageUrl}?x-oss-process=image/resize,w_120" alt="${ item.estateName} " class="lazy">
+            </div>
+            <div class="right">
+                <h4> ${item.houseTitle}</h4>
+                <p class="base-info">                    
+                   ${item.houseTypeStr} ${item.spaceArea}㎡ | ${item.districtAndTownName}
+                </p>
+                <p class="tags">${houseTagList}</p>
+                <p class="unit-price"> ${item.rentPriceStr} 元/月</p>
+            </div>
+        </a>`;
+        return domeRent
     }
+
+    /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+     上拉加载实例化
+     -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
+    pullload(conditionObject) {
+        console.log(conditionObject);
+        let self = this ;
+        //租房列表
+        $(".rent-items").pullload({
+            apiUrl : this.apiUrl.rent.list.rentHouseList ,
+            requestType: "post",
+            queryStringObject : conditionObject ,
+           /* apiDataType:"application/json",*/
+            threshold : 50 ,
+            callback : function(data) {
+                console.log("data"+JSON.stringify(data));
+                if( ! data.data) return ;
+
+                $.each(data.data , (index , rent)=> {
+                    rent.url = "/shanghai/rent/" + rent.encryptHouseId + ".html" ;
+                    $(".rent-items").append(self.creatRent(rent)) ;
+                }) ;
+            }
+        }) ;
+
+    } ;
+    /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+     判断search板块？后面的参数是什么
+     -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
+    checkType(type,value){
+       let typeSearch = '';
+       if (type == 1){
+           typeSearch = "?districtId=" + value;
+       }else if (type == 2){
+           typeSearch = "?townId="+value;
+       }else if (type == 3){
+           typeSearch = "?subwayLine="+value;
+       }else if (type == 4){
+           typeSearch = "?subwayStation="+value;
+       }else if (type == 5){
+           typeSearch = "?subEstateId="+value;
+       }
+       return typeSearch
+
+   }
+    /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+     截取？后面的参数
+     -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
+    GetRequest() {
+        let url = location.search;
+        let theRequest = {};
+        if (url.indexOf("?") !== -1) {
+            let str = url.substr(1);
+            let strs = str.split("&");
+            for(var i = 0; i < strs.length; i ++) {
+                theRequest[strs[i].split("=")[0]]=strs[i].split("=")[1];
+            }
+        }
+        // console.log(theRequest);
+        return theRequest;
+    }
+    /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+     查询？后面
+     -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
+    checkQuery(){
+        let querySting = '';
+        return querySting
+    }
+
 }
 
 

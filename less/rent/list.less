@@ -8,7 +8,7 @@
 @import "../components/rent-items.less";
 
 body{
-  background-color: @default-color;
+  background-color: #F0F0F0;
 }
 
 /*<!--条件选择-->*/
@@ -122,7 +122,8 @@ body{
   }
 }
 .all-control{
-  margin-top: 8.5rem;
+  margin-top: 8.5rem;;
+ /* background-color: #ffffff;*/
 }
 /*<!--房源总数-->*/
 .total-num{
@@ -632,7 +633,9 @@ body{
 }
 .rent-items{
   padding-left: 1.5rem;
-  margin-top: 0.5rem;
+  background-color: @default-color;
+  padding-top: 2rem;
+  padding-bottom: 5rem;
 }
 
 .search-result{
@@ -766,4 +769,10 @@ margin-top: 4.8rem;
     color: @default-color;
     font-size: 1.4rem;
   }
+}
+.rent-item.box .right{
+  text-align: left;
+}
+.rent-item.box .right .base-info{
+  padding-top: 0.2rem;
 }
