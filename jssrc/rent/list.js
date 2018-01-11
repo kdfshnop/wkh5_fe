@@ -682,7 +682,7 @@ class ListController extends Controller {
         搜索
         -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
 
-        $('#searchInput').keyup(function (event) {
+        $('#searchInput').change(function (event) {
             if ($(this).val()) {
                 $('.conone').show();
                 $('.have-result').hide();
