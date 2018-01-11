@@ -425,7 +425,8 @@ class ListController extends Controller {
         /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
         租房价格自定义函数
         -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
-        $('#selfPrConf').click(function () {
+        $('#selfPrConf').click(function (event) {
+            event.preventDefault();
             let lowPr = $('#lowPr').val();
             let topPr=  $('#topPr').val();
                 $('.wrong').hide();
@@ -819,14 +820,8 @@ class ListController extends Controller {
             delete(conditionObj['pr']);
             if (conditionObj['cp']){  // 价格自定义
                 let cpArray = conditionObj['cp'].split("townId");
-                if (cpArray[0] == 0){
-                    conditionData["rentPriceEnd"]= cpArray[1]  //价格
-                }else if(cpArray[1] == 0){
-                    conditionData["rentPriceStart"]= cpArray[0] //价格
-                }else {
                     conditionData["rentPriceStart"]= cpArray[0];
                     conditionData["rentPriceEnd"]= cpArray[1]
-                }
             }
             delete(conditionObj['cp']);
             if (conditionObj['ta']){
@@ -1351,6 +1346,7 @@ class ListController extends Controller {
      上拉加载实例化
      -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
     pullload(conditionObject) {
+        console.log(conditionObject);
         let self = this ;
         //租房列表
         $(".rent-items").pullload({
