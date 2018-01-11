@@ -18,19 +18,22 @@ class ListController extends Controller {
         let condition ='';  // condition字符串
         let valueSearch =''; // 检索的value值
         let queryString = '';// ?后面的参数
-        let areasLineSting =''// ?后面参数 区域用到互斥
+        let areasLineSting ='';  // ?后面参数 区域用到互斥
+        let  conditionstr = "la-0";
         console.log(conditionQuery);
-        if (conditionQuery == "rent" ){
-            conditionQuery = "la-0";
+        console.log(this.GetRequest());
+        if (conditionQuery == "rent?channel=jrttsub" ){
             url = url +"rent/"
         }else if (conditionQuery ==""){
-            conditionQuery = "la-0";
             url = url
         }
-        if (conditionQuery.indexOf('?') == -1) {
-            condition = conditionQuery
+        if (!this.GetRequest()) {
+            condition = conditionQuery;
         }else {
             condition = conditionQuery.slice(0,conditionQuery.indexOf('?'));
+            if (condition == "rent"){
+                condition = conditionstr
+            }
             queryString = conditionQuery.slice(conditionQuery.indexOf('?'));
             let queryObj = this.GetRequest();
             if (queryObj['districtId']){  // 查询？后面参数产出  后面区域板块用到
@@ -44,8 +47,9 @@ class ListController extends Controller {
             }else if (queryObj['subEstateId']){
                 delete (queryObj['subEstateId'])
             }
-            if(queryObj.length > 0){
+            if(queryObj){
                 areasLineSting ="?"+$.param(queryObj);
+
             }
         }
 
@@ -695,7 +699,7 @@ class ListController extends Controller {
                     if (JSON.parse(localStorage.getItem('searchHistory'))) {  // Storage取值渲染
                         $('.have-result').show();
                     }else {
-                        $('.have-result').hide();
+                        $('.have-result').hide();  showResult
                     }
                 });*/
                 let saveLocalStorage = [];
@@ -711,6 +715,7 @@ class ListController extends Controller {
                          if (renthouselistData.secondHouseList) {
                              $('.show-result').show();
                              $('.no-result').hide();
+                             $('.search-result').show();
                              let titleName ='';
                              let addreName = '';
                              let searchaAcWord = '';
@@ -788,7 +793,7 @@ class ListController extends Controller {
             $('.no-result').hide();
              $('.have-result').hide();
             let conditionString = that.objectToString(conditionObject); // 转换成字符串
-             window.location.href = url + conditionString
+             window.location.href = url + conditionString + areasLineSting
         });
          /*删除搜索框不跳转*/
         $('.conone').click(function () {
@@ -806,7 +811,7 @@ class ListController extends Controller {
         /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
         搜索初步渲染
         -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
-        if (JSON.parse(localStorage.getItem('searchHistory')) && conditionQuery.indexOf('?') > 0) {
+        if (JSON.parse(localStorage.getItem('searchHistory')) && this.haveNot() ) {
             let firtName = JSON.parse(localStorage.getItem('searchHistory')).reverse()[0].key;
             $('#searchInput').val(firtName);
             $('.contwo').show();
@@ -817,7 +822,7 @@ class ListController extends Controller {
 
         $('.clearOption').click(function () {
             let conditionString = that.objectToString(conditionObject); // 转换成字符串
-            window.location.href = url  ;
+            window.location.href = url +conditionstr+areasLineSting ;
         });
 
         /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -914,6 +919,31 @@ class ListController extends Controller {
         }
 
         this.pullload(conditionData);
+        /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+        判断是否为今日头条
+        -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
+        if (this.GetRequest()['channel'] == "jrttsub"){
+            $('.search-input').css('width',"96%");
+            $('.history-name').hide();
+           $('.icon-fanhui').hide();
+           $('.sort').hide();
+           $('.cancel-channel').click(function () {
+               $('.all-control').removeClass('on-hide');
+               $('.rent-search').siblings('ul').removeClass('on-hide');
+               $('.search-result').hide();
+               $('.no-result').hide();
+               $('.back').hide();
+               $(this).hide();
+               $('.contwo').hide();
+               $('.show-result').hide();
+               $('#searchInput').val('');
+               $('.rent-search').removeClass('active-search-channel');
+           })
+
+        }
+        /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+        今日头条的取消返回
+        -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
 
     }
 
@@ -1060,15 +1090,21 @@ class ListController extends Controller {
 
         /*搜索框的点击*/
         $('#searchInput').click(function () {
-            $('.rent-search').addClass('active-search');
+
             $('.rent-search').siblings('ul').addClass('on-hide');
             $('.all-control').addClass('on-hide');
             $('.search-result').show();
             $('.show-result').hide();
-            $('.back').hide();
-            $('.fanhui').show();
-            $('.contwo').hide();
-            $('.conone').show();
+            if (self.GetRequest()['channel'] == "jrttsub"){
+                $('.rent-search').addClass('active-search-channel');
+                $('.cancel-channel').show();
+            }else {
+                $('.rent-search').addClass('active-search');
+                $('.back').hide();
+                $('.fanhui').show();
+                $('.contwo').hide();
+                $('.conone').show();
+            }
             $('body').css('background-color','#F0F0F0');
             if (JSON.parse(localStorage.getItem('searchHistory'))) {  // Storage取值渲染
                 $('.have-result').show();
@@ -1113,6 +1149,7 @@ class ListController extends Controller {
                 $('.have-result').hide();
             }
         });
+
         /*返回到列表页*/
         $('.fanhui').click(function () {
             $('.rent-search').removeClass('active-search');
@@ -1447,6 +1484,13 @@ class ListController extends Controller {
        }else if (type == 5){
            typeSearch = "?subEstateId="+value;
        }
+       if (this.GetRequest()['channel'] == "jrttsub" && typeSearch){
+           typeSearch = typeSearch+"&channel=jrttsub"
+       }else if (this.GetRequest()['channel'] == "jrttsub" && !typeSearch){
+           typeSearch = "?channel=jrttsub"
+       }else if (!this.GetRequest()['channel'] == "jrttsub" && typeSearch){
+           typeSearch = typeSearch
+       }
        return typeSearch
 
    }
@@ -1467,18 +1511,15 @@ class ListController extends Controller {
         return theRequest;
     }
     /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
-     查询？后面
+     查询？后面 是否包含搜索的参数
      -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
-/*    serializeObject (lName) {
-        let o = {};
-        $t = this;
-        for (let i = 0; i < $t.length; i++) {
-            for (let item in $t[i]) {
-                o[lName+'[' + i + '].' + item.toString()] = $t[i][item].toString();
-            }
-        }
-        return o;
-    };*/
+     haveNot(){
+         if (this.GetRequest()['districtId'] || this.GetRequest()['townId'] || this.GetRequest()['subwayLine'] || this.GetRequest()['subwayStation'] || this.GetRequest()['subEstateId']){
+             return true
+         }else {
+             return false
+         }
+     }
 
 }
 
