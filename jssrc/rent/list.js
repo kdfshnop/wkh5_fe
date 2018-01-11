@@ -1047,6 +1047,8 @@ class ListController extends Controller {
             $('.rent-search').siblings('ul').addClass('on-hide');
             $('.all-control').addClass('on-hide');
             $('.search-result').show();
+            $('.back').hide();
+            $('.fanhui').show();
             $('body').css('background-color','#F0F0F0');
             if (JSON.parse(localStorage.getItem('searchHistory'))) {  // Storage取值渲染
                 $('.have-result').show();
@@ -1090,6 +1092,20 @@ class ListController extends Controller {
             }else {
                 $('.have-result').hide();
             }
+        });
+        /*返回到列表页*/
+        $('.fanhui').click(function () {
+            $('.rent-search').removeClass('active-search');
+            $('.all-control').removeClass('on-hide');
+            $('.rent-search').siblings('ul').removeClass('on-hide');
+            $('.search-result').hide();
+            $('.no-result').hide();
+            $('.back').show();
+            $(this).hide();
+        });
+        /*返回到首页*/
+        $('.back').click(function () {
+            window.location.href = "/"
         });
         /*清楚历史*/
         $('#clearHistory').click(function () {
