@@ -686,27 +686,28 @@ class ListController extends Controller {
             if ($(this).val()) {
                 $('.conone').show();
                 $('.have-result').hide();
-                $('.conone').click(function () {
+/*                $('.conone').click(function () {
                     $('#searchInput').val('');
                     $('.icon-close').hide();
                     $('#showResult').empty();
-                    /*$('.have-result').show();*/
+                    /!*$('.have-result').show();*!/
                     $('.no-result').hide();
                     if (JSON.parse(localStorage.getItem('searchHistory'))) {  // Storage取值渲染
                         $('.have-result').show();
                     }else {
                         $('.have-result').hide();
                     }
-                });
+                });*/
                 let saveLocalStorage = [];
-
                 let sendData={
                     key:$(this).val(),
                     cityId:cityid,
                     pageName:"renthouselist"
                 };
+                let HouseList ='';
                  that.request(that.apiUrl.rent.list.acWord,sendData,{successCallback(data){
                          let renthouselistData = data.data;
+                         HouseList = renthouselistData.secondHouseList;
                          if (renthouselistData.secondHouseList) {
                              $('.show-result').show();
                              $('.no-result').hide();
@@ -752,27 +753,30 @@ class ListController extends Controller {
                              window.location.href = url + conditionString + that.checkType(typeS,valueSearch);
                          });
                      }});
-                 if (event.keyCode == 13){ //enter存值  ta-0-ta-0-ta-0-ta-0-la-0
-                     JSON.parse( localStorage.getItem('searchHistory')) ?  saveLocalStorage = JSON.parse( localStorage.getItem('searchHistory')) : saveLocalStorage = [];
-                     let singleData={
-                         "key":$('#showResult>li:eq(0)').attr('data-name'),
-                         "id": $('#showResult>li:eq(0)').attr('data-value'),
-                         "address": $('#showResult>li:eq(0)').attr('data-address'),
-                         "type":$('#showResult>li:eq(0)').attr('data-type'),
-                     };
-                     if (saveLocalStorage.length >4){
-                         saveLocalStorage.reverse().splice(4)
+                 if (HouseList){
+                     if (event.keyCode == 13){ //enter存值  ta-0-ta-0-ta-0-ta-0-la-0
+                         JSON.parse( localStorage.getItem('searchHistory')) ?  saveLocalStorage = JSON.parse( localStorage.getItem('searchHistory')) : saveLocalStorage = [];
+                         let singleData={
+                             "key":$('#showResult>li:eq(0)').attr('data-name'),
+                             "id": $('#showResult>li:eq(0)').attr('data-value'),
+                             "address": $('#showResult>li:eq(0)').attr('data-address'),
+                             "type":$('#showResult>li:eq(0)').attr('data-type'),
+                         };
+                         if (saveLocalStorage.length >4){
+                             saveLocalStorage.reverse().splice(4)
+                         }
+                         let saveLocal= saveLocalStorage.reverse();
+                         saveLocal.push(singleData);
+                         localStorage.setItem("searchHistory",JSON.stringify(saveLocal));
+                         delete (conditionObject['di']); delete (conditionObject['to']);
+                         delete (conditionObject['li']); delete (conditionObject['st']);
+                         let conditionString = that.objectToString(conditionObject); // 转换成字符串
+                         valueSearch = $('#showResult>li:eq(0)').attr('data-value');
+                         let typeS = $('#showResult>li:eq(0)').attr('data-type');
+                         window.location.href = url + conditionString + that.checkType(typeS,valueSearch);
                      }
-                     let saveLocal= saveLocalStorage.reverse();
-                     saveLocal.push(singleData);
-                     localStorage.setItem("searchHistory",JSON.stringify(saveLocal));
-                     delete (conditionObject['di']); delete (conditionObject['to']);
-                     delete (conditionObject['li']); delete (conditionObject['st']);
-                     let conditionString = that.objectToString(conditionObject); // 转换成字符串
-                     valueSearch = $('#showResult>li:eq(0)').attr('data-value');
-                     let typeS = $('#showResult>li:eq(0)').attr('data-type');
-                     window.location.href = url + conditionString + that.checkType(typeS,valueSearch);
                  }
+
             }
         });
 
@@ -785,6 +789,19 @@ class ListController extends Controller {
              $('.have-result').hide();
             let conditionString = that.objectToString(conditionObject); // 转换成字符串
              window.location.href = url + conditionString
+        });
+
+        $('.conone').click(function () {
+            $('#searchInput').val('');
+            $('.icon-close').hide();
+            $('#showResult').empty();
+            /*$('.have-result').show();*/
+            $('.no-result').hide();
+            if (JSON.parse(localStorage.getItem('searchHistory'))) {  // Storage取值渲染
+                $('.have-result').show();
+            }else {
+                $('.have-result').hide();
+            }
         });
         /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
         搜索初步渲染
@@ -1049,6 +1066,8 @@ class ListController extends Controller {
             $('.search-result').show();
             $('.back').hide();
             $('.fanhui').show();
+            $('.contwo').hide();
+            $('.conone').show();
             $('body').css('background-color','#F0F0F0');
             if (JSON.parse(localStorage.getItem('searchHistory'))) {  // Storage取值渲染
                 $('.have-result').show();
@@ -1102,6 +1121,8 @@ class ListController extends Controller {
             $('.no-result').hide();
             $('.back').show();
             $(this).hide();
+            $('.contwo').hide();
+            $('#searchInput').val('');
         });
         /*返回到首页*/
         $('.back').click(function () {
