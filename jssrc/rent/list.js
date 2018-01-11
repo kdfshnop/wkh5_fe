@@ -764,7 +764,7 @@ class ListController extends Controller {
             $('.no-result').hide();
              $('.have-result').hide();
             let conditionString = that.objectToString(conditionObject); // 转换成字符串
-             window.location.href = url + conditionString+ queryString
+             window.location.href = url + conditionString
         });
         /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
         搜索初步渲染
