@@ -726,8 +726,13 @@ class ListController extends Controller {
                                  "address": $(this).attr('data-address'),
                                  "type":$(this).attr('data-type'),
                              };
-                             saveLocalStorage.push(singleData);
-                             localStorage.setItem("searchHistory",JSON.stringify(saveLocalStorage));
+                             if (saveLocalStorage.length >4){
+                                 saveLocalStorage.reverse().splice(4)
+                             }
+
+                             let saveLocal= saveLocalStorage.reverse();
+                             saveLocal.push(singleData);
+                             localStorage.setItem("searchHistory",JSON.stringify(saveLocal));
                              let conditionString = that.objectToString(conditionObject); // 转换成字符串
                              valueSearch = $(this).attr('data-value');
                              let typeS = $(this).attr('data-type');
@@ -742,8 +747,12 @@ class ListController extends Controller {
                          "address": $('#showResult>li:eq(0)').attr('data-address'),
                          "type":$('#showResult>li:eq(0)').attr('data-type'),
                      };
-                     saveLocalStorage.push(singleData);
-                     localStorage.setItem("searchHistory",JSON.stringify(saveLocalStorage));
+                     if (saveLocalStorage.length >4){
+                         saveLocalStorage.reverse().splice(4)
+                     }
+                     let saveLocal= saveLocalStorage.reverse();
+                     saveLocal.push(singleData);
+                     localStorage.setItem("searchHistory",JSON.stringify(saveLocal));
                      let conditionString = that.objectToString(conditionObject); // 转换成字符串
                      valueSearch = $('#showResult>li:eq(0)').attr('data-value');
                      let typeS = $('#showResult>li:eq(0)').attr('data-type');
