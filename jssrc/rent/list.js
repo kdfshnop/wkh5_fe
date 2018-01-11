@@ -724,11 +724,11 @@ class ListController extends Controller {
                              let singleData={
                                  "key":$(this).attr('data-name'),
                                  "id": $(this).attr('data-value'),
-                                 "address": $(this).attr('data-address')
+                                 "address": $(this).attr('data-address'),
+                                 "type":$(this).attr('data-type'),
                              };
                              saveLocalStorage.push(singleData);
                              localStorage.setItem("searchHistory",JSON.stringify(saveLocalStorage));
-                             let subEstateid = $(this).attr('data-subEstateid');
                              let  conditionString = "ta-0-ta-0-ta-0-ta-0-la-0";
                              valueSearch = $(this).attr('data-value');
                              let typeS = $(this).attr('data-type');
@@ -740,7 +740,8 @@ class ListController extends Controller {
                      let singleData={
                          "key":$('#showResult>li:eq(0)').attr('data-name'),
                          "id": $('#showResult>li:eq(0)').attr('data-value'),
-                         "address": $('#showResult>li:eq(0)').attr('data-address')
+                         "address": $('#showResult>li:eq(0)').attr('data-address'),
+                         "type":$('#showResult>li:eq(0)').attr('data-type'),
                      };
                      saveLocalStorage.push(singleData);
                      localStorage.setItem("searchHistory",JSON.stringify(saveLocalStorage));
@@ -1026,9 +1027,9 @@ class ListController extends Controller {
                 let listSearchHistory = '';
                 searchHistory.forEach(function (item,index) {
                     if (index == 0){
-                        listSearchHistory = `<li data-subEstateid="${item.id}" data-name="${item.key}" data-address="${item.address}"><p>${item.key}</p><span>${item.address}</span></li>`
+                        listSearchHistory = `<li data-type="${item.type}" data-value="${item.id}" data-name="${item.key}" data-address="${item.address}"><p>${item.key}</p><span>${item.address}</span></li>`
                     }else {
-                        listSearchHistory = listSearchHistory + `<li data-subEstateid="${item.id}" data-name="${item.key}" data-address="${item.address}"><p>${item.key}</p><span>${item.address}</span></li>`
+                        listSearchHistory = listSearchHistory + `<li data-type="${item.type}" data-value="${item.id}" data-name="${item.key}" data-address="${item.address}"><p>${item.key}</p><span>${item.address}</span></li>`
                     }
                 });
                 $('#resultHistory').empty();
@@ -1040,8 +1041,10 @@ class ListController extends Controller {
                     let ind =$(this).index();
                     let singleData = {
                         "key":$(this).attr('data-name'),
-                        "id": $(this).attr('data-subEstateid'),
-                        "address": $(this).attr('data-address')
+                        "id": $(this).attr('data-value'),
+                        "address": $(this).attr('data-address'),
+                        "type":$(this).attr('data-type'),
+
                     };
                     saveLocalStorage.forEach(function (item,index) {
                         if (item.id == singleData.id){
@@ -1050,9 +1053,11 @@ class ListController extends Controller {
                     });
                     saveLocalStorage.push(singleData);
                     localStorage.setItem("searchHistory",JSON.stringify(saveLocalStorage));
-                    let subEstateid = $(this).attr('data-subEstateid');
+                    let subEstateid = $(this).attr('data-value');
                     let  conditionString = "ta-0-ta-0-ta-0-ta-0-la-0";
-                    window.location.href = url + conditionString + "?subEstateId=" + subEstateid;
+                    let valueSearch = $(this).attr('data-value');
+                    let typeS = $(this).attr('data-type');
+                    window.location.href = url + conditionString + self.checkType(typeS,valueSearch);
                 });
             }else {
                 $('.have-result').hide();
@@ -1165,6 +1170,8 @@ class ListController extends Controller {
                     $(`.more-spec > ul >li:eq(${index})`).removeClass('active-house')
                 }
             })
+        }else {
+            $('.more-spec > ul >li').removeClass('active-house')
         }
         //面积 初次选中渲染
         if (conditionObject['ar']) {
@@ -1189,6 +1196,8 @@ class ListController extends Controller {
             numberD.forEach(function (item) {
                 $(`.area>ul>li:eq(${item})`).removeClass('active-house')
             })
+        }else {
+            $('.area>ul>li').removeClass('active-house')
         }
         //装修 初次选中渲染
         if (conditionObject['dt']) {
@@ -1213,6 +1222,8 @@ class ListController extends Controller {
             numberD.forEach(function (item) {
                 $(`.decoration> ul >li:eq(${item -1})`).removeClass('active-house');
             })
+        }else {
+            $('.decoration> ul >li').removeClass('active-house');
         }
     }
     /*++-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
