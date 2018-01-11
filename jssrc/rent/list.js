@@ -418,7 +418,6 @@ class ListController extends Controller {
                 let dataPriceObj = that.parseCondition({condition: dataPrice}); // 转换成对象
                 Object.assign(conditionObject, dataPriceObj); // 合并对象
                 let conditionString = that.objectToString(conditionObject); // 转换成字符串
-                console.log(conditionString);
                 window.location.href = url + conditionString; // 跳转的URL
             }
             $('.price-total').slideToggle();
@@ -729,7 +728,7 @@ class ListController extends Controller {
                              };
                              saveLocalStorage.push(singleData);
                              localStorage.setItem("searchHistory",JSON.stringify(saveLocalStorage));
-                             let  conditionString = "ta-0-ta-0-ta-0-ta-0-la-0";
+                             let conditionString = that.objectToString(conditionObject); // 转换成字符串
                              valueSearch = $(this).attr('data-value');
                              let typeS = $(this).attr('data-type');
                              window.location.href = url + conditionString + that.checkType(typeS,valueSearch);
@@ -745,7 +744,7 @@ class ListController extends Controller {
                      };
                      saveLocalStorage.push(singleData);
                      localStorage.setItem("searchHistory",JSON.stringify(saveLocalStorage));
-                     let  conditionString = "ta-0-ta-0-ta-0-ta-0-la-0";
+                     let conditionString = that.objectToString(conditionObject); // 转换成字符串
                      valueSearch = $('#showResult>li:eq(0)').attr('data-value');
                      let typeS = $('#showResult>li:eq(0)').attr('data-type');
                      window.location.href = url + conditionString + that.checkType(typeS,valueSearch);
@@ -776,7 +775,7 @@ class ListController extends Controller {
         -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
 
         $('.clearOption').click(function () {
-            let  conditionString = "ta-0-ta-0-ta-0-ta-0-la-0";
+            let conditionString = that.objectToString(conditionObject); // 转换成字符串
             window.location.href = url + conditionString;
         });
         /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -1053,8 +1052,7 @@ class ListController extends Controller {
                     });
                     saveLocalStorage.push(singleData);
                     localStorage.setItem("searchHistory",JSON.stringify(saveLocalStorage));
-                    let subEstateid = $(this).attr('data-value');
-                    let  conditionString = "ta-0-ta-0-ta-0-ta-0-la-0";
+                    let conditionString = self.objectToString(conditionObject); // 转换成字符串
                     let valueSearch = $(this).attr('data-value');
                     let typeS = $(this).attr('data-type');
                     window.location.href = url + conditionString + self.checkType(typeS,valueSearch);
@@ -1367,7 +1365,7 @@ class ListController extends Controller {
    checkType(type,value){
        let typeSearch = '';
        if (type == 1){
-           typeSearch = "?districtId="+value;
+           typeSearch = "?districtId=" + value;
        }else if (type == 2){
            typeSearch = "?townId="+value;
        }else if (type == 3){
