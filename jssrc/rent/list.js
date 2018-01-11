@@ -428,24 +428,23 @@ class ListController extends Controller {
         $('#selfPrConf').click(function () {
             let lowPr = $('#lowPr').val();
             let topPr=  $('#topPr').val();
-            console.log(lowPr+"===="+topPr);
-            if (parseInt(lowPr) > parseInt(topPr)) {
-               $('.wrong').show();
-               setTimeout(function () {
-                   $('.wrong').hide();
-               },2000)
-            }else {
                 $('.wrong').hide();
                 if(lowPr && topPr){
-                    $('#price>p').html(lowPr+'-'+topPr);
-                    $('#price').find('i').addClass('bacchosed');
-                    $('#price').addClass('active-color-top');
-                    delete(conditionObject['pr']);  // 删除价格选择的参数的对象
-                    let cp = {"cp":lowPr+"to"+topPr};
-                    Object.assign(conditionObject, cp); // 合并对象
-                    let conditionString = that.objectToString(conditionObject); // 转换成字符串
-                    console.log(conditionString);
-                    window.location.href = url + conditionString+ queryString; // 跳转的URL
+                    if (parseInt(lowPr) > parseInt(topPr)) {
+                        $('.wrong').show();
+                        setTimeout(function () {
+                            $('.wrong').hide();
+                        },2000)}else {
+                        $('#price>p').html(lowPr+'-'+topPr);
+                        $('#price').find('i').addClass('bacchosed');
+                        $('#price').addClass('active-color-top');
+                        delete(conditionObject['pr']);  // 删除价格选择的参数的对象
+                        let cp = {"cp":lowPr+"to"+topPr};
+                        Object.assign(conditionObject, cp); // 合并对象
+                        let conditionString = that.objectToString(conditionObject); // 转换成字符串
+                        console.log(conditionString);
+                        window.location.href = url + conditionString+ queryString; // 跳转的URL
+                    }
                 } else if (lowPr == '' && topPr){
                     $('#price>p').html(topPr+'以下');
                     $('#price').find('i').addClass('bacchosed');
@@ -480,10 +479,6 @@ class ListController extends Controller {
                 $('.bac').hide();
                 $('#price').children('span').removeClass('direction');
                 $('.price-total').slideToggle();
-            }
-
-
-
         });
         /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
         房型传参
@@ -1418,12 +1413,7 @@ class ListController extends Controller {
         let querySting = '';
         return querySting
     }
-    /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
-   页面跳转
-   -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
-   goNextP(){
 
-   }
 }
 
 
