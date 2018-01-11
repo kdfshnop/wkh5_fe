@@ -800,8 +800,9 @@ class ListController extends Controller {
 
         $('.clearOption').click(function () {
             let conditionString = that.objectToString(conditionObject); // 转换成字符串
-            window.location.href = url + conditionString ;
+            window.location.href = url  ;
         });
+
         /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
         对参数转译成服务端需要的参数
         -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
@@ -812,7 +813,6 @@ class ListController extends Controller {
             let newConditionString  = conditionString.replace("to","townId").replace("li","subwayLine").replace("st","subwayStation");
             let conditionObj =  that.parseCondition({condition:newConditionString});
             let spaceAreaStart =["0-50","50-70","70-90","90-110","110-130","130-150","150-0"];
-
             conditionData = {
                  "cityId":cityid,
                  "bedRoomSumLists":[],
