@@ -780,7 +780,7 @@ class ListController extends Controller {
 
         $('.clearOption').click(function () {
             let conditionString = that.objectToString(conditionObject); // 转换成字符串
-            window.location.href = url + conditionString+ queryString;
+            window.location.href = url + conditionString ;
         });
         /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
         对参数转译成服务端需要的参数
