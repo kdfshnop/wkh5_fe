@@ -30,7 +30,7 @@ class ListController extends Controller {
             condition = conditionQuery
         }else {
             condition = conditionQuery.slice(0,conditionQuery.indexOf('?'));
-            queryString = conditionQuery.slice(conditionQuery.indexOf('?')+1).split("=");
+            queryString = conditionQuery.slice(conditionQuery.indexOf('?'));
             console.log("queryString"+queryString);
         }
         console.log();
@@ -108,7 +108,7 @@ class ListController extends Controller {
                             delete(conditionObject['li']);  // 删除地铁线路的对象
                             delete(conditionObject['st']);  // 删除地铁线路的对象
                             let conditionString = that.objectToString(conditionObject);
-                            window.location.href = url + conditionString;
+                            window.location.href = url + conditionString+queryString;
                         }else {
                             dataDic.forEach(function (item) {    //
                                 if (conditionObject["di"]){
@@ -168,7 +168,7 @@ class ListController extends Controller {
                                     delete(conditionObject['to']);  // 删除town的对象
                                     let conditionString = that.objectToString(conditionObject); // 转换成字符串
                                     console.log(conditionString);
-                                    window.location.href = url + conditionString;  // 跳转的URL
+                                    window.location.href = url + conditionString+queryString;  // 跳转的URL
                                 } else {
                                     $('#dic > p').html(dataTownName);
                                     let areasTownString = dataAreasDi + '-' + dataTownTo;  // 字符串链接
@@ -176,7 +176,7 @@ class ListController extends Controller {
                                     Object.assign(conditionObject, areasTownObj);   // 合并对象
                                     let conditionString = that.objectToString(conditionObject); // 转换成字符串
                                     console.log(conditionString);
-                                    window.location.href = url + conditionString;  // 跳转的URL
+                                    window.location.href = url + conditionString+queryString;  // 跳转的URL
                                 }
                                 $('.bac').hide();
                                 $('#dic').children('span').removeClass('direction');
@@ -203,7 +203,7 @@ class ListController extends Controller {
                             delete(conditionObject['to']);  // 删除town的对象
                             let conditionString = that.objectToString(conditionObject); // 转换成字符串
                             console.log(conditionString);
-                            window.location.href = url + conditionString;  // 跳转的URL
+                            window.location.href = url + conditionString+queryString;  // 跳转的URL
 
                         } else {
                             $('#dic > p').html(dataTownName);
@@ -212,7 +212,7 @@ class ListController extends Controller {
                             Object.assign(conditionObject, areasTownObj);   // 合并对象
                             let conditionString = that.objectToString(conditionObject); // 转换成字符串
                             console.log(conditionString);
-                            window.location.href = url + conditionString;  // 跳转的URL
+                            window.location.href = url + conditionString + queryString;  // 跳转的URL
                         }
                         $('.bac').hide();
                         $('#dic').children('span').removeClass('direction');
@@ -335,7 +335,7 @@ class ListController extends Controller {
                                 delete(conditionObject['st']);  // 删除站点的对象
                                 let conditionString = that.objectToString(conditionObject);   // 转换成字符串
                                 console.log(conditionString);
-                                window.location.href = url + conditionString;  // 跳转的URL
+                                window.location.href = url + conditionString+queryString;  // 跳转的URL
                             } else {
                                 $('#dic > p').html(dataStationName); // 判断赋值给检索title
                                 let lineStationString = dataLineLi + '-' + dataStationSt; // 合并字符串
@@ -343,7 +343,7 @@ class ListController extends Controller {
                                 Object.assign(conditionObject, lineStationObj); // 合并对象
                                 let conditionString = that.objectToString(conditionObject); // 转换成字符串
                                 console.log(conditionString);
-                                window.location.href = url + conditionString; // 跳转的URL
+                                window.location.href = url + conditionString+queryString; // 跳转的URL
                             }
                             $('.bac').hide();
                             $('#dic').children('span').removeClass('direction');
@@ -371,7 +371,7 @@ class ListController extends Controller {
                             delete(conditionObject['st']);  // 删除站点的对象
                             let conditionString = that.objectToString(conditionObject);   // 转换成字符串
                             console.log(conditionString);
-                            window.location.href = url + conditionString;  // 跳转的URL
+                            window.location.href = url + conditionString+queryString;  // 跳转的URL
                         } else {
                             $('#dic > p').html(dataStationName); // 判断赋值给检索title
                             let lineStationString = dataLineLi + '-' + dataStationSt; // 合并字符串
@@ -379,7 +379,7 @@ class ListController extends Controller {
                             Object.assign(conditionObject, lineStationObj); // 合并对象
                             let conditionString = that.objectToString(conditionObject); // 转换成字符串
                             console.log(conditionString);
-                            window.location.href = url + conditionString; // 跳转的URL
+                            window.location.href = url + conditionString+queryString; // 跳转的URL
                         }
                         $('.bac').hide();
                         $('#dic').children('span').removeClass('direction');
@@ -409,7 +409,7 @@ class ListController extends Controller {
                 delete(conditionObject['pr']);  // 删除价格参数的对象
                 let conditionString = that.objectToString(conditionObject); // 对象转换成字符串
                 console.log(conditionString);
-                window.location.href = url + conditionString; // 跳转的URL
+                window.location.href = url + conditionString+queryString; // 跳转的URL
             }else {
                 $('#price>p').html($(this).html().replace(/\s|\xA0/g,""));
                 $('#price').find('i').addClass('bacchosed');
@@ -418,7 +418,7 @@ class ListController extends Controller {
                 let dataPriceObj = that.parseCondition({condition: dataPrice}); // 转换成对象
                 Object.assign(conditionObject, dataPriceObj); // 合并对象
                 let conditionString = that.objectToString(conditionObject); // 转换成字符串
-                window.location.href = url + conditionString; // 跳转的URL
+                window.location.href = url + conditionString+ queryString; // 跳转的URL
             }
             $('.price-total').slideToggle();
         });
@@ -445,7 +445,7 @@ class ListController extends Controller {
                     Object.assign(conditionObject, cp); // 合并对象
                     let conditionString = that.objectToString(conditionObject); // 转换成字符串
                     console.log(conditionString);
-                    window.location.href = url + conditionString; // 跳转的URL
+                    window.location.href = url + conditionString+ queryString; // 跳转的URL
                 } else if (lowPr == '' && topPr){
                     $('#price>p').html(topPr+'以下');
                     $('#price').find('i').addClass('bacchosed');
@@ -465,7 +465,7 @@ class ListController extends Controller {
                     Object.assign(conditionObject, cp); // 合并对象
                     let conditionString = that.objectToString(conditionObject); // 转换成字符串
                     console.log(conditionString);
-                    window.location.href = url + conditionString; // 跳转的URL
+                    window.location.href = url + conditionString + queryString; // 跳转的URL
                 }else {
                     $('#price>p').html("租金");
                     $('#price').find('i').removeClass('bacchosed');
@@ -475,7 +475,7 @@ class ListController extends Controller {
                     delete(conditionObject['cp']);  // 删除价格自定义参数的对象
                     let conditionString = that.objectToString(conditionObject); // 转换成字符串
                     console.log(conditionString);
-                    window.location.href = url + conditionString; // 跳转的URL
+                    window.location.href = url + conditionString + queryString; // 跳转的URL
                 }
                 $('.bac').hide();
                 $('#price').children('span').removeClass('direction');
@@ -524,8 +524,8 @@ class ListController extends Controller {
                  Object.assign(conditionObject, houseListObj); // 合并对象
                  let conditionString = that.objectToString(conditionObject); // 转换成字符串
                  console.log(conditionString);
-                 console.log(url + conditionString)
-                 window.location.href = url + conditionString; // 跳转的URL
+                 console.log(url + conditionString);
+                 window.location.href = url + conditionString + queryString; // 跳转的URL
              } if (noHouseListArray.length == 5 && houseListArray[0]== 0) {
                  $('#type').find('i').removeClass('bacchosed');
                  $('#type').removeClass('active-color-top');
@@ -633,7 +633,7 @@ class ListController extends Controller {
             Object.assign(conditionObject, tagObj,areaObj,decorationObj); // 合并对象
             let conditionString = that.objectToString(conditionObject); // 转换成字符串
             console.log(url + conditionString);
-            window.location.href = url + conditionString; // 跳转的URL
+            window.location.href = url + conditionString+ queryString; // 跳转的URL
         });
         /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
         排序
@@ -665,7 +665,7 @@ class ListController extends Controller {
             Object.assign(conditionObject, soObj); // 合并对象
             let conditionString = that.objectToString(conditionObject); // 转换成字符串
             console.log(conditionString);
-            window.location.href = url + conditionString; // 跳转的URL
+            window.location.href = url + conditionString+ queryString; // 跳转的URL
         });
         /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
         搜索
@@ -769,7 +769,7 @@ class ListController extends Controller {
             $('.no-result').hide();
              $('.have-result').hide();
             let conditionString = that.objectToString(conditionObject); // 转换成字符串
-             window.location.href = url + conditionString
+             window.location.href = url + conditionString+ queryString
         });
         /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
         搜索初步渲染
@@ -785,7 +785,7 @@ class ListController extends Controller {
 
         $('.clearOption').click(function () {
             let conditionString = that.objectToString(conditionObject); // 转换成字符串
-            window.location.href = url + conditionString;
+            window.location.href = url + conditionString+ queryString;
         });
         /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
         对参数转译成服务端需要的参数
@@ -868,8 +868,16 @@ class ListController extends Controller {
                 conditionData["districtId"] =conditionObj['di']
             }
             delete(conditionObj['di']);
-            if (queryString){
-                conditionData[queryString[0]] = queryString[1]
+            if (this.GetRequest()['districtId']){  // 查询？后面参数异步请求
+                conditionData['districtId'] = this.GetRequest()['districtId'];
+            }else if (this.GetRequest()['townId']){
+                conditionData['townId'] = this.GetRequest()['townId'];
+            }else if (this.GetRequest()['subwayLine']){
+                conditionData['subwayLine'] = this.GetRequest()['subwayLine'];
+            }else if (this.GetRequest()['subwayStation']){
+                conditionData['subwayStation'] = this.GetRequest()['subwayStation'];
+            }else if (this.GetRequest()['subEstateId']){
+                conditionData['subEstateId'] = this.GetRequest()['subEstateId'];
             }
             Object.assign(conditionData,conditionObj) ;
         }else {
@@ -1369,9 +1377,9 @@ class ListController extends Controller {
 
     } ;
     /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
-     判断search板块
+     判断search板块？后面的参数是什么
      -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
-   checkType(type,value){
+    checkType(type,value){
        let typeSearch = '';
        if (type == 1){
            typeSearch = "?districtId=" + value;
@@ -1387,7 +1395,35 @@ class ListController extends Controller {
        return typeSearch
 
    }
+    /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+     截取？后面的参数
+     -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
+    GetRequest() {
+        let url = location.search;
+        let theRequest = {};
+        if (url.indexOf("?") !== -1) {
+            let str = url.substr(1);
+            let strs = str.split("&");
+            for(var i = 0; i < strs.length; i ++) {
+                theRequest[strs[i].split("=")[0]]=strs[i].split("=")[1];
+            }
+        }
+        // console.log(theRequest);
+        return theRequest;
+    }
+    /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+     查询？后面
+     -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
+    checkQuery(){
+        let querySting = '';
+        return querySting
+    }
+    /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+   页面跳转
+   -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
+   goNextP(){
 
+   }
 }
 
 
