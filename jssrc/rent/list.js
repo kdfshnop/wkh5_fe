@@ -1416,6 +1416,7 @@ class ListController extends Controller {
             requestType: "post",
             queryStringObject : conditionObject ,
             traditional: true,
+            pageSize:10,
            /* apiDataType:"application/json",*/
             threshold : 50 ,
             callback : function(data) {
