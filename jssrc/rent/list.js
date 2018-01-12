@@ -11,7 +11,7 @@ class ListController extends Controller {
         this.readyFun();
         let that = this;
         let cityid = 43;
-        $.cookie('cityId',cityid);
+        localStorage.cookieId = $.cookie('cookieId');
         $.cookie('cityId') ?  cityid = $.cookie('cityId'): cityid = 43;
         let url =  location.href.slice(0,location.href.lastIndexOf('/')+1);
         let conditionQuery = location.href.slice(location.href.lastIndexOf('/')+1,location.href.length);
@@ -931,7 +931,8 @@ class ListController extends Controller {
         判断是否为今日头条
         -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
         if (this.GetRequest()['channel'] == "jrttsub"){
-            $('.rent-list').css("box-shadow"," 0 1px 1px 0 rgba(0,0,0,.15)");
+            $('.rent-list').css({"box-shadow":" 0 1px 0 0 rgba(0,0,0,.15)","background-color":"#fff"});
+            $('#searchInput').css("background-color","#f0f0f0");
             $('.search-input').css('width',"96%");
             $('.history-name').hide();
             $('.icon-fanhui').hide();
