@@ -925,6 +925,7 @@ class ListController extends Controller {
         判断是否为今日头条
         -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
         if (this.GetRequest()['channel'] == "jrttsub"){
+            $('.rent-list').css("box-shadow"," 0 1px 1px 0 rgba(0,0,0,.15)");
             $('.search-input').css('width',"96%");
             $('.history-name').hide();
            $('.icon-fanhui').hide();
