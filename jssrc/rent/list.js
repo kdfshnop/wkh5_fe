@@ -12,7 +12,7 @@ class ListController extends Controller {
         let that = this;
         let cityid = 43;
         localStorage.cookieId = $.cookie('cookieId');
-        $.cookie('cityId') ?  cityid = $.cookie('cityId'): cityid = 43;
+        $.cookie('cityId') ?  cityid = $.cookie('cityId') : cityid = 43;
         let url =  location.href.slice(0,location.href.lastIndexOf('/')+1);
         let conditionQuery = location.href.slice(location.href.lastIndexOf('/')+1,location.href.length);
         let condition ='';  // condition字符串
@@ -246,10 +246,11 @@ class ListController extends Controller {
         请求接口 获取地铁
         -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
         this.request(this.apiUrl.rent.list.citySubway,{cityId:cityid},{successCallback(data){
-                if (data.status == 1) {
+
+                if (data.status == 1 &&  data.data.length) {
                     let dataRes = data;
                     let subwayLine = dataRes.data;
-                    console.log(subwayLine);
+
                     let metroLine = '';
                     let metroStation = '';
                     let dataLineName = '';
@@ -373,9 +374,6 @@ class ListController extends Controller {
                         })
                     });
 
-
-
-
                     $('#metroStation > li').click(function () {   // 站点的点击
                       /*  $(this).siblings().removeClass('chosed');
                         $(this).addClass('chosed');*/
@@ -407,6 +405,8 @@ class ListController extends Controller {
                         $('#dic').addClass('chosed');
                         $('.dic').slideToggle();
                     })
+                }else {
+                    $('.subway').hide();
                 }
             }});
 
@@ -696,25 +696,17 @@ class ListController extends Controller {
             if ($(this).val()) {
                 $('.conone').show();
                 $('.have-result').hide();
-/*                $('.conone').click(function () {
-                    $('#searchInput').val('');
-                    $('.icon-close').hide();
-                    $('#showResult').empty();
-                    /!*$('.have-result').show();*!/
-                    $('.no-result').hide();
-                    if (JSON.parse(localStorage.getItem('searchHistory'))) {  // Storage取值渲染
-                        $('.have-result').show();
-                    }else {
-                        $('.have-result').hide();  showResult
-                    }
-                });*/
                 let saveLocalStorage = [];
                 let sendData={
                     key:$(this).val(),
                     cityId:cityid,
                     pageName:"renthouselist"
                 };
-
+               /* 埋点的参数*/
+               let bigdata =encodeURIComponent(JSON.stringify({
+                   eventName: '1203004',
+                   type: 2
+               }));
                  that.request(that.apiUrl.rent.list.acWord,sendData,{successCallback(data){
                          let renthouselistData = data.data;
                          acWordHouseList = renthouselistData.secondHouseList;
@@ -729,9 +721,9 @@ class ListController extends Controller {
                                  titleName = item.estateDesc.replace(item.markname,`<span>${item.markname}</span>`);
                                  addreName = item.address.replace(item.markname,`<span>${item.markname}</span>`);
                                  if (index == 0){
-                                     searchaAcWord = `<li data-type="${item.type}" data-value="${item.value}" data-name="${item.estateDesc}" data-address="${item.address}"><p>${titleName}</p><span>${addreName}</span></li>`
+                                     searchaAcWord = `<li data-bigdata="${bigdata} " data-type="${item.type}" data-value="${item.value}" data-name="${item.estateDesc}" data-address="${item.address}"><p>${titleName}</p><span>${addreName}</span></li>`
                                  }else {
-                                     searchaAcWord = searchaAcWord +`<li data-type="${item.type}" data-value="${item.value}" data-name="${item.estateDesc}" data-address="${item.address}"><p>${titleName}</p><span>${addreName}</span></li>`
+                                     searchaAcWord = searchaAcWord +`<li data-bigdata="${bigdata} " data-type="${item.type}" data-value="${item.value}" data-name="${item.estateDesc}" data-address="${item.address}"><p>${titleName}</p><span>${addreName}</span></li>`
                                  }
                              }) ;
                              $('#showResult').empty();
@@ -992,16 +984,21 @@ class ListController extends Controller {
                 $('.contwo').hide();
             }
             $('body').css('background-color','#F0F0F0');
-            console.log(acWordHouseList);
+
             if (JSON.parse(localStorage.getItem('searchHistory')) && !acWordHouseList) {  // Storage取值渲染
                 $('.have-result').show();
                 let searchHistory = JSON.parse(localStorage.getItem('searchHistory')).reverse();
                 let listSearchHistory = '';
+                /* 埋点的参数*/
+                let bigdata =encodeURIComponent(JSON.stringify({
+                    eventName: '1203004',
+                    type: 2
+                }));
                 searchHistory.forEach(function (item,index) {
                     if (index == 0){
-                        listSearchHistory = `<li data-type="${item.type}" data-value="${item.id}" data-name="${item.key}" data-address="${item.address}"><p>${item.key}</p><span>${item.address}</span></li>`
+                        listSearchHistory = `<li data-bigdata="${bigdata} " data-type="${item.type}" data-value="${item.id}" data-name="${item.key}" data-address="${item.address}"><p>${item.key}</p><span>${item.address}</span></li>`
                     }else {
-                        listSearchHistory = listSearchHistory + `<li data-type="${item.type}" data-value="${item.id}" data-name="${item.key}" data-address="${item.address}"><p>${item.key}</p><span>${item.address}</span></li>`
+                        listSearchHistory = listSearchHistory + `<li data-bigdata="${bigdata} " data-type="${item.type}" data-value="${item.id}" data-name="${item.key}" data-address="${item.address}"><p>${item.key}</p><span>${item.address}</span></li>`
                     }
                 });
                 $('#resultHistory').empty();
