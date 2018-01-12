@@ -245,11 +245,12 @@ class ListController extends Controller {
         /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
         请求接口 获取地铁
         -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
-        this.request(this.apiUrl.rent.list.citySubway,{cityId:cityid},{successCallback(data){
-                if (data.status == 1  &&  data.data.length > 0) {
+        this.request(this.apiUrl.rent.list.citySubway,{cityId:2736},{successCallback(data){
+
+                if (data.status == 1 &&  data.data.length) {
                     let dataRes = data;
                     let subwayLine = dataRes.data;
-                    console.log(subwayLine);
+
                     let metroLine = '';
                     let metroStation = '';
                     let dataLineName = '';
