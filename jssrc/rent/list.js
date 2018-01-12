@@ -836,19 +836,21 @@ class ListController extends Controller {
             let spaceAreaStart =["0-50","50-70","70-90","90-110","110-130","130-150","150-0"];
             conditionData = {
                  "cityId":cityid,
-                 "bedRoomSumLists":[],
+                 "bedRoomSumLists":[ ],
                  "renovations":[],
                  "spaceAreas":[]
             };
             if(conditionObj['la'] && conditionObj['la'].length == 1){  // 判断是对象还是数组
+                console.log("conditionObj['la']=============="+conditionObj['la']);
                 if(conditionObj['la'] == 0){
-                    conditionData['bedRoomSumLists'] =[];
+                    conditionData['bedRoomSumLists'] =[ ];
                 }else {
                     conditionData['bedRoomSumLists'].push(conditionObj.la)
                 }
             }else {
                 conditionData['bedRoomSumLists'] = conditionObj['la']
             }
+            console.log("conditionData['bedRoomSumLists']=============="+JSON.stringify(conditionData['bedRoomSumLists']));
             delete(conditionObj['la']);
             if (conditionObj['pr']) {   // 价格选择
                 if(conditionObj['pr'].constructor == Array) {
@@ -1111,7 +1113,11 @@ class ListController extends Controller {
             $(this).children('span').toggleClass('direction');
             let list = $('.rent-list > ul > li > span');  // 获取检索当中的span标签   后面判断指向 （根据class判断指向）
             $('.bac').hide();
-            $('#sort').show();
+            if(self.GetRequest['channel'] == "jrttsub"){
+                $('#sort').hide();
+            }else {
+                $('#sort').show();
+            }
             list.each(function (index, item) {   //根据span标签的样式指向判断底部罩层是否显示
                 if (item.classList.length == 1) {
                     $('.bac').show();
@@ -1523,7 +1529,7 @@ class ListController extends Controller {
                 },
      -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
     pullload(conditionObject) {
-        console.log(conditionObject);
+        console.log("conditionObject"+JSON.stringify(conditionObject));
         let self = this ;
         //租房列表
         $(".rent-items").pullload({
