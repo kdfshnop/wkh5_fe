@@ -1056,6 +1056,26 @@ class ListController extends Controller {
                 "type": 1
             });
         });
+
+
+ /*       $('#topPr').bind("focus",function(){
+            $(".price-total").css({"position":"absolute"});
+
+        }).bind("blur",function(){
+            $(".price-total").css("position","fixed");
+        });
+        $('#lowPr').bind("focus",function(){
+            $(".price-total").css({"position":"absolute",});
+        }).bind("blur",function(){
+            $(".price-total").css("position","fixed");
+        });*/
+           /*阻止事件冒泡*/
+        $('.writ-price').click(function (event) {
+            event.stopPropagation()
+        });
+        $('.price-list > ul').scroll(function (event) {
+            event.stopPropagation()
+        })
     }
 
     /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -1096,6 +1116,8 @@ class ListController extends Controller {
                 if (item.classList.length == 1) {
                     $('.bac').show();
                     $('#sort').hide();
+                }else {
+                   /* $('body').css('position','static')*/
                 }
             });
             let indexP = $(this).index();
