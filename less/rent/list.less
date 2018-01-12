@@ -35,7 +35,7 @@ body{
         display: inline-block;
         font-size: 1.6rem;
         max-width: 79%;
-        color: #636363;
+        color: #000;
         .text-ellipsis() ;
       }
       >span{
@@ -62,6 +62,9 @@ body{
     }
     >.active-color-top{
       color: @primary-color;
+      >p{
+        color: @primary-color !important;
+      }
     }
   }
   >.rent-search{

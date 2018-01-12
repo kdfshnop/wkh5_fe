@@ -1171,7 +1171,9 @@ class ListController extends Controller {
             $('.rent-list > ul > li').removeClass('active-color-top');
             $('.bac').css({'z-index': '10', 'top': '4.5rem'});
             $('.bac').hide();
+            $('.slide-right').animate({right:'-50%'});
             $('.slide-right').hide();
+
             $('.sort').show();
             $('.sort-chose').hide();
         });
