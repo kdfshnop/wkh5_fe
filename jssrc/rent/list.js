@@ -1113,7 +1113,7 @@ class ListController extends Controller {
             $(this).children('span').toggleClass('direction');
             let list = $('.rent-list > ul > li > span');  // 获取检索当中的span标签   后面判断指向 （根据class判断指向）
             $('.bac').hide();
-            if(self.GetRequest['channel'] == "jrttsub"){
+            if(self.GetRequest()['channel'] == "jrttsub"){
                 $('#sort').hide();
             }else {
                 $('#sort').show();
@@ -1225,8 +1225,11 @@ class ListController extends Controller {
             $('.bac').hide();
             $('.slide-right').animate({right:'-50%'});
             $('.slide-right').hide();
-
-            $('.sort').show();
+            if(self.GetRequest()['channel'] == "jrttsub"){
+                $('#sort').hide();
+            }else {
+                $('#sort').show();
+            }
             $('.sort-chose').hide();
         });
 
