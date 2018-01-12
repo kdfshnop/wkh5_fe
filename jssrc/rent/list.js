@@ -55,6 +55,7 @@ class ListController extends Controller {
             }
         }
         let conditionObject = this.parseCondition({condition:condition});  // 转成对象
+        console.log(JSON.stringify(conditionObject)+"conditionObject");
         this.choseFun(conditionObject,url,acWordHouseList);
         /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
         请求接口 获取城市区域
@@ -359,7 +360,7 @@ class ListController extends Controller {
                                 window.location.href = url + conditionString+areasLineSting;  // 跳转的URL
                             } else {
                                 $('#dic > p').html(dataStationName); // 判断赋值给检索title
-                                let lineStationString = dataLineLi + '-' + dataStationSt; // 合并字符串
+                                let lineStationString =  dataLineLi+ '-' + dataStationSt; // 合并字符串
                                 let lineStationObj = that.parseCondition({condition: lineStationString}); // 转换成对象
                                 Object.assign(conditionObject, lineStationObj); // 合并对象
                                 let conditionString = that.objectToString(conditionObject); // 转换成字符串
@@ -392,7 +393,8 @@ class ListController extends Controller {
                             window.location.href = url + conditionString+areasLineSting;  // 跳转的URL
                         } else {
                             $('#dic > p').html(dataStationName); // 判断赋值给检索title
-                            let lineStationString = dataLineLi + '-' + dataStationSt; // 合并字符串
+                            let lineStationString = "li-"+ conditionObject['li'] + '-' + dataStationSt; // 合并字符串
+                            console.log(lineStationString+"lineStationString");
                             let lineStationObj = that.parseCondition({condition: lineStationString}); // 转换成对象
                             Object.assign(conditionObject, lineStationObj); // 合并对象
                             let conditionString = that.objectToString(conditionObject); // 转换成字符串
