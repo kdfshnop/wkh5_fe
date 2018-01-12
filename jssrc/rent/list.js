@@ -19,19 +19,21 @@ class ListController extends Controller {
         let valueSearch =''; // 检索的value值
         let queryString = '';// ?后面的参数
         let areasLineSting ='';  // ?后面参数 区域用到互斥
-        let  conditionstr = "la-0";
-        console.log(conditionQuery);
-        console.log(this.GetRequest());
-        if (conditionQuery == "rent?channel=jrttsub" ){
-            url = url +"rent/"
-        }else if (conditionQuery ==""){
+        let  conditionstr = "la-0"; // 默认的 condition 参数
+        let acWordHouseList ='';  // 联想词
+        console.log("conditionQuery"+conditionQuery);
+ /*       if (conditionQuery == "?channel=jrttsub" ){
+            url = url
+
+        }else*/
+        if (conditionQuery == "") {
             url = url
         }
-        if (!this.GetRequest()) {
+        if (conditionQuery.indexOf('?') < 0) {  // ?后面没有参数的赋值
             condition = conditionQuery;
-        }else {
+        }else {   // ?后面有参数的赋值
             condition = conditionQuery.slice(0,conditionQuery.indexOf('?'));
-            if (condition == "rent"){
+            if (condition == " "){
                 condition = conditionstr
             }
             queryString = conditionQuery.slice(conditionQuery.indexOf('?'));
@@ -52,9 +54,8 @@ class ListController extends Controller {
 
             }
         }
-
         let conditionObject = this.parseCondition({condition:condition});  // 转成对象
-        this.choseFun(conditionObject,url);
+        this.choseFun(conditionObject,url,acWordHouseList);
         /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
         请求接口 获取城市区域
         -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
@@ -464,41 +465,46 @@ class ListController extends Controller {
                         let conditionString = that.objectToString(conditionObject); // 转换成字符串
                         console.log(conditionString);
                         window.location.href = url + conditionString+ queryString; // 跳转的URL
+                        $('.bac').hide();
+                        $('#price').children('span').removeClass('direction');
+                        $('.price-total').slideToggle();
                     }
-                } else if (lowPr == '' && topPr){
-                    $('#price>p').html(topPr+'以下');
-                    $('#price').find('i').addClass('bacchosed');
-                    $('#price').addClass('active-color-top');
-                    delete(conditionObject['pr']);  // 删除价格选择的参数的对象
-                    let cp = {"cp":"0"+"to"+topPr};
-                    Object.assign(conditionObject, cp); // 合并对象
-                    let conditionString = that.objectToString(conditionObject); // 转换成字符串
-                    console.log(conditionString);
-                    window.location = url + conditionString; // 跳转的URL
-                } else if(topPr == '' && lowPr){
-                    $('#price>p').html(lowPr+'以上');
-                    $('#price').find('i').addClass('bacchosed');
-                    $('#price').addClass('active-color-top');
-                    delete(conditionObject['pr']);  // 删除价格选择的参数的对象
-                    let cp = {"cp":lowPr+"to"+"0"};
-                    Object.assign(conditionObject, cp); // 合并对象
-                    let conditionString = that.objectToString(conditionObject); // 转换成字符串
-                    console.log(conditionString);
-                    window.location.href = url + conditionString + queryString; // 跳转的URL
-                }else {
-                    $('#price>p').html("租金");
-                    $('#price').find('i').removeClass('bacchosed');
-                    $('#price').removeClass('active-color-top');
-                    $('#price').removeClass('chosed');
-                    delete(conditionObject['pr']);  // 删除价格选择的参数的对象
-                    delete(conditionObject['cp']);  // 删除价格自定义参数的对象
-                    let conditionString = that.objectToString(conditionObject); // 转换成字符串
-                    console.log(conditionString);
-                    window.location.href = url + conditionString + queryString; // 跳转的URL
+                } else{
+                    if (lowPr == '' && topPr){
+                        $('#price>p').html(topPr+'以下');
+                        $('#price').find('i').addClass('bacchosed');
+                        $('#price').addClass('active-color-top');
+                        delete(conditionObject['pr']);  // 删除价格选择的参数的对象
+                        let cp = {"cp":"0"+"to"+topPr};
+                        Object.assign(conditionObject, cp); // 合并对象
+                        let conditionString = that.objectToString(conditionObject); // 转换成字符串
+                        console.log(conditionString);
+                        window.location = url + conditionString; // 跳转的URL
+                    } else if(topPr == '' && lowPr){
+                        $('#price>p').html(lowPr+'以上');
+                        $('#price').find('i').addClass('bacchosed');
+                        $('#price').addClass('active-color-top');
+                        delete(conditionObject['pr']);  // 删除价格选择的参数的对象
+                        let cp = {"cp":lowPr+"to"+"0"};
+                        Object.assign(conditionObject, cp); // 合并对象
+                        let conditionString = that.objectToString(conditionObject); // 转换成字符串
+                        console.log(conditionString);
+                        window.location.href = url + conditionString + queryString; // 跳转的URL
+                    }else {
+                        $('#price>p').html("租金");
+                        $('#price').find('i').removeClass('bacchosed');
+                        $('#price').removeClass('active-color-top');
+                        $('#price').removeClass('chosed');
+                        delete(conditionObject['pr']);  // 删除价格选择的参数的对象
+                        delete(conditionObject['cp']);  // 删除价格自定义参数的对象
+                        let conditionString = that.objectToString(conditionObject); // 转换成字符串
+                        console.log(conditionString);
+                        window.location.href = url + conditionString + queryString; // 跳转的URL
+                    }
+                    $('.bac').hide();
+                    $('#price').children('span').removeClass('direction');
+                    $('.price-total').slideToggle();
                 }
-                $('.bac').hide();
-                $('#price').children('span').removeClass('direction');
-                $('.price-total').slideToggle();
         });
         /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
         房型传参
@@ -683,7 +689,7 @@ class ListController extends Controller {
             window.location.href = url + conditionString+ queryString; // 跳转的URL
         });
         /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
-        搜索
+        搜索 联想词
         -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
 
         $('#searchInput').keyup(function (event) {
@@ -708,10 +714,10 @@ class ListController extends Controller {
                     cityId:cityid,
                     pageName:"renthouselist"
                 };
-                let HouseList ='';
+
                  that.request(that.apiUrl.rent.list.acWord,sendData,{successCallback(data){
                          let renthouselistData = data.data;
-                         HouseList = renthouselistData.secondHouseList;
+                         acWordHouseList = renthouselistData.secondHouseList;
                          if (renthouselistData.secondHouseList) {
                              $('.show-result').show();
                              $('.no-result').hide();
@@ -758,7 +764,7 @@ class ListController extends Controller {
                              window.location.href = url + conditionString + that.checkType(typeS,valueSearch);
                          });
                      }});
-                 if (HouseList){
+                 if (acWordHouseList){
                      if (event.keyCode == 13){ //enter存值  ta-0-ta-0-ta-0-ta-0-la-0
                          JSON.parse( localStorage.getItem('searchHistory')) ?  saveLocalStorage = JSON.parse( localStorage.getItem('searchHistory')) : saveLocalStorage = [];
                          let singleData={
@@ -778,6 +784,7 @@ class ListController extends Controller {
                          let conditionString = that.objectToString(conditionObject); // 转换成字符串
                          valueSearch = $('#showResult>li:eq(0)').attr('data-value');
                          let typeS = $('#showResult>li:eq(0)').attr('data-type');
+                         that.checkType(typeS,valueSearch);
                          window.location.href = url + conditionString + that.checkType(typeS,valueSearch);
                      }
                  }
@@ -923,6 +930,7 @@ class ListController extends Controller {
         判断是否为今日头条
         -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
         if (this.GetRequest()['channel'] == "jrttsub"){
+            $('.rent-list').css("box-shadow"," 0 1px 1px 0 rgba(0,0,0,.15)");
             $('.search-input').css('width',"96%");
             $('.history-name').hide();
            $('.icon-fanhui').hide();
@@ -940,11 +948,90 @@ class ListController extends Controller {
                $('.rent-search').removeClass('active-search-channel');
            })
 
+        }else {
+            $('.icon-hanbao').show();
         }
         /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
-        今日头条的取消返回
+        阻止表单的默认行为：
         -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
+        $('.input-kw-form').submit(function(event){
+            event.preventDefault();
+        });
 
+        /*搜索框的点击*/
+        $('#searchInput').click(function () {
+
+            $('.rent-search').siblings('ul').addClass('on-hide');
+            $('.all-control').addClass('on-hide');
+            $('.search-result').show();
+            $('.show-result').hide();
+            $('.icon-hanbao').hide();
+            if (that.GetRequest()['channel'] == "jrttsub"){
+                $('.rent-search').addClass('active-search-channel');
+                $('.cancel-channel').show();
+            }else {
+                $('.rent-search').addClass('active-search');
+                $('.back').hide();
+                $('.fanhui').show();
+                $('.contwo').hide();
+                $('.conone').show();
+            }
+            $('body').css('background-color','#F0F0F0');
+            console.log(acWordHouseList);
+            if (JSON.parse(localStorage.getItem('searchHistory')) && !acWordHouseList) {  // Storage取值渲染
+                $('.have-result').show();
+                let searchHistory = JSON.parse(localStorage.getItem('searchHistory')).reverse();
+                let listSearchHistory = '';
+                searchHistory.forEach(function (item,index) {
+                    if (index == 0){
+                        listSearchHistory = `<li data-type="${item.type}" data-value="${item.id}" data-name="${item.key}" data-address="${item.address}"><p>${item.key}</p><span>${item.address}</span></li>`
+                    }else {
+                        listSearchHistory = listSearchHistory + `<li data-type="${item.type}" data-value="${item.id}" data-name="${item.key}" data-address="${item.address}"><p>${item.key}</p><span>${item.address}</span></li>`
+                    }
+                });
+                $('#resultHistory').empty();
+                $('#resultHistory').append(listSearchHistory);
+                // 历史搜索点击
+                $('#resultHistory >li').click(function () {
+                    let saveLocalStorage =[];
+                    JSON.parse( localStorage.getItem('searchHistory')) ?  saveLocalStorage = JSON.parse( localStorage.getItem('searchHistory')) : saveLocalStorage = [];
+                    let ind =$(this).index();
+                    let singleData = {
+                        "key":$(this).attr('data-name'),
+                        "id": $(this).attr('data-value'),
+                        "address": $(this).attr('data-address'),
+                        "type":$(this).attr('data-type'),
+
+                    };
+                    saveLocalStorage.forEach(function (item,index) {
+                        if (item.id == singleData.id){
+                            saveLocalStorage.splice(index,1)
+                        }
+                    });
+                    saveLocalStorage.push(singleData);
+                    localStorage.setItem("searchHistory",JSON.stringify(saveLocalStorage));
+                    delete (conditionObject['di']); delete (conditionObject['to']);
+                    delete (conditionObject['li']); delete (conditionObject['st']);
+                    let conditionString = that.objectToString(conditionObject); // 转换成字符串
+                    let valueSearch = $(this).attr('data-value');
+                    let typeS = $(this).attr('data-type');
+                    window.location.href = url + conditionString + that.checkType(typeS,valueSearch);
+                });
+            }else {
+                $('.show-result').show();
+                $('.have-result').hide();
+            }
+        });
+        /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+        右侧滑出选项：
+        -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
+        $('.icon-hanbao').click(function () {
+            $('.bac').css({'z-index': '16', 'top': '0'});
+            $('.bac').show();
+            $('.slide-right').show();
+            $('.slide-right').animate({right:'0'});
+
+        })
     }
 
     /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -961,7 +1048,7 @@ class ListController extends Controller {
     /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
     条件选择的区域选择的点击效果函数
     -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
-    choseFun(conditionObject,url) {
+    choseFun(conditionObject,url,acWordHouseList) {
         let self = this;
             /* 条件选择点击事件*/
         $('.rent-list > ul > li').click(function () {
@@ -1084,70 +1171,9 @@ class ListController extends Controller {
             $('.rent-list > ul > li').removeClass('active-color-top');
             $('.bac').css({'z-index': '10', 'top': '4.5rem'});
             $('.bac').hide();
+            $('.slide-right').hide();
             $('.sort').show();
             $('.sort-chose').hide();
-        });
-
-        /*搜索框的点击*/
-        $('#searchInput').click(function () {
-
-            $('.rent-search').siblings('ul').addClass('on-hide');
-            $('.all-control').addClass('on-hide');
-            $('.search-result').show();
-            $('.show-result').hide();
-            if (self.GetRequest()['channel'] == "jrttsub"){
-                $('.rent-search').addClass('active-search-channel');
-                $('.cancel-channel').show();
-            }else {
-                $('.rent-search').addClass('active-search');
-                $('.back').hide();
-                $('.fanhui').show();
-                $('.contwo').hide();
-                $('.conone').show();
-            }
-            $('body').css('background-color','#F0F0F0');
-            if (JSON.parse(localStorage.getItem('searchHistory'))) {  // Storage取值渲染
-                $('.have-result').show();
-                let searchHistory = JSON.parse(localStorage.getItem('searchHistory')).reverse();
-                let listSearchHistory = '';
-                searchHistory.forEach(function (item,index) {
-                    if (index == 0){
-                        listSearchHistory = `<li data-type="${item.type}" data-value="${item.id}" data-name="${item.key}" data-address="${item.address}"><p>${item.key}</p><span>${item.address}</span></li>`
-                    }else {
-                        listSearchHistory = listSearchHistory + `<li data-type="${item.type}" data-value="${item.id}" data-name="${item.key}" data-address="${item.address}"><p>${item.key}</p><span>${item.address}</span></li>`
-                    }
-                });
-                $('#resultHistory').empty();
-                $('#resultHistory').append(listSearchHistory);
-                // 历史搜索点击
-                $('#resultHistory >li').click(function () {
-                    let saveLocalStorage =[];
-                    JSON.parse( localStorage.getItem('searchHistory')) ?  saveLocalStorage = JSON.parse( localStorage.getItem('searchHistory')) : saveLocalStorage = [];
-                    let ind =$(this).index();
-                    let singleData = {
-                        "key":$(this).attr('data-name'),
-                        "id": $(this).attr('data-value'),
-                        "address": $(this).attr('data-address'),
-                        "type":$(this).attr('data-type'),
-
-                    };
-                    saveLocalStorage.forEach(function (item,index) {
-                        if (item.id == singleData.id){
-                            saveLocalStorage.splice(index,1)
-                        }
-                    });
-                    saveLocalStorage.push(singleData);
-                    localStorage.setItem("searchHistory",JSON.stringify(saveLocalStorage));
-                    delete (conditionObject['di']); delete (conditionObject['to']);
-                    delete (conditionObject['li']); delete (conditionObject['st']);
-                    let conditionString = self.objectToString(conditionObject); // 转换成字符串
-                    let valueSearch = $(this).attr('data-value');
-                    let typeS = $(this).attr('data-type');
-                    window.location.href = url + conditionString + self.checkType(typeS,valueSearch);
-                });
-            }else {
-                $('.have-result').hide();
-            }
         });
 
         /*返回到列表页*/
@@ -1158,10 +1184,12 @@ class ListController extends Controller {
             $('.search-result').hide();
             $('.no-result').hide();
             $('.back').show();
+            $('.icon-hanbao').show();
             $(this).hide();
             $('.contwo').hide();
             $('.show-result').hide();
             $('#searchInput').val('');
+            $('.conone').hide();
         });
         /*返回到首页*/
         $('.back').click(function () {
