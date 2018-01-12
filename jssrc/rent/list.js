@@ -943,6 +943,8 @@ class ListController extends Controller {
                $('.rent-search').removeClass('active-search-channel');
            })
 
+        }else {
+            $('.icon-hanbao').show();
         }
         /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
         阻止表单的默认行为：
@@ -958,6 +960,7 @@ class ListController extends Controller {
             $('.all-control').addClass('on-hide');
             $('.search-result').show();
             $('.show-result').hide();
+            $('.icon-hanbao').hide();
             if (that.GetRequest()['channel'] == "jrttsub"){
                 $('.rent-search').addClass('active-search-channel');
                 $('.cancel-channel').show();
@@ -1165,10 +1168,12 @@ class ListController extends Controller {
             $('.search-result').hide();
             $('.no-result').hide();
             $('.back').show();
+            $('.icon-hanbao').show();
             $(this).hide();
             $('.contwo').hide();
             $('.show-result').hide();
             $('#searchInput').val('');
+            $('.conone').hide();
         });
         /*返回到首页*/
         $('.back').click(function () {
