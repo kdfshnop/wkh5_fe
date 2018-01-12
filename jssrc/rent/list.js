@@ -12,7 +12,7 @@ class ListController extends Controller {
         let that = this;
         let cityid = 43;
         localStorage.cookieId = $.cookie('cookieId');
-        $.cookie('cityId') ?  cityid = $.cookie('cityId'): cityid = 43;
+        $.cookie('cityId') ?  cityid = $.cookie('cityId') : cityid = 43;
         let url =  location.href.slice(0,location.href.lastIndexOf('/')+1);
         let conditionQuery = location.href.slice(location.href.lastIndexOf('/')+1,location.href.length);
         let condition ='';  // condition字符串
@@ -246,7 +246,7 @@ class ListController extends Controller {
         请求接口 获取地铁
         -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
         this.request(this.apiUrl.rent.list.citySubway,{cityId:cityid},{successCallback(data){
-                if (data.status == 1) {
+                if (data.status == 1  &&  data.data.length > 0) {
                     let dataRes = data;
                     let subwayLine = dataRes.data;
                     console.log(subwayLine);
@@ -373,9 +373,6 @@ class ListController extends Controller {
                         })
                     });
 
-
-
-
                     $('#metroStation > li').click(function () {   // 站点的点击
                       /*  $(this).siblings().removeClass('chosed');
                         $(this).addClass('chosed');*/
@@ -407,6 +404,8 @@ class ListController extends Controller {
                         $('#dic').addClass('chosed');
                         $('.dic').slideToggle();
                     })
+                }else {
+                    $('.subway').hide();
                 }
             }});
 
