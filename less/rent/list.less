@@ -35,7 +35,7 @@ body{
         display: inline-block;
         font-size: 1.6rem;
         max-width: 79%;
-        color: #636363;
+        color: #000;
         .text-ellipsis() ;
       }
       >span{
@@ -57,11 +57,15 @@ body{
         position: absolute;
         left: 0.1rem;
         bottom: 0.05rem;
+        top: -4px;
       }
       }
     }
     >.active-color-top{
       color: @primary-color;
+      >p{
+        color: @primary-color !important;
+      }
     }
   }
   >.rent-search{
@@ -76,7 +80,7 @@ body{
     >.search-input{
       display: inline-block;
       margin-left: 0.5rem;
-      width: 80%;
+      width: 76.9%;
       position: relative;
       >.icon-search{
         display: inline-block;
@@ -106,6 +110,7 @@ body{
           border:  none;
           outline: none;
           padding-left: 3.4rem;
+          padding-right: 3.5rem;
           &:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
             color: #7C7C7C; opacity:1;
           }
@@ -158,27 +163,11 @@ body{
     border-top: 1px solid @light-line-gray-color;
     -webkit-transform:scaleY(0.5) ;
   }
- /* &:before{
-    content: '';
-    position: absolute;
-    left: 0;
-    top:0;
-    height: 1px;
-    width: 100%;
-    border-top: 1px solid @light-line-gray-color;
-    -webkit-transform:scaleY(0.5) ;
-  }*/
   >p{
     font-size: 1.2rem;
-    color: @default-font-color;
+    color: @primary-color;
     line-height: 3rem;
     text-align: center;
-    >span{
-      color: #FC4C5A;
-      font-size: 1.2rem;
-      line-height: 3rem;
-     /* line-height: 31px;*/
-    }
   }
 }
 /*区域模块样式*/
@@ -618,7 +607,7 @@ body{
 .no-rent-item {
   /*background-color: @default-color;*/
   text-align: center;
-  margin-top: 4.5rem;
+/*  margin-top: 4.5rem;*/
   > .show-no {
     padding-top: 2.5rem;
     padding-bottom: 2.5rem;
@@ -647,7 +636,7 @@ body{
   }
   >.guess-like{
     margin-top: 1rem;
-    padding: 0 0 0 1.5rem;
+    padding: 0 0 4rem 1.5rem;
     background-color: @default-color;
     >.panel-header{
       text-align: left;
@@ -655,13 +644,8 @@ body{
   }
 }
 .rent-items{
-  padding-left: 1.5rem;
   background-color: @default-color;
-  padding-top: 2rem;
-  padding-bottom: 2rem;
-  >a{
-    padding-right: 1.5rem;
-  }
+  padding: 2rem 1.5rem;
 }
 
 .search-result{
@@ -717,12 +701,14 @@ margin-top: 4.8rem;
            font-size: 1.6rem;
            color: @default-font-color;
            letter-spacing: 0;
+           .text-ellipsis();
          }
           >span{
             font-size: 1.2rem;
             color: @light-font-color;
             letter-spacing: 0;
             line-height: 1.2rem;
+            .text-ellipsis();
           }
         }
       }
@@ -758,10 +744,12 @@ margin-top: 4.8rem;
           font-size: 1.2rem;
           color: @default-font-color;
           letter-spacing: 0;
+          .text-ellipsis();
           >span{
             color: @primary-color;
             position: relative;
             top: -1px;
+            .text-ellipsis();
           }
         }
         >span{
