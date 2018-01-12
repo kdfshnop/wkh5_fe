@@ -934,8 +934,13 @@ class ListController extends Controller {
             $('.rent-list').css("box-shadow"," 0 1px 1px 0 rgba(0,0,0,.15)");
             $('.search-input').css('width',"96%");
             $('.history-name').hide();
-           $('.icon-fanhui').hide();
-           $('.sort').hide();
+            $('.icon-fanhui').hide();
+            $('.sort').hide();
+            if ($('#searchInput').val()){
+                $('.conone').show();
+            }else {
+                $('.conone').hide();
+            }
            $('.cancel-channel').click(function () {
                $('.all-control').removeClass('on-hide');
                $('.rent-search').siblings('ul').removeClass('on-hide');
@@ -944,6 +949,7 @@ class ListController extends Controller {
                $('.back').hide();
                $(this).hide();
                $('.contwo').hide();
+               $('.conone').hide();
                $('.show-result').hide();
                $('#searchInput').val('');
                $('.rent-search').removeClass('active-search-channel');
@@ -964,7 +970,6 @@ class ListController extends Controller {
         搜索框的点击：
         -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
         $('#searchInput').click(function () {
-
             $('.rent-search').siblings('ul').addClass('on-hide');
             $('.all-control').addClass('on-hide');
             $('.search-result').show();
@@ -973,6 +978,12 @@ class ListController extends Controller {
             if (that.GetRequest()['channel'] == "jrttsub"){
                 $('.rent-search').addClass('active-search-channel');
                 $('.cancel-channel').show();
+                if ($('#searchInput').val()){
+                    $('.conone').show();
+                }else {
+                    $('.conone').hide();
+                }
+
             }else {
                 $('.rent-search').addClass('active-search');
                 $('.back').hide();
