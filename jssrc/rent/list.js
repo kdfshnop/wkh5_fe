@@ -1007,7 +1007,7 @@ class ListController extends Controller {
                     let conditionString = that.objectToString(conditionObject); // 转换成字符串
                     let valueSearch = $(this).attr('data-value');
                     let typeS = $(this).attr('data-type');
-                    window.location.href = url + conditionString + self.checkType(typeS,valueSearch);
+                    window.location.href = url + conditionString + that.checkType(typeS,valueSearch);
                 });
             }else {
                 $('.show-result').show();
