@@ -465,41 +465,46 @@ class ListController extends Controller {
                         let conditionString = that.objectToString(conditionObject); // 转换成字符串
                         console.log(conditionString);
                         window.location.href = url + conditionString+ queryString; // 跳转的URL
+                        $('.bac').hide();
+                        $('#price').children('span').removeClass('direction');
+                        $('.price-total').slideToggle();
                     }
-                } else if (lowPr == '' && topPr){
-                    $('#price>p').html(topPr+'以下');
-                    $('#price').find('i').addClass('bacchosed');
-                    $('#price').addClass('active-color-top');
-                    delete(conditionObject['pr']);  // 删除价格选择的参数的对象
-                    let cp = {"cp":"0"+"to"+topPr};
-                    Object.assign(conditionObject, cp); // 合并对象
-                    let conditionString = that.objectToString(conditionObject); // 转换成字符串
-                    console.log(conditionString);
-                    window.location = url + conditionString; // 跳转的URL
-                } else if(topPr == '' && lowPr){
-                    $('#price>p').html(lowPr+'以上');
-                    $('#price').find('i').addClass('bacchosed');
-                    $('#price').addClass('active-color-top');
-                    delete(conditionObject['pr']);  // 删除价格选择的参数的对象
-                    let cp = {"cp":lowPr+"to"+"0"};
-                    Object.assign(conditionObject, cp); // 合并对象
-                    let conditionString = that.objectToString(conditionObject); // 转换成字符串
-                    console.log(conditionString);
-                    window.location.href = url + conditionString + queryString; // 跳转的URL
-                }else {
-                    $('#price>p').html("租金");
-                    $('#price').find('i').removeClass('bacchosed');
-                    $('#price').removeClass('active-color-top');
-                    $('#price').removeClass('chosed');
-                    delete(conditionObject['pr']);  // 删除价格选择的参数的对象
-                    delete(conditionObject['cp']);  // 删除价格自定义参数的对象
-                    let conditionString = that.objectToString(conditionObject); // 转换成字符串
-                    console.log(conditionString);
-                    window.location.href = url + conditionString + queryString; // 跳转的URL
+                } else{
+                    if (lowPr == '' && topPr){
+                        $('#price>p').html(topPr+'以下');
+                        $('#price').find('i').addClass('bacchosed');
+                        $('#price').addClass('active-color-top');
+                        delete(conditionObject['pr']);  // 删除价格选择的参数的对象
+                        let cp = {"cp":"0"+"to"+topPr};
+                        Object.assign(conditionObject, cp); // 合并对象
+                        let conditionString = that.objectToString(conditionObject); // 转换成字符串
+                        console.log(conditionString);
+                        window.location = url + conditionString; // 跳转的URL
+                    } else if(topPr == '' && lowPr){
+                        $('#price>p').html(lowPr+'以上');
+                        $('#price').find('i').addClass('bacchosed');
+                        $('#price').addClass('active-color-top');
+                        delete(conditionObject['pr']);  // 删除价格选择的参数的对象
+                        let cp = {"cp":lowPr+"to"+"0"};
+                        Object.assign(conditionObject, cp); // 合并对象
+                        let conditionString = that.objectToString(conditionObject); // 转换成字符串
+                        console.log(conditionString);
+                        window.location.href = url + conditionString + queryString; // 跳转的URL
+                    }else {
+                        $('#price>p').html("租金");
+                        $('#price').find('i').removeClass('bacchosed');
+                        $('#price').removeClass('active-color-top');
+                        $('#price').removeClass('chosed');
+                        delete(conditionObject['pr']);  // 删除价格选择的参数的对象
+                        delete(conditionObject['cp']);  // 删除价格自定义参数的对象
+                        let conditionString = that.objectToString(conditionObject); // 转换成字符串
+                        console.log(conditionString);
+                        window.location.href = url + conditionString + queryString; // 跳转的URL
+                    }
+                    $('.bac').hide();
+                    $('#price').children('span').removeClass('direction');
+                    $('.price-total').slideToggle();
                 }
-                $('.bac').hide();
-                $('#price').children('span').removeClass('direction');
-                $('.price-total').slideToggle();
         });
         /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
         房型传参
