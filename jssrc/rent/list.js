@@ -956,6 +956,7 @@ class ListController extends Controller {
            })
 
         }else {
+            $('.sort').show();
             $('.icon-hanbao').show();
         }
 
