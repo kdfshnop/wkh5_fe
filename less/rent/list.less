@@ -138,7 +138,8 @@ body{
 
 }
 .all-control{
-  margin-top: 8.5rem;;
+  margin-top: 8.5rem;
+  overflow-x: hidden;
  /* background-color: #ffffff;*/
 }
 /*<!--房源总数-->*/
@@ -657,7 +658,7 @@ body{
   padding-left: 1.5rem;
   background-color: @default-color;
   padding-top: 2rem;
-  padding-bottom: 5rem;
+  padding-bottom: 2rem;
   >a{
     padding-right: 1.5rem;
   }
@@ -836,6 +837,55 @@ margin-top: 4.8rem;
         background-color: #F0F0F0 !important;
         padding-left: 1rem !important;
       }
+    }
+  }
+}
+.data-status{
+  background-color: #fff;
+  padding-bottom: 1.5rem;
+}
+
+/*右侧滑出的链接*/
+.slide-right{
+  width: 50%;
+  position: fixed;
+  top: 0;
+  right: -50%;
+  bottom: 0;
+  background-color: @default-color;
+  z-index: 18;
+  >ul{
+    padding-top: 4.8rem;
+    >li{
+      height: 4.4rem;
+      line-height: 4.4rem;
+      border-left: 5px solid #fff;
+      font-size: 1.8rem;
+      >a{
+        padding-left: 20px;
+        display: block;
+        color: @default-font-color;
+      }
+      &.active{
+        border-color: #4081d6;
+        background: #f5f5f5;
+      }
+    }
+  }
+  >.downloadApp {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 50px;
+    line-height: 50px;
+    text-align: center;
+    font-size: 16px;
+    color: #fff;
+    background: #2c2d2f;
+    >a{
+      display: block;
+      color: #fff;
     }
   }
 }
