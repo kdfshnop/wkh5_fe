@@ -1004,7 +1004,7 @@ class ListController extends Controller {
                     localStorage.setItem("searchHistory",JSON.stringify(saveLocalStorage));
                     delete (conditionObject['di']); delete (conditionObject['to']);
                     delete (conditionObject['li']); delete (conditionObject['st']);
-                    let conditionString = self.objectToString(conditionObject); // 转换成字符串
+                    let conditionString = that.objectToString(conditionObject); // 转换成字符串
                     let valueSearch = $(this).attr('data-value');
                     let typeS = $(this).attr('data-type');
                     window.location.href = url + conditionString + self.checkType(typeS,valueSearch);
