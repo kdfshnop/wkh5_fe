@@ -29,7 +29,7 @@ body{
       line-height: 4.5rem;
       text-align: center;
       font-size: 1.4rem;
-      color: #999999;
+      color: #636363;
       letter-spacing: 0;
       >p{
         display: inline-block;
@@ -94,30 +94,39 @@ body{
         right: 0.5rem;
         top: 0.75rem;
       }
-      >input{
-        height: 3rem;
+      >.input-kw-form{
         width: 100%;
-        background: @default-color;
-        border-radius: 6px;
-        border:  none;
-        outline: none;
-        padding-left: 3.4rem;
-        &:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
-          color: #7C7C7C; opacity:1;
-        }
+        height: 3rem;
+        >input{
+          height: 3rem;
+          width: 100%;
+          background: @default-color;
+          border-radius: 6px;
+          border:  none;
+          outline: none;
+          padding-left: 3.4rem;
+          &:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+            color: #7C7C7C; opacity:1;
+          }
 
-        &::-moz-placeholder { /* Mozilla Firefox 19+ */
-          color: #7C7C7C;opacity:1;
-        }
+          &::-moz-placeholder { /* Mozilla Firefox 19+ */
+            color: #7C7C7C;opacity:1;
+          }
 
-        &:-ms-input-placeholder{
-          color: #7C7C7C;opacity:1;
-        }
+          &:-ms-input-placeholder{
+            color: #7C7C7C;opacity:1;
+          }
 
-        &::-webkit-input-placeholder{
-          color: #7C7C7C;opacity:1;
+          &::-webkit-input-placeholder{
+            color: #7C7C7C;opacity:1;
+          }
+          -webkit-appearance: none;
+        }
+        input[type="search"]::-webkit-search-cancel-button{
+          display: none;
         }
       }
+
     }
   }
 }
@@ -453,10 +462,13 @@ body{
     >.icon-search{
       display: none !important;
     }
-    >input{
-      background-color: #F0F0F0 !important;
-      padding-left: 1rem !important;
+    >.input-kw-form{
+      >input{
+        background-color: #F0F0F0 !important;
+        padding-left: 1rem !important;
+      }
     }
+
   }
 }
 .on-hide{
@@ -806,9 +818,11 @@ margin-top: 4.8rem;
     >.icon-search{
       display: none !important;
     }
-    >input{
-      background-color: #F0F0F0 !important;
-      padding-left: 1rem !important;
+    >.input-kw-form {
+      > input {
+        background-color: #F0F0F0 !important;
+        padding-left: 1rem !important;
+      }
     }
   }
 }
