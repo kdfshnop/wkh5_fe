@@ -55,6 +55,7 @@ class ListController extends Controller {
             }
         }
         let conditionObject = this.parseCondition({condition:condition});  // 转成对象
+        console.log(JSON.stringify(conditionObject)+"conditionObject");
         this.choseFun(conditionObject,url,acWordHouseList);
         /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
         请求接口 获取城市区域
@@ -215,7 +216,7 @@ class ListController extends Controller {
                         let dataTownTo =  $(this).attr("data-to");   // 需要传给后台pinURL的参数  town
                         let dataTownName = $(this).html();   // 获取中文town名称
                         delete(conditionObject['li']);  // 删除地铁线的对象
-                        delete(conditionObject['st']);  // 删除地铁站点的对象
+                        delete(conditionObject['st']);  // 删除地铁站点的对象、、、
                         if (dataTownName == "不限") {
                             $('#dic > p').html(dataAreasName);
                             let dataAreasDiObj =  that.parseCondition({condition:dataAreasDi});  // 转换成对象
@@ -359,7 +360,7 @@ class ListController extends Controller {
                                 window.location.href = url + conditionString+areasLineSting;  // 跳转的URL
                             } else {
                                 $('#dic > p').html(dataStationName); // 判断赋值给检索title
-                                let lineStationString = dataLineLi + '-' + dataStationSt; // 合并字符串
+                                let lineStationString =  dataLineLi+ '-' + dataStationSt; // 合并字符串
                                 let lineStationObj = that.parseCondition({condition: lineStationString}); // 转换成对象
                                 Object.assign(conditionObject, lineStationObj); // 合并对象
                                 let conditionString = that.objectToString(conditionObject); // 转换成字符串
@@ -392,7 +393,8 @@ class ListController extends Controller {
                             window.location.href = url + conditionString+areasLineSting;  // 跳转的URL
                         } else {
                             $('#dic > p').html(dataStationName); // 判断赋值给检索title
-                            let lineStationString = dataLineLi + '-' + dataStationSt; // 合并字符串
+                            let lineStationString = "li-"+ conditionObject['li'] + '-' + dataStationSt; // 合并字符串
+                            console.log(lineStationString+"lineStationString");
                             let lineStationObj = that.parseCondition({condition: lineStationString}); // 转换成对象
                             Object.assign(conditionObject, lineStationObj); // 合并对象
                             let conditionString = that.objectToString(conditionObject); // 转换成字符串
@@ -836,19 +838,21 @@ class ListController extends Controller {
             let spaceAreaStart =["0-50","50-70","70-90","90-110","110-130","130-150","150-0"];
             conditionData = {
                  "cityId":cityid,
-                 "bedRoomSumLists":[],
+                 "bedRoomSumLists":[ ],
                  "renovations":[],
                  "spaceAreas":[]
             };
             if(conditionObj['la'] && conditionObj['la'].length == 1){  // 判断是对象还是数组
+                console.log("conditionObj['la']=============="+conditionObj['la']);
                 if(conditionObj['la'] == 0){
-                    conditionData['bedRoomSumLists'] =[];
+                    conditionData['bedRoomSumLists'] =[ ];
                 }else {
                     conditionData['bedRoomSumLists'].push(conditionObj.la)
                 }
             }else {
                 conditionData['bedRoomSumLists'] = conditionObj['la']
             }
+            console.log("conditionData['bedRoomSumLists']=============="+JSON.stringify(conditionData['bedRoomSumLists']));
             delete(conditionObj['la']);
             if (conditionObj['pr']) {   // 价格选择
                 if(conditionObj['pr'].constructor == Array) {
@@ -1056,6 +1060,26 @@ class ListController extends Controller {
                 "type": 1
             });
         });
+
+
+ /*       $('#topPr').bind("focus",function(){
+            $(".price-total").css({"position":"absolute"});
+
+        }).bind("blur",function(){
+            $(".price-total").css("position","fixed");
+        });
+        $('#lowPr').bind("focus",function(){
+            $(".price-total").css({"position":"absolute",});
+        }).bind("blur",function(){
+            $(".price-total").css("position","fixed");
+        });*/
+           /*阻止事件冒泡*/
+        $('.writ-price').click(function (event) {
+            event.stopPropagation()
+        });
+        $('.price-list > ul').scroll(function (event) {
+            event.stopPropagation()
+        })
     }
 
     /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -1091,11 +1115,17 @@ class ListController extends Controller {
             $(this).children('span').toggleClass('direction');
             let list = $('.rent-list > ul > li > span');  // 获取检索当中的span标签   后面判断指向 （根据class判断指向）
             $('.bac').hide();
-            $('#sort').show();
+            if(self.GetRequest()['channel'] == "jrttsub"){
+                $('#sort').hide();
+            }else {
+                $('#sort').show();
+            }
             list.each(function (index, item) {   //根据span标签的样式指向判断底部罩层是否显示
                 if (item.classList.length == 1) {
                     $('.bac').show();
                     $('#sort').hide();
+                }else {
+                   /* $('body').css('position','static')*/
                 }
             });
             let indexP = $(this).index();
@@ -1197,8 +1227,11 @@ class ListController extends Controller {
             $('.bac').hide();
             $('.slide-right').animate({right:'-50%'});
             $('.slide-right').hide();
-
-            $('.sort').show();
+            if(self.GetRequest()['channel'] == "jrttsub"){
+                $('#sort').hide();
+            }else {
+                $('#sort').show();
+            }
             $('.sort-chose').hide();
         });
 
@@ -1501,7 +1534,7 @@ class ListController extends Controller {
                 },
      -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
     pullload(conditionObject) {
-        console.log(conditionObject);
+        console.log("conditionObject"+JSON.stringify(conditionObject));
         let self = this ;
         //租房列表
         $(".rent-items").pullload({
