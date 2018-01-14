@@ -12,7 +12,7 @@
     -webkit-tap-highlight-color: transparent;
     -webkit-touch-callout: none;
     -webkit-user-select: none;
-    
+
     border-bottom : 1px solid @light-line-gray-color ;
     color : @default-font-color ;
     display : block ;    
@@ -40,6 +40,11 @@
                 overflow: hidden;
                 //white-space: nowrap;
                 height: 2.2rem;
+
+                & + dd {
+                    height: 1.2rem;
+                    overflow: hidden;
+                }
             }
             &.tags {
                 margin-top : 2px ;
