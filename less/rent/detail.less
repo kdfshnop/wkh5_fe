@@ -10,7 +10,11 @@
 @import "../components/album.less";
 @import "../components/map.less";
 @import "../components/rent-comments.less";
+@import "../components/download-app.less" ;
 
+body {
+    padding-bottom : 60px ;
+}
 .icon-back {
     position: absolute;
     left: 1.5rem; 
@@ -75,6 +79,10 @@
 
 .tags {
     margin: 1rem 0;
+    .tag {
+        color : #000 ;
+        padding : 3px 6px ;
+    }
 }
 
 .swiper-wrapper {
@@ -167,4 +175,9 @@
     dd {
         word-wrap: break-word;
     }
+}
+
+
+.one-column-container>dl dd.has-arrow a::after , .subestate .right .completed::after {
+    color : #7c7c7c ;
 }

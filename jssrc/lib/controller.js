@@ -52,6 +52,14 @@ class Controller {
             } ,
             "community" : {
                 "chart" : this.apiPrefix + "api/community/detail/chart"
+            },
+            "rent" : {
+                "list" : {
+                    "cityAreas": this.apiPrefix + "api/rent/list/areas",
+                    "citySubway" : this.apiPrefix + "api/rent/list/subway",
+                    "acWord" : this.apiPrefix + "api/rent/list/acWord",
+                    "rentHouseList" : this.apiPrefix +"api/rent/list/rentHouseList"
+                }
             }
         } ;
         /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -171,5 +179,17 @@ class Controller {
                 iosDownloadLink : "//m.wkzf.com/download/transit"
             }) ;
         }) ;
+        $(".download-app .icon-remove").click(function(){
+            $(".download-app").animate({
+                bottom : "-60px"
+            } , 100) ;
+            $(".assistant").animate({
+                bottom : "0px"
+            } , 100 ) ;
+            $(".all-dis").css({ "padding-bottom" : "60px" }) ;
+        }) ;
+        /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+        onload方法定义结束
+        -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
     }    
 }

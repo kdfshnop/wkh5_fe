@@ -15,10 +15,10 @@
 @import "../components/download-app.less" ;
 
 body{
-  background-color: #F0F0F0;
+  background-color: #F0F0F0;  
 }
 .all-dis{
-  padding-bottom: 50px;
+  padding-bottom: 120px;
 }
 .icon-back{
   color: @default-color;
@@ -147,7 +147,13 @@ body{
         display: block;
         color : @primary-color ;
         .clearfix() ;
+        span {
+          display : block ;
+          margin-right : 2rem ;
+          .text-ellipsis() ;
+        }        
         >.icon-next {
+          color : #7c7c7c ;
           display: inline-block;
           float : right ;
           font-size : 1.6rem ;
@@ -189,10 +195,11 @@ body{
       font-size : 1.4rem ;
       &.hd {
         color : @light-font-color ;
-        line-height : 2rem ;
+        line-height : 20px ;
       }
        &.bd{
-         word-wrap:break-word
+         word-wrap:break-word ;
+         line-height : 20px ;
        }
     }
     >div{
@@ -206,6 +213,9 @@ body{
   }
 }
 .estate {
+  hr {
+    margin-right : 15px ;
+  }
   a {
     display: block;
     .clearfix() ;
@@ -231,7 +241,7 @@ body{
       .outline {
         .fit-height() ;
         .icon-next {
-          color :  @primary-color;
+          color :  #7c7c7c ;
           float : right ;
           display: inline-block;
           font-size : 1.6rem ;
@@ -239,7 +249,8 @@ body{
         }
       }
        .name {
-        color: #000000;
+        color: #000000 ;
+        .text-ellipsis() ;
       }
     }
     &.total-item {
@@ -257,6 +268,7 @@ body{
         font-size : 1.6rem ;
         font-weight: 400;
         >i{
+          color : #7c7c7c ;
           display: inline-block;
           font-size : 1.6rem ;
           font-weight: 600;
@@ -289,9 +301,9 @@ body{
   }
 
   .hr {
-    margin : @gap-dimension 0 ;
+    margin : @gap-dimension  0 ;
   }
-  >.echart{
+  >.echart{    
     #main{
       width: 100%;
       height:20rem;
@@ -313,6 +325,7 @@ hr{
   border:0;
   border-top:1px solid #eee;
   margin-top: 0.5rem;
+  //margin-right : 1.5rem ;
   margin-bottom: 0.5rem;
 }
 .no-sell{
@@ -341,6 +354,12 @@ hr{
  }
 }
 .similar-house{
+  a {
+    margin-right : 1.5rem ;
+    dl {
+      padding-right : 0 ;
+    }
+  }
   >a:first-child{
    margin-top: -1.5rem;
   }
@@ -348,3 +367,5 @@ hr{
 .preview-image {
   z-index: 29999999 !important;
 }
+
+
