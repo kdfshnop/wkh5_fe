@@ -54,6 +54,20 @@ dl {
 }
 
 hr {
-    margin: 0;
-    border-top: 1px dotted @line-gray-color ;
+    border : 0 ;
+    height : 1px ;
+    margin : 0 ;
+    position : relative ; 
+    &:after {
+        border-bottom : 1px solid #e8e8e8 ;
+        bottom : 0 ;
+        content : "" ;
+        height : 1px ;
+        position : absolute ;
+        right : 0 ;
+        transform : scaleY(0.5) ;
+        -webkit-transform : scaleY(0.5) ;
+        width : 100% ;
+    }    
+      
 }
