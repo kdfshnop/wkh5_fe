@@ -5,27 +5,37 @@
  -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
 @import "../variables.less" ;
 @import "../mixins.less" ;
-.esf-item {    
+.esf-item {
+    &:active {
+        background-color : transparent ;
+    } 
+    -webkit-tap-highlight-color: transparent;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+
+    border-bottom : 1px solid @light-line-gray-color ;
     color : @default-font-color ;
-    display : block ;
+    display : block ; 
     position : relative ;
     &:after {
-        border-bottom : 1px solid #e8e8e8 ;
-        bottom : -1px ;
-        content : "" ;
-        height : 1px ;
-        position : absolute ;
-        right : 0 ;
-        transform: scaleY(0.5) ;
-        -webkit-transform: scaleY(0.5) ;
-        width : 100% ;
-    }
-    &:last-child {
-        border : none ;
-        &:after {
-            border : none ;
+            border-bottom : 1px solid #e8e8e8 ;
+            bottom : -1px ;
+            content : "" ;
+            height : 1px ;
+            position : absolute ;
+            right : 0 ;
+            transform: scaleY(0.5) ;
+            -webkit-transform: scaleY(0.5) ;
+            width : 100% ;
         }
-    }
+        &:last-child{
+            border: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+            &:after {
+                border : none ;
+            }
+        }   
     dl {        
         .clearfix() ;        
         padding : 1.5rem 1.5rem 1.5rem 0 ;        
@@ -40,10 +50,18 @@
         }
         dd {            
             margin : 0px 0 5px 140px ;
-            .text-ellipsis() ;
+            //.text-ellipsis() ;
             &.title {
                 color : #000 ;
                 font-size : 1.6rem ; 
+                overflow: hidden;
+                //white-space: nowrap;
+                height: 2.0rem;
+
+                & + dd {
+                    height: 1.2rem;
+                    overflow: hidden;
+                }
             }
             &.tags {
                 margin-top : 2px ;

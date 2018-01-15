@@ -6,10 +6,17 @@
  @import "../variables.less";
  @import "../mixins.less"; 
 
-.rent-item {    
-    &.box {        
+.rent-item { 
+    &:active {
+        background-color : transparent ;
+    } 
+    -webkit-tap-highlight-color: transparent;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    &.box {
+        border-bottom: 1px solid  #e8e8e8 ;
         padding-bottom: 1.5rem;
-        margin-bottom: 1.5rem;
+        margin-bottom: 1.5rem;  
         position : relative ;
         &:after {
             border-bottom : 1px solid #e8e8e8 ;
@@ -29,7 +36,7 @@
             &:after {
                 border : none ;
             }
-        }      
+        }           
         .left {                               
             //flex-shrink: 0;
             .flex-shrink(0);
@@ -40,24 +47,29 @@
         }
         .right {                      
             margin-left: 1rem;
-            .text-ellipsis();
+            //.text-ellipsis();
             h4 {
                 font-weight: normal;
                 color: #000;
                 font-size: 1.6rem;                
-                .text-ellipsis();
-                margin-bottom: 1rem;
-                line-height: 1;
+                //.text-ellipsis();
+                margin-bottom: .5rem;
+                line-height: 2.2rem;
+                overflow: hidden;
+                //white-space: nowrap;
+                height: 2.2rem;
             }
             .base-info {                
                 color: #7C7C7C;
                 font-size: 1.1rem;
-                line-height: 1;
-                .text-ellipsis() ;
+                height: 1.5rem;
+                //line-height: 1;
+                //.text-ellipsis() ;
+                overflow: hidden;                
             }
             .tags {
-                margin-top: .8rem;
-                margin-bottom: .8rem;
+                margin-top: .7rem;
+                margin-bottom: .7rem;
                 min-height : 21px ;
                 white-space: normal;
 
