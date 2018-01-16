@@ -19,7 +19,18 @@ body{
   position: fixed;
   top: 0;
   z-index: 12;
-  box-shadow: 0 2px 6px 0 rgba(0,0,0,0.15);
+  //box-shadow: 0 2px 6px 0 rgba(0,0,0,0.15);
+  &:after {
+      border-bottom : 1px solid #e8e8e8 ;
+      bottom : -1px ;
+      content : "" ;
+      height : 1px ;
+      position : absolute ;
+      right : 0 ;
+      transform: scaleY(0.5) ;
+      -webkit-transform: scaleY(0.5) ;
+      width : 100% ;
+  }
   >ul{
     flex-direction: row;
     display: -webkit-flex;
@@ -645,7 +656,7 @@ body{
       background: #F0F0F0;
       border-radius: 6px;
       font-size: 1.4rem;
-      color: #92A7C3;
+      color: #7c7c7c;
       line-height: 4.5rem;
       height: 4.5rem;
       display: inline-block;

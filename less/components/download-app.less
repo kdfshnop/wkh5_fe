@@ -4,8 +4,7 @@
  3. 作者：zhaohuagang@lifang.com
  -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
 .download-app {
-     background-color : #fff ;
-     border-top : 1px solid #e4e4e4 ;
+     background-color : #fff ;     
      bottom : 0 ; 
      .clearfix() ;
      height : 60px ;
@@ -14,6 +13,17 @@
      position : fixed ;
      width : 100% ;
      z-index : 1000 ;
+     &:before {
+        border-top : 1px solid #e8e8e8 ;
+        top : 0 ;
+        content : "" ;
+        height : 1px ;
+        position : absolute ;
+        right : 0 ;
+        transform: scaleY(0.5) ;
+        -webkit-transform: scaleY(0.5) ;
+        width : 100% ;
+    }
      &>dl {
          .clearfix() ;
          float : left ;
