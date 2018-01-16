@@ -20,7 +20,7 @@ body{
   top: 0;
   z-index: 12;
   //box-shadow: 0 2px 6px 0 rgba(0,0,0,0.15);
-  &:after {
+/*  &:after {
       border-bottom : 1px solid #e8e8e8 ;
       bottom : -1px ;
       content : "" ;
@@ -30,7 +30,7 @@ body{
       transform: scaleY(0.5) ;
       -webkit-transform: scaleY(0.5) ;
       width : 100% ;
-  }
+  }*/
   >ul{
     flex-direction: row;
     display: -webkit-flex;
@@ -122,6 +122,11 @@ body{
           outline: none;
           padding-left: 3.4rem;
           padding-right: 3.5rem;
+          -webkit-tap-highlight-color: rgba(0,0,0,0);
+
+          &:focus{
+            background-color: #F0F0F0 !important;
+          }
           &:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
             color: #7C7C7C; opacity:1;
           }
@@ -855,6 +860,11 @@ margin-top: 4.8rem;
       > input {
         background-color: #F0F0F0 !important;
         padding-left: 1rem !important;
+        &:focus{
+          background: none ;
+          -webkit-tap-highlight-color: rgba(0,0,0,0);
+        }
+
       }
     }
   }
