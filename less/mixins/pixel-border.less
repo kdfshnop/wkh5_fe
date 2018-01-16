@@ -1,0 +1,62 @@
+/*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ 1. 项目名称：yfyk2h5
+ 2. 文件名称：src -> less -> mixins -> pixel-border.less(混合 -> 1px边框)
+ 3. 作者：zhaohuagang@lifang.com
+ 4. 备注：这个混合是为了解决在移动端1px边框有些浏览器看起来呈现2px或者更大值的问题
+                使用这个混合的前提是被赋予混合的dom节点是脱离文档流的，也就是position为：absolute | relative | fixed之中的一种
+ -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
+ .pixel-border-top() {
+     &:before {
+        border-top : 1px solid #e8e8e8 ;
+        top : 0 ;
+        content : "" ;
+        height : 1px ;
+        position : absolute ;
+        left : 0 ;
+        transform: scaleY(0.5) ;
+        -webkit-transform : scaleY(0.5) ;
+        width : 100% ;
+     }
+ }
+
+  .pixel-border-bottom() {
+     &:after {
+        border-bottom : 1px solid #e8e8e8 ;
+        bottom : -1px ;
+        content : "" ;
+        height : 1px ;
+        position : absolute ;
+        left : 0 ;
+        transform: scaleY(0.5) ;
+        -webkit-transform : scaleY(0.5) ;
+        width : 100% ;
+     }
+ }
+
+ .pixel-border-left() {
+     &:before {
+        border-left : 1px solid #e8e8e8 ;
+        top : 0 ;
+        content : "" ;
+        height : 100% ;
+        position : absolute ;
+        left : -1px ;
+        transform: scaleX(0.5) ;
+        -webkit-transform : scaleX(0.5) ;
+        width : 1px ;
+     }
+ }
+
+  .pixel-border-right() {
+     &:after {
+        border-right : 1px solid #e8e8e8 ;
+        top : 0 ;
+        content : "" ;
+        height : 100% ;
+        position : absolute ;
+        right : -1px ;
+        transform: scaleX(0.5) ;
+        -webkit-transform : scaleX(0.5) ;
+        width : 1px ;
+     }
+ }
