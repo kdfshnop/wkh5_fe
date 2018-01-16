@@ -1058,6 +1058,7 @@ class ListController extends Controller {
             BigData.init(that);
             BigData.bigData({
                 "pageName": "1202",
+                "city": cityid,
                 "type": 1
             });
         });
