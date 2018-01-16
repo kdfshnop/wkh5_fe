@@ -940,16 +940,16 @@ class ListController extends Controller {
                 $('.conone').hide();
             }
            $('.cancel-channel').click(function () {
-               $('.all-control').removeClass('on-hide');
-               $('.rent-search').siblings('ul').removeClass('on-hide');
-               $('.search-result').hide();
-               $('.no-result').hide();
-               $('.back').hide();
                $(this).hide();
                $('.contwo').hide();
                $('.conone').hide();
+               $('.all-control').removeClass('on-hide');
+               $('.search-result').hide();
+               $('.no-result').hide();
+               $('.back').hide();
                $('.show-result').hide();
                $('#searchInput').val('');
+               $('.rent-search').siblings('ul').removeClass('on-hide');
                $('.rent-search').removeClass('active-search-channel');
            })
 
