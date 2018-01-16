@@ -927,7 +927,8 @@ class ListController extends Controller {
         判断是否为今日头条
         -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
         if (this.GetRequest()['channel'] == "jrttsub"){
-            $('.rent-list').css({"box-shadow":" 0 1px 0 0 rgba(0,0,0,.15)","background-color":"#fff"});
+            $('.rent-list').css({"box-shadow":" 0 0 0 0 rgba(0,0,0,.15)","background-color":"#fff"});
+           /* $('.rent-list > ul').addClass('rent-list-und');*/
             $('#searchInput').css("background-color","#f0f0f0");
             $('.search-input').css('width',"96%");
             $('.history-name').hide();
@@ -939,16 +940,16 @@ class ListController extends Controller {
                 $('.conone').hide();
             }
            $('.cancel-channel').click(function () {
-               $('.all-control').removeClass('on-hide');
-               $('.rent-search').siblings('ul').removeClass('on-hide');
-               $('.search-result').hide();
-               $('.no-result').hide();
-               $('.back').hide();
                $(this).hide();
                $('.contwo').hide();
                $('.conone').hide();
+               $('.all-control').removeClass('on-hide');
+               $('.search-result').hide();
+               $('.no-result').hide();
+               $('.back').hide();
                $('.show-result').hide();
                $('#searchInput').val('');
+               $('.rent-search').siblings('ul').removeClass('on-hide');
                $('.rent-search').removeClass('active-search-channel');
            })
 
