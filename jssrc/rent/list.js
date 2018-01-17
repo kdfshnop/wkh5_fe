@@ -1058,7 +1058,9 @@ class ListController extends Controller {
             BigData.init(that);
             BigData.bigData({
                 "pageName": "1202",
-                "city": cityid,
+                "pageParam": {
+                    "city": cityid,
+                },
                 "type": 1
             });
         });
@@ -1138,25 +1140,25 @@ class ListController extends Controller {
                 $('.price-total').hide();
                 $('.house-type').hide();
                 $('.more').hide();
-                $('.dic').slideToggle();
+                $('.dic').slideToggle("100");
             } else if (indexP == 1) {      /*判断价格模块的显示*/
                 $('.bac').stop();
                 $('.dic').hide();
                 $('.house-type').hide();
                 $('.more').hide();
-                $('.price-total').slideToggle();
+                $('.price-total').slideToggle("100");
             } else if (indexP == 2) {    /* 判断户型模块显示*/
                 $('.bac').stop();
                 $('.dic').hide();
                 $('.price-total').hide();
                 $('.more').hide();
-                $('.house-type').slideToggle();
+                $('.house-type').slideToggle("100");
             } else if (indexP == 3) {    /* 判断更多模块显示*/
                 $('.bac').stop();
                 $('.dic').hide();
                 $('.price-total').hide();
                 $('.house-type').slideUp();
-                $('.more').slideToggle();
+                $('.more').slideToggle("100");
             }
             $('.sort-chose').hide();
             $('.bac').css({'z-index': '10', 'top': '4.5rem'});
