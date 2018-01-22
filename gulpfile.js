@@ -59,7 +59,8 @@ var pathAppJs = [
     'jssrc/lib/*.js' ,
     '!jssrc/lib/controller.js' ,
     '!jssrc/lib/share.js' ,
-    '!jssrc/lib/wakeupApp.js'
+    '!jssrc/lib/wakeupApp.js' ,
+    '!jssrc/lib/location.js'
 ];
 /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
 定义清空编译目录(css | js)任务
@@ -77,7 +78,7 @@ gulp.task('clean', function() {
 定义对核心js合并的任务
 -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
 gulp.task('js-app', function() {
-    return gulp.src([ 'jssrc/lib/controller.js' , 'jssrc/lib/share.js' , 'jssrc/lib/wakeupApp.js' ])
+    return gulp.src([ 'jssrc/lib/controller.js' , 'jssrc/lib/share.js' , 'jssrc/lib/wakeupApp.js' , 'jssrc/lib/location.js' ])
         .pipe(plumber())
         //.pipe(sourcemaps.init())
         .pipe(babel({
@@ -121,6 +122,8 @@ gulp.task('watch', function() {
 2. 编译less
 3. 合并压缩相应文件到app.min.js
 4. 编译脚本
+
+gulp build --env=test 将会压缩合并的脚本文件
 -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
 gulp.task('default', ['watch']);
 //gulp.task('build', gulpSequence('clean', 'less', 'js-controller', 'js-app', 'js'))
