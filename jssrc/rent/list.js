@@ -926,6 +926,17 @@ class ListController extends Controller {
             conditionData = {
                 "cityId":cityid,
             };
+            if (this.GetRequest()['districtId']){  // 查询？后面参数异步请求
+                conditionData['districtId'] = this.GetRequest()['districtId'];
+            }else if (this.GetRequest()['townId']){
+                conditionData['townId'] = this.GetRequest()['townId'];
+            }else if (this.GetRequest()['subwayLine']){
+                conditionData['subwayLine'] = this.GetRequest()['subwayLine'];
+            }else if (this.GetRequest()['subwayStation']){
+                conditionData['subwayStation'] = this.GetRequest()['subwayStation'];
+            }else if (this.GetRequest()['subEstateId']){
+                conditionData['subEstateId'] = this.GetRequest()['subEstateId'];
+            }
         }
 
         this.pullload(conditionData);
@@ -1069,18 +1080,6 @@ class ListController extends Controller {
             });
         });
 
-
- /*       $('#topPr').bind("focus",function(){
-            $(".price-total").css({"position":"absolute"});
-
-        }).bind("blur",function(){
-            $(".price-total").css("position","fixed");
-        });
-        $('#lowPr').bind("focus",function(){
-            $(".price-total").css({"position":"absolute",});
-        }).bind("blur",function(){
-            $(".price-total").css("position","fixed");
-        });*/
            /*阻止事件冒泡*/
         $('.writ-price').click(function (event) {
             event.stopPropagation()
@@ -1537,9 +1536,7 @@ class ListController extends Controller {
     }
 
     /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
-     上拉加载实例化                "headers":{
-                   "content-type":"application/json"
-                },
+     上拉加载实例化
      -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
     pullload(conditionObject) {
         console.log("conditionObject"+JSON.stringify(conditionObject));
