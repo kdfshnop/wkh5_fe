@@ -69,7 +69,7 @@ define(function(){
         if(controller){
             let total = getTotal();	
 
-            controller.request(controller.apiUrl.bigData,item,{
+            controller.request(controller.apiUrl.common.bigData,item,{
                 successCallback: function(){
 
                 },
