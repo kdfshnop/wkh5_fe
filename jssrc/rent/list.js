@@ -843,7 +843,6 @@ class ListController extends Controller {
                  "spaceAreas":[]
             };
             if(conditionObj['la'] && conditionObj['la'].length == 1){  // 判断是对象还是数组
-                console.log("conditionObj['la']=============="+conditionObj['la']);
                 if(conditionObj['la'] == 0){
                     conditionData['bedRoomSumLists'] =[ ];
                 }else {
@@ -852,7 +851,6 @@ class ListController extends Controller {
             }else {
                 conditionData['bedRoomSumLists'] = conditionObj['la']
             }
-            console.log("conditionData['bedRoomSumLists']=============="+JSON.stringify(conditionData['bedRoomSumLists']));
             delete(conditionObj['la']);
             if (conditionObj['pr']) {   // 价格选择
                 if(conditionObj['pr'].constructor == Array) {
@@ -919,6 +917,17 @@ class ListController extends Controller {
             conditionData = {
                 "cityId":cityid,
             };
+            if (this.GetRequest()['districtId']){  // 查询？后面参数异步请求
+                conditionData['districtId'] = this.GetRequest()['districtId'];
+            }else if (this.GetRequest()['townId']){
+                conditionData['townId'] = this.GetRequest()['townId'];
+            }else if (this.GetRequest()['subwayLine']){
+                conditionData['subwayLine'] = this.GetRequest()['subwayLine'];
+            }else if (this.GetRequest()['subwayStation']){
+                conditionData['subwayStation'] = this.GetRequest()['subwayStation'];
+            }else if (this.GetRequest()['subEstateId']){
+                conditionData['subEstateId'] = this.GetRequest()['subEstateId'];
+            }
         }
 
         this.pullload(conditionData);
