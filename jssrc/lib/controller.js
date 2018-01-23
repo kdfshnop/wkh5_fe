@@ -90,7 +90,7 @@ class Controller {
     }
 
     getDomain() {
-        return document.domain;
+        return document.domain ;
     }
     /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
     发送Ajax请求的方法：
@@ -161,10 +161,17 @@ class Controller {
         $(".assistant .wx").click(function(){
             $.modal({
                 "id" : "addWechatModal" ,
-                "title" : "扫码加微信" ,
-                "content" : "<img src=\"" + $(this).data("agentwchartqrimgurl") + "\" style=\"width : 12rem ; height : 12rem ; \"><p>微信号：" + $(this).data("agentwchatid") + "</p>" ,
+                "title" : "添加微信" ,
+                "content" : "<fieldset><legend>方法一</legend><p>将此页面截屏至您的相册<br>使用微信扫一扫添加</p><img src=\"" + $(this).data("agentwchartqrimgurl") + "\" style=\"width : 12rem ; height : 12rem ; \"></fieldset><fieldset><legend>方法二</legend><p>复制李梅的微信号添加<br>微信号：" + $(this).data("agentwchatid") + "</p></fieldset>" ,
                 "buttons" : [
-                    { "text" : "确定"  , "clickCallback" : () => { $.modal.close("addWechatModal") ; } }               
+                    { "text" : "取消"  , "clickCallback" : () => { $.modal.close("addWechatModal") ; } } ,
+                    { "text" : "复制微信号" , "className" : "copy"  , "clickCallback" : function() { 
+                        $(this).attr("data-clipboard-text" , $(".assistant .wx").data("agentwchatid")) ;
+                        let clipboard = new Clipboard("#addWechatModal .copy") ; 
+                        clipboard.on("success" , function(e) {                                 
+                            $.tips("经纪人微信号已复制请前往微信添加" , 3 ) ;
+                        }) ;
+                     } }               
                 ]
             }) ;
         }) ;
@@ -173,12 +180,13 @@ class Controller {
                 successCallback : (result)=> {                    
                     $.modal({
                         "id" : "callAgentModal" ,
-                        "title" : "" ,
-                        "content" : "<p>" + $(".assistant .portrait .right .name").val() + " " + $(".assistant .portrait .right .company-name").val() + "</p><p>" + result.data.dial + "转" + result.data.digits + "</p><p>为了保护您的隐私， 已为您隐藏手机号码您可安心拨打</p>" ,
+                        "title" : "<img src=\"" + $(".assistant .portrait .left img").attr("src") + "\">" ,
+                        "content" : "<p><span class=\"name\">" + $(".assistant .portrait .right .name").html() + "</span> <span class=\"company\">" + $(".assistant .portrait .right .company-name").html() + "</span></p><p class=\"tel\">" + result.data.dial + " 转 " + result.data.digits + "</p><p class=\"memo\">为了保护您的隐私， 已为您隐藏手机号码您可安心拨打</p>" ,
                         "buttons" : [
                             { "text" : "取消"  , "clickCallback" : () => { $.modal.close("callAgentModal") ; } } ,
-                            { "text" : "拨打"  , "clickCallback" : () => { 
-                                $(".assistant .phone").attr("href" , "tel:" + result.data.dial + "," + result.data.digits ) ;
+                            { "text" : "拨打" , "className" : "phone"  , "clickCallback" : function() { 
+                                $(this).attr("href" , "tel:" + result.data.dial + "," + result.data.digits ) ;
+                                return true ;
                             } }
                         ]
                     }) ;
