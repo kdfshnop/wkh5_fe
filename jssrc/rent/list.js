@@ -1062,18 +1062,6 @@ class ListController extends Controller {
             });
         });
 
-
- /*       $('#topPr').bind("focus",function(){
-            $(".price-total").css({"position":"absolute"});
-
-        }).bind("blur",function(){
-            $(".price-total").css("position","fixed");
-        });
-        $('#lowPr').bind("focus",function(){
-            $(".price-total").css({"position":"absolute",});
-        }).bind("blur",function(){
-            $(".price-total").css("position","fixed");
-        });*/
            /*阻止事件冒泡*/
         $('.writ-price').click(function (event) {
             event.stopPropagation()
