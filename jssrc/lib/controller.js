@@ -47,7 +47,8 @@ class Controller {
         this.apiUrl = {
             "common" : {
                 "bigData" : this.apiPrefix + "api/common/bigData" ,
-                "dial" : this.apiPrefix + "api/common/dial"
+                "dial" : this.apiPrefix + "api/common/dial" ,
+                "getCityByLatLon" : this.apiPrefix + "api/common/getCityByLatLon"
             } ,            
             "store" : {
                 "agent" : this.apiPrefix + "api/store/index/agent" ,
