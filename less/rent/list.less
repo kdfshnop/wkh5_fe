@@ -19,23 +19,10 @@ body{
   position: fixed;
   top: 0;
   z-index: 12;
-  //box-shadow: 0 2px 6px 0 rgba(0,0,0,0.15);
-/*  &:after {
-      border-bottom : 1px solid #e8e8e8 ;
-      bottom : -1px ;
-      content : "" ;
-      height : 1px ;
-      position : absolute ;
-      right : 0 ;
-      transform: scaleY(0.5) ;
-      -webkit-transform: scaleY(0.5) ;
-      width : 100% ;
-  }*/
   >ul{
     flex-direction: row;
     display: -webkit-flex;
     >li{
-      /*flex: 1;*/
       width: 9.375rem;
       line-height: 4.5rem;
       text-align: center;
@@ -113,6 +100,30 @@ body{
       >.input-kw-form{
         width: 100%;
         height: 3rem;
+        border-radius: 6px;
+        > label {
+          height: 3rem;
+          display: inline-block;
+          position: relative;
+          left: 1rem;
+          &:after{
+            content: '';
+            width: 1px;
+            height: 96%;
+            border-top: 1px solid @light-line-gray-color;
+            position: absolute;
+            right: 0;
+            -webkit-transform: scaleX(0.5);
+          }
+          >span{
+            display: inline-block;
+            line-height: 3rem;
+          }
+          >i{
+            display: inline-block;
+            .triangle-down();
+          }
+        }
         >input{
           height: 3rem;
           width: 100%;

@@ -28,11 +28,6 @@ class ListController extends Controller {
         let areasLineSting ='';  // ?后面参数 区域用到互斥
         let  conditionstr = "la-0"; // 默认的 condition 参数
         let acWordHouseList ='';  // 联想词
-        console.log("conditionQuery"+conditionQuery);
- /*       if (conditionQuery == "?channel=jrttsub" ){
-            url = url
-
-        }else*/
         if (conditionQuery == "") {
             url = url
         }
@@ -946,9 +941,10 @@ class ListController extends Controller {
         -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
         if (this.GetRequest()['channel'] == "jrttsub"){
             $('.rent-list').css({"box-shadow":" 0 0 0 0 rgba(0,0,0,.15)","background-color":"#fff"});
-           /* $('.rent-list > ul').addClass('rent-list-und');*/
-            $('#searchInput').css("background-color","#f0f0f0");
+           $('.input-kw-form').css({"background-color":"#f0f0f0"});
+            $('#searchInput').css({"background-color":"#f0f0f0",'width':"84%"});
             $('.search-input').css('width',"96%");
+            $('.icon-search').css('left','5rem');
             $('.history-name').hide();
             $('.icon-fanhui').hide();
             $('.sort').hide();
@@ -972,6 +968,7 @@ class ListController extends Controller {
            })
 
         }else {
+            $('.location-all').hide();
             $('.sort').show();
             $('.icon-hanbao').show();
         }
