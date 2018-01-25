@@ -12,6 +12,12 @@ body{
 .dic-name{
   padding: 0 1.5rem;
   background-color: @default-color;
+  position: fixed;
+  width: 100%;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 12;
   >p{
     line-height: 2.2rem;
     font-size: 1.4rem;
@@ -49,9 +55,10 @@ body{
 }
 
 .city-list {
+  margin-top: 5.8rem;
 /*  国内城市列表*/
-  > .inside-list {
-    > .inside-city-list {
+  > .domestic-list,>.oversea-list {
+    > .inside-city-list,>.inside-city {
        >p{
          font-size: 1.4rem;
          color: @light-font-color;
