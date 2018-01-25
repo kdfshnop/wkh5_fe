@@ -55,7 +55,8 @@ class cityListController extends Controller {
         $('.inside-city-list >ul > li').click(function () {
             pinyin =  $(this).attr('data-pinyin');
             cityId =  $(this).attr('data-cityid');
-            self.backOrigin(pinyin,cityId)
+          let cityName =  $(this).html();
+            self.backOrigin(pinyin,cityId,cityName)
         });
 
     }
@@ -77,7 +78,7 @@ class cityListController extends Controller {
     /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
     返回最终的来源
     -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
-    backOrigin(pinyin,cityId) {
+    backOrigin(pinyin,cityId,cityName) {
         let businessId ='';
         if (this.GetRequest()['businessType'] == "old") {
             window.location.href = '/' + pinyin + "/esf"
@@ -86,6 +87,7 @@ class cityListController extends Controller {
         } else if (this.GetRequest()['businessType'] == "rent") {
             $.cookie('cityId',cityId,{path: '/',});
             $.cookie('pinyin',pinyin,{path: '/',});
+            $.cookie('cityName',cityName,{path: '/',});
             window.location.href = '/' + pinyin + "/rent/?channel=jrttsub"
         } else if(this.GetRequest()['businessType'] == "xfPrice") {
             window.location.href = '/' + "xfPrice/price.html?regionId="+cityId+"&regionType=1"
