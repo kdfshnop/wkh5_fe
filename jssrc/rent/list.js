@@ -8,6 +8,19 @@
 class ListController extends Controller {
     constructor() {
         super();
+        /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+        图片懒加载实例化
+        -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/        
+        $(".lazy").lazyload({ 
+            "placeholder" : this.staticDomain + "/wkh5_fe/images/common/loading.jpg"
+        }) ;
+        new Location({
+            businessType : "rent" ,
+            cityApiUrl : this.apiUrl.common.getCityByLatLon ,
+            identical : (position)=> {
+                console.log(position) ;
+            }
+        }) ;
         this.readyFun();
         let that = this;
         let cityid = 43;
@@ -21,11 +34,6 @@ class ListController extends Controller {
         let areasLineSting ='';  // ?后面参数 区域用到互斥
         let  conditionstr = "la-0"; // 默认的 condition 参数
         let acWordHouseList ='';  // 联想词
-        console.log("conditionQuery"+conditionQuery);
- /*       if (conditionQuery == "?channel=jrttsub" ){
-            url = url
-
-        }else*/
         if (conditionQuery == "") {
             url = url
         }
@@ -937,9 +945,10 @@ class ListController extends Controller {
         -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
         if (this.GetRequest()['channel'] == "jrttsub"){
             $('.rent-list').css({"box-shadow":" 0 0 0 0 rgba(0,0,0,.15)","background-color":"#fff"});
-           /* $('.rent-list > ul').addClass('rent-list-und');*/
-            $('#searchInput').css("background-color","#f0f0f0");
+           $('.input-kw-form').css({"background-color":"#F8F8F8"});
+            $('#searchInput').css({"background-color":"#F8F8F8",'width':"82%"});
             $('.search-input').css('width',"96%");
+            $('.icon-search').css('left','6rem');
             $('.history-name').hide();
             $('.icon-fanhui').hide();
             $('.sort').hide();
@@ -958,11 +967,14 @@ class ListController extends Controller {
                $('.back').hide();
                $('.show-result').hide();
                $('#searchInput').val('');
+               $('.location-all').show();
+               $('#searchInput').css({"background-color":"#F8F8F8",'width':"82%"});
                $('.rent-search').siblings('ul').removeClass('on-hide');
                $('.rent-search').removeClass('active-search-channel');
            })
 
         }else {
+            $('.location-all').hide();
             $('.sort').show();
             $('.icon-hanbao').show();
         }
@@ -991,6 +1003,8 @@ class ListController extends Controller {
             if (that.GetRequest()['channel'] == "jrttsub"){
                 $('.rent-search').addClass('active-search-channel');
                 $('.cancel-channel').show();
+                $('.location-all').hide();
+                $('#searchInput').css({"background-color":"#F8F8F8",'width':"100%"});
             }else {
                 $('.rent-search').addClass('active-search');
                 $('.back').hide();
@@ -1071,18 +1085,6 @@ class ListController extends Controller {
             });
         });
 
-
- /*       $('#topPr').bind("focus",function(){
-            $(".price-total").css({"position":"absolute"});
-
-        }).bind("blur",function(){
-            $(".price-total").css("position","fixed");
-        });
-        $('#lowPr').bind("focus",function(){
-            $(".price-total").css({"position":"absolute",});
-        }).bind("blur",function(){
-            $(".price-total").css("position","fixed");
-        });*/
            /*阻止事件冒泡*/
         $('.writ-price').click(function (event) {
             event.stopPropagation()
@@ -1539,9 +1541,7 @@ class ListController extends Controller {
     }
 
     /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
-     上拉加载实例化                "headers":{
-                   "content-type":"application/json"
-                },
+     上拉加载实例化
      -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
     pullload(conditionObject) {
         console.log("conditionObject"+JSON.stringify(conditionObject));

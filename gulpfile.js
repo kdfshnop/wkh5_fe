@@ -112,7 +112,7 @@ gulp.task('js', function() {
 -----------------------------------------------------------------------------------------------------------*/
 gulp.task('watch', function() {
     gulp.watch('less/**/**/**.less',['less']);
-    gulp.watch(pathAppJs,['js-app']);
+    gulp.watch(['jssrc/lib/*.js'],['js-app']);
     gulp.watch(pathJs,['build']);
 });
 

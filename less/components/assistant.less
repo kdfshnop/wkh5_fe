@@ -99,3 +99,79 @@
          .flex(1);
      }     
  }
+
+/*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ 拨打经纪人电话dialog的样式
+ -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
+ #callAgentModal {
+     .modal-header {
+         position : relative ;       
+         img {
+             .border-radius(100px) ;
+             border : 2px solid #fff ;
+             display : block ;
+             height : 70px ;
+             left : 50% ;
+             margin-left : -35px ;
+             position : absolute ;
+             top : -35px ;
+             width : 70px ;
+         }
+     }
+     .modal-body {
+         margin-top : 15px ;
+         .name {
+             color : #000 ;
+             font-size : 1.6rem ;
+         }
+         .company {
+             font-size : 1.4rem ;
+         }
+         .tel {
+             color : @primary-color ;
+             font-size : 1.6rem ;
+             margin : 20px 0 ;
+         }
+         .memo {
+             font-size : 1.4rem ;
+         }
+     }
+     .modal-footer {
+         .phone {
+             color : @primary-color ;
+         }
+     }
+ }
+
+ /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ 添加微信dialog的样式
+ -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
+ #addWechatModal {
+     .modal-body {
+         fieldset {
+             border : none ;
+            border-top : 1px solid #e8e8e8 ;
+            legend {
+                padding : 0 15px ;
+            }
+            p {
+                font-size : 1.3rem ;
+                margin-top : 15px ;
+            }
+         }
+         .copy-operation {
+             color : @primary-color ;
+             display : inline-block ;
+             font-size : 1.4rem ;
+             margin : 15px 0 ;
+         }
+     }
+     .modal-footer {
+         background-color : transparent ;
+         position : relative ;
+         top : -20px ;
+         .copy {
+             color : @primary-color ;
+         }
+     }
+ }

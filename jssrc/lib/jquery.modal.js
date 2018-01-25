@@ -11,7 +11,7 @@
         "title" : "提示信息" ,
         "content" : "你这么牛逼你妈知道吗？" ,
         "buttons" : [
-             { "text" : "确定" , "className" : "text-success" , "clickCallback" : function(){ $.modal.close("alertModalDialog") ; } } ,
+             { "text" : "确定" , "className" : "text-success" , "href" : "tel:13000998899" , "clickCallback" : function(){ $.modal.close("alertModalDialog") ; } } ,
              { "text" : "取消" , "className" : "text-info" , "clickCallback" : function(){ $.modal.close("alertModalDialog") ; } }
         ]
     }) ;
@@ -32,6 +32,7 @@ $.modal = function(params) {
     不定义title的话title就是警告
     -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
     var title = (params === null || params.title === undefined) ? "警告" : params.title ;
+    var closeable = (params === null || params.closeable === undefined) ? false : params.closeable ;
     /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
    每个modal对应一个遮罩层
     -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
@@ -40,12 +41,24 @@ $.modal = function(params) {
     /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
     绘制modal层
     -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
-    var $modal = $(document.createElement("DIV")).attr("id", params.id).addClass("wk-modal").append("<div class=\"modal-header\">" + title + "</div>").append("<div class=\"modal-body\">" + params.content + "</div>") ;
+    var $modal = $(document.createElement("DIV")).attr("id", params.id).addClass("wk-modal") ;
+    var $modalHeader = $(document.createElement("DIV")).addClass("modal-header").html(title) ;
+    if(closeable) {        
+        var $closeIcon = $(document.createElement("I")).addClass("iconfont icon-remove") ;        
+        $closeIcon.click(function(){
+            $.modal.close(params.id) ;
+        }) ;
+        $modalHeader.append($closeIcon) ;
+    }
+    $modal.append($modalHeader) ;
+    $modal.append("<div class=\"modal-body\">" + params.content + "</div>") ;
     var $modalFooter = $(document.createElement("DIV")).addClass("modal-footer") ;
     var buttons = params.buttons ;
     for(var a = 0 ; a < buttons.length ; a ++) {
         var button = buttons[a] ;        
-        var $button = $(document.createElement("A")).attr("href", "javascript:void(0);").addClass("wk-btn wk-btn-transparent").text(button.text) ;        
+        var $button = $(document.createElement("A")).addClass("wk-btn wk-btn-transparent").text(button.text) ;
+        if(button.href !== undefined && button.href !== null && button.href !== "") $button.attr("href", button.href ) ;
+        else $button.attr("href", "javascript:void(0);") ;
         if(button.className !== undefined && button.className !== null && button.className !== "") $button.addClass(button.className) ;
         $button.css({ "width" : 100 / buttons.length + "%"}) ;
         if($.isFunction(button.clickCallback)) $button.click(button.clickCallback) ;
