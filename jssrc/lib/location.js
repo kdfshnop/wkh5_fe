@@ -85,6 +85,7 @@ class Location {
                         写几个cookie的值
                         -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/                        
                         $.cookie( this.cookieKeyPrefix + "cityName" , city.cityName , { path : "/" } ) ;
+                        $.cookie( "cityId" , city.cityId , { path : "/" } ) ;
                          /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
                         用拿到的cityId和cookie里面的值做对比
                         -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/                  
@@ -168,7 +169,7 @@ class Location {
         if( this.businessType === "xfPrice" ) return "/xfPrice/price.html?regionId=" + newCityId + "&regionType=1" ;
         let moduleName = "esf" ;
         if( this.businessType === "new" ) moduleName = "xflist" ;
-        else if( this.businessType === "rent" ) moduleName = "rent?channel=jrttsub" ;
+        else if( this.businessType === "rent" ) moduleName = "rent/?channel=jrttsub" ;
         return "/" + newPinyin + "/" +moduleName ;
     }
     

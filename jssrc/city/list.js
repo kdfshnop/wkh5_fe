@@ -93,6 +93,7 @@ class cityListController extends Controller {
         }
         $.cookie('userSelectedCity',pinyin,{path: '/',});
         $.cookie('userSelectedCityId',cityId,{path: '/',});
+        $.cookie('userSelectedCityName',cityName,{path: '/',});
     }
 }
     /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------

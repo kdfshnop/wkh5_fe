@@ -13,8 +13,15 @@ class ListController extends Controller {
         -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/        
         $(".lazy").lazyload({ 
             "placeholder" : this.staticDomain + "/wkh5_fe/images/common/loading.jpg"
-        }) ; 
-        
+        }) ;
+        new Location({
+            businessType : "rent" ,
+            cityApiUrl : this.apiUrl.common.getCityByLatLon ,
+            success : (position)=> {
+                console.log(21312);
+                console.log(position) ;
+            }
+        }) ;
         this.readyFun();
         let that = this;
         let cityid = 43;
@@ -941,10 +948,10 @@ class ListController extends Controller {
         -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
         if (this.GetRequest()['channel'] == "jrttsub"){
             $('.rent-list').css({"box-shadow":" 0 0 0 0 rgba(0,0,0,.15)","background-color":"#fff"});
-           $('.input-kw-form').css({"background-color":"#f0f0f0"});
-            $('#searchInput').css({"background-color":"#f0f0f0",'width':"84%"});
+           $('.input-kw-form').css({"background-color":"#F8F8F8"});
+            $('#searchInput').css({"background-color":"#F8F8F8",'width':"82%"});
             $('.search-input').css('width',"96%");
-            $('.icon-search').css('left','5rem');
+            $('.icon-search').css('left','6rem');
             $('.history-name').hide();
             $('.icon-fanhui').hide();
             $('.sort').hide();
@@ -963,6 +970,8 @@ class ListController extends Controller {
                $('.back').hide();
                $('.show-result').hide();
                $('#searchInput').val('');
+               $('.location-all').show();
+               $('#searchInput').css({"background-color":"#F8F8F8",'width':"82%"});
                $('.rent-search').siblings('ul').removeClass('on-hide');
                $('.rent-search').removeClass('active-search-channel');
            })
@@ -997,6 +1006,8 @@ class ListController extends Controller {
             if (that.GetRequest()['channel'] == "jrttsub"){
                 $('.rent-search').addClass('active-search-channel');
                 $('.cancel-channel').show();
+                $('.location-all').hide();
+                $('#searchInput').css({"background-color":"#F8F8F8",'width':"100%"});
             }else {
                 $('.rent-search').addClass('active-search');
                 $('.back').hide();
