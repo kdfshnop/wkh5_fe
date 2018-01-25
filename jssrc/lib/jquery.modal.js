@@ -32,6 +32,7 @@ $.modal = function(params) {
     不定义title的话title就是警告
     -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
     var title = (params === null || params.title === undefined) ? "警告" : params.title ;
+    var closeable = (params === null || params.closeable === undefined) ? false : params.closeable ;
     /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
    每个modal对应一个遮罩层
     -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
@@ -40,7 +41,17 @@ $.modal = function(params) {
     /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
     绘制modal层
     -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
-    var $modal = $(document.createElement("DIV")).attr("id", params.id).addClass("wk-modal").append("<div class=\"modal-header\">" + title + "</div>").append("<div class=\"modal-body\">" + params.content + "</div>") ;
+    var $modal = $(document.createElement("DIV")).attr("id", params.id).addClass("wk-modal") ;
+    var $modalHeader = $(document.createElement("DIV")).addClass("modal-header").html(title) ;
+    if(closeable) {        
+        var $closeIcon = $(document.createElement("I")).addClass("iconfont icon-remove") ;        
+        $closeIcon.click(function(){
+            $.modal.close(params.id) ;
+        }) ;
+        $modalHeader.append($closeIcon) ;
+    }
+    $modal.append($modalHeader) ;
+    $modal.append("<div class=\"modal-body\">" + params.content + "</div>") ;
     var $modalFooter = $(document.createElement("DIV")).addClass("modal-footer") ;
     var buttons = params.buttons ;
     for(var a = 0 ; a < buttons.length ; a ++) {

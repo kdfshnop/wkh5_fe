@@ -163,16 +163,16 @@ class Controller {
             $.modal({
                 "id" : "addWechatModal" ,
                 "title" : "添加微信" ,
+                "closeable" : true ,
                 "content" : "<fieldset><legend>方法一</legend><p>将此页面截屏至您的相册<br>使用微信扫一扫添加</p><img src=\"" + $(this).data("agentwchartqrimgurl") + "\" style=\"width : 12rem ; height : 12rem ; \"></fieldset><fieldset><legend>方法二</legend><p>复制李梅的微信号添加<br>微信号：" + $(this).data("agentwchatid") + "</p></fieldset>" ,
                 "buttons" : [
-                    { "text" : "取消"  , "clickCallback" : () => { $.modal.close("addWechatModal") ; } } ,
-                    { "text" : "复制微信号" , "className" : "copy"  , "clickCallback" : function() { 
+                    { "text" : "复制微信号" , "className" : "copy" , "clickCallback" : function() {
                         $(this).attr("data-clipboard-text" , $(".assistant .wx").data("agentwchatid")) ;
                         let clipboard = new Clipboard("#addWechatModal .copy") ; 
                         clipboard.on("success" , function(e) {                                 
-                            $.tips("经纪人微信号已复制请前往微信添加" , 3 ) ;
+                            $.tips("经纪人微信号已复制<br>请前往微信添加" , 3 ) ;
                         }) ;
-                     } }               
+                    }}
                 ]
             }) ;
         }) ;
