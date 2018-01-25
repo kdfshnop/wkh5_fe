@@ -17,8 +17,7 @@ class ListController extends Controller {
         new Location({
             businessType : "rent" ,
             cityApiUrl : this.apiUrl.common.getCityByLatLon ,
-            success : (position)=> {
-                console.log(21312);
+            identical : (position)=> {
                 console.log(position) ;
             }
         }) ;
