@@ -82,9 +82,6 @@ class cityListController extends Controller {
         } else if (this.GetRequest()['businessType'] == "new") {
             window.location.href = '/' + pinyin + "/xflist"
         } else if (this.GetRequest()['businessType'] == "rent") {
-            $.cookie('cityId',cityId,{path: '/',});
-            $.cookie('pinyin',pinyin,{path: '/',});
-            $.cookie('cityName',cityName,{path: '/',});
             window.location.href = '/' + pinyin + "/rent/?channel=jrttsub"
         } else if(this.GetRequest()['businessType'] == "xfPrice") {
             window.location.href = '/' + "xfPrice/price.html?regionId="+cityId+"&regionType=1"
