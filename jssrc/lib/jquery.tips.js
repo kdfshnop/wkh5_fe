@@ -6,7 +6,7 @@
     $.tips("至少选择2项", 2, function(){ alert("提示看完了") ; }) ;
  -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
 $.tips = function(content, time, callback) {
-    var $tips = $(document.createElement("DIV")).addClass("wk-tips").text(content) ;
+    var $tips = $(document.createElement("DIV")).addClass("wk-tips").html(content) ;
     var callbackMethod = callback || $.noop ;
     $(document.body).append($tips) ;
     $tips.fadeIn(200).css({ "left" : parseInt(($(window).width() - $tips.width()) / 2, 10) + "px" , "top" : parseInt(($(window).height() - $tips.height()) / 2, 10) + "px" }) ;    
