@@ -128,7 +128,7 @@ class Location {
                 break ;
 
                 case error.POSITION_UNAVAILABLE :  //定位信息无效
-                this.fail() ;
+                this.timeout() ;
                 break ;
 
                 case error.TIMEOUT :  //定位超时
@@ -136,7 +136,7 @@ class Location {
                 break ;
 
                 case error.UNKNOWN_ERROR :  //其他不可预知的错误
-                this.fail() ;
+                this.timeout() ;
                 break ;
             }
         } , geoOpts ) ;
