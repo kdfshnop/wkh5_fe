@@ -489,7 +489,7 @@ class ListController extends Controller {
                         Object.assign(conditionObject, cp); // 合并对象
                         let conditionString = that.objectToString(conditionObject); // 转换成字符串
                         console.log(conditionString);
-                        window.location = url + conditionString; // 跳转的URL
+                        window.location = url + conditionString+ queryString; // 跳转的URL
                     } else if(topPr == '' && lowPr){
                         $('#price>p').html(lowPr+'以上');
                         $('#price').find('i').addClass('bacchosed');
