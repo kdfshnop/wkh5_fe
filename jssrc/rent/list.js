@@ -948,7 +948,7 @@ class ListController extends Controller {
            $('.input-kw-form').css({"background-color":"#F8F8F8"});
             $('#searchInput').css({"background-color":"#F8F8F8",'width':"82%"});
             $('.search-input').css('width',"96%");
-            $('.icon-search').css('left','6rem');
+            $('.icon-search').css('left','6.6rem');
             $('.history-name').hide();
             $('.icon-fanhui').hide();
             $('.sort').hide();
