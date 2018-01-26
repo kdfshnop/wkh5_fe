@@ -151,7 +151,7 @@ class Location {
             "buttons" : [
                 { "text" : "去选择" , "className" : "goto-select-city" , "clickCallback" : () => {
                     $.cookie( "citySelectionOpen" , 1  , { path : "/" } ) ;  //标识打开过城市选择页面
-                    window.location.href = "/common/city/select?businessType=" + this.businessType ;
+                    window.location.href = "/public/city/select?businessType=" + this.businessType ;
                 } } 
             ]
         }) ;
@@ -161,7 +161,7 @@ class Location {
     -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
     fail() {
         $.cookie( "citySelectionOpen" , 1 , { path : "/" } ) ;  //标识打开过城市选择页面
-        window.location.href = "/common/city/select?businessType=" + this.businessType ;
+        window.location.href = "/public/city/select?businessType=" + this.businessType ;
     }
     /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
     根据cityPinyin和cityId来组织列表页路由
