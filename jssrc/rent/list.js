@@ -1019,7 +1019,7 @@ class ListController extends Controller {
                 let listSearchHistory = '';
                 /* 埋点的参数*/
                 let bigdata =encodeURIComponent(JSON.stringify({
-                    eventName: '1203004',
+                    eventName: '1203005',
                     type: 2
                 }));
                 searchHistory.forEach(function (item,index) {
