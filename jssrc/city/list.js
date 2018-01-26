@@ -84,9 +84,9 @@ class cityListController extends Controller {
         } else if (this.GetRequest()['businessType'] == "rent") {
             window.location.href = '/' + pinyin + "/rent/?channel=jrttsub"
         } else if(this.GetRequest()['businessType'] == "xfPrice") {
-            window.location.href = '/' + "xfPrice/price.html?regionId="+cityId+"&regionType=1"
+            window.location.href = "/xfPrice/price.html?regionId="+cityId+"&regionType=1"
         }else if(this.GetRequest()['businessType'] == "esfPrice") {
-            window.location.href = '/' + "esfPrice/price.html?regionId="+cityId+"&regionType=1"
+            window.location.href = "/esfPrice/price.html?regionId="+cityId+"&regionType=1"
         }
         $.cookie('userSelectedCity',pinyin,{path: '/',});
         $.cookie('userSelectedCityId',cityId,{path: '/',});
