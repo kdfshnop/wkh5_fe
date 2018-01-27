@@ -967,7 +967,7 @@ class ListController extends Controller {
                $('.show-result').hide();
                $('#searchInput').val('');
                $('.location-all').show();
-               $('#searchInput').css({"background-color":"#F8F8F8",'width':"76%"});
+               $('#searchInput').css({"background-color":"#F8F8F8",'width':"52%"});
                $('.rent-search').siblings('ul').removeClass('on-hide');
                $('.rent-search').removeClass('active-search-channel');
            });
@@ -975,6 +975,7 @@ class ListController extends Controller {
                $.cookie('citySelectionOpen', 1 ,{path: '/',});
            })
         }else {
+            $('.input-kw-form').css({"background-color":"#FFF"});
             $('.location-all').hide();
             $('.sort').show();
             $('.icon-hanbao').show();
@@ -1007,6 +1008,7 @@ class ListController extends Controller {
                 $('.location-all').hide();
                 $('#searchInput').css({"background-color":"#F8F8F8",'width':"100%"});
             }else {
+                $('.input-kw-form').css({"background-color":"#f0f0f0"});
                 $('.rent-search').addClass('active-search');
                 $('.back').hide();
                 $('.fanhui').show();
@@ -1250,6 +1252,7 @@ class ListController extends Controller {
 
         /*返回到列表页*/
         $('.fanhui').click(function () {
+            $('.input-kw-form').css({"background-color":"#fff"});
             $('.rent-search').removeClass('active-search');
             $('.all-control').removeClass('on-hide');
             $('.rent-search').siblings('ul').removeClass('on-hide');
