@@ -146,7 +146,8 @@ class Location {
     -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
     timeout() {
         $.modal({
-            "id" : "orientateTimeoutDialog" ,            
+            "id" : "orientateTimeoutDialog" ,
+            "title" : "" ,      
             "content" : "定位失败<br>请手动选择您的城市" ,
             "buttons" : [
                 { "text" : "去选择" , "className" : "goto-select-city" , "clickCallback" : () => {
