@@ -946,7 +946,7 @@ class ListController extends Controller {
         if (this.GetRequest()['channel'] == "jrttsub"){
             $('.rent-list').css({"box-shadow":" 0 0 0 0 rgba(0,0,0,.15)","background-color":"#fff"});
            $('.input-kw-form').css({"background-color":"#F8F8F8"});
-            $('#searchInput').css({"background-color":"#F8F8F8",'width':"80%"});
+            $('#searchInput').css({"background-color":"#F8F8F8",'width':"78%"});
             $('.search-input').css('width',"96%");
             $('.icon-search').css('left','6.6rem');
             $('.history-name').hide();
