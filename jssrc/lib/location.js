@@ -29,6 +29,7 @@ class Location {
         window.onpageshow = () => {
             if( $.cookie("citySelectionOpen") && ! $.cookie("userSelectedCity")) {
                 window.location.href = this.route( "shanghai" , 43 ) ;
+                $.cookie( this.cookieKeyPrefix + "noChose" , 1 , { path : "/" } ) ; // 用户首次拒绝定位跳到城市列表页但没有选择城市返回之后 设置标识防止再次决绝定位时跳入城市选择页
             }
         };
         /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -161,8 +162,10 @@ class Location {
     定位失败处理：直接跳城市选择页面    
     -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
     fail() {
-        $.cookie( "citySelectionOpen" , 1 , { path : "/" } ) ;  //标识打开过城市选择页面
-        window.location.href = "/public/city/select?businessType=" + this.businessType ;
+        if(!$.cookie( this.cookieKeyPrefix + "noChose" )) {
+            $.cookie( "citySelectionOpen" , 1 , { path : "/" } ) ;  //标识打开过城市选择页面
+            window.location.href = "/public/city/select?businessType=" + this.businessType ;
+        }
     }
     /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
     根据cityPinyin和cityId来组织列表页路由
