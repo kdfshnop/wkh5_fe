@@ -172,6 +172,9 @@ class Controller {
                         clipboard.on("success" , function(e) {                                 
                             $.tips("经纪人微信号已复制<br>请前往微信添加" , 3 ) ;
                         }) ;
+                        clipboard.on( "error" , function(e) {
+                            $.tips("复制微信号失败<br>请截屏后添加微信" , 3 ) ;
+                        }) ;
                     }}
                 ]
             }) ;
