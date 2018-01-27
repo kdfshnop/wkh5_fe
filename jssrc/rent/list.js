@@ -971,8 +971,10 @@ class ListController extends Controller {
                $('#searchInput').css({"background-color":"#F8F8F8",'width':"82%"});
                $('.rent-search').siblings('ul').removeClass('on-hide');
                $('.rent-search').removeClass('active-search-channel');
+           });
+           $('.location-all').click(function () {
+               $.cookie('citySelectionOpen', 1 ,{path: '/',});
            })
-
         }else {
             $('.location-all').hide();
             $('.sort').show();
