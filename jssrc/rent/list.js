@@ -62,6 +62,10 @@ class ListController extends Controller {
 
             }
         }
+        let  channelFlag = ''; // 埋点需要的 channel:channel || "",
+        if (this.GetRequest()['channel']){
+            channelFlag = this.GetRequest()['channel'];
+        }
         let conditionObject = this.parseCondition({condition:condition});  // 转成对象
         this.choseFun(conditionObject,url,acWordHouseList);
         /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -712,6 +716,7 @@ class ListController extends Controller {
                /* 埋点的参数*/
                let bigdata =encodeURIComponent(JSON.stringify({
                    eventName: '1203004',
+                   channel:channelFlag || "",
                    type: 2
                }));
                  that.request(that.apiUrl.rent.list.acWord,sendData,{successCallback(data){
@@ -1029,6 +1034,7 @@ class ListController extends Controller {
                 /* 埋点的参数*/
                 let bigdata =encodeURIComponent(JSON.stringify({
                     eventName: '1203005',
+                    channel:channelFlag || "",
                     type: 2
                 }));
                 searchHistory.forEach(function (item,index) {
@@ -1091,6 +1097,7 @@ class ListController extends Controller {
             BigData.init(that);
             BigData.bigData({
                 "pageName": "1202",
+                "channel":channelFlag || "",
                 "type": 1
             });
         });
