@@ -735,9 +735,11 @@ class ListController extends Controller {
                              }) ;
                              $('#showResult').empty();
                              $('#showResult').append(searchaAcWord);
+                             $('body').css('background-color','#F0F0F0');
                          } else {
                              $('.no-result').show();
                              $('.show-result').hide();
+                             $('body').css('background-color','#FFF');
                          }
                          // 搜索条目点击跳转 和储存
                          $('#showResult >li').click(function () {
@@ -814,8 +816,10 @@ class ListController extends Controller {
             $('.no-result').hide();
             if (JSON.parse(localStorage.getItem('searchHistory'))) {  // Storage取值渲染
                 $('.have-result').show();
+                $('body').css('background-color','#F0F0F0');
             }else {
                 $('.have-result').hide();
+                $('body').css('background-color','#FFF');
             }
         });
         /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -971,6 +975,7 @@ class ListController extends Controller {
                $('#searchInput').css({"background-color":"#F8F8F8",'width':"52%"});
                $('.rent-search').siblings('ul').removeClass('on-hide');
                $('.rent-search').removeClass('active-search-channel');
+               $('body').css('background-color','#F0F0F0');
            });
            $('.location-all').click(function () {
                $.cookie('citySelectionOpen', 1 ,{path: '/',});
@@ -1015,9 +1020,9 @@ class ListController extends Controller {
                 $('.fanhui').show();
                 $('.contwo').hide();
             }
-            $('body').css('background-color','#F0F0F0');
 
             if (JSON.parse(localStorage.getItem('searchHistory')) && !acWordHouseList) {  // Storage取值渲染
+                $('body').css('background-color','#F0F0F0');
                 $('.have-result').show();
                 let searchHistory = JSON.parse(localStorage.getItem('searchHistory')).reverse();
                 let listSearchHistory = '';
@@ -1064,6 +1069,7 @@ class ListController extends Controller {
             }else {
                 $('.show-result').show();
                 $('.have-result').hide();
+                $('body').css('background-color','#FFF');
             }
         });
 
