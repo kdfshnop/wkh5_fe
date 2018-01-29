@@ -63,7 +63,6 @@ class ListController extends Controller {
             }
         }
         let conditionObject = this.parseCondition({condition:condition});  // 转成对象
-        console.log(JSON.stringify(conditionObject)+"conditionObject");
         this.choseFun(conditionObject,url,acWordHouseList);
         /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
         请求接口 获取城市区域
@@ -193,16 +192,15 @@ class ListController extends Controller {
                                 if (dataTownName == "不限") {
                                     $('#dic > p').html(dataAreasName);
                                     let dataAreasDiObj =  that.parseCondition({condition:dataAreasDi});  // 转换成对象
-                                    Object.assign(conditionObject,dataAreasDiObj); // 合并对象
+                                    $.extend(conditionObject,dataAreasDiObj); // 合并对象
                                     delete(conditionObject['to']);  // 删除town的对象
                                     let conditionString = that.objectToString(conditionObject); // 转换成字符串
-                                    console.log(conditionString);
                                     window.location.href = url + conditionString+areasLineSting;  // 跳转的URL
                                 } else {
                                     $('#dic > p').html(dataTownName);
                                     let areasTownString = dataAreasDi + '-' + dataTownTo;  // 字符串链接
                                     let areasTownObj = that.parseCondition({condition: areasTownString}); // 转换成对象
-                                    Object.assign(conditionObject, areasTownObj);   // 合并对象
+                                    $.extend(conditionObject, areasTownObj);   // 合并对象
                                     let conditionString = that.objectToString(conditionObject); // 转换成字符串
                                     console.log(conditionString);
                                     window.location.href = url + conditionString+areasLineSting;  // 跳转的URL
@@ -228,7 +226,7 @@ class ListController extends Controller {
                         if (dataTownName == "不限") {
                             $('#dic > p').html(dataAreasName);
                             let dataAreasDiObj =  that.parseCondition({condition:dataAreasDi});  // 转换成对象
-                            Object.assign(conditionObject,dataAreasDiObj); // 合并对象
+                            $.extend(conditionObject,dataAreasDiObj); // 合并对象
                             delete(conditionObject['to']);  // 删除town的对象
                             let conditionString = that.objectToString(conditionObject); // 转换成字符串
                             console.log(conditionString);
@@ -238,7 +236,7 @@ class ListController extends Controller {
                             $('#dic > p').html(dataTownName);
                             let areasTownString = dataAreasDi + '-' + dataTownTo;  // 字符串链接
                             let areasTownObj = that.parseCondition({condition: areasTownString}); // 转换成对象
-                            Object.assign(conditionObject, areasTownObj);   // 合并对象
+                            $.extend(conditionObject, areasTownObj);   // 合并对象
                             let conditionString = that.objectToString(conditionObject); // 转换成字符串
                             console.log(conditionString);
                             window.location.href = url + conditionString + areasLineSting;  // 跳转的URL
@@ -361,7 +359,7 @@ class ListController extends Controller {
                             if ($(this).html() == "不限") {
                                 $('#dic > p').html(dataLineName);  // 判断赋值给检索title
                                 let dataLineLiObj = that.parseCondition({condition: dataLineLi}); // 转换成对象
-                                Object.assign(conditionObject, dataLineLiObj); // 合并对象
+                                $.extend(conditionObject, dataLineLiObj); // 合并对象
                                 delete(conditionObject['st']);  // 删除站点的对象
                                 let conditionString = that.objectToString(conditionObject);   // 转换成字符串
                                 console.log(conditionString);
@@ -370,7 +368,7 @@ class ListController extends Controller {
                                 $('#dic > p').html(dataStationName); // 判断赋值给检索title
                                 let lineStationString =  dataLineLi+ '-' + dataStationSt; // 合并字符串
                                 let lineStationObj = that.parseCondition({condition: lineStationString}); // 转换成对象
-                                Object.assign(conditionObject, lineStationObj); // 合并对象
+                                $.extend(conditionObject, lineStationObj); // 合并对象
                                 let conditionString = that.objectToString(conditionObject); // 转换成字符串
                                 console.log(conditionString);
                                 window.location.href = url + conditionString+areasLineSting; // 跳转的URL
@@ -394,7 +392,7 @@ class ListController extends Controller {
                         if ($(this).html() == "不限") {
                             $('#dic > p').html(dataLineName);  // 判断赋值给检索title
                             let dataLineLiObj = that.parseCondition({condition: dataLineLi}); // 转换成对象
-                            Object.assign(conditionObject, dataLineLiObj); // 合并对象
+                            $.extend(conditionObject, dataLineLiObj); // 合并对象
                             delete(conditionObject['st']);  // 删除站点的对象
                             let conditionString = that.objectToString(conditionObject);   // 转换成字符串
                             console.log(conditionString);
@@ -404,7 +402,7 @@ class ListController extends Controller {
                             let lineStationString = "li-"+ conditionObject['li'] + '-' + dataStationSt; // 合并字符串
                             console.log(lineStationString+"lineStationString");
                             let lineStationObj = that.parseCondition({condition: lineStationString}); // 转换成对象
-                            Object.assign(conditionObject, lineStationObj); // 合并对象
+                            $.extend(conditionObject, lineStationObj); // 合并对象
                             let conditionString = that.objectToString(conditionObject); // 转换成字符串
                             console.log(conditionString);
                             window.location.href = url + conditionString+areasLineSting; // 跳转的URL
@@ -446,7 +444,7 @@ class ListController extends Controller {
                 $('#price').addClass('active-color-top');
                 let dataPrice = $(this).attr("data-pr");
                 let dataPriceObj = that.parseCondition({condition: dataPrice}); // 转换成对象
-                Object.assign(conditionObject, dataPriceObj); // 合并对象
+                $.extend(conditionObject, dataPriceObj); // 合并对象
                 let conditionString = that.objectToString(conditionObject); // 转换成字符串
                 window.location.href = url + conditionString+ queryString; // 跳转的URL
             }
@@ -471,7 +469,7 @@ class ListController extends Controller {
                         $('#price').addClass('active-color-top');
                         delete(conditionObject['pr']);  // 删除价格选择的参数的对象
                         let cp = {"cp":lowPr+"to"+topPr};
-                        Object.assign(conditionObject, cp); // 合并对象
+                        $.extend(conditionObject, cp); // 合并对象
                         let conditionString = that.objectToString(conditionObject); // 转换成字符串
                         console.log(conditionString);
                         window.location.href = url + conditionString+ queryString; // 跳转的URL
@@ -486,7 +484,7 @@ class ListController extends Controller {
                         $('#price').addClass('active-color-top');
                         delete(conditionObject['pr']);  // 删除价格选择的参数的对象
                         let cp = {"cp":"0"+"to"+topPr};
-                        Object.assign(conditionObject, cp); // 合并对象
+                        $.extend(conditionObject, cp); // 合并对象
                         let conditionString = that.objectToString(conditionObject); // 转换成字符串
                         console.log(conditionString);
                         window.location = url + conditionString+ queryString; // 跳转的URL
@@ -496,7 +494,7 @@ class ListController extends Controller {
                         $('#price').addClass('active-color-top');
                         delete(conditionObject['pr']);  // 删除价格选择的参数的对象
                         let cp = {"cp":lowPr+"to"+"0"};
-                        Object.assign(conditionObject, cp); // 合并对象
+                        $.extend(conditionObject, cp); // 合并对象
                         let conditionString = that.objectToString(conditionObject); // 转换成字符串
                         console.log(conditionString);
                         window.location.href = url + conditionString + queryString; // 跳转的URL
@@ -552,7 +550,7 @@ class ListController extends Controller {
                      $('#type').find('i').addClass('bacchosed');
                  }
                  let houseListObj = that.parseCondition({condition: houseListString}); // 转换成对象
-                 Object.assign(conditionObject, houseListObj); // 合并对象
+                 $.extend(conditionObject, houseListObj); // 合并对象
                  let conditionString = that.objectToString(conditionObject); // 转换成字符串
                  console.log(conditionString);
                  console.log(url + conditionString);
@@ -648,7 +646,7 @@ class ListController extends Controller {
                 delete(conditionObject['dt'])
             }
             console.log(tagString+'tagString');
-            Object.assign(moreDta, tagObj, areaObj, decorationObj); // 合并对象
+            $.extend(moreDta, tagObj, areaObj, decorationObj); // 合并对象
             if (areaObj['ar'] || decorationObj['dt'] || tagObj['ta']){
                 $('#more').find('i').addClass('bacchosed');
                 $("#more").removeClass('active-color-top');
@@ -661,7 +659,7 @@ class ListController extends Controller {
             $('.bac').hide();
             $('#more').children('span').removeClass('direction');
             $('.more').slideToggle();
-            Object.assign(conditionObject, tagObj,areaObj,decorationObj); // 合并对象
+            $.extend(conditionObject, tagObj,areaObj,decorationObj); // 合并对象
             let conditionString = that.objectToString(conditionObject); // 转换成字符串
             console.log(url + conditionString);
             window.location.href = url + conditionString+ queryString; // 跳转的URL
@@ -693,7 +691,7 @@ class ListController extends Controller {
             let soString =  $(this).attr('data-so');
             let soObj = that.parseCondition({condition:soString});
             console.log(soObj);
-            Object.assign(conditionObject, soObj); // 合并对象
+            $.extend(conditionObject, soObj); // 合并对象
             let conditionString = that.objectToString(conditionObject); // 转换成字符串
             console.log(conditionString);
             window.location.href = url + conditionString+ queryString; // 跳转的URL
@@ -923,7 +921,7 @@ class ListController extends Controller {
             }else if (this.GetRequest()['subEstateId']){
                 conditionData['subEstateId'] = this.GetRequest()['subEstateId'];
             }
-            Object.assign(conditionData,conditionObj) ;
+            $.extend(conditionData,conditionObj) ;
         }else {
             conditionData = {
                 "cityId":cityid,
