@@ -12,7 +12,9 @@ class cityListController extends Controller {
        根据定位是否成功显示或隐藏定位的信息
        -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
         if($.cookie('location_cityName')){
-            $('.location').html( $.cookie('location_cityName'))
+            $('.location').html( $.cookie('location_cityName'));
+            $('.location').attr('data-pinyin',$.cookie('location_cityPinyin'));
+            $('.location').attr('data-cityid',$.cookie('location_cityId') )
         }else {
             $('.inside-city').hide();
         }

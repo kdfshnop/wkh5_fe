@@ -80,14 +80,7 @@ body{
       margin-left: 0.5rem;
       width: 76.9%;
       position: relative;
-      >.icon-search{
-        display: inline-block;
-        width: 20px;
-        height: 20px;
-        position: absolute;
-        left: 1.5rem;
-        top: 0.75rem;
-      }
+
       >.icon-close{
         display: none;
         width: 28px;
@@ -101,6 +94,15 @@ body{
         width: 100%;
         height: 3rem;
         border-radius: 6px;
+        >.icon-search{
+          display: inline-block;
+          width: 20px;
+          height: 20px;
+          margin-left: 0.8rem;
+     /*     position: absolute;
+          left: 1.5rem;
+          top: 0.75rem;*/
+        }
         > a {
           height: 3rem;
           display: inline-block;
@@ -126,7 +128,7 @@ body{
             font-size: 1.4rem;
             color: #000000;
             letter-spacing: 0;
-            width: 3rem;
+           /* width: 3rem;*/
             height: 3rem;
             overflow: hidden;
           }
@@ -137,12 +139,12 @@ body{
         }
         >input{
           height: 3rem;
-          width: 100%;
+          width: 84%;
           background: @default-color;
           border-radius: 6px;
           border:  none;
           outline: none;
-          padding-left: 3.4rem;
+       /*   padding-left: 3.4rem;*/
           padding-right: 3.5rem;
           -webkit-tap-highlight-color: rgba(0,0,0,0);
           animation:  10s;
@@ -520,13 +522,13 @@ body{
   >.search-input{
     width: 88% !important;
     height: 2.8rem !important;
-    >.icon-search{
-      display: none !important;
-    }
     >.input-kw-form{
+      >.icon-search{
+        display: none !important;
+      }
       >input{
         background-color: #F0F0F0 !important;
-        padding-left: 1rem !important;
+        /*padding-left: 1rem !important;*/
       }
     }
 
@@ -787,7 +789,7 @@ margin-top: 4.8rem;
     > ul {
       padding-left: 1.5rem;
       > li {
-        height: 4rem;
+        height: 6rem;
         padding-right: 1.5rem;
         position: relative;
         padding-top: 0.4rem;
@@ -802,7 +804,8 @@ margin-top: 4.8rem;
           -webkit-transform:scaleY(0.5) ;
         }
         >p{
-          font-size: 1.2rem;
+          font-size: 1.6rem;
+          margin-top: 1rem;
           color: @default-font-color;
           letter-spacing: 0;
           .text-ellipsis();
@@ -814,7 +817,7 @@ margin-top: 4.8rem;
           }
         }
         >span{
-          font-size: 1rem;
+          font-size: 1.2rem;
           color: @light-font-color;
           letter-spacing: 0;
           line-height: 1.2rem;
@@ -881,10 +884,10 @@ margin-top: 4.8rem;
     margin-left: 0 !important;
     width: 85% !important;
     height: 2.8rem !important;
-    >.icon-search{
-      display: none !important;
-    }
     >.input-kw-form {
+      >.icon-search{
+        display: none !important;
+      }
       > input {
         background-color: #F0F0F0 !important;
         padding-left: 1rem !important;
