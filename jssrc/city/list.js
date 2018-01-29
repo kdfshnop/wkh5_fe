@@ -55,7 +55,7 @@ class cityListController extends Controller {
         $('.inside-city-list >ul > li').click(function () {
             pinyin =  $(this).attr('data-pinyin');
             cityId =  $(this).attr('data-cityid');
-          let cityName =  $(this).html();
+            let cityName =  $(this).html();
             self.backOrigin(pinyin,cityId,cityName)
         });
 

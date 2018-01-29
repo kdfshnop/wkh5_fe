@@ -39,14 +39,16 @@ class DetailController extends Controller {
         /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
         页面埋点和相册需要的模块
         -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
+        let self = this;
         require([ '../components/album.min','../components/bigdata.min'],function(Album, BigData){
             BigData.init(that);
             BigData.bigData({
                 "pageName": "1067",
                 "pageParam":{
                     "house_id": $('#estateName').attr('data-houseid'),
-                    "boutique": $('#estateName').attr('data-boutique'),
+                    "boutique": $('#estateName').attr('data-boutique')
                 },
+                "channel":self.GetRequest()['channel'] || "",
                 "type": 1
             });
         });
@@ -123,7 +125,7 @@ class DetailController extends Controller {
                 },
                 formatter:function (params, ticket, callback) {
                     let paramsValue =  params.value + "元";
-                    that.request(that.apiUrl.bigData , echartBigData ,function () {
+                    that.request(that.apiUrl.common.bigData , echartBigData ,function () {
 
                     });
                     return paramsValue;
@@ -208,6 +210,22 @@ class DetailController extends Controller {
             }],
         };
         myChart.setOption(option);
+    }
+    /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+     截取？后面的参数
+     -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
+    GetRequest() {
+        let url = location.search;
+        let theRequest = {};
+        if (url.indexOf("?") !== -1) {
+            let str = url.substr(1);
+            let strs = str.split("&");
+            for(var i = 0; i < strs.length; i ++) {
+                theRequest[strs[i].split("=")[0]]=strs[i].split("=")[1];
+            }
+        }
+        // console.log(theRequest);
+        return theRequest;
     }
 }
 

@@ -32,6 +32,7 @@ class DetailController extends Controller {
                 pageParam: {
                     rent_house_id: $('#houseId').val()
                 },
+                channel:self.GetRequest()['channel'] || "",
                 type: 1
             });
 
@@ -57,7 +58,24 @@ class DetailController extends Controller {
                 }));
             }
         }
-    };   
+
+    };
+    /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+   截取？后面的参数
+   -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
+    GetRequest() {
+        let url = location.search;
+        let theRequest = {};
+        if (url.indexOf("?") !== -1) {
+            let str = url.substr(1);
+            let strs = str.split("&");
+            for(var i = 0; i < strs.length; i ++) {
+                theRequest[strs[i].split("=")[0]]=strs[i].split("=")[1];
+            }
+        }
+        // console.log(theRequest);
+        return theRequest;
+    }
 }
 
 /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
