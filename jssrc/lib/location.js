@@ -115,7 +115,6 @@ class Location {
                             let newPinyin = city[this.businessType + "Business"] ? city.cityPinyin : "shanghai" ;                            
                             window.location.href = this.route( newPinyin , newCityId ) ;
                         }
-                        
                     }
                     else {
                         $.tips( data.message , 3 ) ;
