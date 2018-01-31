@@ -12,8 +12,7 @@ define(function(){
         return s4() + s4() + "-" + s4() + "-" + s4() + "-" + s4() + "-" + s4() + s4() + s4() ; 
     } 
     //从cookie里面取得wkwapsid，如果没有用guid填充再返回
-    function getCookieId() {
-        if($.cookie("wkwapsid")) return $.cookie("wkwapsid") ;
+    function getCookieId() {        
         if(!localStorage.cookieId ) localStorage.cookieId = guid() ;
         return localStorage.cookieId ;        
     }
