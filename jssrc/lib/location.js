@@ -124,7 +124,7 @@ class Location {
             }) ;             
         } , ( error ) => {
             switch(error.code) {
-                case error.PERMISSION_DENIED :  //用户阻止了授权
+                case error.PERMISSION_DENIED :  // 用户阻止了授权
                 this.fail() ;
                 break ;
 
