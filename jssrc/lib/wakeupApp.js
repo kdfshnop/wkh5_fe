@@ -116,7 +116,7 @@ class WakeupApp {
             if( browser.name == "safari" && browser.version < 9 ) window.location.href = this.opts.isoSchemes ;
 		    if(browser.name!="safari") window.location.href = this.opts.isoSchemes ;
         }
-        else if (browser == "android") ifr.attr("src", this.opts.androidSchemes) ;
+        else if (system == "android") ifr.attr("src", this.opts.androidSchemes) ;
         $("body").append(ifr) ;
         this.timer = window.setTimeout(() => {
             this.tryToOpenApp(t1) ;
