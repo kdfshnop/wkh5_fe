@@ -11,10 +11,10 @@ define(function(){
     function guid() {
         return s4() + s4() + "-" + s4() + "-" + s4() + "-" + s4() + "-" + s4() + s4() + s4() ; 
     } 
-    //从localStorage里面取得cookieId，如果没有用guid填充再返回
-    function getCookieId() {
+    //从cookie里面取得wkwapsid，如果没有用guid填充再返回
+    function getCookieId() {        
         if(!localStorage.cookieId ) localStorage.cookieId = guid() ;
-        return localStorage.cookieId ;
+        return localStorage.cookieId ;        
     }
 
     //获取设备Id
