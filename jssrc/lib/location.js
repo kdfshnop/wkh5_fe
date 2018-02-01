@@ -124,7 +124,7 @@ class Location {
             }) ;             
         } , ( error ) => {
             switch(error.code) {
-                case error.PERMISSION_DENIED :  //用户阻止了授权
+                case error.PERMISSION_DENIED :  // 用户阻止了授权
                 this.fail() ;
                 break ;
 
@@ -153,7 +153,7 @@ class Location {
             "buttons" : [
                 { "text" : "去选择" , "className" : "goto-select-city" , "clickCallback" : () => {
                     $.cookie( "citySelectionOpen" , 1  , { path : "/" } ) ;  //标识打开过城市选择页面
-                    window.location.href = "/public/city/select?businessType=" + this.businessType ;
+                    window.location.href = "/public/city/select?businessType=" + this.businessType + "&channel="+ this.GetRequest()['channel'];  // 根据channel的值判断来源，用于返回来源埋点需要
                 } } 
             ]
         }) ;
@@ -164,7 +164,7 @@ class Location {
     fail() {
         if(!$.cookie( this.cookieKeyPrefix + "noChose" )) {
             $.cookie( "citySelectionOpen" , 1 , { path : "/" } ) ;  //标识打开过城市选择页面
-            window.location.href = "/public/city/select?businessType=" + this.businessType ;
+            window.location.href = "/public/city/select?businessType=" + this.businessType +"&channel="+ this.GetRequest()['channel'];  // 根据channel的值判断来源，用于返回来源埋点需要
         }
     }
     /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -175,8 +175,24 @@ class Location {
         if( this.businessType === "xfPrice" ) return "/xfPrice/price.html?regionId=" + newCityId + "&regionType=1" ;
         let moduleName = "esf" ;
         if( this.businessType === "new" ) moduleName = "xflist" ;
-        else if( this.businessType === "rent" ) moduleName = "rent/?channel=jrttsub" ;
+        else if( this.businessType === "rent" ) moduleName = "rent/?channel="+ this.GetRequest()['channel'] ;  // 根据channel的值判断来源，用于返回来源埋点需要
         return "/" + newPinyin + "/" +moduleName ;
+    }
+    /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+    截取？后面的参数
+    -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
+    GetRequest() {
+        let url = location.search;
+        let theRequest = {};
+        if (url.indexOf("?") !== -1) {
+            let str = url.substr(1);
+            let strs = str.split("&");
+            for(var i = 0; i < strs.length; i ++) {
+                theRequest[strs[i].split("=")[0]]=strs[i].split("=")[1];
+            }
+        }
+        // console.log(theRequest);
+        return theRequest;
     }
     
 
