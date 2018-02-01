@@ -21,6 +21,21 @@ class DetailController extends Controller {
         打开app按钮点击处理
         schemes参数规则请参照：http://confluence.wkzf/pages/viewpage.action?pageId=80329073
         -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
+        $(".download-app .download").click(()=> {
+            nativeSchema.loadSchema({               
+                schema : "external_call/parameter?t=0&bt=1&houseId=" + $("#houseId").val() + "&systemHouseType=1"  ,  // 通过NN打开某个链接
+                protocal : "wkzf" , //schema头协议，实际情况填写
+                loadWaiting:"3000" , //发起唤醒请求后，会等待loadWaiting时间，超时则跳转到failUrl，默认3000ms                
+                failUrl:"http://a.app.qq.com/o/simple.jsp?pkgname=com.wukong.ua" ,  //唤起失败时的跳转链接，默认跳转到下载页
+                // apk信息,请根据实际情况填写
+                apkInfo : {
+                    PKG : "com.wukong.ua" ,
+                    CATEGORY : "android.intent.category.DEFAULT" ,
+                    ACTION : "android.intent.action.VIEW"
+                }
+            }) ;
+        }) ;
+        /*
         new WakeupApp({
             element : ".download-app .download" ,
             androidSchemes : "wkzf://external_call/parameter?t=0&bt=1&houseId=" + $("#houseId").val() + "&systemHouseType=1" ,
@@ -28,6 +43,7 @@ class DetailController extends Controller {
             androidDownloadLink : "https://m.wkzf.com/download/transit?from=esfDetail" ,
             iosDownloadLink : "https://m.wkzf.com/download/transit?from=esfDetail"
         }) ;
+        */
         /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
         底部经纪人助手条处理
         -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
