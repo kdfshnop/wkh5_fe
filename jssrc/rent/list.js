@@ -953,7 +953,7 @@ class ListController extends Controller {
         /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
         判断是否为今日头条
         -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
-        if (this.GetRequest()['channel'] == "jrttsub"){
+        if (this.GetRequest()['channel']){
             $('.rent-list').css({"box-shadow":" 0 0 0 0 rgba(0,0,0,.15)","background-color":"#fff"});
           /*  $('.input-kw-form').css({"background-color":"#F8F8F8"});*/
             $('.search-input').css('width',"96%");
@@ -1599,11 +1599,11 @@ class ListController extends Controller {
        }else if (type == 5){
            typeSearch = "?subEstateId="+value;
        }
-       if (this.GetRequest()['channel'] == "jrttsub" && typeSearch){
-           typeSearch = typeSearch+"&channel=jrttsub"
-       }else if (this.GetRequest()['channel'] == "jrttsub" && !typeSearch){
-           typeSearch = "?channel=jrttsub"
-       }else if (!this.GetRequest()['channel'] == "jrttsub" && typeSearch){
+       if (this.GetRequest()['channel'] && typeSearch){
+           typeSearch = typeSearch+"&channel"+this.GetRequest()['channel']
+       }else if (this.GetRequest()['channel'] && !typeSearch){
+           typeSearch = "?channel"+this.GetRequest()['channel']
+       }else if (!this.GetRequest()['channel'] && typeSearch){
            typeSearch = typeSearch
        }
        return typeSearch
