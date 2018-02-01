@@ -175,8 +175,24 @@ class Location {
         if( this.businessType === "xfPrice" ) return "/xfPrice/price.html?regionId=" + newCityId + "&regionType=1" ;
         let moduleName = "esf" ;
         if( this.businessType === "new" ) moduleName = "xflist" ;
-        else if( this.businessType === "rent" ) moduleName = "rent/?channel=jrttsub" ;
+        else if( this.businessType === "rent" ) moduleName = "rent/?channel="+ this.GetRequest()['channel'] ;
         return "/" + newPinyin + "/" +moduleName ;
+    }
+    /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+    截取？后面的参数
+    -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
+    GetRequest() {
+        let url = location.search;
+        let theRequest = {};
+        if (url.indexOf("?") !== -1) {
+            let str = url.substr(1);
+            let strs = str.split("&");
+            for(var i = 0; i < strs.length; i ++) {
+                theRequest[strs[i].split("=")[0]]=strs[i].split("=")[1];
+            }
+        }
+        // console.log(theRequest);
+        return theRequest;
     }
     
 
