@@ -153,7 +153,7 @@ class Location {
             "buttons" : [
                 { "text" : "去选择" , "className" : "goto-select-city" , "clickCallback" : () => {
                     $.cookie( "citySelectionOpen" , 1  , { path : "/" } ) ;  //标识打开过城市选择页面
-                    window.location.href = "/public/city/select?businessType=" + this.businessType ;
+                    window.location.href = "/public/city/select?businessType=" + this.businessType + "&channel="+ this.GetRequest()['channel'];  // 根据channel的值判断来源，用于返回来源埋点需要
                 } } 
             ]
         }) ;
@@ -164,7 +164,7 @@ class Location {
     fail() {
         if(!$.cookie( this.cookieKeyPrefix + "noChose" )) {
             $.cookie( "citySelectionOpen" , 1 , { path : "/" } ) ;  //标识打开过城市选择页面
-            window.location.href = "/public/city/select?businessType=" + this.businessType ;
+            window.location.href = "/public/city/select?businessType=" + this.businessType +"&channel="+ this.GetRequest()['channel'];  // 根据channel的值判断来源，用于返回来源埋点需要
         }
     }
     /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -175,7 +175,7 @@ class Location {
         if( this.businessType === "xfPrice" ) return "/xfPrice/price.html?regionId=" + newCityId + "&regionType=1" ;
         let moduleName = "esf" ;
         if( this.businessType === "new" ) moduleName = "xflist" ;
-        else if( this.businessType === "rent" ) moduleName = "rent/?channel="+ this.GetRequest()['channel'] ;
+        else if( this.businessType === "rent" ) moduleName = "rent/?channel="+ this.GetRequest()['channel'] ;  // 根据channel的值判断来源，用于返回来源埋点需要
         return "/" + newPinyin + "/" +moduleName ;
     }
     /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
