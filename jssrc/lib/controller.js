@@ -202,6 +202,7 @@ class Controller {
     -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
     addListenerToDownloadApp() {        
         if($(".download-app").length == 0) return ;
+        /*
         $(".download-app .download").click(function(){
             new WakeupApp({
                 androidSchemes : "wkzf://external_call" ,
@@ -210,6 +211,7 @@ class Controller {
                 iosDownloadLink : "//m.wkzf.com/download/transit"
             }) ;
         }) ;
+        */
         $(".download-app .icon-remove").click(function(){
             $(".download-app").animate({
                 bottom : "-60px"
