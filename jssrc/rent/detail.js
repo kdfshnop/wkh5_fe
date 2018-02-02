@@ -22,7 +22,8 @@ class DetailController extends Controller {
         -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
         $(".download-app .download").click(()=> {
             nativeSchema.loadSchema({               
-                schema : "external_call/parameter?t=0&bt=1&houseId=" + $("#houseId").val()  ,  // 通过NN打开某个链接
+                //schema : "external_call/parameter?t=0&bt=1&houseId=" + $("#houseId").val()  ,  // 通过NN打开某个链接
+                schema : "external_call" ,  // 通过NN打开某个链接
                 protocal : "wkzf" , //schema头协议，实际情况填写
                 loadWaiting : "1500" , //发起唤醒请求后，会等待loadWaiting时间，超时则跳转到failUrl，默认3000ms                
                 failUrl:"https://m.wkzf.com/download/transit?from=rentDetail" ,  //唤起失败时的跳转链接，默认跳转到下载页
