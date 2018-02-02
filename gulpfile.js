@@ -58,8 +58,7 @@ var pathJs = [
 var pathAppJs = [
     'jssrc/lib/*.js' ,
     '!jssrc/lib/controller.js' ,
-    '!jssrc/lib/share.js' ,
-    '!jssrc/lib/wakeupApp.js' ,
+    '!jssrc/lib/share.js' ,    
     '!jssrc/lib/location.js'
 ];
 /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -78,7 +77,7 @@ gulp.task('clean', function() {
 定义对核心js合并的任务
 -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
 gulp.task('js-app', function() {
-    return gulp.src([ 'jssrc/lib/controller.js' , 'jssrc/lib/share.js' , 'jssrc/lib/wakeupApp.js' , 'jssrc/lib/location.js' ])
+    return gulp.src([ 'jssrc/lib/controller.js' , 'jssrc/lib/share.js' , 'jssrc/lib/location.js' ])
         .pipe(plumber())
         //.pipe(sourcemaps.init())
         .pipe(babel({
