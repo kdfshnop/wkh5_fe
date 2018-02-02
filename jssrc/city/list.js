@@ -13,8 +13,6 @@ class cityListController extends Controller {
        -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
         if($.cookie('location_cityName')){
             $('.location').html( $.cookie('location_cityName'));
-           /* $('.location').attr('data-pinyin',$.cookie('location_cityPinyin'));
-            $('.location').attr('data-cityid',$.cookie('location_cityId') )*/
         }else {
             $('.inside-city').hide();
         }
