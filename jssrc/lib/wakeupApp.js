@@ -30,6 +30,12 @@
         },
         isWx : function() {
             return navigator.userAgent.match(/micromessenger/i) ? true : false;
+        },
+        isUC: function() {
+            return navigator.userAgent.match(/UCBrowser/i) ? true : false;
+        },
+        isNewsArticle: function(){
+            return navigator.userAgent.match(/NewsArticle/i) ? true: false;
         }
     };
 
@@ -56,7 +62,7 @@
 
         // 唤起超时时间，超时则跳转到下载页面
         LOAD_WAITING: 3000
-    };
+    } ;
 
     var ua = window.navigator.userAgent;
 
@@ -64,7 +70,7 @@
     // Android下的chrome，需要通过特殊的intent 来唤醒
     // refer link：https://developer.chrome.com/multidevice/android/intents
     var isAndroidChrome = (ua.match(/Chrome\/([\d.]+)/) || ua.match(/CriOS\/([\d.]+)/))
-                          && browser.isAndroid() && !browser.isMobileQQ();
+                          && browser.isAndroid() && !browser.isMobileQQ() && !browser.isUC() && !browser.isNewsArticle() ;
 
     return {
         /**
