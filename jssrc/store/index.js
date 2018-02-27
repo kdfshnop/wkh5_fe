@@ -74,11 +74,13 @@ class IndexController extends Controller{
             let $storeName = $("header .banner .store-name") ;
             if ($(window).scrollTop() >= 20 ) {                
                 if( ! $header.hasClass("fixed")) $header.addClass("fixed") ;
+                $('.market').addClass('market-small');
                 $(".tabs-frame").addClass("header-margin") ;           
                 $storeName.hide() ;
             }
             else if ($(window).scrollTop() < 20) {
                 if( $header.hasClass("fixed") ) $header.removeClass("fixed") ;
+                $('.market').removeClass('market-small');
                 $(".tabs-frame").removeClass("header-margin") ; 
                 $storeName.show() ;
             }

@@ -23,8 +23,8 @@
      } 
  }
    
- .one-column-container {
-    >dl{                
+ .one-column-container,.subway-school {
+    >dl{
         //display: flex;
         .flex();
         color: #000;
@@ -35,8 +35,7 @@
             color: #7C7C7C;
             white-space: nowrap;
         } 
-        dd {
-            .text-ellipsis();
+        dd{
             //flex-grow: 1;
             .flex-grow(1);
             &.has-arrow{
@@ -57,6 +56,20 @@
         }       
     }
  }
+.one-column-container{
+  >dl{
+    >dd{
+      .text-ellipsis();
+    }
+  }
+}
+.subway-school{
+  > dl {
+    > dt {
+      margin-right: 0;
+    }
+  }
+}
 
  .two-column-container {
      .clearfix();
