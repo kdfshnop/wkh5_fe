@@ -6,79 +6,73 @@
 @import "../variables.less" ;
 @import "../mixins.less" ;
 .esf-item {
-    &:active {
-        background-color : transparent ;
-    } 
-    -webkit-tap-highlight-color: transparent;
-    -webkit-touch-callout: none;
-    -webkit-user-select: none; 
+    .no-active() ;
     color : @default-font-color ;
     display : block ; 
-    position : relative ;
-    &:after {
-            border-bottom : 1px solid #e8e8e8 ;
-            bottom : -1px ;
-            content : "" ;
-            height : 1px ;
-            position : absolute ;
-            right : 0 ;
-            transform: scaleY(0.5) ;
-            -webkit-transform: scaleY(0.5) ;
-            width : 100% ;
+    .pixel-border-bottom() ;
+    position : relative ;    
+    &:last-child { 
+        &:after {
+            border : none ;
         }
-        &:last-child{
-            border: none;
-            margin-bottom: 0;
-            padding-bottom: 0;
-            &:after {
-                border : none ;
-            }
-        }   
+    }   
     dl {        
         .clearfix() ;        
         padding : 1.5rem 1.5rem 1.5rem 0 ;        
         dt {
             float : left ;
-            height : 87px ;            
-            width : 131px ;
-            img {
+            height : 62px ;            
+            width : 94px ;
+            &>img {
+                .border-radius(4px) ;
                 height : 100% ;
                 width : 100% ;
             }
         }
         dd {            
-            margin : 0px 0 5px 140px ;
-            //.text-ellipsis() ;
+            margin : 0px 0 5px 109px ;
+            .text-ellipsis() ;
             &.title {
                 color : #000 ;
-                font-size : 1.6rem ; 
-                overflow: hidden;
-                //white-space: nowrap;
-                height: 2.0rem;
-                line-height: 2.0rem;
-
-                & + dd {
-                    height: 1.2rem;
-                    overflow: hidden;
+                font-size : 1.6rem ;
+                line-height : 100% ;
+                & + dd {  //就是下面户型、面积、区域、板块这一行
+                    height : 1.2rem ;
+                    line-height : 1.2rem ;
                 }
             }
             &.tags {
-                margin-top : 2px ;
-                height : 20px ;               
-                span {
-                    background-color : @tag-background-color ;
-                    color : #000 ;
-                    .border-radius(3px) ;
-                    display : block ;
-                    float : left ;
-                    font-size : 1.0rem ;
-                    margin : 0 2px 2px 0 ;
-                    padding : 2px 5px ;
-                    &.selected {
-                        background-color : @primary-color ;
-                        color : #fff ;
+                .clearfix() ;
+                div {
+                    border : 1px solid #79a6e2 ;
+                    .border-radius(2px) ;
+                    float : left ;       
+                    height : 15px ;
+                    line-height : 100% ;
+                    margin : 0 5px 2px 0 ;
+                    padding : 2px 3px ;
+                    &.promotion {
+                        background : linear-gradient(-90deg , #FBD059 0% , #FFB33C 99%) ;                        
                     }
-                }
+                    &.new {
+                        background : linear-gradient(-90deg , #FA7A6B 0% , #FC4C5A 100%) ;
+                    }
+                    &.over {
+                        background : linear-gradient(-90deg , #3B9FFF 0% , #4081D6 100%) ;
+                    }
+                    &.promotion ,  &.new , &.over {
+                        border : none ;
+                        span {
+                            color : #fff ;
+                        }
+                    }
+                    span {                       
+                        color : #79a6e2 ;
+                        display : inline-block ;
+                        font-size : 12px ;                        
+                        .scale(0.83 , 0.83) ;                                           
+                    }
+                }                
             }                 
             .money {
                 color : @danger-color ;                
