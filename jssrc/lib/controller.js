@@ -65,6 +65,11 @@ class Controller {
                     "acWord" : this.apiPrefix + "api/rent/list/acWord",
                     "rentHouseList" : this.apiPrefix +"api/rent/list/rentHouseList"
                 }
+            } ,
+            "esf" : {
+                "list" : {
+                    "houselist" : "api/esf/houselist"
+                }
             }
         } ;        
     } ;
