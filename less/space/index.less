@@ -13,7 +13,11 @@
  @import "../components/esf-items.less" ;
  @import "../components/xf-items.less" ;
  @import "../components/rent-items.less" ;
+@import "../components/store-nodata.less" ;
 
+body{
+  background: #F0F0F0;
+}
 header {   
     box-shadow : 0 -2px 6px 0 rgba( 0 , 0 , 0 , .2 ) ;
     background-color : #fff ;
@@ -29,68 +33,85 @@ header {
     }
 }
 .highlight {
-    padding-top : 1rem ;    
-     .card {
-         border-bottom : 1px solid @lighter-line-gray-color ;
-        .clearfix() ;
-        padding-bottom : 1rem ;
-        dt {            
-            float : left ;
-            height : 6rem ;
-            margin : 0 .125rem ;
-            overflow : hidden ; 
-            width : 6rem ; 
-            img {
-                height : 100% ;
-                width : 100% ;
-            }
-        }
-        dd {
-            .fit-height() ;
-            margin-left : 7.5rem ;
-            padding-right : 1.5rem ;
-            &.company {
-                line-height : 2rem ;
-                margin-bottom : .5rem ;
-            }
-            &.tags {
-                span {
-                    background-color : @tag-background-color ;
-                    .border-radius(3px) ;
-                    display : inline-block ;
-                    font-size : 1rem ;
-                    margin : 0 5px 5px 0 ;
-                    padding : 2px 3px ;
-                }
-            }            
-            .agent-name {
-                float : left ;                
-                h1 {
-                    display : inline-block ;   
-                    font-size : 1.8rem ;
-                    font-weight : 400 ;
-                }
-                .good {
-                    background-color : #fbe69a ;
-                    .border-radius(3px) ;
-                    color : #ce8000 ;
-                    display : inline-block ;   
-                    font-size : 1.1rem ;
-                    margin-left : 5px ;
-                    padding : 2px 3px ;
-                }
-            }
-            .sign {
-                color : @light-font-color ;
-                float : right ;
-                font-size : 1.2rem ; 
-                .iconfont {
-                    color : #39bdd3 ;
-                    margin-left : .5rem ;
-                }
-            }
-        }
+  padding-top: 1rem;
+  hr{
+    margin-right: 1.5rem;
+  }
+  .card {
+   /* border-bottom: 1px solid @lighter-line-gray-color;*/
+    /*.clearfix() ;*/
+    padding-bottom: 1rem;
+    .flex();
+    align-items: center;
+    > .agent-pic {
+      height: 6rem;
+      width: 6rem;
+      overflow: hidden;
+      text-align: center;
+      > img {
+        height: 100%;
+        width: 100%;
+        border-radius: 3px;
+      }
     }
+    > .agent-info {
+      flex: 3;
+      padding-left: 1.5rem;
+      > .agent-name {
+        > .name {
+          font-size: 1.6rem;
+          color: #000000;
+          line-height: 1.6rem;
+        }
+        > .company {
+          font-size: 1.6rem;
+          color: #7C7C7C;
+          line-height: 1.6rem;
+        }
+      }
+    }
+  }
+  /*服务信息*/
+  .agent-dec {
+    .flex();
+    padding-bottom: 1.5rem;
+    > div {
+      .flex(1);
+      padding-top: 1.5rem;
+      > span {
+        font-size: 1.4rem;
+        color: #7C7C7C;
+        line-height: 1.6rem;
+      }
+      > p {
+        font-size: 1.8rem;
+        color: @primary-color;
+        line-height: 2rem;
+        margin-top: 0.5rem;
+      }
+    }
+  }
+  .familiar{
+    padding-top: 1.5rem;
+    padding-right: 1.5rem;
+    >.name{
+      font-size: 1.6rem;
+      color: #000000;
+      line-height: 1.6rem;
+      .clearfix();
+      >a{
+        font-size: 1.4rem;
+        color: #7C7C7C;
+        letter-spacing: 0;
+        line-height: 1.4rem;
+        display: inline-block;
+        float: right;
+      }
+    }
+    >.dec{
+      margin-top: 1rem;
+    }
+  }
    .panel-item {
         .clearfix() ;
         dt , dd {
@@ -153,7 +174,11 @@ header {
 新房二手房资讯tab
 -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
 .wk-tabs {
-    margin-bottom : 5.5rem ;
+  padding-bottom: 5.5rem;
+  background: #fff;
+  .store-nodata>img{
+    margin-top: 14%;
+  }
     .tabs-frame {
         padding-bottom : 0 ;
         &.rent-frame {
