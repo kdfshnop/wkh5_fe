@@ -3,9 +3,6 @@
  2. 文件名称：src -> less -> components -> tags.less (常用的标签)
  3. 作者：tangxuyang@lifang.com
  -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
- @import "../variables.less";
- @import "../mixins.less";
-
  .tag {     
      font-size: 1.2rem;     
      color:  #4E4E4E;
@@ -16,3 +13,36 @@
      padding: 2px 5px;
  }
 
+ .esf-tags {
+      .clearfix() ;
+      div {
+            border : 1px solid #79a6e2 ;
+            .border-radius(2px) ;
+            float : left ;       
+            height : 15px ;
+            line-height : 100% ;
+            margin : 0 5px 2px 0 ;
+            padding : 2px 3px ;
+            &.promotion {
+                background : linear-gradient(-90deg , #FBD059 0% , #FFB33C 99%) ;                        
+            }
+            &.new {
+                background : linear-gradient(-90deg , #FA7A6B 0% , #FC4C5A 100%) ;
+            }
+            &.over {
+                background : linear-gradient(-90deg , #3B9FFF 0% , #4081D6 100%) ;
+            }
+            &.promotion ,  &.new , &.over {
+                border : none ;
+                span {
+                    color : #fff ;
+                }
+            }
+            span {                       
+                color : #79a6e2 ;
+                display : inline-block ;
+                font-size : 12px ;                        
+                .scale(0.83 , 0.83) ;                                           
+            }
+        } 
+ }

@@ -1,0 +1,188 @@
+/*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ 1. 项目名称：wkh5
+ 2. 文件名称：src -> less -> components -> conning-tower.less (列表页面司令塔，包括返回、定位城市、搜索、汉堡菜单等信息)
+ 3. 作者：zhaohuagang@lifang.com
+ -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
+.conning-tower {
+    background-color : #fff ;
+     .clearfix() ;
+    padding : 11px 0 ;
+    .back , .hamburg-menu {
+        line-height : 26px ;
+        text-align : center ;
+        width : 48px ;        
+    }
+    .back {
+        float : left ;
+        .iconfont {
+            font-size : 1.2rem ;
+        }     
+    }
+    .hamburg-menu {
+        float : right ;
+        .iconfont {
+            font-size : 1.8rem ;
+        }    
+    }
+    dl {
+        background-color : #f8f8f8 ;
+        .border-radius(3px) ;
+        .clearfix() ;        
+        height : 30px ;
+        margin : 0 48px ;
+        padding : 3px 0 ;
+        dt {
+            border-right : 1px solid #e4e4e4 ;
+            float : left ;
+            font-size : 1.4rem ;            
+            text-align : center ;
+            width : 70px ;
+            span {
+                display : inline-block ;
+            }
+            i {
+                .triangle-down( 4px , #7c7c7c ) ;
+                margin-top : 2px ;
+            }
+        }
+        dd {
+            color : #7c7c7c ;
+            font-size : 1.4rem ;
+            margin-left : 70px ;
+            padding-left : 15px ;
+            .iconfont {
+                font-size : 1.4rem ;
+            }
+        }
+    }
+    /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+    今日头条对应页面风格，不要返回和汉堡菜单两部分
+    -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
+    &.jrtt {
+        .back , .hamburg-menu {
+            display : none ;
+        }
+        dl {
+            margin : 0 15px ;
+        }
+    }
+}
+/*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+由汉堡菜单点击衍生出来的导航菜单
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
+.navigator-mask {
+    background-color : rgba( 0 , 0 , 0 , .3 ) ;
+    display : none ;
+    height : 100% ;
+    left : 0 ;
+    position : fixed ;
+    top : 0 ;
+    width : 100% ;
+    z-index : 10000 ;    
+}
+.navigator-pop {
+    background-color : #fff ;
+    height : 100% ;
+    padding-top : 48px ;
+    position : fixed ;
+    right : -200px ;
+    top : 0 ;
+    width : 200px ;
+    z-index : 10001 ;
+    a {
+        border-left : 5px solid transparent ;
+        color : #4e4e4e ;
+        display : block ;
+        font-size : 1.8rem ;
+        height : 44px ;
+        line-height : 44px ;
+        padding-left : 20px ;
+        &.on {
+            background-color : #f5f5f5 ;
+            border-left-color : #4081d6 ;
+        }
+        &.app-download {
+            background-color : #2c2d2f ;
+            bottom : 0 ;
+            color : #fff ;
+            left : 0 ;
+            padding : 0 ;
+            position : absolute ;
+            text-align : center ;
+            width : 100% ;
+            .iconfont {
+                margin-right : 10px ;
+            }
+        }
+    }
+}
+/*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+搜索替身部分，就是点击了假的搜索框区域出来的真正的搜索框以及搜索结果
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
+.substitute-mask {
+    background-color : #fff ;
+    display : none ;
+    height : 100% ;
+    left : 0 ;
+    position : fixed ;
+    top : 0 ;
+    width : 100% ;
+    z-index : 10002 ;
+    .search-substitute {
+         .clearfix() ;
+        padding : 11px 0 ;       
+        .back {
+            float : left ;
+            line-height : 26px ;
+            text-align : center ;
+            width : 48px ; 
+            .iconfont {
+                font-size : 1.2rem ;
+            }
+        }
+        .input-section {
+            background-color : #f8f8f8 ;
+            .border-radius(3px) ;                
+            height : 30px ;
+            margin : 0 15px 0 48px ;
+            padding : 3px 0 ;
+            position : relative ;
+            input {
+                display : block ;
+                line-height : 26px ;
+                .transparent() ;
+                text-indent : 15px ;
+            }
+            .iconfont {
+                font-size : 1.8rem ;
+                position : absolute ;
+                right : 10px ;
+                top : 5px ;
+            }
+        }
+    }
+    /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+    搜索结果列表区域
+    -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
+    .list {
+        padding : 0 15px ;
+        li {
+            position : relative ;            
+            dl {
+                padding : 10px 0 ;
+                dt {
+                    color : #4e4e4e ;
+                    font-size : 1.6rem ;                
+                }
+                dd {
+                    color : #999 ;
+                    font-size : 1.2rem ;
+                    line-height : 30px ;
+                }
+            }
+        }
+        li + li {
+            .pixel-border-top() ;
+        }       
+    }
+}
