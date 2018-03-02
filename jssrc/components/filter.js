@@ -53,6 +53,77 @@
   }
   */
 
+/*
+* ---------------------------取自underscore----------------------------
+*/
+var templateSettings = {
+    evaluate    : /<%([\s\S]+?)%>/g,
+    interpolate : /<%=([\s\S]+?)%>/g,
+    escape      : /<%-([\s\S]+?)%>/g
+};
+
+var noMatch = /(.)^/;
+
+var escaper = /\\|'|\r|\n|\u2028|\u2029/g;
+
+var escapeChar = function(match) {
+    return '\\' + escapes[match];
+};
+
+var _template = function(text, settings, oldSettings) {
+    if (!settings && oldSettings) settings = oldSettings;
+    settings = $.extend({}, settings, templateSettings);
+
+    var matcher = RegExp([
+        (settings.escape || noMatch).source,
+        (settings.interpolate || noMatch).source,
+        (settings.evaluate || noMatch).source
+    ].join('|') + '|$', 'g');
+
+    var index = 0;
+    var source = "__p+='";
+    text.replace(matcher, function(match, escape, interpolate, evaluate, offset) {
+        source += text.slice(index, offset).replace(escaper, escapeChar);
+        index = offset + match.length;
+
+        if (escape) {
+            source += "'+\n((__t=(" + escape + "))==null?'':_.escape(__t))+\n'";
+        } else if (interpolate) {
+            source += "'+\n((__t=(" + interpolate + "))==null?'':__t)+\n'";
+        } else if (evaluate) {
+            source += "';\n" + evaluate + "\n__p+='";
+        }
+        
+        return match;
+    });
+    source += "';\n";
+
+    if (!settings.variable) source = 'with(obj||{}){\n' + source + '}\n';
+
+    source = "var __t,__p='',__j=Array.prototype.join," +
+        "print=function(){__p+=__j.call(arguments,'');};\n" +
+        source + 'return __p;\n';
+
+    try {
+        var render = new Function(settings.variable || 'obj', '_', source);
+    } catch (e) {
+        e.source = source;
+        throw e;
+    }
+
+    var template = function(data) {
+        return render.call(this, data);
+    };
+
+    var argument = settings.variable || 'obj';
+    template.source = 'function(' + argument + '){\n' + source + '}';
+
+    return template;
+};
+
+/*
+* ----------------------------------------------------------------------
+*/
 define([],function(){
     let template = {
         outline: ``,
@@ -196,13 +267,35 @@ define([],function(){
 
     //没有模板库，先自己写函数吧
     function createPriceSection(prices){// 价格
-        return '<div class="total-price"><ul>' + prices.map(function(price){
+        var templateStr = '<div class="total-price">\
+                                <ul>\
+                                <%for(var i = 0; i < prices.length; i++){%>\
+                                    <li data-value="<%=prices[i].id%>"><%=prices[i].text%></li>\
+                                <%}%>\
+                                </ul>\
+                                <div>\
+                                    <div>\
+                                        <input type="number" placeholder="最低价格">\
+                                    </div>\
+                                    <div class="normal">-</div>\
+                                    <div>\
+                                        <input placeholder="最高价格" type="number">\
+                                    </div>\
+                                    <div class="normal"></div>\
+                                    <div>\
+                                        <button type="button">确定</button>\
+                                    </div>\
+                                </div>\
+                            </div>';
+        var html = _template(templateStr)({prices:prices});        
+        return html;
+        /*return '<div class="total-price"><ul>' + prices.map(function(price){
             return '<li data-value="'+price.id+'">'+price.text+'</li>';
-        }).join('') + '</ul>' + '<div><div><input type="numeric" placeholder="最低价格"></div><div class="normal">-</div><div><input placeholder="最高价格" type="numeric"></div><div class="normal"></div><div><button type="button">确定</button></div></div></div>';
+        }).join('') + '</ul>' + '<div><div><input type="number" placeholder="最低价格"></div><div class="normal">-</div><div><input placeholder="最高价格" type="number"></div><div class="normal"></div><div><button type="button">确定</button></div></div></div>';*/
     }
 
     function createHouseTypeSection(houseTypes){// 户型
-        function createUl(items, count){
+        /*function createUl(items, count){
             count = count || 4;//默认四个作为一个ul
             var result = "";
 
@@ -229,23 +322,61 @@ define([],function(){
             }
 
             return result;
-        }
+        }*/
 
-        return '<div class="house-type"><div class="house-type-inner">' + houseTypes.map(function(houseType){
+        var templateStr = '<div class="house-type">\
+                            <div class="house-type-inner">\
+                                <% var c = count || 4;%>\
+                                <%for(var i = 0; i < houseTypes.length; i++){%>\
+                                    <div class="house-type-section" data-key="<%= houseTypes[i].name%>">\
+                                        <h4><%= houseTypes[i].title%></h4>\
+                                        <%var r = Math.ceil(houseTypes[i].items.length/c);%>\
+                                        <%for(var j = 0; j < r; j++){%>\
+                                            <ul>\
+                                            <%for(var k = 0; k < c; k++){%>\
+                                              <%var item = houseTypes[i].items[j*c +k];%>\
+                                              <%if(item){%>\
+                                              <li data-value="<%= item.id%>" data-exclusive="<%= item.exclusive?1:0%>"><%= item.text %></li>\
+                                              <%}else{%>\
+                                                <li class="placeholder"></li>\
+                                              <%}%>\
+                                            <%}%>\
+                                            </ul>\
+                                        <%}%>\
+                                    </div>\
+                                    <%}%></div>\
+                                    <ul class="operation">\
+                                        <li class="reset">重置</li>\
+                                        <li class="confirm">确定</li>\
+                                    </ul>\
+                            </div>';
+
+        /*return '<div class="house-type"><div class="house-type-inner">' + houseTypes.map(function(houseType){
             return '<div class="house-type-section" data-key="'+ houseType.name +'"><h4>'+houseType.title+'</h4>' + createUl(houseType.items) + '</div>';
-        }).join('') + '</div><ul class="operation"><li class="reset">重置</li><li class="confirm">确定</li></ul></div>';
+        }).join('') + '</div><ul class="operation"><li class="reset">重置</li><li class="confirm">确定</li></ul></div>';*/
+        var html = _template(templateStr)({houseTypes: houseTypes, count: 4});
+        return html;
     }
 
     function createSortSection(sorts){// 排序
-        return '<div class="sort"><ul>'+ sorts.map(function(sort){
+        var templateStr = '<div class="sort">\
+                                <ul>\
+                                <%for(var i = 0; i < sorts.length; i++){%>\
+                                    <li data-value="<%= sorts[i].id%>"><%= sorts[i].text%></li>\
+                                <%}%>\
+                                </ul>\
+                            </div>';
+        var html = _template(templateStr)({sorts: sorts});
+        return html;
+        /*return '<div class="sort"><ul>'+ sorts.map(function(sort){
             return '<li data-value="'+ sort.id +'">'+ sort.text +'</li>';
-        }).join('') +'</ul></div>';
+        }).join('') +'</ul></div>';*/
     }
 
-    function createDistrctAndMetroSection(options){// 区域（包括区域和地铁）
+    function createDistrictAndMetroSection(options){// 区域（包括区域和地铁）
         
 
-        var district = "";
+        /*var district = "";
         var metro = "";
 
         if(options.districts){// 区域
@@ -277,64 +408,109 @@ define([],function(){
 
             metro += '</div></div>';
         }
-        return '<div class="district-metro"><ul><li class="active">区域</li><li>地铁</li></ul>'+district + metro+'</div>';
+        return '<div class="district-metro"><ul><li class="active">区域</li><li>地铁</li></ul>'+district + metro+'</div>';*/
+
+        var templateStr = '<div class="district-metro"><ul><li class="active">区域</li><li>地铁</li></ul><div class="district district-metro-item">\
+                                <div class="district-inner">\
+                                    <ul class="parent">\
+                                        <li>不限</li>\
+                                        <%for(var i = 0; i< districts.length; i++){%>\
+                                        <li data-value="<%= districts[i].id%>"><%= districts[i].name%></li>\
+                                        <%}%>\
+                                    </ul>\
+                                    <div class="child">\
+                                    <%for(var i = 0; i < districts.length; i++){%>\
+                                        <ul data-value="<%= districts[i].id%>" data-text="<%= districts[i].name%>">\
+                                            <li data-pinyin="<%=districts[i].pinyin%>">不限</li>\
+                                            <%for(var j = 0; j < districts[i].townList.length; j++){%>\
+                                                <li data-pinyin="<%=districts[i].pinyin%>-<%=districts[i].townList[j].pinyin%>" data-value="<%= districts[i].townList[j].id%>"><%= districts[i].townList[j].name%></li>\
+                                            <%}%>\
+                                        </ul>\
+                                    <%}%>\
+                                    </div>\
+                                </div>\
+                            </div>\
+                            <div class="metro district-metro-item">\
+                            <div class="metro-inner">\
+                                <ul class="parent">\
+                                    <li>不限</li>\
+                                    <%for(var i = 0; i< metros.length; i++){%>\
+                                    <li data-value="<%= metros[i].id%>"><%= metros[i].name%></li>\
+                                    <%}%>\
+                                </ul>\
+                                <div class="child">\
+                                <%for(var i = 0; i < metros.length; i++){%>\
+                                    <ul data-value="<%= metros[i].id%>" data-text="<%= metros[i].name%>">\
+                                        <li data-pinyin="<%=metros[i].key%>">不限</li>\
+                                        <%for(var j = 0; j < metros[i].subList.length; j++){%>\
+                                            <li data-pinyin="<%=metros[i].key%><%=metros[i].subList[j].key%>" data-value="<%= metros[i].subList[j].id%>"><%= metros[i].subList[j].name%></li>\
+                                        <%}%>\
+                                    </ul>\
+                                <%}%>\
+                            </div>\
+                        </div>\
+                        </div></div>';
+        var html = _template(templateStr)({districts: options.districts, metros: options.metros});        
+        return html;
     }
 
     function create(){
         var options = this.options;
-        return '<ul class="filter-items"><li><span class="label">区域</span><span class="triangle"></span></li><li><span class="label">总价</span><span class="triangle"></span></li><li><span class="label">户型</span><span class="triangle"></span></li><li><span class="label">排序</span><span class="triangle"></span></li></ul><div class="content"><div class="content-inner">'+createDistrctAndMetroSection({districts: options.districts, metros: options.metros})+createPriceSection(options.prices)+createHouseTypeSection(options.houseTypes)+createSortSection(options.sorts)+'</div></div>';
+        return '<ul class="filter-items"><li><span class="label">区域</span><span class="triangle"></span></li><li><span class="label">总价</span><span class="triangle"></span></li><li><span class="label">户型</span><span class="triangle"></span></li><li><span class="label">排序</span><span class="triangle"></span></li></ul><div class="content"><div class="content-inner">'+createDistrictAndMetroSection({districts: options.districts, metros: options.metros})+createPriceSection(options.prices)+createHouseTypeSection(options.houseTypes)+createSortSection(options.sorts)+'</div></div>';
+    }
+
+    // 计算查询提交，并调用filterChange回调
+    function calcCondition() {
+        var result = {};
+        // 排序
+        $('.sort .active').each(function(){
+            result.sort = $(this).data('value');
+        });
+
+        // 总价
+        $('.total-price .active').each(function(){
+            result.price = $(this).data('value');
+        });
+        // TODO:读取自定义总价
+
+        // 户型
+        $('.house-type-section').each(function(){
+            var key = $(this).data('key');
+            result[key] = [];
+            $(this).find('.active').each(function(){
+                var value = $(this).data('value');
+                if(value != null && value != undefined && value != ''){
+                    result[key].push(value);
+                }                    
+            });
+            if(result[key].length == 0){// 没选中则删除
+                delete result[key];
+            }
+        });
+
+        // 区域地铁
+        /*
+        $('.district .parent li.active').each(function(){
+            result.district = $(this).data('value');
+        });
+        $('.district .child li.active').each(function(){
+            result.town = $(this).data('value');
+        });
+        $('.metro .parent li.active').each(function(){
+            result.metro = $(this).data('value');
+        });
+        $('.metro .child li.active').each(function(){
+            result.station = $(this).data('value');
+        });*/
+        // 区域地铁的有点复杂，还是在点击选中时直接复制给this.result
+        
+        result = $.extend({}, this.result, result);
+        this.options.filterChanged && this.options.filterChanged(result);        
     }
 
     function bindEvent() {
         var self = this;
-        // 计算查询提交，并调用filterChange回调
-        function calcCondition() {
-            var result = {};
-            // 排序
-            $('.sort .active').each(function(){
-                result.sort = $(this).data('value');
-            });
-
-            // 总价
-            $('.total-price .active').each(function(){
-                result.price = $(this).data('value');
-            });
-            // TODO:读取自定义总价
-
-            // 户型
-            $('.house-type-section').each(function(){
-                var key = $(this).data('key');
-                result[key] = [];
-                $(this).find('.active').each(function(){
-                    var value = $(this).data('value');
-                    if(value != null && value != undefined && value != ''){
-                        result[key].push(value);
-                    }                    
-                });
-                if(result[key].length == 0){// 没选中则删除
-                    delete result[key];
-                }
-            });
-
-            // 区域地铁
-            /*
-            $('.district .parent li.active').each(function(){
-                result.district = $(this).data('value');
-            });
-            $('.district .child li.active').each(function(){
-                result.town = $(this).data('value');
-            });
-            $('.metro .parent li.active').each(function(){
-                result.metro = $(this).data('value');
-            });
-            $('.metro .child li.active').each(function(){
-                result.station = $(this).data('value');
-            });*/
-            // 区域地铁的有点复杂，还是在点击选中时直接复制给this.result
-            
-            result = $.extend({}, this.result, result);
-            console.log(result);
-        }
+        
 
         // 关闭筛选弹层
         function hide(){            
@@ -507,6 +683,8 @@ define([],function(){
                 delete self.result.town;
                 delete self.result.metro;
                 delete self.result.station; 
+                delete self.result.districtPinyin;
+                delete self.result.metroKey;
                 hide();
                 calcCondition.apply(self);    
                 self.$districtLabel.text("区域").parent().removeClass('active');           
@@ -520,8 +698,10 @@ define([],function(){
             $this.addClass('active');
             delete self.result.metro;
             delete self.result.station;
+            delete self.result.metroKey;
             self.result.district = $this.parent().data('value');
             self.result.town = $this.data('value');
+            self.result.districtPinyin = $this.data('pinyin');
             calcCondition.apply(self);
             hide();
             var str = "";
@@ -538,8 +718,10 @@ define([],function(){
             $this.addClass('active');
             delete self.result.district;
             delete self.result.town;
+            delete self.result.districtPinyin;
             self.result.metro = $this.parent().data('value');
             self.result.station = $this.data('value');
+            self.result.metroKey = $this.data('pinyin');
             calcCondition.apply(self);
             hide();
             var str = "";
@@ -618,9 +800,8 @@ define([],function(){
 
     var initCount = 0;
     function init(){
-        initCount++;
-        console.log(initCount);
-        if(initCount!=2){
+        initCount++;        
+        if(initCount!=2){// 获取区域和地铁是两个接口，因此这里要确定它们都已经成功返回了
             return;
         }
         this.$el.html(create.apply(this));
@@ -646,7 +827,7 @@ define([],function(){
         this.$houseTypeConfirmBtn = this.$houseType.find('.confirm');
 
         
-        this.result = {};
+        //this.result = {};
         this.initValue = this.$el.data('init');
         if(this.initValue){
             this.initValue = JSON.parse(decodeURIComponent(this.initValue));
@@ -661,15 +842,11 @@ define([],function(){
     }
 
     function Filter(options) {        
-        this.options = $.extend({},DEFAULT, options);  
-        //this.options = options;                      
+        this.options = $.extend({},DEFAULT, options);                            
         this.$el = $(options.el);
         this.controller = options.controller;        
 
-        getDistrictAndMetro.apply(this);
-
-
-        //init.apply(this);        
+        getDistrictAndMetro.apply(this);  
     }
 
     // 根据指定的值设置控件中各个筛选条件选中值
@@ -689,7 +866,8 @@ define([],function(){
          * }
          */        
         // 区域/地铁
-        var str = "";        
+        var str = "";
+        this.result = {};                
         if(value.district != undefined || value.town != undefined){            
             if(value.district != undefined) {
                 str = this.$district.find('.parent li[data-value='+value.district+']').addClass('active').text();
@@ -715,6 +893,16 @@ define([],function(){
                        
             this.$district.hide();
             this.$metro.show();
+        }else{// 清空选中的区域地铁
+            this.$districtMetro.find('ul, li').removeClass('active');
+            this.$districtMetro.find('.child ul').hide();
+            this.$districtLabel.text('区域').parent().removeClass('active');
+            delete this.result.district;
+            delete this.result.districtPinyin;
+            delete this.result.town;
+            delete this.result.metro;
+            delete this.result.metroKey;
+            delete this.result.station;
         }
         if(str){// 设置选中区域或地铁站到区域内容中
             this.$districtLabel.text(str).parent().addClass('active');
@@ -744,6 +932,12 @@ define([],function(){
                 str = $pr.text();
             }
             this.$priceLabel.text(str).parent().addClass('active');
+        }else{
+            this.$price.find('li').removeClass('active');
+            this.$maxPrice.val('');
+            this.$minPrice.val('');
+            this.$priceLabel.text('总价').parent().removeClass('active');
+            delete this.result.price;
         }
 
         // 户型
@@ -755,6 +949,9 @@ define([],function(){
             }
 
             this.$houseTypeLabel.parent().addClass('active');
+        }else{
+            this.$houseType.find('li').removeClass('active');
+            this.$houseTypeLabel.text('户型').parent().removeClass('active');
         }
 
         // 排序
@@ -764,7 +961,16 @@ define([],function(){
                 this.$sortLabel.text(str).parent().addClass('active');
             }
             this.result.sort = value.sort;
+        }else{
+            delete this.result.sort;
+            this.$sort.find('li').removeClass('active');
+            this.$sortLabel.text('排序').parent().removeClass('active');
         }
+    }
+
+    Filter.prototype.clear = function() {
+        this.setValue({});        
+        calcCondition.apply(this);
     }
 
     return Filter;
