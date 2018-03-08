@@ -29,6 +29,10 @@
                 if (data.status == 1){
                     let dataRes = data;
                     let echartData =  that.recombineM(dataRes.data);
+                    let dataaa = {
+                          "monthList":["4月", "5月", "6月", "7月", "8月", "9月", "10月", "11月", "12月", "1月", "2月", "3月"],
+                          "seriesData":["10000", "14000", "12000", "15000", "15000", "18000", "15000", "15000", "13000", "0", "15000", "15000"]
+                    };
                     that.echartFun(echartData) ;
                 }
             }});
@@ -38,10 +42,27 @@
      折线图函数异步操作
      -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
      echartFun(echartData){
+         let seriesData=[];
+         echartData.seriesData.forEach(function(item){
+             if(item == 0){
+                 seriesData.push(null);
+             }else{
+                 seriesData.push(parseFloat(item));
+             }
+         });
          let sortArray = echartData.seriesData.sort(function(a, b) {
              return parseFloat(a) - parseFloat(b);
          });
-         let maxPrice = Math.ceil((sortArray[sortArray.length - 1] / 10000) + 1) * 10000;
+         let maxPrice = Math.ceil((sortArray[sortArray.length - 1] / 1000)) * 1000;
+         let minPrice = Math.ceil((sortArray[0] / 1000) - 1) * 1000;
+         let avgPrice = 1000 ;
+         if (maxPrice == minPrice ) {
+             minPrice = maxPrice - 2000;
+             avgPrice = 1000
+         }else{
+             avgPrice = (maxPrice - minPrice)/4 < 1000 ? 1000:Math.ceil((maxPrice - minPrice)/4000)*1000;
+         }
+         minPrice =  minPrice < 0 ? 0:minPrice;
          let myChart = echarts.init(document.getElementById('main'),{ width: '88%' });
          let that = this;
          // 给折线图dome增加埋点
@@ -122,10 +143,9 @@
                          }
                      }
                  },
-                 min:0,
-                 max:maxPrice,
-                 splitNumber: 6,
-                 interval: maxPrice / 4
+                 min:minPrice,
+                 max:avgPrice*5,
+                 interval:avgPrice,
              },
              series: [{
                  name: '销量',
@@ -146,8 +166,8 @@
                          color: '#92A7C3'
                      }
                  },
-                 connectNulls:true,
-                 data: echartData.seriesData,
+                 connectNulls: true,
+                 data: seriesData,
              }],
          };
          myChart.setOption(option);
@@ -171,6 +191,7 @@
                  echartData.seriesData.push(item.unitPrice)
              });
          }
+         console.log(echartData);
          return echartData ;
      }
 }

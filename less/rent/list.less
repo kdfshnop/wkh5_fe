@@ -123,7 +123,7 @@ body{
       left: 0;
       border-top: 1px solid @light-line-gray-color;
      /* box-shadow: 0 2px 6px 0 rgba(0,0,0,0.15);*/
-         transform: -webkit-scaleY(0.5);
+      -webkit-transform: scaleY(0.5);
     }
     >ul{
       .flex();
@@ -285,13 +285,20 @@ body{
   top:8.5rem;
   z-index: 11;
   >.house-list{
+    >p{
+      font-size: 1.5rem;
+      color: @default-font-color;
+      letter-spacing: 0;
+      line-height: 1.4rem;
+      margin-bottom: 1rem;
+    }
     >ul{
       width: 100%;
-      text-align: center;
+      /*text-align: center;*/
       position: relative;
       left: 0.2rem;
       >li{
-        width: 31%;
+        width: 22%;
         height: 3.3rem;
         background: @tag-background-color;
         border-radius: 0.4rem;
@@ -302,9 +309,8 @@ body{
         line-height: 3.3rem;
         text-align: center;
         margin-bottom: 0.9rem;
-        margin-right: 0.3rem;
+        margin-right: 0.49rem;
       }
-
     }
   }
   >.house-conf{
@@ -321,7 +327,7 @@ body{
       top:0;
       left: 0;
       border-top: 1px solid @light-line-gray-color;
-         transform: -webkit-scaleY(0.5);
+      -webkit-transform: scaleY(0.5);
     }
     >button{
       width: 15.5rem;
@@ -341,11 +347,10 @@ body{
 .sort-chose{
   background: @default-color;
   width: 100%;
-  z-index: 14;
+  z-index: 11;
   position: fixed;
-  bottom: 0;
-  left: 0;
-  right: 0;
+  top:8.5rem;
+/*  z-index: 11;*/
   >ul{
     width: 100%;
     >li{
@@ -354,7 +359,7 @@ body{
       line-height: 4.5rem;
       text-align: center;
       position: relative;
-      &:not(:first-child):before{
+/*      &:not(:first-child):before{
         content: '';
         height: 1px;
         width: 100%;
@@ -362,8 +367,8 @@ body{
         left: 0;
         top: 0;
         border-top: 1px solid @light-line-gray-color;
-        transform: -webkit-scaleY(0.5);
-      }
+        -webkit-transform: scaleY(0.5);
+      }*/
     }
   }
 }
@@ -401,22 +406,23 @@ body{
 /*更多模块样式*/
 .more{
   width: 100%;
-  max-height:80% ;
+  max-height:85% ;
   padding: 1.5rem  1rem;
   background-color: @default-color;
   position: fixed;
   top:8.5rem;
   z-index: 11;
   overflow-y:scroll ;
-  >.more-spec,>.area,>.decoration{
+  >.more-spec,>.area,>.decoration,>.rent-way{
     padding-bottom: 0.5rem;
+    padding-top: 1rem;
     position: relative;
     &:after{
       content: '';
       height: 1px;
       width: 100%;
       border-top: 1px solid @light-line-gray-color;;
-      transform: -webkit-scaleY(0.5);
+      -webkit-transform: scaleY(0.5);
       position: absolute;
       bottom: 0;
       right: 0;
