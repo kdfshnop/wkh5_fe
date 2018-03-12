@@ -48,7 +48,14 @@ class IndexController extends Controller {
             $(".wk-tabs").tabs({
                 "fixedWhenScroll" : false ,
                 "effect" : "fadeIn" ,
-                "duration" : 200
+                "duration" : 200,
+                onSwap: function (index) {
+                    let requestParams = {
+                       "agentId": $("#agentId").val()
+                    };
+                   let typeHouseList = $(`.tabs-handle >li:eq(${index})`).attr("data-typehouse");
+                   /* pullload(requestParams,typeHouseList)*/
+                }
             }) ;            
         }) ;        
         /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -82,6 +89,93 @@ class IndexController extends Controller {
             $(this).siblings(".switch").show(200) ;
         }) ;
     }
+    /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+     创建dome
+    -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
+    creatRent(type,item) {
+        let houseTagList = ''; // 标签
+        let commision =''; // 租房零佣金
+        let domeType='';   // dome 的拼装
+        if (type == "rent"){
+               if (item.houseTag.isSubwayHouse) {
+                   houseTagList += '<span class="tag nears">近地铁</span>'
+               }  if (item.houseTag.isPriceDown) {
+                   houseTagList += '<span class="tag priced">降价</span>'
+               }  if (item.houseTag.isNewHouse) {
+                   houseTagList += '<span class="tag newup">新上</span>'
+               }   if (item.houseTag.isShortRent) {
+                   houseTagList += '<span class="tag anthert">可短租</span>'
+               }   if(item.houseTag.isHardcover == 1){
+                   houseTagList += '<span class="tag anthert">精装</span>'
+               } if(item.houseTag.isHardcover == 2){
+                   houseTagList += '<span class="tag anthert">豪装</span>'
+               } if(item.houseTag.isSouth){
+                   houseTagList += '<span class="tag anthert">朝南</span>'
+               } if(item.houseTag.isZeroCommission){
+                   commision= ' <span>0 佣金</span>'
+               }
+               domeType=  `<a  class="rent-item box" href=" ${item.url}">
+                   <div class="left">
+                       <img src="${item.firstImageUrl}?x-oss-process=image/resize,w_120" alt="${ item.estateName} " class="lazy">
+                       ${commision}
+                   </div>
+                   <div class="right">
+                       <h4> ${item.houseTitle}</h4>
+                       <p class="base-info">                    
+                          ${item.houseTypeStr} ${item.spaceArea}㎡ | ${item.districtAndTownName}
+                       </p>
+                        <p class="base-info">${item.distanceSubway}</p>
+                       <p class="tags">${houseTagList}</p>
+                       <p class="unit-price"> ${item.rentPriceStr} 元/月</p>
+                   </div>
+               </a>`;
+        }else if(type == "esf"){
+`<a href="/shanghai/esf/79fe70c9110b15020d7fcf7677cd8757.html" class="esf-item" data-bigdata="%7B%22eventName%22%3A1002017%2C%22eventParam%22%3A%7B%7D%7D">
+        <dl>
+            <dt><img src="https://image-test.wkzf.com/13cffd8795404077ae823c140b129396/Urbd0JIDwwxVs.jpg?x-oss-process=image/resize,w_150" alt="梅陇一村" class="lazy" style="display: inline;"></dt>
+            <dd class="title">业主新挂牌房源，南北通透户型，位置好采光足,随时可看</dd>
+            <dd>2室1厅1卫 52.41m² | 闵行区 梅陇</dd>
+            <dd class="tags">
+                
+                    <div><span>地铁房</span></div>
+                
+                    <div><span>近学校</span></div>
+                
+                    <div><span>南北通透</span></div>
+                               
+            </dd>   
+            <dd>
+                 <span class="money">295万</span>
+                 <span class="price">56287 元/㎡</span>
+            </dd>                             
+        </dl>
+    </a>`
+        }
+        return domeType
+    }
+    /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+    上拉加载实例化
+    -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
+    pullload(requestParams,typeHouseList) {
+        let self = this ;
+        //租房列表
+        $(".rent-items").pullload({
+            apiUrl : `this.apiUrl.space.${typeHouseList}` ,
+            requestType: "get",
+            queryStringObject : requestParams ,
+            traditional: true,
+            pageSize: 10,
+            threshold : 50 ,
+            callback : function(data) {
+                if( ! data.data) return ;
+                $.each(data.data , (index , rent)=> {
+                    rent.url = "/shanghai/rent/" + rent.encryptHouseId + ".html" ;
+                    $(".rent-items").append(self.creatRent(rent)) ;
+                }) ;
+            }
+        }) ;
+
+    } ;
 }
 /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
 类的初始化

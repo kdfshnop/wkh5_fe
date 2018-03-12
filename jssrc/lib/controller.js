@@ -70,6 +70,11 @@ class Controller {
                 "list" : {
                     "houselist" : "api/esf/houselist"
                 }
+            },
+            "space": {
+                "secondHouseList": this.apiPrefix + "api/space/secondApiProvider",
+                "rentHouseList": this.apiPrefix + "api/space/rentApiProvider",
+                "newHouseList": this.apiPrefix + "api/space/newApiProvider"
             }
         } ;        
     } ;
