@@ -1169,7 +1169,7 @@ class ListController extends Controller {
      -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
     pullload(conditionObject) {
         let self = this ;
-        let pinyin = $.cookie('pinyin');
+        let pinyin = $.cookie('pinyin') || "shanghai";
         //租房列表
         $(".rent-items").pullload({
             apiUrl : this.apiUrl.rent.list.rentHouseList ,

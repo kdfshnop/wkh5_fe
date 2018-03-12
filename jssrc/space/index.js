@@ -29,7 +29,8 @@ class IndexController extends Controller {
         /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
         载入组件逻辑
         -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/  
-        require([ "../components/bigdata.min" , "../components/tabs.min" ] , (BigData) => { 
+        let that = this;
+        require([ "../components/bigdata.min" , "../components/tabs.min" ] , (BigData) => {
             /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
             pv埋点
             -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
@@ -54,7 +55,7 @@ class IndexController extends Controller {
                        "agentId": $("#agentId").val()
                     };
                    let typeHouseList = $(`.tabs-handle >li:eq(${index})`).attr("data-typehouse");
-                   /* pullload(requestParams,typeHouseList)*/
+                   that.pullload(requestParams,typeHouseList)
                 }
             }) ;            
         }) ;        
@@ -130,26 +131,26 @@ class IndexController extends Controller {
                    </div>
                </a>`;
         }else if(type == "esf"){
-`<a href="/shanghai/esf/79fe70c9110b15020d7fcf7677cd8757.html" class="esf-item" data-bigdata="%7B%22eventName%22%3A1002017%2C%22eventParam%22%3A%7B%7D%7D">
-        <dl>
-            <dt><img src="https://image-test.wkzf.com/13cffd8795404077ae823c140b129396/Urbd0JIDwwxVs.jpg?x-oss-process=image/resize,w_150" alt="梅陇一村" class="lazy" style="display: inline;"></dt>
-            <dd class="title">业主新挂牌房源，南北通透户型，位置好采光足,随时可看</dd>
-            <dd>2室1厅1卫 52.41m² | 闵行区 梅陇</dd>
-            <dd class="tags">
-                
-                    <div><span>地铁房</span></div>
-                
-                    <div><span>近学校</span></div>
-                
-                    <div><span>南北通透</span></div>
-                               
-            </dd>   
-            <dd>
-                 <span class="money">295万</span>
-                 <span class="price">56287 元/㎡</span>
-            </dd>                             
-        </dl>
-    </a>`
+            item.tagList.forEach(function(tag) {
+              if(tag == "降价") { houseTagList+=`<div class="promotion"><span>${ tag }</span></div>`}
+                 else if(tag == "新上") { houseTagList+=`<div class="new"><span>${ tag }</span></div>`}
+                 else if(tag == "满二" || tag == "满五唯一") { houseTagList+=`<div class="over"><span>${ tag }</span></div>`}
+                 else { houseTagList+=`<div><span>${tag}</span></div>`}
+                }) ;
+            domeType = `<a href=" ${item.url}" class="esf-item" data-bigdata="%7B%22eventName%22%3A1002017%2C%22eventParam%22%3A%7B%7D%7D">
+                            <dl>
+                                <dt><img src="${item.houseImgUrl}?x-oss-process=image/resize,w_120" alt="${ item.houseTitle}" class="lazy" style="display: inline;"></dt>
+                                <dd class="title">${item.houseTitle}</dd>
+                                <dd>${item.houseChild} ${item.areaStr} | ${item.district}${item.town}</dd>
+                                <dd class="tags">
+                                  ${houseTagList}               
+                                </dd>   
+                                <dd>
+                                     <span class="money">${item.totalPrice}万</span>
+                                     <span class="price">${item.unitPrice} 元/㎡</span>
+                                </dd>                             
+                            </dl>
+                        </a>`;
         }
         return domeType
     }
@@ -158,9 +159,11 @@ class IndexController extends Controller {
     -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
     pullload(requestParams,typeHouseList) {
         let self = this ;
-        //租房列表
-        $(".rent-items").pullload({
-            apiUrl : `this.apiUrl.space.${typeHouseList}` ,
+        let pinyin = $.cookie('pinyin') || "shanghai";
+        let type = typeHouseList == "secondHouseList" ? "esf": (typeHouseList == "rentHouseList" ? "rent": "new");
+        // 房源列表
+        $(`.${type}-frame`).pullload({
+            apiUrl : eval(`this.apiUrl.space.${typeHouseList}`) ,
             requestType: "get",
             queryStringObject : requestParams ,
             traditional: true,
@@ -168,9 +171,9 @@ class IndexController extends Controller {
             threshold : 50 ,
             callback : function(data) {
                 if( ! data.data) return ;
-                $.each(data.data , (index , rent)=> {
-                    rent.url = "/shanghai/rent/" + rent.encryptHouseId + ".html" ;
-                    $(".rent-items").append(self.creatRent(rent)) ;
+                $.each(data.data , (index , listItem)=> {
+                    listItem.url = `/${pinyin}/${type}/${ listItem.encryptHouseId}.html` ;
+                    $(`.${type}-frame`).append(self.creatRent(type,listItem)) ;
                 }) ;
             }
         }) ;
