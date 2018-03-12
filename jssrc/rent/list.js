@@ -1110,40 +1110,53 @@ class ListController extends Controller {
      创建dome
    -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
 
-    creatRent(item){
+    creatRent(conditionObject,item){
         let houseTag=[];
-        if (item.houseTag.isSubwayHouse) {
-            houseTag.push("近地铁")
-        }  if (item.houseTag.isPriceDown) {
-            houseTag.push("降价")
-        }  if (item.houseTag.isNewHouse) {
-            houseTag.push("新上")
-        }  if(item.houseTag.isHardcover == 1){
-            houseTag.push("精装")
-        } if(item.houseTag.isHardcover == 2){
-            houseTag.push("豪装")
-        } if(item.houseTag.isSouth){
-            houseTag.push("朝南")
-        }
         let houseTagList = '';
-        if (houseTag){
-            houseTag.forEach(function (item,index) {
-                if (index == 0){
-                    houseTagList =  `<span class="tag">${item}</span>`
-                }else {
-                    houseTagList += `<span class="tag">${item}</span>`
-                }
-            })
+        let commision ='';
+        if (item.houseTag.isSubwayHouse) {
+           /* houseTag.push("近地铁");*/
+            houseTagList += '<span class="tag nears">近地铁</span>'
+        }  if (item.houseTag.isPriceDown) {
+          /*  houseTag.push("降价")*/
+            houseTagList += '<span class="tag priced">降价</span>'
+        }  if (item.houseTag.isNewHouse) {
+           /* houseTag.push("新上")*/
+            houseTagList += '<span class="tag newup">新上</span>'
+        }   if (item.houseTag.isShortRent) {
+            /*houseTag.push("可短租")*/
+            houseTagList += '<span class="tag anthert">可短租</span>'
+        }   if(item.houseTag.isHardcover == 1){
+            /*houseTag.push("精装")*/
+            houseTagList += '<span class="tag anthert">精装</span>'
+        } if(item.houseTag.isHardcover == 2){
+            /*houseTag.push("豪装")*/
+            houseTagList += '<span class="tag anthert">豪装</span>'
+        } if(item.houseTag.isSouth){
+            /*houseTag.push("朝南")*/
+            houseTagList += '<span class="tag anthert">朝南</span>'
+        } if(item.houseTag.isZeroCommission){
+            /*houseTag.push("0佣金")*/
+            commision= ' <span>0 佣金</span>'
         }
-        let domeRent=  `<a  class="rent-item box" href=" ${item.url}">
+
+  /*      if (houseTag) {
+            houseTag.forEach(function (item, index) {
+                houseTagList += `<span class="tag">${item}</span>`
+            })
+        }*/
+        let bigdata = encodeURIComponent(JSON.stringify({ eventName:'1202039',eventParam:{rent_house_id:item.houseId }, channel:conditionObject.channel || "", type: 2}));
+        let domeRent=  `<a  class="rent-item box" href=" ${item.url}" data-bigdata="${bigdata}">
             <div class="left">
                 <img src="${item.firstImageUrl}?x-oss-process=image/resize,w_120" alt="${ item.estateName} " class="lazy">
+                ${commision}
             </div>
             <div class="right">
                 <h4> ${item.houseTitle}</h4>
                 <p class="base-info">                    
                    ${item.houseTypeStr} ${item.spaceArea}㎡ | ${item.districtAndTownName}
                 </p>
+                 <p class="base-info">${item.distanceSubway}</p>
                 <p class="tags">${houseTagList}</p>
                 <p class="unit-price"> ${item.rentPriceStr} 元/月</p>
             </div>
@@ -1156,19 +1169,20 @@ class ListController extends Controller {
      -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
     pullload(conditionObject) {
         let self = this ;
+        let pinyin = $.cookie('pinyin') || "shanghai";
         //租房列表
         $(".rent-items").pullload({
             apiUrl : this.apiUrl.rent.list.rentHouseList ,
             requestType: "post",
             queryStringObject : conditionObject ,
             traditional: true,
-            pageSize:10,
+            pageSize: 10,
             threshold : 50 ,
             callback : function(data) {
                 if( ! data.data) return ;
                 $.each(data.data , (index , rent)=> {
-                    rent.url = "/shanghai/rent/" + rent.encryptHouseId + ".html" ;
-                    $(".rent-items").append(self.creatRent(rent)) ;
+                    rent.url = "/"+pinyin+"/rent/" + rent.encryptHouseId + ".html" ;
+                    $(".rent-items").append(self.creatRent(conditionObject,rent)) ;
                 }) ;
             }
         }) ;
@@ -1260,8 +1274,9 @@ class ListController extends Controller {
             conditionData['subwayStation'] = this.GetRequest()['subwayStation'];
         } if (this.GetRequest()['subEstateId']){
             conditionData['subEstateId'] = this.GetRequest()['subEstateId'];
+        } if (this.GetRequest()['channel']){
+            conditionData['channel'] = this.GetRequest()['channel'];
         }
-
         this.pullload(conditionData);  // 上拉加载的 函数注册
     };
 

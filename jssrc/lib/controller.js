@@ -49,7 +49,8 @@ class Controller {
                 //"bigData" : this.apiPrefix + "api/common/bigData" ,
                 "bigData" : this.apiPrefix + "buriedPoint/sendData.rest" ,
                 "dial" : this.apiPrefix + "api/common/dial" ,
-                "getCityByLatLon" : this.apiPrefix + "api/common/getCityByLatLon"
+                "getCityByLatLon" : this.apiPrefix + "api/common/getCityByLatLon",
+                "acWord" : this.apiPrefix + "api/common/acWord", // 搜索联想词
             } ,            
             "store" : {
                 "agent" : this.apiPrefix + "api/store/index/agent" ,
@@ -62,7 +63,6 @@ class Controller {
                 "list" : {
                     "cityAreas": this.apiPrefix + "api/rent/list/areas",
                     "citySubway" : this.apiPrefix + "api/rent/list/subway",
-                    "acWord" : this.apiPrefix + "api/rent/list/acWord",
                     "rentHouseList" : this.apiPrefix +"api/rent/list/rentHouseList"
                 }
             } ,
@@ -70,6 +70,11 @@ class Controller {
                 "list" : {
                     "houselist" : "api/esf/houselist"
                 }
+            },
+            "space": {
+                "secondHouseList": this.apiPrefix + "api/space/secondApiProvider",
+                "rentHouseList": this.apiPrefix + "api/space/rentApiProvider",
+                "newHouseList": this.apiPrefix + "api/space/newApiProvider"
             }
         } ;        
     } ;

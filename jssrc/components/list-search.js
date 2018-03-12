@@ -114,7 +114,7 @@ define(function(){
                     channel:channelFlag ,
                     type: 2
                 }));
-                that.request(that.apiUrl.rent.list.acWord,sendData,{successCallback(data){
+                that.request(that.apiUrl.common.acWord,sendData,{successCallback(data){
                         let renthouselistData = data.data;
                         acWordHouseList = renthouselistData.secondHouseList;
                         if (renthouselistData.secondHouseList) {
