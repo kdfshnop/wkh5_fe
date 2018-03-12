@@ -13,9 +13,11 @@ class ListController extends Controller {
         加载相关页面组件逻辑
         -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
         require([ "../components/conning-tower.min" ] , () => {
-            new ConningTower({
-                "apiUrl" : this.apiUrl.esf.list.houselist ,
-                "moduleType" : "esf"
+            new ConningTower({                
+                "moduleType" : "esf" ,
+                "cityClick" : () => {
+                    alert("在二手房城市选择器中点选了城市") ;
+                }
             }) ;
         }) ;
     }        
