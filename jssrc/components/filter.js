@@ -8,7 +8,25 @@
       el: "", //挂载点
       houseType: "",//查询区域板块用的
       cityId: "",//查询区域板块和地铁用的
-      filterChanged: function(condition){},//查询条件变化回调
+      cityName: "",
+      near: true,
+      longitude: "",// 经度
+      latitude: "",// 纬度
+      distances: [{value: "5000", text: "不限（智能范围）"},{value: "500", text: "500米"},{value: "1000", text: "1000米"},{value: "2000", text: "2000米"},{value: "5000", text: "5000米"}],
+      filterChanged: function(condition){
+        condition:{
+            price: "",
+            sort: "",
+            district: "",
+            town: "",
+            metro: "",
+            station: "",
+            districtPinyin: "",
+            metroKey: ""
+            ...
+        }
+
+      },//查询条件变化回调
       prices:[{
           id: "",
           text: "不限"          
@@ -50,6 +68,16 @@
           id: "",
           text: "综合排序"
       }]
+  }
+
+  filteChange的参数: {
+    sort: "", //排序
+    price: "",//价格
+    district: "",//区域id
+    town: "",//板块id
+    metro: "",//地铁线id
+    station: "",//地铁站id
+    .... // 对应options中houseTypes的name
   }
   */
 
@@ -125,14 +153,6 @@ var _template = function(text, settings, oldSettings) {
 * ----------------------------------------------------------------------
 */
 define([],function(){
-    let template = {
-        outline: ``,
-        districtMetro: ``,
-        total: ``,
-        houseType: ``,
-        sort:`<ul></ul>`
-    };
-
     const DEFAULT =  {
         el: "", //挂载点
         filterChanged: function(condition){},//查询条件变化回调
@@ -199,32 +219,32 @@ define([],function(){
             name: "features",
             title: "特色",
             items: [{
-                id: "1",
-                text: "进地铁"
+                id: "f1",
+                text: "近地铁"
             },{
-                id: "2",
+                id: "s1",
                 text: "即将开盘"
             },{
-                id: "3",
+                id: "s2",
                 text: "在售楼盘"
             },{
-                id: "4",
+                id: "f0",
                 text: "有优惠"
             },{
-                id: "5",
+                id: "f2",
                 text: "有视频"
             }]
         },{
             name: "propertyTypes",
             title: "物业类型",
             items: [{
-                id: "1",
+                id: "t1",
                 text: "住宅"
             },{
-                id: "2",
+                id: "t2",
                 text: "别墅"
             },{
-                id: "3",
+                id: "t3",
                 text: "商用"
             }]
         },{
@@ -235,37 +255,31 @@ define([],function(){
                 text: "毛坯"
             },{
                 id: "2",
-                text: "简装"
-            },{
-                id: "3",
-                text: "中装"
-            },{
-                id: "4",
                 text: "精装"
             },{
-                id: "5",
+                id: "3",
                 text: "豪装"
             }]
         }],
         sorts:[{
-            id: "1",
+            id: "-1",
             text: "综合排序"
         },{
-            id: "2",
+            id: "1",
             text: "均价从低到高"
         },{
-            id: "3",
+            id: "2",
             text: "均价从高到低"
         },{
-            id: "4",
+            id: "3",
             text: "面积从小到大"
         },{
-            id: "5",
+            id: "4",
             text: "面积从大到小"
-        }]
+        }],
+        near: true
     };
-
-    //没有模板库，先自己写函数吧
+    
     function createPriceSection(prices){// 价格
         var templateStr = '<div class="total-price">\
                                 <ul>\
@@ -289,41 +303,9 @@ define([],function(){
                             </div>';
         var html = _template(templateStr)({prices:prices});        
         return html;
-        /*return '<div class="total-price"><ul>' + prices.map(function(price){
-            return '<li data-value="'+price.id+'">'+price.text+'</li>';
-        }).join('') + '</ul>' + '<div><div><input type="number" placeholder="最低价格"></div><div class="normal">-</div><div><input placeholder="最高价格" type="number"></div><div class="normal"></div><div><button type="button">确定</button></div></div></div>';*/
     }
 
-    function createHouseTypeSection(houseTypes){// 户型
-        /*function createUl(items, count){
-            count = count || 4;//默认四个作为一个ul
-            var result = "";
-
-            var appendCount = count - items.length%count;
-            if(appendCount){
-                for(var i = 0; i < appendCount; i++) {
-                    items.push({id: "", text: ""});
-                }
-            }
-
-            var times = items.length / count;
-            var item = null;
-            for(var i = 0; i < times; i++){
-                result += "<ul>";
-                for(var j = 0; j < count; j++){
-                    item = items[i*count + j];
-                    if(item.text){
-                        result += '<li data-value="'+item.id+'" '+(item.exclusive?'data-exclusive="1"':'')+'>'+item.text+'</li>';
-                    }else{
-                        result += '<li class="placeholder"></li>';
-                    }                    
-                }
-                result += "</ul>";
-            }
-
-            return result;
-        }*/
-
+    function createHouseTypeSection(houseTypes){// 户型        
         var templateStr = '<div class="house-type">\
                             <div class="house-type-inner">\
                                 <% var c = count || 4;%>\
@@ -350,10 +332,7 @@ define([],function(){
                                         <li class="confirm">确定</li>\
                                     </ul>\
                             </div>';
-
-        /*return '<div class="house-type"><div class="house-type-inner">' + houseTypes.map(function(houseType){
-            return '<div class="house-type-section" data-key="'+ houseType.name +'"><h4>'+houseType.title+'</h4>' + createUl(houseType.items) + '</div>';
-        }).join('') + '</div><ul class="operation"><li class="reset">重置</li><li class="confirm">确定</li></ul></div>';*/
+        
         var html = _template(templateStr)({houseTypes: houseTypes, count: 4});
         return html;
     }
@@ -367,58 +346,29 @@ define([],function(){
                                 </ul>\
                             </div>';
         var html = _template(templateStr)({sorts: sorts});
-        return html;
-        /*return '<div class="sort"><ul>'+ sorts.map(function(sort){
-            return '<li data-value="'+ sort.id +'">'+ sort.text +'</li>';
-        }).join('') +'</ul></div>';*/
+        return html;        
     }
 
     function createDistrictAndMetroSection(options){// 区域（包括区域和地铁）
-        
-
-        /*var district = "";
-        var metro = "";
-
-        if(options.districts){// 区域
-            district += '<div class="district district-metro-item"><div class="district-inner">';
-            district += '<ul class="parent"><li>不限</li>'+ (options.districts && options.districts.map(function(district){
-                return '<li data-value="'+district.id+'">' + district.name + '</li>';
-            }).join('') || '') +'</ul>';
-
-            district +='<div class="child">' + (options.districts && options.districts.map(function(district){
-                return '<ul data-value="'+district.id+'" data-text="'+district.name+'"><li>不限</li>'+ (district.townList && district.townList.map(function(town){
-                    return '<li data-value="'+town.id+'">'+town.name+'</li>';
-                }).join('') || '') +'</ul>';
-            }).join('') || '') + '</div>';
-
-            district += '</div></div>';
-        }
-
-        if(options.metros){// 板块
-            metro += '<div class="metro district-metro-item"><div class="metro-inner">';
-            metro += '<ul class="parent"><li>不限</li>'+ (options.metros && options.metros.map(function(metro){
-                return '<li data-value="'+metro.id+'">' + metro.name + '</li>';
-            }).join('') || '') +'</ul>';
-
-            metro += '<div class="child">' + (options.metros && options.metros.map(function(metro){
-                return '<ul data-value="'+metro.id+'" data-text="'+metro.name+'"><li>不限</li>'+ (metro.subList && metro.subList.map(function(station){
-                    return '<li data-value="'+station.id+'">'+station.name+'</li>';
-                }).join('') || '') +'</ul>';
-            }).join('') || '') + '</div>';
-
-            metro += '</div></div>';
-        }
-        return '<div class="district-metro"><ul><li class="active">区域</li><li>地铁</li></ul>'+district + metro+'</div>';*/
-
         var templateStr = '<div class="district-metro"><ul><li class="active">区域</li><li>地铁</li></ul><div class="district district-metro-item">\
                                 <div class="district-inner">\
                                     <ul class="parent">\
+                                        <%if(near){%>\
+                                        <li data-value="near" class="near"><%= latitude && longitude ? "附近" : "定位失败"%></li>\
+                                        <%}%>\
                                         <li>不限</li>\
                                         <%for(var i = 0; i< districts.length; i++){%>\
                                         <li data-value="<%= districts[i].id%>"><%= districts[i].name%></li>\
                                         <%}%>\
                                     </ul>\
                                     <div class="child">\
+                                    <%if(longitude && latitude){%>\
+                                        <ul data-value="near" class="near">\
+                                            <%for(var i = 0; distances && i < distances.length; i++){%>\
+                                                <li class="near" data-value="<%=distances[i].value%>"><%= distances[i].text%></li>\
+                                            <%}%>\
+                                        </ul>    \
+                                    <%}%>\
                                     <%for(var i = 0; i < districts.length; i++){%>\
                                         <ul data-value="<%= districts[i].id%>" data-text="<%= districts[i].name%>">\
                                             <li data-pinyin="<%=districts[i].pinyin%>">不限</li>\
@@ -450,13 +400,14 @@ define([],function(){
                             </div>\
                         </div>\
                         </div></div>';
-        var html = _template(templateStr)({districts: options.districts, metros: options.metros});        
+        console.log("经纬度：", options.latitude, options.longitude);
+        var html = _template(templateStr)({districts: options.districts, metros: options.metros, longitude: options.longitude, latitude: options.latitude, distances: options.distances, near: options.near});        
         return html;
     }
 
     function create(){
         var options = this.options;
-        return '<ul class="filter-items"><li><span class="label">区域</span><span class="triangle"></span></li><li><span class="label">总价</span><span class="triangle"></span></li><li><span class="label">户型</span><span class="triangle"></span></li><li><span class="label">排序</span><span class="triangle"></span></li></ul><div class="content"><div class="content-inner">'+createDistrictAndMetroSection({districts: options.districts, metros: options.metros})+createPriceSection(options.prices)+createHouseTypeSection(options.houseTypes)+createSortSection(options.sorts)+'</div></div>';
+        return '<ul class="filter-items"><li><span class="label">区域</span><span class="triangle"></span></li><li><span class="label">总价</span><span class="triangle"></span></li><li><span class="label">户型</span><span class="triangle"></span></li><li><span class="label">排序</span><span class="triangle"></span></li></ul><div class="content"><div class="content-inner">'+createDistrictAndMetroSection(options)+createPriceSection(options.prices)+createHouseTypeSection(options.houseTypes)+createSortSection(options.sorts)+'</div></div>';
     }
 
     // 计算查询提交，并调用filterChange回调
@@ -511,7 +462,6 @@ define([],function(){
     function bindEvent() {
         var self = this;
         
-
         // 关闭筛选弹层
         function hide(){            
             self.$content.hide();
@@ -528,7 +478,6 @@ define([],function(){
             self.$sort.hide();
 
             $('.filter-items li').removeClass('open');            
-
             self.$content.show();
             switch(index){
                 case 0:
@@ -605,6 +554,9 @@ define([],function(){
                 return;
             }
             self.result.price = (min || 0) + "to" + (max || 0);
+            if(self.result.price=="0to0"){
+                delete self.result.price;
+            }
             var str = "";
             if(!min && max){
                 str = max + "万以下";
@@ -699,17 +651,37 @@ define([],function(){
             delete self.result.metro;
             delete self.result.station;
             delete self.result.metroKey;
-            self.result.district = $this.parent().data('value');
-            self.result.town = $this.data('value');
-            self.result.districtPinyin = $this.data('pinyin');
+            delete self.result.district;
+            delete self.result.town;
+            delete self.result.districtPinyin;
+            delete self.result.longitude;
+            delete self.result.latitude;
+            delete self.result.meter;
+
+            var str = "";
+            
+            if($this.hasClass('near')){//附近中选项                
+                self.result.longitude = self.options.longitude;
+                self.result.latitude = self.options.latitude;
+                self.result.meter = $this.data('value');
+                str = $this.text();
+                if(str.indexOf('不限')> -1){
+                    str = "附近";
+                }
+            }else{
+                self.result.district = $this.parent().data('value');
+                self.result.town = $this.data('value');
+                self.result.districtPinyin = $this.data('pinyin');
+                if(!self.result.town){// 不限
+                    str = $this.parent().data('text');
+                } else {
+                    str = $this.text();
+                }
+            }
+            
             calcCondition.apply(self);
             hide();
-            var str = "";
-            if(!self.result.town){// 不限
-                str = $this.parent().data('text');
-            } else {
-                str = $this.text();
-            }
+            
             self.$districtLabel.text(str).parent().addClass('active');
         });
         $('.filter .metro .child li').click(function(){
@@ -719,6 +691,9 @@ define([],function(){
             delete self.result.district;
             delete self.result.town;
             delete self.result.districtPinyin;
+            delete self.result.longitude;
+            delete self.result.latitude;
+            delete self.result.meter;
             self.result.metro = $this.parent().data('value');
             self.result.station = $this.data('value');
             self.result.metroKey = $this.data('pinyin');
@@ -841,7 +816,7 @@ define([],function(){
         setMaxHeight.apply(this);
     }
 
-    function Filter(options) {        
+    function Filter(options) {                
         this.options = $.extend({},DEFAULT, options);                            
         this.$el = $(options.el);
         this.controller = options.controller;        
@@ -873,20 +848,24 @@ define([],function(){
                 str = this.$district.find('.parent li[data-value='+value.district+']').addClass('active').text();
                 this.$district.find('.child ul[data-value='+value.district+']').show();
                 this.result.district = value.district;
+                this.result.districtPinyin = this.$district.find('.child ul[data-value='+value.district+'] li:eq(0)').data('pinyin');
             }
             if(value.town != undefined) {
                 str = this.$district.find('.child li[data-value='+value.town+']').addClass('active').text();
                 this.result.town = value.town;
+                this.result.districtPinyin = this.$district.find('.child li[data-value='+value.town+']').data('pinyin');
             }                    
         } else if(value.metro != undefined || value.station != undefined){        
             if(value.metro != undefined) {
                 str = this.$metro.find('.parent li[data-value='+value.metro+']').addClass('active').text();
                 this.$metro.find('.child ul[data-value='+value.metro+']').show();
                 this.result.metro = value.metro;
+                this.result.metroKey = this.$metro.find('.child ul[data-value='+value.metro+'] li:eq(0)').data('pinyin');
             }
             if(value.station != undefined) {
                 str = this.$metro.find('.child li[data-value='+value.station+']').addClass('active').text();
                 this.result.station = value.station;
+                this.result.metroKey = this.$metro.find('.child li[data-value='+value.station+']').data('pinyin');
             }
 
             $('.filter .district-metro >ul li').removeClass('active').filter(':eq(1)').addClass('active');
@@ -897,6 +876,9 @@ define([],function(){
             this.$districtMetro.find('ul, li').removeClass('active');
             this.$districtMetro.find('.child ul').hide();
             this.$districtLabel.text('区域').parent().removeClass('active');
+            this.$district.show();
+            this.$metro.hide();
+            this.$districtMetro.find('>ul li:eq(0)').addClass('active');
             delete this.result.district;
             delete this.result.districtPinyin;
             delete this.result.town;
@@ -971,6 +953,21 @@ define([],function(){
     Filter.prototype.clear = function() {
         this.setValue({});        
         calcCondition.apply(this);
+    }
+
+    Filter.prototype.clearDistrictAndMetro = function(){
+        this.$districtMetro.find('.parent li').removeClass('active');
+        this.$districtMetro.find('.child li').removeClass('active');
+        this.$districtLabel.text('区域').parent().removeClass('active');
+        delete this.result.district;
+        delete this.result.town;
+        delete this.result.metro;
+        delete this.result.station;
+        delete this.result.districtPinyin;
+        delete this.result.metroKey;
+        delete this.result.meter;
+        delete this.result.longitude;
+        delete this.result.latitude;
     }
 
     return Filter;

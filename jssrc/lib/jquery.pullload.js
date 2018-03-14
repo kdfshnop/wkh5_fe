@@ -56,7 +56,15 @@
         /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
         设置请求的时候附带的参数数据
         -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/        
-        var requestParams = opts.queryStringObject || {} ;
+        var requestParams = {} ;
+        // 支持函数形式
+        if(opts.queryStringObject){
+            if(typeof opts.queryStringObject === 'function'){
+                requestParams = opts.queryStringObject();
+            }else{
+                requestParams = opts.queryStringObject;
+            }
+        }
         requestParams[opts.pageIndexKey] = $(container).children().size() ;
         requestParams[opts.pageSizeKey] = opts.pageSize ;
 
