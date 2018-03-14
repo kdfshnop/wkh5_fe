@@ -1110,7 +1110,7 @@ class ListController extends Controller {
      创建dome
    -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
 
-    creatRent(conditionObject,item){
+    creatRent(conditionObject,channel,item){
         let houseTag=[];
         let houseTagList = '';
         let commision ='';
@@ -1145,7 +1145,7 @@ class ListController extends Controller {
                 houseTagList += `<span class="tag">${item}</span>`
             })
         }*/
-        let bigdata = encodeURIComponent(JSON.stringify({ eventName:'1202039',eventParam:{rent_house_id:item.houseId }, channel:conditionObject.channel || "", type: 2}));
+        let bigdata = encodeURIComponent(JSON.stringify({ eventName:'1202039',eventParam:{rent_house_id:item.houseId }, channel:channel || "", type: 2}));
         let domeRent=  `<a  class="rent-item box" href=" ${item.url}" data-bigdata="${bigdata}">
             <div class="left">
                 <img src="${item.firstImageUrl}?x-oss-process=image/resize,w_120" alt="${ item.estateName} " class="lazy">
@@ -1156,7 +1156,7 @@ class ListController extends Controller {
                 <p class="base-info">                    
                    ${item.houseTypeStr} ${item.spaceArea}㎡ | ${item.districtAndTownName}
                 </p>
-                 <p class="base-info">${item.distanceSubway}</p>
+                <p class="base-info">${item.distanceSubway}</p>
                 <p class="tags">${houseTagList}</p>
                 <p class="unit-price"> ${item.rentPriceStr} 元/月</p>
             </div>
@@ -1167,7 +1167,7 @@ class ListController extends Controller {
     /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
      上拉加载实例化
      -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
-    pullload(conditionObject) {
+    pullload(conditionObject,channel) {
         let self = this ;
         let pinyin = $.cookie('pinyin') || "shanghai";
         //租房列表
@@ -1182,7 +1182,7 @@ class ListController extends Controller {
                 if( ! data.data) return ;
                 $.each(data.data , (index , rent)=> {
                     rent.url = "/"+pinyin+"/rent/" + rent.encryptHouseId + ".html" ;
-                    $(".rent-items").append(self.creatRent(conditionObject,rent)) ;
+                    $(".rent-items").append(self.creatRent(conditionObject,channel,rent)) ;
                 }) ;
             }
         }) ;
@@ -1264,6 +1264,7 @@ class ListController extends Controller {
                 "cityId":cityid,
             };
         }
+        let channel="";
         if (this.GetRequest()['districtId']) {  // 查询？后面参数异步请求
             conditionData['districtId'] = this.GetRequest()['districtId'];
         } if (this.GetRequest()['townId']){
@@ -1275,9 +1276,9 @@ class ListController extends Controller {
         } if (this.GetRequest()['subEstateId']){
             conditionData['subEstateId'] = this.GetRequest()['subEstateId'];
         } if (this.GetRequest()['channel']){
-            conditionData['channel'] = this.GetRequest()['channel'];
+             channel = this.GetRequest()['channel'];
         }
-        this.pullload(conditionData);  // 上拉加载的 函数注册
+        this.pullload(conditionData,channel);  // 上拉加载的 函数注册
     };
 
     /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------

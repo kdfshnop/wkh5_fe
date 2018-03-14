@@ -29,10 +29,10 @@
                 if (data.status == 1){
                     let dataRes = data;
                     let echartData =  that.recombineM(dataRes.data);
-                    let dataaa = {
+                /*    let dataaa = {
                           "monthList":["4月", "5月", "6月", "7月", "8月", "9月", "10月", "11月", "12月", "1月", "2月", "3月"],
                           "seriesData":["10000", "14000", "12000", "15000", "15000", "18000", "15000", "15000", "13000", "0", "15000", "15000"]
-                    };
+                    };*/
                     that.echartFun(echartData) ;
                 }
             }});
