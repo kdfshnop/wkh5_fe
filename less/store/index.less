@@ -74,7 +74,17 @@
               .flex(3);
             }
             >.right{
-              .flex(2)
+              .flex(2);
+              > .hd {
+                > .icon-asc {
+                  font-size: 1rem;
+                  color: #FC4C5A;
+                }
+                >.icon-desc{
+                  font-size: 1rem;
+                  color: #0EA800;
+                }
+              }
             }
           }
           >.market-small{
@@ -94,6 +104,15 @@
                   font-weight: 300;
                   position: relative;
                   bottom: 2px;
+                  >i{
+                    font-size: 0.7rem;
+                    &.icon-asc{
+                      color: #FC4C5A;
+                    }
+                    &.icon-desc{
+                      color: #0EA800;
+                    }
+                  }
                 }
               }
             }
