@@ -17,6 +17,9 @@ class ListController extends Controller {
                 "moduleType" : "esf" ,
                 "cityClick" : () => {
                     alert("在二手房城市选择器中点选了城市") ;
+                } ,
+                "searchResultItemClick" : (data) => {
+                    alert(data) ;
                 }
             }) ;
         }) ;
