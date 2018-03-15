@@ -13,13 +13,16 @@ class ListController extends Controller {
         加载相关页面组件逻辑
         -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
         var self = this;
-        require(["../components/filter.min", "../components/conning-tower.min" ] , () => {
-            new ConningTower({                
-                "moduleType" : "esf" ,
-                "cityClick" : () => {
-                    alert("在二手房城市选择器中点选了城市") ;
-                }
-            }) ;
+        require(["../components/filter.min", "../components/conning-tower.min" ] , (Filter) => {
+            // new ConningTower({                
+            //     "moduleType" : "esf" ,
+            //     "cityClick" : () => {
+            //         alert("在二手房城市选择器中点选了城市") ;
+            //     } ,
+            //     "searchResultItemClick" : (data) => {
+            //         alert(data) ;
+            //     }
+            // }) ;
 
             self.filter = new Filter({
                 el: ".filter",
