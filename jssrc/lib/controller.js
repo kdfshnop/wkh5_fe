@@ -75,6 +75,9 @@ class Controller {
                 "secondHouseList": this.apiPrefix + "api/space/secondApiProvider",
                 "rentHouseList": this.apiPrefix + "api/space/rentApiProvider",
                 "newHouseList": this.apiPrefix + "api/space/newApiProvider"
+            },
+            "xf": {
+                "list": this.apiPrefix + "api/xf/list", // 新房列表查询接口
             }
         } ;        
     } ;

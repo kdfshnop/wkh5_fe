@@ -238,13 +238,13 @@ define([],function(){
             name: "propertyTypes",
             title: "物业类型",
             items: [{
-                id: "t1",
+                id: "1",
                 text: "住宅"
             },{
-                id: "t2",
+                id: "2",
                 text: "别墅"
             },{
-                id: "t3",
+                id: "3",
                 text: "商用"
             }]
         },{

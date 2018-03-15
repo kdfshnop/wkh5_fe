@@ -10,6 +10,7 @@
         this.total = 0;//总数
         this.count = 0;//当前数量
         this.pageSize = 10;//
+        this.paramGenerator = new ParamGenerator();
         $('.total').slideUp();
         require(['../components/filter.min'], function(Filter){            
             self.filter = new Filter({
@@ -24,9 +25,8 @@
                 filterChanged: function(result){
                     this.total = 0;
                     this.count = 0;                    
-                    console.log("筛选条件变了：", result);                                        
-
-                    var param = self.convertParam(result);
+                    console.log("筛选条件变了：", result);                                      
+                    var param = self.paramGenerator.generateParamObj(result);
                     self.param = param;
                     self.hideNoData();
                     self.hideNoMore();
@@ -35,7 +35,7 @@
                             self.showNoMore();
                         }
                         self.createHouseList(data.data,data.count);  
-                        var qs = self.object2QueryString(param);                        
+                        var qs = ParamGenerator.object2QueryString(param);                        
                         window.history.pushState(param, "", "./" + qs);       
                     });
                 }                
@@ -45,20 +45,17 @@
         });
 
         window.onpopstate = function(event){
-            console.log('onpopstate');
-            console.log(event);
-            console.log(location.href);
             var param;
-            if(event.state){
+            if(event.state){ //如果有event.state，优先用
                 param = event.state;
-            }else{
+            }else{// 否则读取url中的最有一部分
                 var tempArr = location.href.split('xflist');
                 var str = tempArr[1];
                 if(str.startsWith('/')){
                     str = str.substring(1);
                 }
 
-                param = self.queryString2Object(str);
+                param = ParamGenerator.queryString2Object(str);
             }
 
             self.fetchData(param,function(data){
@@ -102,109 +99,7 @@
         });
 
         return str;
-    }
-
-    object2QueryString(obj){
-        console.log(obj);
-        var tmpArr = [];
-
-        for(var key in obj){
-            if(typeof(obj[key]) === 'undefined') continue;
-            if(Object.prototype.toString.call(obj[key]) == "[object Array]"){// 数组
-                for(var i = 0; i < obj[key].length; i++){
-                    tmpArr.push(key);
-                    tmpArr.push(obj[key][i]);
-                }
-            }else{
-                tmpArr.push(key);
-                tmpArr.push(obj[key]);
-            }
-        }
-
-        return tmpArr.join('-');
-    }
-
-    queryString2Object(str){
-        if(str){
-            var tmpArr = str.split('-');
-            var ret = {};
-
-            if(tmpArr.length % 2 == 1){
-                return {};// 参数有问题
-            }
-
-            for(var i = 0; i < tmpArr.length / 2; i+=2){
-                if(typeof ret[tmpArr[i]] === 'undefined'){
-                    ret[tmpArr[i]] = tmpArr[i+1];
-                }else if(Object.prototype.call(ret[tmpArr[i]]) === '[object Array]'){
-                    ret[tmpArr[i]].push(tmpArr[i+1]);
-                } else {
-                    ret[tmpArr[i]] = [tmpArr[i+1]];
-                }
-            }
-        }
-
-        return {};
-    }
-
-    convertParam(obj){
-        // 把从filter中获得的查询条件转化成后端接口需要的格式
-        var funcs = {
-            sort: function(ret, data){
-                ret.so = data;
-            },
-
-            price: function(ret, data){
-                ret.cp = data; 
-            },
-
-            district: function(ret, data){
-                ret.di = data;
-            },
-
-            town: function(ret, data){
-                ret.to = data;
-            },
-
-            metro: function(ret, data){
-                ret.li = data;
-            },
-
-            station: function(ret, data){
-                ret.st = data;
-            },
-
-            meter: function(ret, data){
-                ret.m = data;
-            },
-
-            features: function(ret, data){// 特色
-                ret.ta = data;
-            },
-
-            propertyTypes: function(ret, data){// 物业类型
-                ret.ty = data;
-            },
-
-            decorations: function(ret, data){// 装修
-                ret.dt = data;
-            },
-
-            types: function(ret, data){// 户型
-                ret.la = data;
-            }            
-        };
-
-        var ret = {};
-        for(var key in obj) {
-            var func = funcs[key];
-            if(func){
-                func(ret, obj[key]);
-            }
-        }
-
-        return ret;
-    }
+    }    
 
     createHouseList(data,count){// 生成房源列表
         this.hideNoData();
@@ -258,14 +153,14 @@
     }
 
     fetchData(param,success,error){// 获取列表数据
-        this.request("https://m.wkzf.com/xflist/houselist.rest",param, {
+        this.request(this.apiUrl.xf.list, param, {
+            type: "POST",
             successCallback: success,
             errorCallback: error
         });
     }
 
-    insertTrendAndOldHouse(){// 插入跳转到价格行情和二手房的链接
-        //$('.list .xf-item').length()
+    insertTrendAndOldHouse(){// 插入跳转到价格行情和二手房的链接        
         var cityName = "上海";
         var $list = $('.list .xf-item:not(.house):not(.house-price)');
         if($('.list .house-price').length == 0 && $list.length>9){
@@ -293,8 +188,11 @@
     }
 
     pullload(){
-        let self = this ;
-        var i = parseInt($('#count').val() || 0);
+        let self = this ;        
+        function getPageIndex() {
+            return Math.ceil($('.list .xf-item:not(.house-price):not(.price)').length / 10) || 1;
+        }
+
         //二手房
         $(".list").pullload({
             apiUrl : "https://m.wkzf.com/xflist/houselist.rest" ,
@@ -306,11 +204,13 @@
             callback : function(data) {
                 if( ! data.data) return ;                
                 self.appendHouseList(data.data);
-                window.history.replaceState(null, "", "" + (++i));
+                self.param.pa = getPageIndex();
+                window.history.replaceState(self.param, "", "./" + ParamGenerator.object2QueryString(self.param) );// 修改当前url    `
             }
         }) ;
     }
 }
+
 
 
 /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------

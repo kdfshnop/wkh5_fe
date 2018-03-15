@@ -12,13 +12,42 @@ class ListController extends Controller {
         /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
         加载相关页面组件逻辑
         -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
-        require([ "../components/conning-tower.min" ] , () => {
+        var self = this;
+        require(["../components/filter.min", "../components/conning-tower.min" ] , () => {
             new ConningTower({                
                 "moduleType" : "esf" ,
                 "cityClick" : () => {
                     alert("在二手房城市选择器中点选了城市") ;
                 }
             }) ;
+
+            self.filter = new Filter({
+                el: ".filter",
+                houseType: 1,
+                cityId: 43,
+                near: false,
+                longitude: 222,
+                latitude: 234,
+                distances: [{value: "5000", text: "不限（智能范围）"},{value: "500", text: "500米"},{value: "1000", text: "1000米"},{value: "2000", text: "2000米"},{value: "5000", text: "5000米"}],
+                controller: self,
+                filterChanged: function(result){ 
+                    this.total = 0;
+                    this.count = 0;                    
+                    console.log("筛选条件变了：", result);                                      
+                    var param = self.paramGenerator.generateParamObj(result);
+                    self.param = param;
+                    self.hideNoData();
+                    self.hideNoMore();
+                    self.fetchData(param,function(data){
+                        if(data.count!=0 && data.count<=self.pageSize){// 没有更多了
+                            self.showNoMore();
+                        }
+                        self.createHouseList(data.data,data.count);  
+                        var qs = ParamGenerator.object2QueryString(param);                        
+                        window.history.pushState(param, "", "./" + qs);       
+                    });
+                }                
+            });
         }) ;
     }        
     
