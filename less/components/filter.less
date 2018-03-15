@@ -1,0 +1,379 @@
+/*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ 1. 项目名称：悟空找房H5前端MVC框架
+ 2. 文件名称：components -> filter.less (筛选)
+ 3. 作者：tangxuyang@lifang.com
+ -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
+ @import "../variables.less";
+ @import "../mixins.less";
+
+.filter {
+    position: fixed;
+    width: 100%;
+    z-index: 2;
+    top: 0;
+    background-color: #fff;
+    .filter-items {
+        position: relative;
+        padding-left: 10px;
+        padding-right: 10px;
+        .flex();
+        > li {
+            .flex(0% 1 0);
+            font-size: 14px;
+            color: #000;
+            text-align: center;
+            line-height: 46px;
+
+            &.open {
+                color: #4081d6;
+
+                span.triangle {
+                    border-top-color: #4081d6;
+                    transform: rotate(180deg);
+                }
+            }
+
+            &.active {
+                color: #4081d6;
+
+                span.triangle {
+                    border-top-color: #4081d6;
+                }
+            }
+
+            span.label {
+                max-width: 78%;
+                display: inline-block;
+                .text-ellipsis();
+            }
+
+            span.triangle {
+                .triangle-down(4px, #999); 
+                transition: all 1s;                                               
+            }
+        }
+
+        &::after{
+            position: absolute;
+            content: "";
+            height: 1px;
+            bottom: -1px;
+            width: 100%;
+            -webkit-transform: scaleY(.5);
+            transform: scaleY(.5);
+            border-bottom: 1px solid #e8e8e8;
+        }
+    }
+    .content{
+        position: absolute;
+        width: 100%;
+        z-index:2;
+        background-color: rgba(0,0,0,.4);        
+        display: none;
+        top: 47px;
+        .content-inner {
+            background-color: #fff;
+        }
+        .district-metro {
+            //display: none;
+            //.district-metro {
+                > ul {
+                    .flex();
+
+                    li {
+                        .flex(1);
+                        text-align: center;
+                        font-size: 14px;
+                        line-height: 44px;
+                        border-bottom: 1px solid #e8e8e8;
+
+                        &.active {
+                            border-bottom: 2px solid #4081D6;
+                            color: #4081D6;
+                        }
+                    }
+                }
+            //}
+            .district {
+                //display: none;
+                .district-inner {
+                    .flex();
+                }                
+                .parent {
+                    .flex(1);
+                    overflow: auto;
+                    li {
+                        padding-left: 15px;
+                        line-height: 44px;
+                        font-size: 14px;
+                        color: #000;
+                        background-color: #f5f5f5;
+                        &.active {
+                            background-color: #fff;
+                            //color: #4081d6;
+                        }
+                    }
+                }
+                .child {
+                    .flex(1);  
+                    overflow: auto;
+                    ul {
+                        display: none;
+                    }                  
+                    li {
+                        padding-left: 15px;
+                        line-height: 44px;
+                        font-size: 14px;
+
+                        &.active {
+                            color: #4081d6;
+                        }
+                    }
+                }
+            }
+
+            .metro {
+                display: none;
+                .metro-inner {
+                    .flex();
+                }
+
+                .parent {
+                    .flex(1);
+                    overflow: auto;
+                    li {
+                        padding-left: 15px;
+                        line-height: 44px;
+                        font-size: 14px;
+                        color: #000;
+                        background-color: #f5f5f5;
+                        &.active {
+                            background-color: #fff;
+                            //color: #4081d6;
+                        }
+                    }
+                }
+                .child {
+                    .flex(1);  
+                    overflow: auto;
+                    ul {
+                        display: none;
+                    }                  
+                    li {
+                        padding-left: 15px;
+                        line-height: 44px;
+                        font-size: 14px;
+
+                        &.active {
+                            color: #4081d6;
+                        }
+                    }
+                }
+            }
+        }
+        .total-price {
+            position: relative;
+            //padding: 0 20px;
+            display: none;
+            overflow: hidden;
+            padding-bottom: 84px;
+            > ul {
+                //padding: 0 20px;
+                position: relative;
+                font-size: 15px;
+                overflow: auto;
+                li {
+                    line-height: 45px;
+                    text-align: center;
+                    padding: 0 20px;
+                    &.active {
+                        color: #4081d6;
+                    }
+                }
+                
+                // &::after {
+                //     position: absolute;
+                //     content: '';
+                //     height: 1px;
+                //     bottom: -1px;
+                //     width: 100%;
+                //     -webkit-transform: scaleY(.5);
+                //     transform: scaleY(.5);
+                //     border-bottom: 1px solid #d7d7d7;
+                // }
+            }
+
+            > div {
+                position: absolute;
+                bottom: 0;
+                left: 0;
+                right: 0;                
+                .flex();
+
+                div {
+                    .flex(0% 1 1);
+                }
+
+                div.normal {
+                    .flex(none);
+                    width: 20px;
+                    text-align: center;
+                    line-height: 33px;
+                }
+
+                div.normal:empty{
+                    width: 10px;                    
+                }
+                
+                padding: 25px 0;                
+                margin-left: 20px;
+                margin-right: 20px;
+                border-top: 1px solid #e8e8e8;
+            }
+
+            ::-webkit-input-placeholder { /* WebKit browsers */
+                color: #92A7C3;
+            }
+            :-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+                color: #92A7C3;
+            }
+            ::-moz-placeholder { /* Mozilla Firefox 19+ */
+                color: #92A7C3;
+            }
+            :-ms-input-placeholder { /* Internet Explorer 10+ */
+                color: #92A7C3;
+            }
+            input {
+                background: #f6f6f6;
+                height: 33px;
+                line-height: 33px;
+                font-size: 15px;
+                text-align: center;
+                .border-radius(4px);
+                border: 0;
+                width: 100%;
+                color: #92A7C3;
+            }
+            button {
+                width: 100%;
+                line-height: 33px;
+                font-size: 14px;
+                text-align: center;
+                background-color: #4081d6;
+                color: #fff;                
+                border: transparent;
+            }
+        }
+        .house-type {
+            position: relative;
+            display: none;
+            font-size: 12px;
+            //padding: 0 20px;
+            padding-bottom: 90px;
+
+            .house-type-inner {
+                overflow: auto;                
+                padding: 0 20px;
+            }
+            .house-type-section {
+                padding-top: 9px;
+                padding-bottom: 20px;
+                border-bottom: 1px solid #e8e8e8;
+
+                &:last-child{
+                    border: 0;
+                }
+
+                h4 {
+                    font-size: 15px;
+                    font-weight: normal;
+                    line-height: 36px;
+                }
+                ul {
+                    .flex();
+                    & + ul {
+                        margin-top: 10px;
+                    }                    
+                }
+                li {
+                    .flex(1);
+                    text-align: center;
+                    background-color: #f5f5f5;
+                    font-size: 12px;
+                    line-height: 33px;
+                    border: 1px solid transparent;
+                    .border-radius(4px);
+                    &.active {
+                        background-color: #fff;
+                        color: #4081d6;
+                        border-color: #4081d6;
+                    }
+
+                    & + li {
+                        margin-left: 10px;
+                    }
+
+                    &.placeholder {
+                        background-color: transparent;                        
+                    }
+                }
+            } 
+            
+            .operation {// 重置和确定按钮
+                position: absolute;
+                margin: 0 20px;
+                bottom: 0;   
+                left: 0;
+                right: 0;     
+                padding: 25px 0; 
+                border-top: 1px solid #e8e8e8;       
+                .flex();
+                //margin-top: 25px;            
+                li {
+                    .flex(1);
+                    background-color: #fff;
+                    color: #4081d6;
+                    border: 1px solid #4081d6;
+                    text-align: center;
+                    font-size: 13px;
+                    line-height: 36px;
+                    .border-radius(4px);
+                    & + li {
+                        margin-left: 20px;
+                        background-color: #4081d6;
+                        color: #fff;
+                        border: 1px solid transparent;
+                    }
+                }
+            }
+        }
+        .sort {
+            display: none;
+            font-size: 15px;
+            color: #000;
+            overflow: auto;
+            li {
+                line-height: 45px;
+                text-align: center;
+
+                &.active {
+                    color: #4081d6;
+                }
+            }
+        }
+    }
+}
+
+html, body {
+    height: 100%;
+}
+
+body {
+    -webkit-overflow-scrolling: touch;
+    padding-top: 50px;
+}
+
+.noscroll {
+    overflow-y: hidden;
+    height: 100%;
+}

@@ -1,0 +1,67 @@
+/*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ 1. 项目名称：悟空找房H5前端MVC框架
+ 2. 文件名称：xf -> list.less (新房列表页)
+ 3. 作者：tangxuyang@lifang.com
+ -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
+ @import "../variables.less";
+ @import "../mixins.less";
+ @import "../components/filter.less";
+ @import "../components/xf-items.less";
+
+
+.reach-bottom {// 到底了
+  height: 1px;
+  border-top: 1px solid #e8e8e8;
+  margin: 20px 0;
+  display: none;
+
+  .inner {
+    width: 50%;
+    margin: 0 auto;
+    margin-top: -10px;
+    text-align: center;
+    background-color: #fff;
+  }
+}
+
+body {
+  background-color: #fff;
+}
+
+.total {
+  line-height: 30px;
+  font-size: 14px;
+  text-align: center;
+  color: #4081d6;
+  border-bottom: 1px solid #e4e4e4;
+
+  .count {
+    color: #fc4c5a;
+  }
+}
+
+.no-data {
+  display: none;
+  font-size: 16px;
+  color: #000;
+  text-align: center;
+  padding: 25px 15px;
+  margin-bottom: 15px;
+  line-height: 24px;
+  p:nth-child(2){
+    color: #999;
+  }
+
+  button {
+    border-radius: 4px;
+    text-align: center;
+    color: #92a7c3;
+    line-height: 20px;
+    padding: 12px 0;    
+    height: 44px;
+    width: 100%;
+    border: 0;
+    margin-top: 16px;
+    background-color: #f6f6f6;
+  }
+}

@@ -169,6 +169,7 @@ class IndexController extends Controller {
             traditional: true,
             pageSize: 10,
             threshold : 50 ,
+            countKey:"total",
             callback : function(data) {
                 if( ! data.data) return ;
                 $.each(data.data , (index , listItem)=> {
