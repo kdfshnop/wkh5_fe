@@ -6,7 +6,7 @@
 .conning-tower {
     background-color : #fff ;
      .clearfix() ;
-    padding : 11px 0 ;
+    padding : 11px 0 ; 
     .back , .hamburg-menu {
         line-height : 26px ;
         text-align : center ;
@@ -127,13 +127,20 @@
     display : none ;
     height : 100% ;
     left : 0 ;
+    overflow-y : auto ;
     position : fixed ;
     top : 0 ;
     width : 100% ;
     z-index : 10002 ;
     .search-substitute {
+        background-color : #fff ;
          .clearfix() ;
-        padding : 11px 0 ;       
+         left : 0 ;
+        padding : 11px 0 ;        
+        position : fixed ;
+        top : 0 ;
+        width : 100% ;
+        z-index : 10003 ;
         .back {
             float : left ;
             line-height : 26px ;
@@ -165,10 +172,17 @@
             }
         }
     }
+    hr {
+        left : 0 ;
+        position : fixed ;
+        top : 52px ;
+        width : 100% ;
+    }
     /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
     搜索结果列表区域
     -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
     .list {
+        margin-top : 52px ;
         padding : 0 15px ;
         li {
             position : relative ;            
@@ -205,7 +219,7 @@
     position : fixed ;
     top : 0 ;
     width : 100% ;
-    z-index : 10003 ;
+    z-index : 10004 ;
     .caption {
         background-color : #fff ;
         left : 0 ;
@@ -275,7 +289,7 @@
     position : fixed ;
     top : 0 ;
     width : 100% ;
-    z-index : 10004 ;
+    z-index : 10005 ;
     &.visible {
         display : block ;
     }
