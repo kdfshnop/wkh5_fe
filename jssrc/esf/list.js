@@ -12,8 +12,10 @@ class ListController extends Controller {
         /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
         加载相关页面组件逻辑
         -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
-        require([ "../components/conning-tower.min" ] , () => {
-            new ConningTower({                
+        require([ "../components/bigdata.min" , "../components/conning-tower.min" ] , (BigData) => {
+            BigData.init(this) ;
+            new ConningTower({
+                "bigDataUtil" : BigData ,               
                 "moduleType" : "esf" ,
                 "cityClick" : () => {
                     alert("在二手房城市选择器中点选了城市") ;
