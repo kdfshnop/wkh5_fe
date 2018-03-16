@@ -72,10 +72,9 @@ define(function(){
                         "id": $(this).attr('data-value'),
                         "address": $(this).attr('data-address'),
                         "type":$(this).attr('data-type'),
-
                     };
                     saveLocalStorage.forEach(function (item,index) {
-                        if (item.id == singleData.id){
+                        if (item.id == singleData.id && item.type == singleData.type){
                             saveLocalStorage.splice(index,1)
                         }
                     });
@@ -144,7 +143,7 @@ define(function(){
                         // 搜索条目点击跳转 和储存
                         $('#showResult >li').click(function () {
                             JSON.parse( localStorage.getItem('searchHistory')) ?  saveLocalStorage = JSON.parse( localStorage.getItem('searchHistory')) : saveLocalStorage = [];
-                            let singleData={
+                            let singleData = {
                                 "key":$(this).attr('data-name'),
                                 "id": $(this).attr('data-value'),
                                 "address": $(this).attr('data-address'),
@@ -154,7 +153,7 @@ define(function(){
                                 saveLocalStorage.reverse().splice(4)
                             }
                             saveLocalStorage.forEach(function (item,index) {
-                                if (item.id == singleData.id){
+                                if (item.id == singleData.id && item.type == singleData.type){
                                     saveLocalStorage.splice(index,1)
                                 }
                             });
@@ -192,7 +191,9 @@ define(function(){
                         window.location.href = url + conditionString + checkType(typeS,valueSearch);
                     }
                 }
-
+            }else {
+                $('.show-result').hide();
+                $('#showResult').empty();
             }
         });
 
