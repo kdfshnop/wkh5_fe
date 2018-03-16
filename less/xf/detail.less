@@ -1,0 +1,337 @@
+ /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ 1. 项目名称：悟空找房h5
+ 2. 文件名称：rent -> detail.less (租房详情页)
+ 3. 作者：tangxuyang@lifang.com
+ -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
+ @import "../components/assistant.less";
+ @import "../components/supporting.less";
+ @import "../components/rent-items.less"; 
+ @import "../components/album.less";
+ @import "../components/map.less";
+ @import "../components/rent-comments.less";
+ @import "../components/download-app.less" ;
+ @import "../components/xf-items.less"; 
+ @import "../components/xf-dynamic.less";
+
+ hr {
+     color: #e8e8e8;
+ }
+
+ img {
+     max-width: 100%;
+ }
+
+ .wk-panel {
+    padding-bottom: 0;
+}
+
+ .base-info {
+     padding-top: 20px;
+     padding-bottom: 15px;
+
+     .house-title {
+        font-size: 20px;
+        line-height: 28px;
+        .text-ellipsis();
+        font-weight: normal;     
+    }
+   
+    h2 {
+        font-size: 12px;
+        line-height: 22px;
+        font-weight: normal;
+        color: #999;
+    }
+   
+    .unit-price {
+        position: relative;
+        color: #f95355;
+        font-size: 24px;
+        line-height: 54px;
+        margin-bottom: 5px;
+   
+        small {
+            font-size: 12px;
+            color: #999;          
+            margin-left: 10px;        
+        }     
+        .calc {
+           position: absolute;
+           width: 29px;
+           height: auto;
+           top: 15px;
+           right: 0;
+        }
+    }
+
+    .tags {
+        margin-top: 15px;
+                  
+
+        .tag {
+            border-radius: 2px;
+            border: 1px solid #79a6e2;
+            color: #79a6e2;
+            font-size: 10px;      
+            background-color: #fff;
+            line-height: 15px;
+            padding: 0 6px;
+        }
+
+        .yh {
+            background-image: linear-gradient(-90deg, rgba(249,85,65,0.78) 0%, #FC4C5A 100%);
+            color: #fff;
+            border: 1px solid transparent;
+        }
+
+        .dt {
+            background-image: linear-gradient(-90deg, #3B9FFF 0%, #4081D6 100%);
+            color: #fff;
+            border: 1px solid transparent;
+        }        
+    }
+
+    .time {        
+        dl {
+            margin: 15px 0;
+            font-size: 14px;
+            dt {
+                float: left;
+                color: #7c7c7c;
+            }
+            dd {
+                margin-left: 75px;
+                color: #000;
+            }
+
+            //&::after {
+                .clearfix();
+            //}
+        }
+    }
+
+    .activity {
+        border-top: 1px solid #e8e8e8;
+        padding: 10px 0;
+        margin-bottom: -15px;        
+
+        li {
+            margin-left: -8px;
+            &::before {
+                width: 32px;
+                height: 32px;
+                border-radius: 50%;
+                line-height: 32px;
+                font-size: 18px;
+                color: #f95355;
+                transform: scale(.5);
+                border: 1px solid #f95355;
+                content: "惠";
+                display: inline-block;
+                text-align: center;
+            }
+            font-size: 14px;
+            line-height: 20px;
+        }
+    }
+ }
+
+ .xf-dynamics {
+    padding-bottom: 15px;
+}
+
+ .house-type {
+    .house-type-item{
+        width: 124px;
+        display: inline-block;
+        padding-bottom: 12px;
+        img {
+            width: 100%;
+            height: 92px;
+        }
+        h3 {
+            font-size: 14px;
+            font-weight: normal;
+            margin-top: 7px;
+            line-height: 20px;
+            .text-ellipsis();
+        }
+
+        .type-area {
+            font-size: 12px;
+            line-height: 16px;
+            color: #7c7c7c;
+            .text-ellipsis();
+        }
+
+        .total-price {
+            font-size: 12px;
+            line-height: 18px;
+            color: #f95355;
+        }      
+        
+        + .house-type-item {
+            margin-left: 15px;
+        }
+    }    
+
+    .panel-body {
+        white-space: nowrap;
+        overflow-x: auto;
+    }
+ }
+
+ .project-feature {
+     padding-bottom: 15px;
+    li {
+        img {
+            width: 30px;
+            //height: 30px;    
+            height: auto;
+            float: left;
+        }        
+        div {
+            margin-left: 45px;
+            
+            h3 {
+                font-size: 14px;
+                font-weight: normal;
+                color: #7c7c7c;
+            }
+
+            p {
+                font-size: 14px;
+                color: #000;
+            }
+        }
+
+        &::after {
+            .clearfix();
+        }
+
+        & + li {
+            margin-top: 15px;
+        }
+    }        
+ }
+
+ .building-info {
+     padding-bottom: 15px;
+     .panel-body.one {
+         & > div {
+            width: 50%;
+            float: left;
+            font-size: 14px;
+            margin-bottom: 15px;
+
+            &:nth-child(2n){
+                padding-left: 17px;
+            }
+
+            span {
+                color: #7c7c7c;
+
+                & + span {
+                    color: #000;
+                    margin-left: 15px;
+                }
+            }
+         }         
+         //.clearfix();         
+         &::after {
+            content: " ";
+            clear: both; 
+            display: block;           
+         }
+     }
+
+     .panel-body.two {
+         &:after{
+            content: " ";
+            clear: both; 
+            display: block;
+         }
+         hr{
+             //margin-top: 15px;
+             margin-bottom: 15px;
+         }
+        & > div {
+            span:nth-child(1) {
+                float: left;                
+                display: block;
+                color: #7c7c7c;
+                font-size: 14px;
+            }
+
+            span:nth-child(2) {
+                display: block;
+                margin-left: 71px;
+                color: #000;
+                font-size: 14px;
+            }
+
+            .clearfix();
+
+            margin-bottom: 15px;
+            &:last-child{
+                margin-bottom: 0;
+            }
+        }
+
+        .more {
+            font-size: 14px;
+            line-height: 20px;
+            color: #4081D6;
+        }
+     }
+ }
+
+ .magazine {
+     padding-bottom: 15px;
+    h3 {
+        font-size: 14px;
+        line-height: 20px;
+        font-weight: normal;
+    }
+    h4 {
+        font-size: 13px;
+        line-height: 22px;
+        font-weight: normal;
+        margin-bottom: 5px;
+        color: #7c7c7c;
+    }
+
+    p {
+        font-size: 14px;
+        line-height: 20px;
+        margin-top: 10px;
+        margin-bottom: 15px;
+    }
+
+    .more {
+        font-size: 14px;
+        color: #4081D6;
+    }
+ }
+.around-building{
+    .xf-item {
+        padding-left: 0;
+    }
+    .more {
+        display: block;
+        font-size: 14px;
+        line-height: 20px;
+        color: #4081D6;
+        padding-top: 15px;
+        padding-bottom: 15px;
+    }
+}
+
+.consult-phone{
+    display: block;
+    font-size: 14px;
+    line-height: 50px;
+    text-align: center;
+    color: #fff;
+    background-color: #4081d6;
+}
