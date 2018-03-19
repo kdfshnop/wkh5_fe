@@ -24,10 +24,37 @@ class ParamGenerator {
     }    
 }
 
+function setValue(obj, fieldName, val){
+    var tmpArr = fieldName.split('.');
+    if(tmpArr.length > 1){
+        if(!obj[tmpArr[0]]){
+            obj[tmpArr[0]] = {};
+        }
+
+        setValue(obj[tmpArr[0]], tmpArr.join('.'), val);
+    }else{
+        if(Object.prototype.toString.call(val) == '[object Array]'){
+            obj[fieldName] = val;
+        }else{
+            obj[fieldName] = [val];
+        }        
+    }
+}
+
+ParamGenerator.createMappingFunc = function(type, fieldName){
+    if(type == 1){// 单数
+        return function(ret, data){
+            ret[fieldName] = data;
+        }
+    }else{// 数组
+        return function(ret, data){            
+            setValue(ret, fieldName, data);
+        }
+    }
+}
+
 ParamGenerator.DEFAULT = {
-    sort: function(ret, data){// 排序
-        ret.so = data;
-    },
+    sort: ParamGenerator.createMappingFunc(1, "so"),// 排序
 
     price: function(ret, data){// 价格
         data = data + "";
@@ -37,46 +64,18 @@ ParamGenerator.DEFAULT = {
             ret.pr = data;
         }
     },
-
-    district: function(ret, data){// 区域id
-        ret.di = data;
-    },
-
-    town: function(ret, data){// 板块id
-        ret.to = data;
-    },
-
-    metro: function(ret, data){// 地铁线id
-        ret.li = data;
-    },
-
-    station: function(ret, data){// 地铁站id
-        ret.st = data;
-    },
-
-    meter: function(ret, data){// 附近米数
-        ret.m = data;
-    },
-
-    features: function(ret, data){// 特色
-        ret.ta = data;
-    },
-
-    propertyTypes: function(ret, data){// 物业类型
-        ret.ty = data;
-    },
-
-    decorations: function(ret, data){// 装修
-        ret.dt = data;
-    },
-
-    types: function(ret, data){// 户型
-        ret.la = data;
-    },
-    
-    houseTypes: function(ret, data) {// 房屋类型 TODO还没维护
-        ret.ht = data;
-    }
+    district: ParamGenerator.createMappingFunc(1, "di"),// 区域id
+    town: ParamGenerator.createMappingFunc(1, "to"),// 板块id
+    metro: ParamGenerator.createMappingFunc(1, "li"),// 地铁线id
+    station: ParamGenerator.createMappingFunc(1, "st"),// 地铁站id
+    meter: ParamGenerator.createMappingFunc(1, "m"),// 附近米数
+    features: ParamGenerator.createMappingFunc(1, "ta"),// 特色（标签）
+    propertyTypes: ParamGenerator.createMappingFunc(1, "ty"),// 物业类型
+    decorations: ParamGenerator.createMappingFunc(1, "dt"),// 装修类型
+    types: ParamGenerator.createMappingFunc(1, "la"),// 户型
+    houseTypes: ParamGenerator.createMappingFunc(1, "ht"),// 户型
+    areas: ParamGenerator.createMappingFunc(1, "ar"),// 面积
+    ages: ParamGenerator.createMappingFunc(1, "ag"), // 房龄
 };
 
 // 对象转成queryString，用-隔开
@@ -109,17 +108,51 @@ ParamGenerator.queryString2Object = function(str) {
             return {};// 参数有问题
         }
 
-        for(var i = 0; i < tmpArr.length / 2; i+=2){
+        for(var i = 0; i < tmpArr.length; i+=2){
             if(typeof ret[tmpArr[i]] === 'undefined'){
                 ret[tmpArr[i]] = tmpArr[i+1];
-            }else if(Object.prototype.call(ret[tmpArr[i]]) === '[object Array]'){
+            }else if(Object.prototype.toString.call(ret[tmpArr[i]]) === '[object Array]'){
                 ret[tmpArr[i]].push(tmpArr[i+1]);
             } else {
-                ret[tmpArr[i]] = [tmpArr[i+1]];
+                ret[tmpArr[i]] = [ret[tmpArr[i]], tmpArr[i+1]];
             }
         }
     }
 
-    return {};
+    return ret;
 };
 
+// 把后端理解的查询条件转换成Filter使用的初始化值
+ParamGenerator.convert2FilterParam = function(obj){
+    var funcs = {        
+        so: ParamGenerator.createMappingFunc(1, "sort"),// 排序        
+        pr: ParamGenerator.createMappingFunc(1, "price"),// 价格
+        cp: ParamGenerator.createMappingFunc(1, "price"),// 价格        
+        di: ParamGenerator.createMappingFunc(1, "district"),// 区域id
+        to: ParamGenerator.createMappingFunc(1, "town"),// 板块id        
+        li: ParamGenerator.createMappingFunc(1, "metro"),// 地铁线id
+        st: ParamGenerator.createMappingFunc(1, "station"),// 地铁站id
+        m: ParamGenerator.createMappingFunc(1, "meter"),
+        lon: ParamGenerator.createMappingFunc(1, "longitude"),
+        lat: ParamGenerator.createMappingFunc(1, "latitude"),
+
+        la: ParamGenerator.createMappingFunc(2, "houseTypes.types"), 
+        ta: ParamGenerator.createMappingFunc(2, "houseTypes.features"),        
+        ty: ParamGenerator.createMappingFunc(2, "houseTypes.propertyTypes"),
+        ht: ParamGenerator.createMappingFunc(2, "houseTypes.houseTypes"),        
+        ht: ParamGenerator.createMappingFunc(2, "houseTypes.decorations"),
+        ag: ParamGenerator.createMappingFunc(2, "houseTypes.houseAges"),
+        ar: ParamGenerator.createMappingFunc(2, "houseTypes.ares"),       
+    };
+
+    var ret = {};
+
+    for(var key in obj){
+        var func = funcs[key];
+        if(func){
+            func(ret, obj[key]);
+        }
+    }
+
+    return ret;
+};

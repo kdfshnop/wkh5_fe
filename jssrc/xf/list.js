@@ -22,21 +22,30 @@
                 latitude: 234,
                 distances: [{value: "5000", text: "不限（智能范围）"},{value: "500", text: "500米"},{value: "1000", text: "1000米"},{value: "2000", text: "2000米"},{value: "5000", text: "5000米"}],
                 controller: self,
-                filterChanged: function(result){
+                filterChanged: function(result){ 
                     this.total = 0;
                     this.count = 0;                    
                     console.log("筛选条件变了：", result);                                      
                     var param = self.paramGenerator.generateParamObj(result);
+                    //param.pa = 1;
                     self.param = param;
                     self.hideNoData();
-                    self.hideNoMore();
+                    self.hideNoMore();                    
                     self.fetchData(param,function(data){
-                        if(data.count!=0 && data.count<=self.pageSize){// 没有更多了
+                        data = data.data;
+                        $('.list').empty();
+                        if(data.total!=0 && data.total<=self.pageSize){// 没有更多了
                             self.showNoMore();
+                        }else if(data.newHouseDataListModelList.length == 0){
+                            self.showNoData();
+                        }else{
+                            self.createHouseList(data.newHouseDataListModelList,data.total); 
+                            console.log("有数据,enable...");
+                            $('.list').trigger('enable');
                         }
-                        self.createHouseList(data.data,data.count);  
-                        var qs = ParamGenerator.object2QueryString(param);                        
-                        window.history.pushState(param, "", "./" + qs);       
+                         
+                        var qs = ParamGenerator.object2QueryString(param);     
+                        window.history.pushState(param, "", "./" + qs);
                     });
                 }                
             });
@@ -57,6 +66,8 @@
 
                 param = ParamGenerator.queryString2Object(str);
             }
+
+            self.filter.setValue(ParamGenerator.convert2FilterParam(param));
 
             self.fetchData(param,function(data){
                 if(data.count!=0 && data.count<=self.pageSize){// 没有更多了
@@ -153,10 +164,16 @@
     }
 
     fetchData(param,success,error){// 获取列表数据
+        var self = this;
+        this.showLoading();
+        $('.list').trigger('disable');
         this.request(this.apiUrl.xf.list, param, {
             type: "POST",
             successCallback: success,
-            errorCallback: error
+            errorCallback: error,
+            completeCallback: function(){
+                self.hideLoading();
+            }
         });
     }
 
@@ -172,7 +189,7 @@
                 </div>\
             </a>').insertAfter($($list[9]));
         }
-        if($('.list .price').length == 0 && $list.length>19){
+        if($('.list .house').length == 0 && $list.length>19){
             $('<a href="#" class="xf-item house">\
                 <div class="img"></div>\
                 <div class="info">\
@@ -187,25 +204,38 @@
 
     }
 
+    showLoading(){
+        $('.page-loading').show();
+    }
+
+    hideLoading(){
+        $('.page-loading').hide();
+    }
+
     pullload(){
-        let self = this ;        
-        function getPageIndex() {
-            return Math.ceil($('.list .xf-item:not(.house-price):not(.price)').length / 10) || 1;
-        }
+        let self = this ;
 
         //二手房
         $(".list").pullload({
-            apiUrl : "https://m.wkzf.com/xflist/houselist.rest" ,
+            apiUrl : self.apiUrl.xf.list ,
             queryStringObject : function(){
+                delete self.param.pa;
                 return self.param;
             },   
+            requestType: "POST",
             threshold : 50 ,
-            pageSize: 10,       
+            pageSize: 10,   
+            pageIndexKey: "of",
+            pageSizeKey: "ps",    
             callback : function(data) {
-                if( ! data.data) return ;                
-                self.appendHouseList(data.data);
-                self.param.pa = getPageIndex();
-                window.history.replaceState(self.param, "", "./" + ParamGenerator.object2QueryString(self.param) );// 修改当前url    `
+                
+                if( !data.data || !data.data.newHouseDataListModelList || !data.data.newHouseDataListModelList.length){
+                    data.count = 1;
+                    return;    
+                } 
+
+                self.appendHouseList(data.data.newHouseDataListModelList);                
+                window.history.replaceState(self.param, "", "./" + ParamGenerator.object2QueryString(self.param));// 修改当前url    `
             }
         }) ;
     }

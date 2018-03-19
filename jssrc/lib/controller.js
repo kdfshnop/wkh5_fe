@@ -68,7 +68,7 @@ class Controller {
             } ,
             "esf" : {
                 "list" : {
-                    "houselist" : "api/esf/houselist"
+                    "houselist" : this.apiPrefix + "api/esf/houselist"
                 }
             },
             "space": {
@@ -156,7 +156,8 @@ class Controller {
                     $.tips(data.message , 2) ;
                     exceptionCallback(data) ;
                 }
-            }
+            },
+            complete: params.completeCallback || function(){}
         } ;        
         try {
             $.ajax(options) ;
