@@ -131,7 +131,7 @@
     position : fixed ;
     top : 0 ;
     width : 100% ;
-    z-index : 10002 ;
+    z-index : 10002 ;    
     .search-substitute {
         background-color : #fff ;
          .clearfix() ;
@@ -156,14 +156,17 @@
             height : 30px ;
             margin : 0 15px 0 48px ;
             padding : 3px 0 ;
-            position : relative ;
+            position : relative ;            
             input {
                 display : block ;
                 line-height : 26px ;
                 .transparent() ;
                 text-indent : 15px ;
                 width : 100% ;
-            }
+                &::-webkit-search-cancel-button {
+                    display : none ;
+                }
+            }           
             .iconfont {
                 font-size : 1.8rem ;
                 position : absolute ;
@@ -178,37 +181,58 @@
         top : 52px ;
         width : 100% ;
     }
-    /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
-    搜索结果列表区域
-    -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
-    .list {
+    .list-container {
         margin-top : 52px ;
-        padding : 0 15px ;
-        li {
-            position : relative ; 
-            .pixel-border-bottom() ;       
-            dl {
-                padding : 10px 0 ;
-                dt , dd {
-                    .text-ellipsis() ;
-                    span {
-                        color : @primary-color ;
-                        vertical-align : baseline ;
+        /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+        搜索历史title及操作按钮
+        -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
+        .history-caption {
+            background-color : #f0f0f0 ;
+            color : @light-font-color ;
+            display : none ;
+            font-size : 1.4rem ;           
+            line-height : 27px ;
+            padding-left : 15px ;            
+        }
+        .clear-history {
+            color : @primary-color ;
+            display : none ;
+            font-size : 1.4rem ;
+            line-height : 40px ;
+            text-align : center ;
+        }
+        /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+        搜索结果列表区域
+        -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
+        .list {            
+            padding : 0 15px ;
+            li {
+                position : relative ; 
+                .pixel-border-bottom() ;       
+                dl {
+                    padding : 10px 0 ;
+                    dt , dd {
+                        .text-ellipsis() ;
+                        span {
+                            color : @primary-color ;
+                            vertical-align : baseline ;
+                        }
+                    }
+                    dt {
+                        color : #4e4e4e ;
+                        font-size : 1.6rem ;  
+                    }
+                    dd {
+                        color : #999 ;
+                        font-size : 1.2rem ;
+                        line-height : 30px ;
                     }
                 }
-                dt {
-                    color : #4e4e4e ;
-                    font-size : 1.6rem ;  
-                }
-                dd {
-                    color : #999 ;
-                    font-size : 1.2rem ;
-                    line-height : 30px ;
-                }
             }
+                
         }
-             
-    }
+    }    
+    
 }
 /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
 城市选择器部分代码
