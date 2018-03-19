@@ -12,8 +12,9 @@
         this.pageSize = 10;//
         this.paramGenerator = new ParamGenerator();
         $('.total').slideUp();
-        require(['../components/filter.min'], function(Filter){            
-            self.filter = new Filter({
+        require(['../components/filter.min', '../components/bigdata.min'], function(Filter, BigData){   
+            BigData.init(self);         
+            self.filter = new Filter($.extend({},Filter.XFDEFAULT,{
                 el: ".filter",
                 houseType: 1,
                 cityId: 43,
@@ -22,6 +23,7 @@
                 latitude: 234,
                 distances: [{value: "5000", text: "不限（智能范围）"},{value: "500", text: "500米"},{value: "1000", text: "1000米"},{value: "2000", text: "2000米"},{value: "5000", text: "5000米"}],
                 controller: self,
+                BigData: BigData,
                 filterChanged: function(result){ 
                     this.total = 0;
                     this.count = 0;                    
@@ -39,8 +41,7 @@
                         }else if(data.newHouseDataListModelList.length == 0){
                             self.showNoData();
                         }else{
-                            self.createHouseList(data.newHouseDataListModelList,data.total); 
-                            console.log("有数据,enable...");
+                            self.createHouseList(data.newHouseDataListModelList,data.total);
                             $('.list').trigger('enable');
                         }
                          
@@ -48,7 +49,9 @@
                         window.history.pushState(param, "", "./" + qs);
                     });
                 }                
-            });
+            }));
+
+            self.param = self.filter.getResult();
 
             window.filter = self.filter;
         });
@@ -70,10 +73,16 @@
             self.filter.setValue(ParamGenerator.convert2FilterParam(param));
 
             self.fetchData(param,function(data){
-                if(data.count!=0 && data.count<=self.pageSize){// 没有更多了
+                data = data.data;
+                $('.list').empty();
+                if(data.total!=0 && data.total<=self.pageSize){// 没有更多了
                     self.showNoMore();
-                }
-                self.createHouseList(data.data,data.count);       
+                }else if(data.newHouseDataListModelList.length == 0){
+                    self.showNoData();
+                }else{
+                    self.createHouseList(data.newHouseDataListModelList,data.total);
+                    $('.list').trigger('enable');
+                }   
             });            
         };
 
@@ -219,7 +228,10 @@
         $(".list").pullload({
             apiUrl : self.apiUrl.xf.list ,
             queryStringObject : function(){
-                delete self.param.pa;
+                self.param && delete self.param.pa;
+                if(!self.param){
+                    self.param = {};
+                }
                 return self.param;
             },   
             requestType: "POST",

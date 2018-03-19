@@ -31,7 +31,7 @@ function setValue(obj, fieldName, val){
             obj[tmpArr[0]] = {};
         }
 
-        setValue(obj[tmpArr[0]], tmpArr.join('.'), val);
+        setValue(obj[tmpArr[0]], tmpArr.splice(1).join('.'), val);
     }else{
         if(Object.prototype.toString.call(val) == '[object Array]'){
             obj[fieldName] = val;

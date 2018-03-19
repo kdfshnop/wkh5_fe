@@ -72,14 +72,15 @@
     &::after{// 底部border，1像素问题
       position:  absolute;
       content: '';
-      width: 100%;
+      //width: 100%;
       border-top: 1px solid #e8e8e8;
       height: 1px;
       bottom: -1px;
       //right: 0;
       transform: scaleY(.5);
       -webkit-transform: scaleY(.5);
-      //clear: both;
+      left: 15px;
+      right: 15px;
     }
   
     .img {
