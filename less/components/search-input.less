@@ -79,7 +79,7 @@
         border-radius: 6px;
         border:  none;
         outline: none;
-        /*   padding-left: 3.4rem;*/
+        padding-left: 1rem;
         padding-right: 3.5rem;
         -webkit-tap-highlight-color: rgba(0,0,0,0);
         animation:  10s;
@@ -192,6 +192,9 @@
 .search-result{
   position: fixed;
   width: 100%;
+  bottom: 0;
+  top: 8%;
+  z-index: -1;
  /* margin-top: 4.8rem;*/
   >.no-result{
     background-color: @default-color;
@@ -266,6 +269,8 @@
   }
   > .show-result {
     background-color: @default-color;
+    overflow-y: scroll;
+    height: 100%;
     > ul {
       padding-left: 1.5rem;
       > li {
@@ -273,6 +278,7 @@
         padding-right: 1.5rem;
         position: relative;
         padding-top: 0.4rem;
+        z-index: 1;
         &:not(:first-child):before{
           content: '';
           height: 1px;
@@ -291,8 +297,7 @@
           .text-ellipsis();
           >span{
             color: @primary-color;
-            position: relative;
-            top: -1px;
+            vertical-align: baseline;
             .text-ellipsis();
           }
         }
