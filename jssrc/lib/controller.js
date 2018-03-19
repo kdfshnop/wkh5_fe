@@ -68,13 +68,16 @@ class Controller {
             } ,
             "esf" : {
                 "list" : {
-                    "houselist" : "api/esf/houselist"
+                    "houselist" : this.apiPrefix + "api/esf/houselist"
                 }
             },
             "space": {
                 "secondHouseList": this.apiPrefix + "api/space/secondApiProvider",
                 "rentHouseList": this.apiPrefix + "api/space/rentApiProvider",
                 "newHouseList": this.apiPrefix + "api/space/newApiProvider"
+            },
+            "xf": {
+                "list": this.apiPrefix + "api/xf/list", // 新房列表查询接口
             }
         } ;        
     } ;
@@ -153,7 +156,8 @@ class Controller {
                     $.tips(data.message , 2) ;
                     exceptionCallback(data) ;
                 }
-            }
+            },
+            complete: params.completeCallback || function(){}
         } ;        
         try {
             $.ajax(options) ;

@@ -238,13 +238,13 @@ define([],function(){
             name: "propertyTypes",
             title: "物业类型",
             items: [{
-                id: "t1",
+                id: "1",
                 text: "住宅"
             },{
-                id: "t2",
+                id: "2",
                 text: "别墅"
             },{
-                id: "t3",
+                id: "3",
                 text: "商用"
             }]
         },{
@@ -262,7 +262,7 @@ define([],function(){
             }]
         }],
         sorts:[{
-            id: "-1",
+            //id: "-1",
             text: "综合排序"
         },{
             id: "1",
@@ -803,10 +803,27 @@ define([],function(){
 
         
         //this.result = {};
-        this.initValue = this.$el.data('init');
-        if(this.initValue){
-            this.initValue = JSON.parse(decodeURIComponent(this.initValue));
+        //this.initValue = this.$el.data('init');//不从dom节点上读了，这样加大了node端对条件的解析，filter本身直接读取url，分析
+
+        //--- 读取url 并分析初始条件-----------------
+        this.initValue = {};
+        var pageUrl = location.href;
+        pageUrl = pageUrl.replace('//','');
+        var tmpArr = pageUrl.split('/');
+        if(tmpArr[3]){// 有查询条件
+            var obj = ParamGenerator.queryString2Object(tmpArr[3]);
+            if(obj){
+                this.initValue = ParamGenerator.convert2FilterParam(obj);
+            }
         }
+
+        //--- end-----------------------------------
+
+        // if(this.initValue){
+        //     this.initValue = JSON.parse(decodeURIComponent(this.initValue));
+        // }else{
+        //     this.initValue = {};
+        // }
         if(this.$el.length == 0) {
             throw "挂载点不存在";
         }
@@ -924,6 +941,10 @@ define([],function(){
 
         // 户型
         if(value.houseTypes){
+            // 先清空
+            this.$houseType.find('li').removeClass('active');
+            this.$houseTypeLabel.text('户型').parent().removeClass('active');
+
             for(var key in value.houseTypes) {
                 for(var i = 0; i < value.houseTypes[key].length; i++){
                     this.$houseType.find('[data-key='+key+'] [data-value='+value.houseTypes[key][i]+']').addClass('active');
@@ -931,9 +952,6 @@ define([],function(){
             }
 
             this.$houseTypeLabel.parent().addClass('active');
-        }else{
-            this.$houseType.find('li').removeClass('active');
-            this.$houseTypeLabel.text('户型').parent().removeClass('active');
         }
 
         // 排序

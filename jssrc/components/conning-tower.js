@@ -477,7 +477,7 @@
         $(".substitute-mask .list li").off().click((event) => {
             let $item = $(event.currentTarget) ;
             if($item.hasClass("no-data")) return ; 
-            this.setSearchCache(JSON.stringify($item.data())) ;
+            this.setSearchCache($item.data()) ;
             this.searchResultItemClick($item.data()) ;
         }) ;      
 
@@ -504,6 +504,16 @@
         最后重新设置到localStorage中
         -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
         window.localStorage[this.moduleType + "SearchHistory" ] = JSON.stringify(noRepeatItems) ;   
+    }
+    /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+    绘制搜索历史
+    -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
+    renderSearchHistory() {
+        let searchCache = window.localStorage[this.moduleType + "SearchHistory" ] ;
+        searchCache = searchCache ? JSON.parse(searchCache) : [] ;
+        searchCache.forEach( (cache) => {
+
+        }) ;
     }
     /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
     整个组件定义结束
