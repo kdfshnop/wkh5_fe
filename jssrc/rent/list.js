@@ -456,55 +456,6 @@ class ListController extends Controller {
         /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
         房型传参
         -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
-       /*  $('#houseCmfir').click(function () {
-             let houseList =  $('.house-list  > ul > li ');  // 获取房型标签
-             let houseListString = '';
-             let houseListArray = [];
-             let noHouseListArray = [];
-                 houseList.each(function (index,item) {   // 判断是否房型被选中
-                 if (item.classList.length == 1) {
-                     houseListArray.push(index)
-                 }else {
-                     noHouseListArray.push(index)
-                 }
-             });
-             if (houseListArray.length > 0){
-                 houseListArray.forEach(function (item,index) {
-                     if (index == 0) {
-                         houseListString = $(`.house-list  > ul > li:eq(${item})`).attr('data-la');
-                     }else {
-                         houseListString = houseListString +'-'+$(`.house-list  > ul > li:eq(${item})`).attr('data-la');
-                     }
-                 });
-                 if(houseListArray.length == 1){  // 判断单选的情况下是不限 还是有具体房型
-                     if ($(`.house-list  > ul > li:eq(${houseListArray[0]})`).html() == '不限'){
-                         $('#type >p').html('户型');
-                     }else {
-                         let houseTitle =  $(`.house-list  > ul > li:eq(${houseListArray[0]})`).html();
-                         $('#type >p').html(houseTitle);
-                         $('#type').find('i').addClass('bacchosed');
-                     }
-                 }else {
-                     $('#type >p').html('多选');
-                     $('#type').find('i').addClass('bacchosed');
-                 }
-                 let houseListObj = that.parseCondition({condition: houseListString}); // 转换成对象
-                 $.extend(conditionObject, houseListObj); // 合并对象
-                 let conditionString = that.objectToString(conditionObject); // 转换成字符串
-                 window.location.href = url + conditionString + queryString; // 跳转的URL
-             }
-             if (noHouseListArray.length == 5 && houseListArray[0]== 0) {
-                 $('#type').find('i').removeClass('bacchosed');
-                 $('#type').removeClass('active-color-top');
-                 $('#type').removeClass('chosed');
-             }
-             $('.bac').hide();
-             $('#type').children('span').removeClass('direction');
-             $('.house-type').slideToggle();
-         });*/
-        /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
-        更多选择
-        -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
         $('#moreComf').click(function () {
             let tag = $('.more-spec > ul >li');  // 四个tag标签的选择
             let area = $('.area > ul >li');    // 面价的标签的选择
@@ -515,11 +466,11 @@ class ListController extends Controller {
             let areaString = '';  // 面积的选择的字符串的组装
             let decorationString = ''; // 装修的状况的字符串的组装
             let decorationArray = [];  // 装修 临时使用数组
-            let rentWayString = '';
-            let rentWayObj={};
-            let tagObj = {};
-            let areaObj = {};
-            let decorationObj = {};
+            let rentWayString = ''; // 租赁方式 字符串
+            let rentWayObj={}; // 租赁方式 对象
+            let tagObj = {};  // 标签对象
+            let areaObj = {}; // 面积 对象
+            let decorationObj = {}; //
             let areaArray = [];
             let houseListString = '';
             let houseListArray = [];

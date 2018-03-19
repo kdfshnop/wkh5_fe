@@ -113,6 +113,7 @@ define(function(){
                     }else {
                         $('#showResult').empty();
                         $('.have-result').hide();
+                        $('.history').hide();
                         $('.no-result').show();
                     }
                     $('#showResult > li').click(function () {

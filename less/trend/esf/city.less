@@ -1,6 +1,6 @@
 /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
 1. 项目名称：悟空找房h5
-2. 文件名称：trend -> esf -> town.less (二手房价格行情，板块)
+2. 文件名称：trend -> esf -> city.less (二手房价格行情，城市)
 3. 作者：liyang@lifang.com
 -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
 @import "../../variables.less" ;
@@ -62,11 +62,11 @@ body{
       }
     }
   }
-  /*  描述*/
+/*  描述*/
   >.description{
     padding: 0.2rem 1.5rem 1rem 1.5rem;
     background: #4081D6;
-    /*  background-image: linear-gradient(0deg, #FFFFFF 2%, rgba(255,255,255,0.00) 100%);*/
+  /*  background-image: linear-gradient(0deg, #FFFFFF 2%, rgba(255,255,255,0.00) 100%);*/
     >h3{
       font-size: 2rem;
       color: #FFFFFF;
@@ -85,7 +85,7 @@ body{
       >.up-down{
         position: relative;
         padding-left: 0.5rem;
-        /*   height: 5rem;*/
+     /*   height: 5rem;*/
         &:after{
           position: absolute;
           content:"";
@@ -121,10 +121,10 @@ body{
       }
       .tot-house{
         padding-left: 0.5rem;
-        >i{
-          font-size: 1.2rem;
-          color: #FFFFFF;
-        }
+          >i{
+            font-size: 1.2rem;
+            color: #FFFFFF;
+          }
       }
       >div{
         >span{
@@ -141,9 +141,9 @@ body{
       }
     }
   }
-  /*  折线图*/
+/*  折线图*/
   .echart {
-    overflow: hidden;
+  overflow: hidden;
     #main {
       width: 100%;
       height: 20rem;
@@ -151,7 +151,7 @@ body{
     }
   }
 
-  /*  区域模块*/
+/*  区域模块*/
   >.district-town{
     margin-top: 0.6rem;
     >.panel-header{
@@ -190,10 +190,27 @@ body{
         >li.top-name{
           .flex();
           flex-direction: row;
-          >span{
-            .flex(1);
+         >span{
+           .flex(1);
+           font-size: 1.4rem;
+           color: #7C7C7C;
+           &.unit-price{
+             text-align: center;
+           }
+           &:last-child{
+             text-align: right;
+           }
+         }
+        }
+        > li.content {
+          >a{
+            .flex();
+            flex-direction: row;
+          >p{
+            width: 33.33%;
+            .text-ellipsis();
             font-size: 1.4rem;
-            color: #7C7C7C;
+            color: #000000;
             &.unit-price{
               text-align: center;
             }
@@ -201,29 +218,12 @@ body{
               text-align: right;
             }
           }
-        }
-        > li.content {
-          >a{
-            .flex();
-            flex-direction: row;
-            >p{
-              width: 33.33%;
-              .text-ellipsis();
-              font-size: 1.4rem;
-              color: #000000;
-              &.unit-price{
-                text-align: center;
-              }
-              &:last-child{
-                text-align: right;
-              }
-            }
-            >p.increase-red{
-              color: #D64040;
-            }
-            >p.increase-blue{
-              color: #5EB71F;
-            }
+          >p.increase-red{
+            color: #D64040;
+          }
+          >p.increase-blue{
+            color: #5EB71F;
+          }
           }
         }
       }
