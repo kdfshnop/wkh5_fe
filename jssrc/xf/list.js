@@ -11,9 +11,31 @@
         this.count = 0;//当前数量
         this.pageSize = 10;//
         this.paramGenerator = new ParamGenerator();
-        $('.total').slideUp(1000);
-        require(['../components/filter.min', '../components/bigdata.min'], function(Filter, BigData){   
+        $('.total').slideUp(1000);// 隐藏查询总条数        
+        require(['../components/filter.min', '../components/bigdata.min', "../components/conning-tower.min"], function(Filter, BigData){   
             BigData.init(self);         
+            new ConningTower({                
+                "bigDataUtil" : BigData ,               
+                "moduleType" : "xf" ,
+                "cityClick" : (data) => {
+                } ,
+                "searchResultItemClick" : (data) => {
+                    console.log(data);
+                    // 与filter中的区域地铁互斥
+                    delete self.param.di;// 区域id
+                    delete self.param.to;// 板块id
+                    delete self.param.li;// 地铁线id
+                    delete self.param.st;// 地铁站id
+                    delete self.param.id;// 小区id
+                    var mapping = ["","sdi","sto","sli","sst","sid"];
+                    var key = mapping[data.type];
+                    if(key){
+                        self.param[key] = data.value;
+                        self.goto();
+                    }
+                }
+            }) ;
+
             self.filter = new Filter($.extend({},Filter.XFDEFAULT,{
                 el: ".filter",                
                 cityId: 43,
@@ -25,15 +47,45 @@
                 filterChanged: function(result){ 
                     // 获得最新查询条件TODO: 还要集成搜索组件                                     
                     var param = self.paramGenerator.generateParamObj(result);
+                    if(param.di || param.to || param.li || param.st){
+                        // do nothing
+                    }else{// 判断是否有sid,sli,sst,sdi,sto
+                        var mapping = ["sdi","sto","sli","sst","sid"];
+                        mapping.forEach(function(item){
+                            if(self.param[item]){
+                                param[item] = self.param[item];
+                            }
+                        });                        
+                    }
 
+                    self.param = param;
                     // 跳转
-                    location.href = './' +  ParamGenerator.object2QueryString(param);                    
+                    self.goto();
                 }                
             }));                     
         });
 
+        // 从url中解析参数
+        var pageUrl = location.href;
+        pageUrl = pageUrl.replace('//','');
+        var tmpArr = pageUrl.split('/');
+        self.param = {};
+        if(tmpArr[3]){// 有查询条件
+            var obj = ParamGenerator.queryString2Object(tmpArr[3]);
+            if(obj){
+                self.param = obj;
+            }
+        }
+                    
+        window.filter = self.filter;
+
         this.bindEvent();
         this.pullload();
+    }
+
+    // 根据查询条件进行相应的跳转
+    goto(){
+        location.href = './' +  ParamGenerator.object2QueryString(this.param);                    
     }
 
     bindEvent(){
@@ -151,10 +203,13 @@
     // 上拉加载
     pullload(){
         let self = this ;
-
+        var cityId = $.cookie("xfSelectedCityId");
+        var cityPinyin = $.cookie("xfSelectedCityPinyin");
+        var cityName = $.cookie("xfSelectedCityName");
+        
         //二手房
         $("#list").pullload({
-            apiUrl : self.apiUrl.xflist ,
+            apiUrl : self.apiUrl.xf.list ,
             queryStringObject : function(){
                 self.param && delete self.param.pa;
                 if(!self.param){

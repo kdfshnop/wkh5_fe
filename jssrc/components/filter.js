@@ -1003,12 +1003,12 @@ define([],function(){
             this.$district.show();
             this.$metro.hide();
             this.$districtMetro.find('>ul li:eq(0)').addClass('active');
-            delete this.result.district;
-            delete this.result.districtPinyin;
-            delete this.result.town;
-            delete this.result.metro;
-            delete this.result.metroKey;
-            delete this.result.station;
+            // delete this.result.district;
+            // delete this.result.districtPinyin;
+            // delete this.result.town;
+            // delete this.result.metro;
+            // delete this.result.metroKey;
+            // delete this.result.station;
         }
         if(str){// 设置选中区域或地铁站到区域内容中
             this.$districtLabel.text(str).parent().addClass('active');
@@ -1042,8 +1042,7 @@ define([],function(){
             this.$price.find('li').removeClass('active');
             this.$maxPrice.val('');
             this.$minPrice.val('');
-            this.$priceLabel.text('总价').parent().removeClass('active');
-            delete this.result.price;
+            this.$priceLabel.text('总价').parent().removeClass('active');            
         }
 
         // 户型
@@ -1054,6 +1053,10 @@ define([],function(){
             for(var key in value.houseTypes) {
                 for(var i = 0; i < value.houseTypes[key].length; i++){
                     this.$houseType.find('[data-key='+key+'] [data-value='+value.houseTypes[key][i]+']').addClass('active');
+                    if(!this.result[key]){
+                        this.result[key] = [];
+                    }
+                    this.result[key].push(value.houseTypes[key][i]);
                 }                
             }
 
@@ -1068,10 +1071,12 @@ define([],function(){
             }
             this.result.sort = value.sort;
         }else{
-            delete this.result.sort;
+            //delete this.result.sort;
             this.$sort.find('li').removeClass('active');
             this.$sortLabel.text('排序').parent().removeClass('active');
         }
+
+        //this.result = value || {};
     }
 
     Filter.prototype.clear = function() {
