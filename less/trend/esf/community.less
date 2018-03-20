@@ -1,11 +1,12 @@
 /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
 1. 项目名称：悟空找房h5
-2. 文件名称：trend -> esf -> community.less (租房详情页)
+2. 文件名称：trend -> esf -> community.less (二手房价格行情，小区)
 3. 作者：liyang@lifang.com
 -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
 @import "../../variables.less" ;
 @import "../../mixins.less" ;
 @import "../../components/trend-search.less" ;
+@import "../../components/esf-items.less" ;
 body{
   background: #F0F0F0;
 }
@@ -168,66 +169,7 @@ body{
     }
     >.wk-body{
       padding-right: 1.5rem;
-      >ul{
-        >li{
-          line-height: 4.2rem;
-          position: relative;
-          &:after{
-            content: '';
-            width: 100%;
-            height: 1px;
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            border-top: 1px solid #E8E8E8;
-            -webkit-transform: scaleY(0.5);
-            -moz-transform: scaleY(0.5);
-            -ms-transform: scaleY(0.5);
-            -o-transform: scaleY(0.5);
-            transform: scaleY(0.5);
-          }
-        }
-        >li.top-name{
-          .flex();
-          flex-direction: row;
-          >span{
-            .flex(1);
-            font-size: 1.4rem;
-            color: #7C7C7C;
-            &.unit-price{
-              text-align: center;
-            }
-            &:last-child{
-              text-align: right;
-            }
-          }
-        }
-        > li.content {
-          >a{
-            .flex();
-            flex-direction: row;
-            >p{
-              width: 33.33%;
-              .text-ellipsis();
-              font-size: 1.4rem;
-              color: #000000;
-              &.unit-price{
-                text-align: center;
-              }
-              &:last-child{
-                text-align: right;
-              }
-            }
-            >p.increase-red{
-              color: #D64040;
-            }
-            >p.increase-blue{
-              color: #5EB71F;
-            }
-          }
-        }
-      }
-      >button{
+      >a.more-esf{
         width: 100%;
         height: 4.5rem;
         background: #F6F6F6;
@@ -237,10 +179,22 @@ body{
         margin-top: 1.5rem;
         font-size: 1.4rem;
         color: #92A7C3;
+        display: block;
+        line-height: 4.5rem;
+        text-align: center;
       }
     }
   }
-
+ .more-link{
+   >a{
+    color: #000000;
+     display: block;
+     padding-right: 1.5rem;
+     >i{
+       float: right;
+     }
+   }
+ }
 }
 
 

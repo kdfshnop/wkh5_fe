@@ -426,8 +426,7 @@ define([],function(){
                                 <%}%>\
                             </div>\
                         </div>\
-                        </div></div>';
-        console.log("经纬度：", options.latitude, options.longitude);
+                        </div></div>';        
         var html = _template(templateStr)({districts: options.districts, metros: options.metros, longitude: options.longitude, latitude: options.latitude, distances: options.distances, near: options.near, bigDataParams: options.bigDataParams});        
         return html;
     }
@@ -440,25 +439,31 @@ define([],function(){
     // 计算查询提交，并调用filterChange回调
     function calcCondition() {
         var result = {};
+        var self = this;
         // 排序
+        delete this.result.sort;
         $('.sort .active').each(function(){
             if($(this).data('value')){
                 result.sort = $(this).data('value');
             }
         });
 
-        // 总价
+        // 总价              
         $('.total-price .active').each(function(){
             if($(this).data('value')){
                 result.price = $(this).data('value');
             }
         });
+        if(typeof result.price != 'undefined'){
+            delete this.result.price;
+        }
         // TODO:读取自定义总价
 
-        // 户型
+        // 户型        
         $('.house-type-section').each(function(){
             var key = $(this).data('key');
             result[key] = [];
+            delete self[key];
             $(this).find('.active').each(function(){
                 var value = $(this).data('value');
                 if(value != null && value != undefined && value != ''){
@@ -831,18 +836,15 @@ define([],function(){
         },{
             successCallback: function(data){
                 self.options.districts = data.data;
-                init.apply(self);
-                console.log('area: success');
+                init.apply(self);                
             },
             errorCallback: function(){
                 self.options.districts = [];
-                init.apply(self);
-                console.log('area: error');
+                init.apply(self);                
             },
             exceptionCallback: function(){
                 self.options.districts = [];
-                init.apply(self);
-                console.log('area: exception');
+                init.apply(self);                
             }
         });
 
@@ -852,18 +854,15 @@ define([],function(){
         },{
             successCallback: function(data){
                 self.options.metros = data.data;
-                init.apply(self);
-                console.log('subway: success');
+                init.apply(self);                
             },
             errorCallback: function(){
                 self.options.metros = [];
-                init.apply(self);
-                console.log('subway: error');
+                init.apply(self);                
             },
             exceptionCallback: function(){
                 self.options.metros = [];
                 init.apply(self);
-                console.log('subway: exception');
             }
         });
     }
@@ -1087,7 +1086,7 @@ define([],function(){
         return this.result;
     };
 
-    Filter.XFDEFAULT = {
+    Filter.XFDEFAULT = {        
         bigDataParams: {
             sort: {
                 clickTab: encodeURIComponent('{"eventName": "1050003"}')
@@ -1098,15 +1097,15 @@ define([],function(){
                 clickTown: "1050033", //板块点击
                 clickMetro: "1050034",// 地铁线点击
                 clickStation: "1050035", //地铁站点击
-                clickDistrictSection: encodeURIComponent('"eventName": "1050043"'),// 点击区域tab
-                clickMetroSection: encodeURIComponent('"eventName": "1050044"'),// 点击地铁tab
+                clickDistrictSection: encodeURIComponent('{"eventName": "1050043"}'),// 点击区域tab
+                clickMetroSection: encodeURIComponent('{"eventName": "1050044"}'),// 点击地铁tab
             },
             price: {
                 clickButton: "1050017",// 
                 // clickItem: "",// 选项点击            
             },
             houseTypes: {
-                clickConfirm: "1050019"
+                clickConfirm: encodeURIComponent('{"eventName: "1050019"}')
             },            
         }
     };

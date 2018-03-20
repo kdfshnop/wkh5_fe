@@ -11,80 +11,26 @@
         this.count = 0;//当前数量
         this.pageSize = 10;//
         this.paramGenerator = new ParamGenerator();
-        $('.total').slideUp();
+        $('.total').slideUp(1000);
         require(['../components/filter.min', '../components/bigdata.min'], function(Filter, BigData){   
             BigData.init(self);         
             self.filter = new Filter($.extend({},Filter.XFDEFAULT,{
-                el: ".filter",
-                houseType: 1,
+                el: ".filter",                
                 cityId: 43,
                 near: false,
                 longitude: 222,
-                latitude: 234,
-                distances: [{value: "5000", text: "不限（智能范围）"},{value: "500", text: "500米"},{value: "1000", text: "1000米"},{value: "2000", text: "2000米"},{value: "5000", text: "5000米"}],
+                latitude: 234,                
                 controller: self,
                 BigData: BigData,
                 filterChanged: function(result){ 
-                    this.total = 0;
-                    this.count = 0;                    
-                    console.log("筛选条件变了：", result);                                      
+                    // 获得最新查询条件TODO: 还要集成搜索组件                                     
                     var param = self.paramGenerator.generateParamObj(result);
-                    //param.pa = 1;
-                    self.param = param;
-                    self.hideNoData();
-                    self.hideNoMore();                    
-                    self.fetchData(param,function(data){
-                        data = data.data;
-                        $('.list').empty();
-                        if(data.total!=0 && data.total<=self.pageSize){// 没有更多了
-                            self.showNoMore();
-                        }else if(data.newHouseDataListModelList.length == 0){
-                            self.showNoData();
-                        }else{
-                            self.createHouseList(data.newHouseDataListModelList,data.total);
-                            $('.list').trigger('enable');
-                        }
-                         
-                        var qs = ParamGenerator.object2QueryString(param);     
-                        window.history.pushState(param, "", "./" + qs);
-                    });
+
+                    // 跳转
+                    location.href = './' +  ParamGenerator.object2QueryString(param);                    
                 }                
-            }));
-
-            self.param = self.filter.getResult();
-
-            window.filter = self.filter;
+            }));                     
         });
-
-        window.onpopstate = function(event){
-            var param;
-            if(event.state){ //如果有event.state，优先用
-                param = event.state;
-            }else{// 否则读取url中的最有一部分
-                var tempArr = location.href.split('xflist');
-                var str = tempArr[1];
-                if(str.startsWith('/')){
-                    str = str.substring(1);
-                }
-
-                param = ParamGenerator.queryString2Object(str);
-            }
-
-            self.filter.setValue(ParamGenerator.convert2FilterParam(param));
-
-            self.fetchData(param,function(data){
-                data = data.data;
-                $('.list').empty();
-                if(data.total!=0 && data.total<=self.pageSize){// 没有更多了
-                    self.showNoMore();
-                }else if(data.newHouseDataListModelList.length == 0){
-                    self.showNoData();
-                }else{
-                    self.createHouseList(data.newHouseDataListModelList,data.total);
-                    $('.list').trigger('enable');
-                }   
-            });            
-        };
 
         this.bindEvent();
         this.pullload();
@@ -92,8 +38,10 @@
 
     bindEvent(){
         var self = this;
+        // 清空查询条件
         $('.no-data button').click(function(){
-            self.filter.clear();
+            // 跳转            
+            location.href = "./";
         });
     }    
 
@@ -146,7 +94,7 @@
             $('.list').append(str);
             this.insertTrendAndOldHouse();
         }else{// 没有更多数据了
-            this.showNoMore();
+            //this.showNoMore();
         }
     }
 
@@ -160,30 +108,12 @@
         $('.no-data').hide();
     }
 
-    showNoMore(){// 显示没有更多
-        $('.reach-bottom').show();
-    }
+    // showNoMore(){// 显示没有更多
+    //     $('.reach-bottom').show();
+    // }
 
     hideNoMore(){
         $('.reach-bottom').hide();
-    }
-
-    loadMore(){// 加载更多数据
-        
-    }
-
-    fetchData(param,success,error){// 获取列表数据
-        var self = this;
-        this.showLoading();
-        $('.list').trigger('disable');
-        this.request(this.apiUrl.xf.list, param, {
-            type: "POST",
-            successCallback: success,
-            errorCallback: error,
-            completeCallback: function(){
-                self.hideLoading();
-            }
-        });
     }
 
     insertTrendAndOldHouse(){// 插入跳转到价格行情和二手房的链接        
@@ -213,14 +143,16 @@
 
     }
 
-    showLoading(){
-        $('.page-loading').show();
-    }
+    // 金箍棒loading效果，现在第一屏用同步输出 ，已经用不到了，先保留，后续删掉
+    // showLoading(){
+    //     $('.page-loading').show();
+    // }
 
-    hideLoading(){
-        $('.page-loading').hide();
-    }
+    // hideLoading(){
+    //     $('.page-loading').hide();
+    // }
 
+    // 上拉加载
     pullload(){
         let self = this ;
 
@@ -247,7 +179,6 @@
                 } 
 
                 self.appendHouseList(data.data.newHouseDataListModelList);                
-                window.history.replaceState(self.param, "", "./" + ParamGenerator.object2QueryString(self.param));// 修改当前url    `
             }
         }) ;
     }

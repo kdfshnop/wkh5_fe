@@ -44,16 +44,16 @@
 
             $(opts.handler).on("scroll.pullload", eventHandler);
 
-            $(this).on("enable", function(){                
-                console.log('enable...');
-                $(opts.handler).on("scroll.pullload", eventHandler);// 重新绑定scroll事件处理函数
-                $('.' + opts.tipsClassName).remove();
-                $(self).attr('data-requestable', 'true');
-            }).on("disable", function(){
-                console.log('disable...');
-                $('.' + opts.tipsClassName).remove();
-                $(opts.handler).off("scroll.pullload");
-            }) ;
+            // $(this).on("enable", function(){                
+            //     console.log('enable...');
+            //     $(opts.handler).on("scroll.pullload", eventHandler);// 重新绑定scroll事件处理函数
+            //     $('.' + opts.tipsClassName).remove();
+            //     $(self).attr('data-requestable', 'true');
+            // }).on("disable", function(){
+            //     console.log('disable...');
+            //     $('.' + opts.tipsClassName).remove();
+            //     $(opts.handler).off("scroll.pullload");
+            // }) ;
         }) ;
     } ;
 
