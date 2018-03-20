@@ -83,7 +83,7 @@ gulp.task('js-app', function() {
         .pipe(babel({
             presets: ['es2015']
         })) 
-        .pipe(addsrc(pathAppJs))       
+        .pipe(addsrc.prepend(pathAppJs))
         //.pipe(sourcemaps.write('.'))
         .pipe(concat('app.min.js'))
         .pipe(gulpif(isTest, uglify()))

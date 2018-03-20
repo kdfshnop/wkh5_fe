@@ -7,6 +7,7 @@
  @import "../mixins.less";
  @import "../components/filter.less";
  @import "../components/xf-items.less";
+ @import "../components/conning-tower.less";
 
 
 .reach-bottom {// 到底了
@@ -41,7 +42,7 @@ body {
 }
 
 .no-data {
-  display: none;
+  //display: none;
   font-size: 16px;
   color: #000;
   text-align: center;
@@ -81,4 +82,10 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;  
+}
+
+.container {
+  .has-margin {
+    margin-top: 50px;
+  }  
 }

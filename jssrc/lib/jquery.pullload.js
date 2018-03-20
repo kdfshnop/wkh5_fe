@@ -24,8 +24,7 @@
             /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
             然后给句柄绑定事件
             -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
-            function eventHandler() {
-                console.log("scroll...");
+            function eventHandler() {                
                 /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
                 取得页面滚动条位置
                 -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
@@ -45,16 +44,16 @@
 
             $(opts.handler).on("scroll.pullload", eventHandler);
 
-            $(this).on("enable", function(){                
-                console.log('enable...');
-                $(opts.handler).on("scroll.pullload", eventHandler);// 重新绑定scroll事件处理函数
-                $('.' + opts.tipsClassName).remove();
-                $(self).attr('data-requestable', 'true');
-            }).on("disable", function(){
-                console.log('disable...');
-                $('.' + opts.tipsClassName).remove();
-                $(opts.handler).off("scroll.pullload");
-            }) ;
+            // $(this).on("enable", function(){                
+            //     console.log('enable...');
+            //     $(opts.handler).on("scroll.pullload", eventHandler);// 重新绑定scroll事件处理函数
+            //     $('.' + opts.tipsClassName).remove();
+            //     $(self).attr('data-requestable', 'true');
+            // }).on("disable", function(){
+            //     console.log('disable...');
+            //     $('.' + opts.tipsClassName).remove();
+            //     $(opts.handler).off("scroll.pullload");
+            // }) ;
         }) ;
     } ;
 
@@ -95,8 +94,7 @@
         /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
         整个请求过程用try-catch块包起来
         -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/        
-        try {
-            console.log("requestParams"+JSON.stringify(requestParams));
+        try {            
             $.ajax({
                 url : opts.apiUrl ,
                 type : requestType ,
