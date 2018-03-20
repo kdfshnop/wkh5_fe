@@ -25,7 +25,7 @@ body{
     >.left{
       vertical-align: middle;
       align-items: center;
-      >span{
+      >a{
         font-size: 1.4rem;
         color: @default-color;
         display: inline-block;
@@ -44,13 +44,17 @@ body{
           text-align: center;
           display: inline-block;
           font-size: 1.6rem;
-          color: @default-color;
+          >a{
+            color: @default-color;
+          }
           &:first-child{
             margin-right: 2.6rem;
             border-bottom:2px solid @default-color;
           }
           &:not(:first-child){
-            color: @light-line-gray-color;
+            >a{
+              color: @light-line-gray-color;
+            }
           }
         }
       }
@@ -122,12 +126,15 @@ body{
       }
       .tot-house{
         padding-left: 0.5rem;
-        >i{
-          font-size: 1.2rem;
-          color: #FFFFFF;
+        >a{
+          display: block;
+          >i{
+            font-size: 1.2rem;
+            color: #FFFFFF;
+          }
         }
       }
-      >div{
+      >div,div>a{
         >span{
           font-size: 1.2rem;
           color: #FFFFFF;

@@ -8,6 +8,7 @@
 
 define(function(){
     let that;
+    let houseListType= 'oldhouselist';  // 二手房或者新房来源标识
     /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
     点击icon搜索框的出现
     -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
@@ -17,9 +18,9 @@ define(function(){
             /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
             // Storage取值渲染搜索历史
             -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
-            if (JSON.parse(localStorage.getItem('searchTrendHistory')) ) {
+            if (JSON.parse(localStorage.getItem(houseListType)) ) {
                 $('.history').show();
-                let searchHistory = JSON.parse(localStorage.getItem('searchTrendHistory')).reverse();
+                let searchHistory = JSON.parse(localStorage.getItem(houseListType)).reverse();
                 let listSearchHistory ='';
                 /* 埋点的参数*/
                 let bigdata =encodeURIComponent(JSON.stringify({
@@ -87,7 +88,7 @@ define(function(){
             let sendData={
                 key:$(this).val(),
                 cityId:$.cookie('cityId') || 43,
-                pageName:"oldhouselist"
+                pageName: houseListType
             };
             /* 埋点的参数*/
             let bigdata =encodeURIComponent(JSON.stringify({
@@ -140,7 +141,7 @@ define(function(){
         }else {
             $('#showResult').empty().parent().hide();
             $('.icon-close').hide();
-            if (localStorage.getItem('searchTrendHistory')){
+            if (localStorage.getItem(houseListType)){
                 $('.history').show();
             }else {
                 $('.history').hide();
@@ -152,7 +153,7 @@ define(function(){
     联想词的检索历史储存到localStorage
     -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
     let historyList = function (singleData) {
-       let  saveLocalStorage = JSON.parse(localStorage.getItem('searchTrendHistory')) ? JSON.parse(localStorage.getItem('searchTrendHistory')) : [];
+       let  saveLocalStorage = JSON.parse(localStorage.getItem(houseListType)) ? JSON.parse(localStorage.getItem(houseListType)) : [];
         saveLocalStorage.forEach(function (item, index) {
             if (item.id == singleData.id && item.type == singleData.type) {
                 saveLocalStorage.splice(index, 1)
@@ -163,11 +164,22 @@ define(function(){
         }
         let saveLocal = saveLocalStorage.reverse();
         saveLocal.push(singleData);
-        localStorage.setItem("searchTrendHistory", JSON.stringify(saveLocal));
+        localStorage.setItem(houseListType, JSON.stringify(saveLocal));
+        let houseT =  houseListType=="oldhouselist" ? "esf":"new";
+        if (singleData.type == 1){
+            window.location.href = `/trend/${houseT}/district/${singleData.id}`
+        }else if (singleData.type == 2) {
+            console.log(`/trend/${houseT}/town/${singleData.id}`);
+            window.location.href = `/trend/${houseT}/town/${singleData.id}`
+        }else if (singleData.type == 5) {
+            console.log(`/trend/${houseT}/community/${singleData.id}`);
+            window.location.href = `/trend/${houseT}/community/${singleData.id}`
+        }
     };
     return {
-        init: function(c){
+        init: function(c,houseType){
             that = c;
+            houseListType = houseType || "oldhouselist";
         },
         selectFun : selectFun
     }

@@ -180,7 +180,9 @@ class Location {
     -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
     route( newPinyin , newCityId ) {
         if( this.businessType === "esfPrice" ) return "/esfPrice/price.html?regionId=" + newCityId + "&regionType=1" ;
-        if( this.businessType === "xfPrice" ) return "/xfPrice/price.html?regionId=" + newCityId + "&regionType=1" ;
+        if( this.businessType === "xfPrice" )  return "/xfPrice/price.html?regionId=" + newCityId + "&regionType=1" ;
+        if( this.businessType === "esfTrend" ) return "/trend/esf/city/"+newCityId;
+        if( this.businessType === "newTrend" ) return "/trend/new/city/"+newCityId;
         let moduleName = "esf" ;
         if( this.businessType === "new" ) moduleName = "xflist" ;
         else if( this.businessType === "rent" ) moduleName = "rent/?channel="+ this.GetRequest()['channel'] ;  // 根据channel的值判断来源，用于返回来源埋点需要
