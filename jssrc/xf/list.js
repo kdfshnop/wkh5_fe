@@ -75,7 +75,7 @@
             $('.no-data').hide();
             var str = this.createHouseItems(data);
 
-            $('.list').html(str);
+            $('#list').html(str);
             $('.total .count').text(count);
             $('.total').slideDown();
             setTimeout(function(){
@@ -91,7 +91,7 @@
     appendHouseList(data){// 上拉滚动时加载数据
         if(data&&data.length){
             var str = this.createHouseItems(data);
-            $('.list').append(str);
+            $('#list').append(str);
             this.insertTrendAndOldHouse();
         }else{// 没有更多数据了
             //this.showNoMore();
@@ -108,18 +108,14 @@
         $('.no-data').hide();
     }
 
-    // showNoMore(){// 显示没有更多
-    //     $('.reach-bottom').show();
-    // }
-
     hideNoMore(){
         $('.reach-bottom').hide();
     }
 
     insertTrendAndOldHouse(){// 插入跳转到价格行情和二手房的链接        
         var cityName = "上海";
-        var $list = $('.list .xf-item:not(.house):not(.house-price)');
-        if($('.list .house-price').length == 0 && $list.length>9){
+        var $list = $('#list .xf-item:not(.house):not(.house-price)');
+        if($('#list .house-price').length == 0 && $list.length>9){
             $('<a href="#" class="xf-item house-price">\
                 <div class="img"></div>\
                 <div class="info">\
@@ -128,7 +124,7 @@
                 </div>\
             </a>').insertAfter($($list[9]));
         }
-        if($('.list .house').length == 0 && $list.length>19){
+        if($('#list .house').length == 0 && $list.length>19){
             $('<a href="#" class="xf-item house">\
                 <div class="img"></div>\
                 <div class="info">\
@@ -157,8 +153,8 @@
         let self = this ;
 
         //二手房
-        $(".list").pullload({
-            apiUrl : self.apiUrl.xf.list ,
+        $("#list").pullload({
+            apiUrl : self.apiUrl.xflist ,
             queryStringObject : function(){
                 self.param && delete self.param.pa;
                 if(!self.param){

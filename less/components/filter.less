@@ -7,10 +7,14 @@
  @import "../mixins.less";
 
 .filter {
-    position: fixed;
-    width: 100%;
-    z-index: 2;
-    top: 0;
+    &.fixed {
+        position: fixed;
+        top: 0;
+        width: 100%;
+    }
+    //position: fixed;
+    position: relative;
+    z-index: 2;    
     background-color: #fff;
     .filter-items {
         position: relative;
@@ -58,7 +62,9 @@
             content: "";
             height: 1px;
             bottom: -1px;
-            width: 100%;
+            //width: 100%;
+            left: 0;
+            right: 0;
             -webkit-transform: scaleY(.5);
             transform: scaleY(.5);
             border-bottom: 1px solid #e8e8e8;
@@ -70,7 +76,7 @@
         z-index:2;
         background-color: rgba(0,0,0,.4);        
         display: none;
-        top: 47px;
+        top: 48px;
         .content-inner {
             background-color: #fff;
         }
