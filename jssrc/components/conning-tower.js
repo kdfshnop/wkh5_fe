@@ -283,6 +283,7 @@
             }) ;
             if(has) {
                 let shoupin = city.pinyin.charAt(0).toUpperCase() ;
+                if( ! result.overseas.hasOwnProperty(shoupin)) result.overseas[shoupin] = [] ;
                 result.overseas[shoupin].push({ "cityId" : city.cityId , "cityName" : city.cityName , "pinyin" : city.pinyin , "cityType" : city.cityType }) ;
             } 
         }) ;

@@ -12,8 +12,19 @@
         this.pageSize = 10;//
         this.paramGenerator = new ParamGenerator();
         $('.total').slideUp(1000);
-        require(['../components/filter.min', '../components/bigdata.min'], function(Filter, BigData){   
+        require(['../components/filter.min', '../components/bigdata.min', "../components/conning-tower.min"], function(Filter, BigData){   
             BigData.init(self);         
+            new ConningTower({                
+                "bigDataUtil" : BigData ,               
+                "moduleType" : "xf" ,
+                "cityClick" : () => {
+                    //alert("在二手房城市选择器中点选了城市") ;
+                } ,
+                "searchResultItemClick" : (data) => {
+                    //alert(data) ;
+                }
+            }) ;
+
             self.filter = new Filter($.extend({},Filter.XFDEFAULT,{
                 el: ".filter",                
                 cityId: 43,
