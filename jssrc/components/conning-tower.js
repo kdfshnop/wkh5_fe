@@ -479,6 +479,7 @@
     combineUrl(cityPinyin) {
         let urlArray = window.location.href.split("/") ;
         urlArray[3] = cityPinyin ;
+        urlArray = urlArray.slice( 0 , 5 ) ;
         return urlArray.join("/") ;
     }
     /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
