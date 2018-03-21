@@ -1,0 +1,207 @@
+/*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+1. 项目名称：悟空找房h5
+2. 文件名称：trend -> new -> community.less (新房价格行情，小区)
+3. 作者：liyang@lifang.com
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
+@import "../../variables.less" ;
+@import "../../mixins.less" ;
+@import "../../components/trend-search.less" ;
+@import "../../components/esf-items.less" ;
+body{
+  background: #F0F0F0;
+}
+.container{
+  /*头部header部分*/
+  >.header{
+    height: 4.4rem;
+    padding: 0 1.5rem;
+    background-color: @primary-color;
+    .flex();
+    flex-direction: row;
+    align-items: center;
+    >.left-gap,>.right{
+      .flex(2)
+    }
+    >.left{
+      vertical-align: middle;
+      align-items: center;
+      >a{
+        font-size: 1.4rem;
+        color: @default-color;
+        display: inline-block;
+      }
+      >i{
+        .triangle();
+        .triangle-down(4px,#fff)
+      }
+    }
+    >.middle{
+      .flex(8);
+      text-align: center;
+      >ul{
+        >li{
+          line-height: 2.8rem;
+          text-align: center;
+          display: inline-block;
+          font-size: 1.6rem;
+          &:first-child{
+            margin-right: 2.6rem;
+            >a{
+              color: @light-line-gray-color;
+            }
+          }
+          &:not(:first-child){
+            >a{
+              color: @default-color;
+            }
+            border-bottom:2px solid @default-color;
+          }
+        }
+      }
+    }
+    >.right{
+      text-align: right;
+      >i{
+        color: @default-color;
+        font-size: 2rem;
+      }
+    }
+  }
+  /*  描述*/
+  >.description{
+    padding: 0.2rem 1.5rem 1rem 1.5rem;
+    background: #4081D6;
+    /*  background-image: linear-gradient(0deg, #FFFFFF 2%, rgba(255,255,255,0.00) 100%);*/
+    >h3{
+      font-size: 2rem;
+      color: #FFFFFF;
+      font-weight: 400;
+      margin-bottom: 1rem;
+    }
+    >.description-detail{
+      .flex();
+      flex-direction: row;
+      >.unit-price{
+        .flex(4);
+      }
+      >.up-down,>.tot-house{
+        .flex(3);
+      }
+      >.up-down{
+        position: relative;
+        padding-left: 0.5rem;
+        /*   height: 5rem;*/
+        &:after{
+          position: absolute;
+          content:"";
+          width: 1px;
+          height: 100%;
+          opacity: 0.5;
+          right: 0;
+          top: 0;
+          bottom: 0;
+          border-left: 1px solid #FFFFFF;
+          -webkit-transform: scaleX(0.5);
+          -moz-transform: scaleX(0.5);
+          -ms-transform: scaleX(0.5);
+          -o-transform: scaleX(0.5);
+          transform: scaleX(0.5);
+        }
+        &:before{
+          position: absolute;
+          content:"";
+          width: 1px;
+          height: 100%;
+          opacity: 0.5;
+          left: 0;
+          top: 0;
+          bottom: 0;
+          border-left: 1px solid #FFFFFF;
+          -webkit-transform: scaleX(0.5);
+          -moz-transform: scaleX(0.5);
+          -ms-transform: scaleX(0.5);
+          -o-transform: scaleX(0.5);
+          transform: scaleX(0.5);
+        }
+      }
+      .tot-house{
+        padding-left: 0.5rem;
+        >a{
+          display: block;
+          >i{
+            font-size: 1.2rem;
+            color: #FFFFFF;
+          }
+        }
+      }
+      >div,div>a{
+        >span{
+          font-size: 1.2rem;
+          color: #FFFFFF;
+          line-height: 1.2rem;
+          opacity: 0.5;
+        }
+        >p{
+          font-size: 1.8rem;
+          color: #FFFFFF;
+          margin-top: 0.5rem;
+        }
+      }
+    }
+  }
+  /*  折线图*/
+  .echart {
+    overflow: hidden;
+    #main {
+      width: 100%;
+      height: 20rem;
+      margin-top: -2rem;
+    }
+  }
+
+  /*  区域模块*/
+  >.district-town{
+    margin-top: 0.6rem;
+    >.panel-header{
+      padding-right: 1.5rem;
+      font-size: 1.6rem;
+      color: #000000;
+      >span{
+        display: inline-block;
+        float: right;
+        font-size: 1.4rem;
+        color: #7C7C7C;
+        line-height: 1.6rem;
+      }
+    }
+    >.wk-body{
+      padding-right: 1.5rem;
+      >a.more-esf{
+        width: 100%;
+        height: 4.5rem;
+        background: #F6F6F6;
+        border-radius: 3px;
+        outline: none;
+        border: none;
+        margin-top: 1.5rem;
+        font-size: 1.4rem;
+        color: #92A7C3;
+        display: block;
+        line-height: 4.5rem;
+        text-align: center;
+      }
+    }
+  }
+ .more-link{
+   >a{
+    color: #000000;
+     display: block;
+     padding-right: 1.5rem;
+     >i{
+       float: right;
+     }
+   }
+ }
+}
+
+

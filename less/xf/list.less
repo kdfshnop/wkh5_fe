@@ -8,22 +8,7 @@
  @import "../components/filter.less";
  @import "../components/xf-items.less";
  @import "../components/conning-tower.less";
-
-
-.reach-bottom {// 到底了
-  height: 1px;
-  border-top: 1px solid #e8e8e8;
-  margin: 20px 0;
-  display: none;
-
-  .inner {
-    width: 50%;
-    margin: 0 auto;
-    margin-top: -10px;
-    text-align: center;
-    background-color: #fff;
-  }
-}
+ @import "../components/scene.less";
 
 body {
   background-color: #fff;
@@ -41,8 +26,7 @@ body {
   }
 }
 
-.no-data {
-  //display: none;
+.no-data {  
   font-size: 16px;
   color: #000;
   text-align: center;
@@ -67,25 +51,13 @@ body {
   }
 }
 
-.page-loading{
-  display: none;
-}
-
-.page-loading-inner {
-  position: fixed;
-  left: 0;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  background-color: rgba(0,0,0,.4);
-  z-index: 5;
-  display: flex;
-  align-items: center;
-  justify-content: center;  
-}
-
 .container {
   .has-margin {
     margin-top: 50px;
   }  
+}
+
+#list {
+  padding-left: 15px;
+  padding-right: 15px;
 }

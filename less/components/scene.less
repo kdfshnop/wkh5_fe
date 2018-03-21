@@ -1,0 +1,73 @@
+/*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ 1. 项目名称：yfyk2h5
+ 2. 文件名称：src -> less -> components -> scene.less (场景连篇)
+ 3. 作者：tangxuyang@lifang.com
+ -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
+ @import "../variables.less" ;
+ @import "../mixins.less" ;
+
+ .scene {
+     display: block;
+     padding: 15px 0 5px 0;
+     margin-left: -15px;
+     margin-right: -15px;
+     padding-left: 15px;     
+
+    .img {
+        float: left;
+        width: 92px;
+        height: 64px;
+        background-size: cover;
+        .border-radius(2px);
+
+        img {
+            width: 100%;
+            height: 100%;                        
+        }
+    }
+
+    .info {
+        margin-left: 109px;
+        h3 {
+            margin-top: 5px;
+            font-size: 16px;
+            line-height: 22.5px;
+            font-weight: 400;
+            color: #000;
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+        }
+
+        .detail {
+            margin-top: 10px;
+            color: #4081d6;            
+            border-radius: 100px;
+            font-size: 14px;
+            line-height: 20px;
+            width: 64px;
+            text-align: center;
+            display: inline-block;
+            border: 1px solid;
+            margin-bottom: 15px;
+        }
+    }
+
+    &.house {
+        .img {
+            background-image: url(../../images/house.png);
+        }
+    }
+
+    &.house-price {
+        .img {
+            background-image: url(../../images/house-price.png);
+        }
+    }
+
+    background-color: #f7f7f7;
+
+    //&::after {
+        .clearfix();
+    //}
+ }

@@ -3,7 +3,7 @@
  2. 页面名称：trend/esf/district(二手房价格行情 区域)
  3. 作者：liyang@lifang.com
  -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
-class townController extends Controller {
+class districtController extends Controller {
     constructor() {
         super();
         let dataaa = {
@@ -219,5 +219,5 @@ class townController extends Controller {
 类的初始化
 -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
 $(document).ready(function() {
-    new townController;
+    new districtController;
 });
