@@ -1,6 +1,6 @@
 /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
 1. 项目名称：悟空找房h5
-2. 文件名称：trend -> esf -> town.less (二手房价格行情，板块)
+2. 文件名称：trend -> new -> district.less (新房价格行情，区域)
 3. 作者：liyang@lifang.com
 -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
 @import "../../variables.less" ;
@@ -43,17 +43,17 @@ body{
           text-align: center;
           display: inline-block;
           font-size: 1.6rem;
-          >a{
-            color: @default-color;
-          }
           &:first-child{
             margin-right: 2.6rem;
-            border-bottom:2px solid @default-color;
-          }
-          &:not(:first-child){
             >a{
               color: @light-line-gray-color;
             }
+          }
+          &:not(:first-child){
+            >a{
+              color: @default-color;
+            }
+            border-bottom:2px solid @default-color;
           }
         }
       }
