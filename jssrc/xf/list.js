@@ -6,10 +6,7 @@
  class ListController extends Controller {
     constructor() {
         super();
-        var self = this;
-        this.total = 0;//总数
-        this.count = 0;//当前数量
-        this.pageSize = 10;//
+        var self = this;        
         this.paramGenerator = new ParamGenerator();
         $('.total').slideUp(1000);// 隐藏查询总条数        
         require(['../components/filter.min', '../components/bigdata.min', "../components/conning-tower.min"], function(Filter, BigData){   
@@ -19,8 +16,7 @@
                 "moduleType" : "xf" ,
                 "cityClick" : (data) => {
                 } ,
-                "searchResultItemClick" : (data) => {
-                    console.log(data);
+                "searchResultItemClick" : (data) => {                    
                     // 与filter中的区域地铁互斥
                     delete self.param.di;// 区域id
                     delete self.param.to;// 板块id
@@ -44,8 +40,7 @@
                 latitude: 234,                
                 controller: self,
                 BigData: BigData,
-                filterChanged: function(result){ 
-                    // 获得最新查询条件TODO: 还要集成搜索组件                                     
+                filterChanged: function(result){   
                     var param = self.paramGenerator.generateParamObj(result);
                     if(param.di || param.to || param.li || param.st){
                         // do nothing
@@ -81,6 +76,7 @@
 
         this.bindEvent();
         this.pullload();
+        this.insertTrendAndOldHouse();
     }
 
     // 根据查询条件进行相应的跳转
@@ -99,8 +95,10 @@
 
     createHouseItems(data){
         var str = "";
+        var cityPinyin = $('#visitedCityPinyin').val();
+        var channel = $('#channel').val();
         data.forEach(function(item){
-            str += '<a class="xf-item" href="/shanghai/rent/b5463d25fbc09ea7.html?channel=undefined">\
+            str += '<a class="xf-item" href="/'+cityPinyin+'/xflist/'+item.subEstateId+'.html' +(channel? '?channel='+channel : "")+'" data-bigdata="'+encodeURIComponent('{"eventName": "1050025", "eventParam": {"new_house_id":"'+item.subEstateId+'"}}')+'">\
                 <div class="img">\
                     <img src="'+item.imageUrl+'">\
                     <div class="yh">团购享 20万抵50万</div>\
@@ -110,10 +108,10 @@
                     <p class="district-town-area">\
                         <span>'+item.districtName+' '+item.townName+'</span><span>'+item.startSpace+'m-'+item.endSpace+'m</span>\
                     </p>\
-                    <ul class="tags">\
-                        <li class="yh">有优惠</li><li class="dt">近地铁</li><li class="">在售楼盘</li><li class="">即将开盘</li><li class="">即将开盘</li>\
-                    </ul>\
-                    <p class="unit-price"><span>'+item.unitPrice+'</span> <span>元/m</span></p>\
+                    <ul class="tags">'
+                + (item.hasActivity && '<li class="yh">有优惠</li>' || "") + (item.isSubwayEstate&&'<li class="dt">近地铁</li>'||'') + (!item.isSoonOpen&&'<li>在售楼盘</li>'||'<li>即将开盘</li>') + (item.hasVideo&&'<li>有视频</li>'||'') +
+                    '</ul>\
+                    <p class="unit-price"><span>'+item.unitPrice+'</span> <span>元/m²</span></p>\
                 </div>\
             </a>';
         });
@@ -164,11 +162,11 @@
         $('.reach-bottom').hide();
     }
 
-    insertTrendAndOldHouse(){// 插入跳转到价格行情和二手房的链接        
-        var cityName = "上海";
-        var $list = $('#list .xf-item:not(.house):not(.house-price)');
-        if($('#list .house-price').length == 0 && $list.length>9){
-            $('<a href="#" class="xf-item house-price">\
+    insertTrendAndOldHouse(){// 场景连篇        
+        var cityName = $('#visitedCityName').val();
+        var $list = $('#list .xf-item');
+        if($('#list .scene.house-price').length == 0 && $list.length>9){
+            $('<a href="#" class="scene house-price">\
                 <div class="img"></div>\
                 <div class="info">\
                     <h3>'+cityName+'房价涨了还是跌了？</h3>\
@@ -176,8 +174,8 @@
                 </div>\
             </a>').insertAfter($($list[9]));
         }
-        if($('#list .house').length == 0 && $list.length>19){
-            $('<a href="#" class="xf-item house">\
+        if($('#list .scene.house').length == 0 && $list.length>19){
+            $('<a href="#" class="scene house">\
                 <div class="img"></div>\
                 <div class="info">\
                     <h3>火爆高性价比二手房</h3>\
@@ -215,7 +213,7 @@
                 if(!self.param){
                     self.param = {};
                 }
-                return self.param;
+                return $.extend({},self.param,{cityId: $('#visitedCityId').val()});
             },   
             requestType: "POST",
             threshold : 50 ,
