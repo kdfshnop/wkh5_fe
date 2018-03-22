@@ -1,14 +1,15 @@
  /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
  1. 项目名称：悟空找房h5
- 2. 文件名称：rent -> detail.less (新房详情页)
+ 2. 文件名称：xf -> detail.less (新房详情页)
  3. 作者：tangxuyang@lifang.com
  -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
+@import "../variables.less";
+ @import "../mixins.less";
  @import "../components/assistant.less";
- @import "../components/supporting.less";
- @import "../components/rent-items.less"; 
+ @import "../components/supporting.less"; 
  @import "../components/album.less";
  @import "../components/map.less";
- @import "../components/rent-comments.less";
+ @import "../components/subestate-comments.less";
  @import "../components/download-app.less" ;
  @import "../components/xf-items.less"; 
  @import "../components/xf-dynamic.less";
@@ -346,6 +347,38 @@
         color: #4081D6;
     }
  }
+/*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+用户评论部分
+ -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
+ .estate-comments {
+    .panel-header {
+        //.clearfix() ;
+        .fit-height() ;
+        .pull-right {
+            color : @primary-color ;
+            display : block ;
+            .iconfont {
+                color : #7c7c7c ;
+                vertical-align : baseline ;
+            }
+        }
+    }
+    .subestate-comment {
+        .content {
+            border : none ;
+        }
+    }
+    .go-comment {
+        color : @primary-color ;
+        display : block ;
+        font-size : 14px ;
+        line-height : 30px ;
+        padding : 10px 0 ;
+    }
+ }
+ /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+周边楼盘部分
+ -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
 .around-building {
     .panel-header {
         padding-bottom : 0 ;
