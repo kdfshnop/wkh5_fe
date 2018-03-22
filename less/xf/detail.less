@@ -1,17 +1,21 @@
  /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
  1. 项目名称：悟空找房h5
- 2. 文件名称：rent -> detail.less (租房详情页)
+ 2. 文件名称：xf -> detail.less (新房详情页)
  3. 作者：tangxuyang@lifang.com
  -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
+@import "../variables.less";
+ @import "../mixins.less";
  @import "../components/assistant.less";
- @import "../components/supporting.less";
- @import "../components/rent-items.less"; 
+ @import "../components/supporting.less"; 
  @import "../components/album.less";
  @import "../components/map.less";
- @import "../components/rent-comments.less";
+ @import "../components/subestate-comments.less";
  @import "../components/download-app.less" ;
  @import "../components/xf-items.less"; 
  @import "../components/xf-dynamic.less";
+ body {
+     padding-bottom : 60px ;
+ }
 
  hr {
      color: #e8e8e8;
@@ -48,20 +52,30 @@
         color: #f95355;
         font-size: 24px;
         line-height: 54px;
-        margin-bottom: 5px;
-   
+        margin-bottom: 5px;   
         small {
             font-size: 12px;
             color: #999;          
             margin-left: 10px;        
-        }     
-        .calc {
-           position: absolute;
-           width: 29px;
-           height: auto;
-           top: 15px;
-           right: 0;
         }
+        a {
+            background-color : #f6f6f6 ;
+            .border-radius(3px) ;
+            color : #8da3c0 ;
+            display : block ;
+            height : 29px ;
+            line-height : 29px ;
+            padding : 0 ;
+            position : absolute ;
+            right : 0 ;
+            text-align : center ;  
+            top : 15px ;            
+            width : 29px ;
+            .iconfont {
+                position : relative ;
+                top : -2px ;
+            }
+        }       
     }
 
     .tags {
@@ -93,7 +107,7 @@
 
     .time {        
         dl {
-            margin: 15px 0;
+            margin-top : 15px ;
             font-size: 14px;
             dt {
                 float: left;
@@ -110,10 +124,12 @@
         }
     }
 
-    .activity {
-        border-top: 1px solid #e8e8e8;
+    .activity {        
         padding: 10px 0;
-        margin-bottom: -15px;        
+        margin-bottom: -15px;
+        hr {
+            margin : 5px 0 ;
+        }      
 
         li {
             margin-left: -8px;
@@ -132,12 +148,31 @@
             }
             font-size: 14px;
             line-height: 20px;
+            .text-ellipsis() ;
         }
     }
  }
 
  .xf-dynamics {
-    padding-bottom: 15px;
+     display : block ;
+     padding-bottom : 15px ;
+     .panel-header {
+         .clearfix() ;
+         .pull-right {
+             color : @primary-color ;
+         } 
+         .iconfont {
+             color : #7c7c7c ;
+             vertical-align : baseline ;
+         }
+     }
+     .panel-body {
+         .xf-dynamic {
+             h3 {
+                 .text-ellipsis() ;
+             }
+         }
+     }
 }
 
  .house-type {
@@ -229,11 +264,13 @@
             }
 
             span {
-                color: #7c7c7c;
-
+                color: #7c7c7c ;
+                display : inline-block ;
                 & + span {
                     color: #000;
                     margin-left: 15px;
+                    max-width : 56px ;
+                    .text-ellipsis() ;
                 }
             }
          }         
@@ -313,7 +350,42 @@
         color: #4081D6;
     }
  }
-.around-building{
+/*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+用户评论部分
+ -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
+ .estate-comments {
+    .panel-header {
+        //.clearfix() ;
+        .fit-height() ;
+        .pull-right {
+            color : @primary-color ;
+            display : block ;
+            .iconfont {
+                color : #7c7c7c ;
+                vertical-align : baseline ;
+            }
+        }
+    }
+    .subestate-comment {
+        .content {
+            border : none ;
+        }
+    }
+    .go-comment {
+        color : @primary-color ;
+        display : block ;
+        font-size : 14px ;
+        line-height : 30px ;
+        padding : 10px 0 ;
+    }
+ }
+ /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+周边楼盘部分
+ -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
+.around-building {
+    .panel-header {
+        padding-bottom : 0 ;
+    }
     .xf-item {
         padding-left: 0;
     }
@@ -328,10 +400,14 @@
 }
 
 .consult-phone{
-    display: block;
-    font-size: 14px;
-    line-height: 50px;
-    text-align: center;
-    color: #fff;
-    background-color: #4081d6;
+    bottom : 60px ;
+    display : block ;
+    font-size : 14px ;
+    left : 0 ;
+    line-height : 50px ;
+    position : fixed ;
+    text-align : center ;
+    color : #fff ;
+    background-color : #4081d6 ;
+    width : 100% ;
 }
