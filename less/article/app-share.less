@@ -1,0 +1,351 @@
+@import "../mixins.less";
+@import "./wechatAudio.less";
+@wkcolor: #4081D6;
+html ,
+body {
+    background:#F0F0F0;
+    color:#4E4E4E;
+}
+
+a:active ,
+a:link ,
+a:visited ,
+a:hover {
+    text-decoration:none;
+}
+
+.details-container {    
+    background:#F0F0F0;
+    &>div {
+        padding:0 15px;
+        background:#FFFFFF;
+    }
+    .mb-10 {
+        margin-bottom: 10px;
+    }
+    .mt-10 {
+        margin-top: 10px;
+    }
+    .pb-10 {
+        padding-bottom: 10px;
+    }
+    .pt-10 {
+        padding-top: 10px;
+    }
+    .inline-block {        
+        display: inline-block;
+    }
+    .left {
+        float:left;
+    }
+    .right {
+        float:right;
+    }
+    .txt-right {
+        text-align:right;
+    }
+    .txt-left {
+        text-align:left;
+    }
+    .txt-center {
+        text-align:center;
+    }
+    >.details-Info{
+        padding: 20px 15px;
+        &>.title {
+            font-size: 24px;
+            line-height: 33.5px;            
+            display: -webkit-box;
+            display: box;
+            -webkit-box-orient: vertical;
+            white-space: initial;
+            overflow: hidden;
+        }
+        &>.article-info{
+            margin-top: 5px;
+            margin-bottom: 20px;
+            height: 20px;
+            >div{
+                width: 50%;
+                height: 20px;
+                line-height: 20px;
+                color: #999;
+            }
+            >.left{
+                >span{
+                    margin-left: 5px;
+                }
+            }
+            >.right{
+                text-align: right;
+                span{
+                    margin-right: 2.5px;
+                    color: #4e4e4e;
+                }
+            }
+        }
+        &>.article-content {
+            display:none;
+            img ,
+            video {
+                padding-top: 10px;
+                padding-bottom: 10px;
+                width:100%;
+            }
+            .nopandding {
+                line-height:0;
+                img {
+                    padding:0;
+                    margin:0;
+                }
+            }
+            embed {
+                display:none;
+            }
+            video {
+                height: 194px;
+                display:block;
+            }
+            a {
+                color:#4081D6;
+            }
+            ol ,
+            ol li {
+                list-style:"";
+                padding:0 15px;
+            }
+            ul ,
+            ul li {
+                list-style:disc;
+                padding:0 15px;
+            }
+            .link {
+                color:#4081D6;
+                font-size: 14px;
+                font-weight: 600;
+            }
+
+            /*
+            * prd要求（wkwap_pd 3.12)            
+                1、无论后台大家怎么编辑文字，前台显示的格式都一样为：16号字， 黑色，行距1.75.段落和段落之间空行。
+                2、后台关闭字体大小调解，前台显示的格式都一样为：16号字， 黑色，行距1.75.段落和段落之间空行。
+            */
+            p, div, a, span{
+                font-size: 16px !important;
+                color: #000 !important;
+                line-height: 1.75 !important; 
+            }
+
+            font-size: 16px !important;
+        }
+        &>.operation {
+            .clearfix();
+            margin: 15px 0 0 0;
+            height: 20px;
+            line-height: 20px;
+            font-size: 14px;
+            &>div {
+                width: 50%;
+            }
+            &>.sub-operation {
+                &>span {
+                    cursor:pointer;
+                    &>i {
+                        font-size: 16px;
+                        margin-right: 4px;
+                        color:#92A7C3;
+                    }
+                }
+                &>span:first-child {
+                    margin-right: 10px;
+                }
+            }
+        }
+    }
+    &>.comment {
+        &>.title {            
+            padding-top: 15px;
+            padding-bottom: 5px;
+            margin-bottom: 10px;
+            font-size: 16px;
+            color:#4E4E4E;
+        }
+        &>.write {
+            &>form {
+                &>div {
+                    border:1px solid #E4E4E4;
+                    textarea {
+                        border:none;
+                        font-size: 16px;
+                        width: 100%;
+                        resize:none;
+                        line-height: 16px;
+                        height: 37.5px;
+                        padding: 10px 5px 5px 5px;
+                    }
+                }
+            }
+            &>.operation {
+                margin-top: 15px;
+                text-align:right;
+                span {
+                    width: 72px;
+                    height: 30px;
+                    display:inline-block;
+                    padding: 5.5px 10px;
+                    font-size: 14px;
+                    line-height: 18px;
+                    color:#999999;
+                    cursor:pointer;
+                    text-align:center;
+                    &.submit {
+                        border: 2px solid #999999;
+                        .border-radius(3px);
+                    }
+                    &.cancel {
+                        margin-right: 10px;
+                    }
+                }
+            }
+        }
+        &>.no-commet {
+            text-align:left;
+            color:#999999;
+            font-size: 14px;
+            padding: 6px 0 21px 0;            
+        }
+        &>.comment-list {
+            &>.item {
+                padding: 15px 0;
+                border-bottom:1px solid #E4E4E4;
+                &>.commenter {
+                    line-height: 30px;
+                    img {
+                        .border-radius(15px);
+                        width: 30px;
+                        height: 30px;
+                        margin-right: 10px;
+                        vertical-align:middle;
+                        display:inline-block;
+                    }
+                    &>.name {
+                        font-size: 16px;
+                        vertical-align:middle;
+                        color:#999999;
+                    }
+                }
+                &>.content {
+                    font-size: 16px;
+                    word-wrap: break-word; 
+                }
+                &>.datetime {
+                    font-size: 14px;
+                    color:#999999;
+                    &>.date {
+                        width: 84.5px;
+                        margin-right: 10px;
+                    }
+                }
+            }
+        }
+        &>.pagination {
+            display: flex;
+            display: -webkit-flex;
+            justify-content: center;
+            -webkit-justify-content: center;
+            font-size: 14px;
+            padding: 15px 0;
+            color: @wkcolor;
+            &>a {
+                display: block;
+                min-width: 24px;
+                height: 24px;
+                line-height: 24px;
+                margin: 0 5px;
+                padding: 0 2.5px;
+                color: #757575;
+                background-color: #f5f5f5;
+                text-align: center;
+            }
+            &>.on {
+                background: @wkcolor;
+                .border-radius(3px);
+                color: #fff;
+            }
+            &>.disabled {
+                display: none;
+            }
+        }
+    }
+    &>.belongs ,
+    &>.recommend {
+        &>.title {
+            border-bottom:1px solid #CCCCCC;
+            .clearfix();
+            padding: 15px 0;
+            margin-bottom: 15px;
+            font-size: 16px;
+            color:#4E4E4E;
+            .left {
+                color:#4E4E4E;
+            }
+            .redirect {
+                color:@wkcolor;
+                i {
+                    font-size: 16px;
+                }
+            }
+        }
+        &>.item {
+            .clearfix();
+            padding-bottom: 10px;
+            .left{
+                width: 50px;
+                height: 50px;
+                .border-radius(2.5px);
+                overflow: hidden;
+            }
+            img {
+                .border-radius(2.5px);
+                width: 50px;                
+            }
+            .details {
+                padding-left: 10px;
+                width: 285px;
+                .title {
+                    .text-ellipsis();
+                    padding-bottom: 5px;
+                    font-size: 16px;
+                    color:#4E4E4E;
+                }
+                .desc {
+                    .text-ellipsis();
+                    color:#999999;
+                    font-size: 14px;
+                }
+            }
+        }
+    }
+    &>.phone {
+        text-align:center;
+        position:fixed;
+        bottom: 20px;
+        right: 20px;
+        width: 55px;
+        height: 46px;
+        box-shadow:0 2px 3px 0 rgba(0, 0, 0, 0.36);
+        padding: 1px;
+        .border-radius(3px);
+        p {
+            font-size: 10px;
+            color:#737373;
+            i {
+                font-size: 10px;
+                color:@wkcolor;
+            }
+            &:first-child {
+                margin-top: 2.5px;
+            }
+        }
+    }
+}

@@ -1,0 +1,146 @@
+ @import '../mixins.less';
+ @base: 20px;
+ .db {
+     display: block;
+ }
+ 
+ .weixinAudio {
+     padding-top:20px;
+     padding-bottom:20px;
+     line-height: @base * 2;
+     margin-left: 15px;
+ }
+ 
+ .audio_area {
+     display: inline-block;
+     width: 398px;
+     height: 74px;
+     vertical-align: top;
+     margin: 0px 1px 0px 0;
+     font-size: 0;
+     position: relative;
+     font-weight: 400;
+     text-decoration: none;
+     -ms-text-size-adjust: none;
+     -webkit-text-size-adjust: none;
+     text-size-adjust: none;
+ }
+ 
+ .audio_arrow{
+     .triangle-prev(15px ,#a5e463);
+     position: absolute;
+     top: 50%;
+     margin-top: -15px;
+     margin-left: -13px;
+ }
+ 
+ .audio_arrow_back{
+     .triangle-prev(15px,#89B76B);
+     position: absolute;
+     top: 50%;
+     margin-top: -15px;
+     margin-left: -14px;
+ }
+ 
+ 
+ .audio_wrp {
+     border: 1px solid #89B76B;
+     background-color: #a5e463;
+     .border-radius(@base);
+     overflow: hidden;
+     // padding: @base * 1.2 @base * 2  @base * 1.2 @base * 1.2;
+ }
+ 
+ .audio_play_area {
+     float: left;
+     margin: @base * .9 @base * 2.2 @base @base * .5;
+     font-size: 0;
+     width: @base * 1.8;
+     height: @base * 2.2;
+ }
+ 
+ .playing .audio_play_area .icon_audio_default {
+     display: block;
+   
+ }
+ 
+ .audio_play_area .icon_audio_default {
+     background: transparent url(../img/source/common/iconloop.png) no-repeat 0 0;
+     width: @base * 1.8;
+     height: @base * 2.5;
+     vertical-align: middle;
+     display: inline-block;
+     -webkit-background-size: @base * 5.4 35px;
+     background-size: @base * 5.4 35px;
+     background-position: -@base * 3.6 center;
+     position: absolute;
+     top: 15px;
+     left: 20px;
+ }
+ 
+ .audio_play_area .icon_audio_playing {
+     background: transparent url(../img/source/common/iconloop.png) no-repeat 0 0;
+     width: @base * 1.8;
+     height: @base * 2.5;
+     vertical-align: middle;
+     display: inline-block;
+     -webkit-background-size: @base * 5.4 35px;
+     background-size: @base * 5.4 35px;
+     -webkit-animation: audio_playing 1s infinite;
+     background-position: 0px center;
+     display: none;
+     position: absolute;
+     top: 15px;
+     left: 20px;
+ }
+ 
+ .tips_global {
+     color: #8c8c8c;
+ }
+ 
+ .audio_length {
+     color: #4E4E4E;
+     display: inline-block;
+     margin-top: @base;
+     margin-left: 10px;
+     font-size: 24px;/*px*/
+ }
+ 
+ .audio_area .progress_bar {
+     bottom: -10px;
+     background-color: #0cbb08;
+     height: 2px;
+     left: 0;
+     position: absolute;
+     width: 0;
+     .border-radius(@base);
+     max-width: 95%;
+     margin-left: @base * .8;
+ }
+ 
+ .playing .audio_play_area .icon_audio_default {
+     display: none;
+ }
+ 
+ .playing .audio_play_area .icon_audio_playing {
+     display: inline-block;
+ }
+ 
+ @-webkit-keyframes audio_playing {
+     30% {
+         background-position: 0px center;
+     }
+     31% {
+         background-position: -@base * 1.8 center;
+     }
+     61% {
+         background-position: -@base * 1.8 center;
+     }
+     61.5% {
+         background-position: -@base * 3.6 center;
+     }
+     100% {
+         background-position: -@base * 3.6 center;
+     }
+ }
+ 
