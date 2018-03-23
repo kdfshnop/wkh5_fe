@@ -1,43 +1,34 @@
 @import "../variables.less";
-@import "../mixins.less";
-
-div {
-    padding: 0 15px;
+@import "../mixins.less" ;
+body {
+    background-color : #fff ;
 }
-
 header {    
-    position: relative;
-    .right {        
-        text-align: center;
-        font-size: 18px;
-        line-height: 52px;
-    }    
-
-    box-shadow: 0 0.1rem 0.3rem 0 rgba(0,0,0,.15);
-
+    box-shadow : 0 0.1rem 0.3rem 0 rgba( 0 , 0 , 0 , .15 ) ;
+   position : relative ;
+    div {        
+        text-align : center ;
+        font-size : 18px ;
+        line-height : 52px ;
+    }
     .iconfont {
-        position: absolute;
-        left: 15px;
-        top: 0;
-        height: 52px;
-        line-height: 52px;
+        font-size : 1.4rem ;
+        left : 15px ;
+        position : absolute ;
+        top : 19px ;
     }
 }
-
-dl {    
-    padding: 10px 0;
-    font-size: 15px;
-    dt {
-        display: block;
-        float: left;
+dl {
+    .clearfix() ;
+    padding : 10px 0 ;
+    margin : 0 15px ;
+    font-size : 15px ;
+    dt {        
+        float : left ;
     }
-
-    dd {
-        display: block;
-        margin-left: 220px;
-        color: #999;
-        text-align: right;
-    }
-
-    .clearfix();
+    dd {        
+        margin-left : 30% ;
+        color : #999 ;
+        text-align : right ;
+    }    
 }
