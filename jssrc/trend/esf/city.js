@@ -6,14 +6,11 @@
 class cityController extends Controller {
     constructor() {
         super();
-            let dataaa = {
-                   "monthList":["4月", "5月", "6月", "7月", "8月", "9月", "10月", "11月", "12月", "1月", "2月", "3月"],
-                   "seriesData":["10000", "14000", "12000", "15000", "15000", "18000", "15000", "15000", "13000", "0", "15000", "15000"]
-             };
          let echartsData =  $('.echart').attr('data-echart');
          /*console.log(JSON.parse(echartsData));*/
-         console.log(this.recombineM(JSON.parse(echartsData)));
-        this.echartFun(dataaa) ;
+        if (echartsData){
+            this.echartFun(this.recombineM(JSON.parse(echartsData))) ;
+        }
         let that = this;
         /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
        区域的加载更多和收起
@@ -45,7 +42,6 @@ class cityController extends Controller {
 
             }
         }) ;
-        $('.city-name').html($.cookie('userSelectedCityName')||$.cookie('location_cityName') || "上海")
     }
     /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
     折线图函数异步操作

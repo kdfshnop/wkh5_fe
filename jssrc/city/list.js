@@ -14,7 +14,7 @@ class cityListController extends Controller {
         if($.cookie('location_cityName')){
             $('.location').html( $.cookie('location_cityName'));
         }else {
-            $('.inside-city').hide();
+            $('.location').html( "定位失败");
         }
         /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
         动态渲染高度 和头部的置顶
@@ -56,8 +56,8 @@ class cityListController extends Controller {
             let cityName =  $(this).html();
             self.backOrigin(pinyin,cityId,cityName)
         });
-
     }
+
     /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
     返回最终的来源   @businessType : 业务类型，可以是old (二手房) | new (新房) | rent (租房) | xfPrice,newTrend (新房价格行情) | esfPrice ,esfTrend(新房价格行情)，只当前模块是哪个业务
     -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
@@ -73,9 +73,9 @@ class cityListController extends Controller {
         }else if(url('?businessType') == "esfPrice") {
             window.location.href = "/esfPrice/price.html?regionId="+cityId+"&regionType=1"
         } else if (url('?businessType') == "esfTrend"){
-            window.location.href = "/trend/esf/city/"+cityId
+            window.location.href = "/"+pinyin+"/trend/esf"
         } else if (url('?businessType') == "newTrend"){
-            window.location.href = "/trend/new/city/"+cityId
+            window.location.href = "/"+pinyin+"/trend/new"
         }
         $.cookie('userSelectedCity',pinyin,{path: '/',});
         $.cookie('userSelectedCityId',cityId,{path: '/',});
