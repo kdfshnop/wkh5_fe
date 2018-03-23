@@ -342,20 +342,27 @@
             this.request({ 
                 apiUrl : this.apiUrl.getCityByLola , 
                 requestData : { "latitude" : latitude , "longitude" : longitude } , 
-                success : (result) => {
-                    /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
-                    写入几个缓存
-                    -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
-                    $.cookie("locationCityId" , result.data.cityId , { path : "/" , expires : 365 * 24 * 60 } ) ;
-                    $.cookie("locationCityName" , result.data.cityName , { path : "/" , expires : 365 * 24 * 60 } ) ;
-                    $.cookie("locationCityPinyin" , result.data.cityPinyin , { path : "/" , expires : 365 * 24 * 60 } ) ; 
-                    $.cookie("locationCityChina" , result.data.china , { path : "/" , expires : 365 * 24 * 60 } ) ;                    
+                success : (result) => {                                        
                     /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
                     直接跳转到对应城市结束
                     -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
                     if( parseInt( result.data.cityId , 10 ) !== parseInt( $("#visitedCityId").val() , 10 ) )  window.location.href = this.combineUrl(result.data.cityPinyin) ;
                     else {
+                        /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+                        写入几个缓存
+                        -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
+                        $.cookie("locationCityId" , result.data.cityId , { path : "/" , expires : 365 * 24 * 60 } ) ;
+                        $.cookie("locationCityName" , result.data.cityName , { path : "/" , expires : 365 * 24 * 60 } ) ;
+                        $.cookie("locationCityPinyin" , result.data.cityPinyin , { path : "/" , expires : 365 * 24 * 60 } ) ; 
+                        $.cookie("locationCityChina" , result.data.china , { path : "/" , expires : 365 * 24 * 60 } ) ;
+                        /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+                        执行定位回调
+                        -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
                         this.locationCallback({ "latitude" : latitude , "longitude" : longitude }) ;
+                        /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+                        城市选择弹层定位城市改写
+                        -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
+                        $(".city-selector .tabs-frame .location-city").text(result.data.cityName) ;
                         /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
                         为了保证cookie的统一写入口，页面同步渲染的时候将城市信息放到页面隐藏域中，然后由FE来写到 cookie中
                         -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
@@ -366,22 +373,20 @@
         } , ( error ) => {
             switch(error.code) {
                 case error.PERMISSION_DENIED :  // 用户阻止了授权
-                this.locationCallback() ;
+                this.locationCallback() ;                
+                $(".city-selector .tabs-frame .location-city").text("定位失败") ;
                 this.popCitySelector() ;
                 break ;
 
-                case error.POSITION_UNAVAILABLE :  //定位信息无效
-                this.locationCallback() ;
+                case error.POSITION_UNAVAILABLE :  //定位信息无效                
                 this.orientateTimeout() ;
                 break ;
 
-                case error.TIMEOUT :  //定位超时
-                this.locationCallback() ;
+                case error.TIMEOUT :  //定位超时                
                 this.orientateTimeout() ;
                 break ;
 
-                case error.UNKNOWN_ERROR :  //其他不可预知的错误
-                this.locationCallback() ;
+                case error.UNKNOWN_ERROR :  //其他不可预知的错误                
                 this.orientateTimeout() ;
                 break ;
             }
@@ -423,7 +428,7 @@
                 绘制tabs-frame
                 -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/                    
                 let $domesticFrame = $(document.createElement("DIV")).addClass("tabs-frame domestic") ;
-                if($.cookie("locationCityName") && $.cookie("locationCityChina")) $domesticFrame.append("<span>定位城市</span><a data-cityid=\"" + $.cookie("locationCityId") + "\" data-pinyin=\"" + $.cookie("locationCityPinyin") + "\" data-china=\"" + $.cookie("locationCityChina") + "\">" + $.cookie("locationCityName") + "</a>") ;
+                if($.cookie("locationCityName") && $.cookie("locationCityChina")) $domesticFrame.append("<span>定位城市</span><a class=\"location-city\" data-cityid=\"" + $.cookie("locationCityId") + "\" data-pinyin=\"" + $.cookie("locationCityPinyin") + "\" data-china=\"" + $.cookie("locationCityChina") + "\">" + $.cookie("locationCityName") + "</a>") ;
                 if( Object.keys(cities.domestic).length ) {
                     for( let key in cities.domestic ) {
                         $domesticFrame.append("<span>" + key + "</span>") ;
@@ -435,7 +440,7 @@
                 $(".city-selector").append($domesticFrame) ;
 
                 let $overseasFrame = $(document.createElement("DIV")).addClass("tabs-frame overseas") ;
-                if($.cookie("locationCityName") && ! $.cookie("locationCityChina")) $domesticFrame.append("<span>定位城市</span><a data-cityid=\"" + $.cookie("locationCityId") + "\" data-pinyin=\"" + $.cookie("locationCityPinyin") + "\"  data-china=\"" + $.cookie("locationCityChina") + "\">" + $.cookie("locationCityName") + "</a>") ;
+                if($.cookie("locationCityName") && ! $.cookie("locationCityChina")) $domesticFrame.append("<span>定位城市</span><a class=\"location-city\" data-cityid=\"" + $.cookie("locationCityId") + "\" data-pinyin=\"" + $.cookie("locationCityPinyin") + "\"  data-china=\"" + $.cookie("locationCityChina") + "\">" + $.cookie("locationCityName") + "</a>") ;
                 if( Object.keys(cities.overseas).length ) {
                     for( let key in cities.overseas ) {
                         $overseasFrame.append("<span>" + key + "</span>") ;
@@ -454,8 +459,13 @@
     }    
     /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
     定位信息无效，定位超时，其他不可预知的错误情况下的处理
+    @1. 先执行定位回调
+    @2. 改写城市选择弹层定位城市显示
+    @3. 弹出定位失败提示去选择
     -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
     orientateTimeout() {
+        this.locationCallback() ;
+        $(".city-selector .tabs-frame .location-city").text("定位失败") ;
         $.modal({
             "id" : "orientateTimeoutDialog" ,
             "title" : "" ,      
