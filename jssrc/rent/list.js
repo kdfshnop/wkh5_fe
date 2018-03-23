@@ -23,7 +23,7 @@ class ListController extends Controller {
             identical : (position)=> {
 
             }
-        }) ;
+        });
         this.readyFun();
         let that = this;
         let cityid = 43;
@@ -70,9 +70,9 @@ class ListController extends Controller {
         根据定位 展示定位附近
         -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
         if($.cookie('location_latitude') && $.cookie('location_longitude')) {
-            $('.location-name').html("附近")
+            $('.location-name').html("附近");
         }else{
-            $('.location-name').html("定位失败")
+            $('.location-name').html("定位失败");
         }
         /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
         请求接口 获取城市区域
@@ -156,7 +156,9 @@ class ListController extends Controller {
                                     locationList+=`<li data-ne="ne-${item}">${item}米</li>`
                                 }
                             });
-                            $('#town').empty().append(locationList);
+                             if ($(this).html() == "附近"){
+                                 $('#town').empty().append(locationList);
+                             }
                         } else {
                             dataDic.forEach(function (item) {    //
                                 if (conditionObject["di"]){

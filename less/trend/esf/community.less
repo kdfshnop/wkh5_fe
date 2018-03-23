@@ -8,7 +8,7 @@
 @import "../../components/trend-search.less" ;
 @import "../../components/esf-items.less" ;
 body{
-  background: #F0F0F0;
+  background: #fff;
 }
 .container{
   /*头部header部分*/
@@ -71,6 +71,7 @@ body{
   >.description{
     padding: 0.2rem 1.5rem 1rem 1.5rem;
     background: #4081D6;
+    height: 8.5rem;
     /*  background-image: linear-gradient(0deg, #FFFFFF 2%, rgba(255,255,255,0.00) 100%);*/
     >h3{
       font-size: 2rem;
@@ -158,10 +159,15 @@ body{
       margin-top: -2rem;
     }
   }
-
+  >.empty-color{
+    height: 6px;
+    width: 100%;
+    background-color: #F0F0F0;
+    border: none;
+  }
   /*  区域模块*/
   >.district-town{
-    margin-top: 0.6rem;
+   /* margin-top: 0.6rem;*/
     >.panel-header{
       padding-right: 1.5rem;
       font-size: 1.6rem;
@@ -197,11 +203,18 @@ body{
     color: #000000;
      display: block;
      padding-right: 1.5rem;
+     line-height: 22px;
      >i{
        float: right;
      }
    }
  }
+  >img{
+    width:157.5px ;
+    height:144px;
+    margin-left: 30%;
+    margin-top: 30%;
+  }
 }
 
 
