@@ -12,8 +12,9 @@ class districtController extends Controller {
         };
         let echartsData =  $('.echart').attr('data-echart');
         /*console.log(JSON.parse(echartsData));*/
-        console.log(this.recombineM(JSON.parse(echartsData)));
-        this.echartFun(dataaa) ;
+        if (echartsData){
+            this.echartFun(this.recombineM(JSON.parse(echartsData))) ;
+        }
         let that = this;
         /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
        区域的加载更多和收起
@@ -34,7 +35,16 @@ class districtController extends Controller {
             listSearch.init(that);
             listSearch.selectFun("icon-search");
         });
+        /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+        定位的一个实例
+        -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
+        new Location({
+            businessType : "esfTrend" ,
+            cityApiUrl : this.apiUrl.common.getCityByLatLon ,
+            identical : (position)=> {
 
+            }
+        }) ;
     }
     /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
     折线图函数异步操作

@@ -76,6 +76,8 @@ ParamGenerator.DEFAULT = {
     houseTypes: ParamGenerator.createMappingFunc(1, "ht"),// 户型
     areas: ParamGenerator.createMappingFunc(1, "ar"),// 面积
     ages: ParamGenerator.createMappingFunc(1, "ag"), // 房龄
+    longitude: ParamGenerator.createMappingFunc(1, "lon"),// 经度
+    latitude: ParamGenerator.createMappingFunc(1, "lat"),// 纬度
 };
 
 // 对象转成queryString，用-隔开
@@ -142,7 +144,9 @@ ParamGenerator.convert2FilterParam = function(obj){
         ht: ParamGenerator.createMappingFunc(2, "houseTypes.houseTypes"),        
         ht: ParamGenerator.createMappingFunc(2, "houseTypes.decorations"),
         ag: ParamGenerator.createMappingFunc(2, "houseTypes.houseAges"),
-        ar: ParamGenerator.createMappingFunc(2, "houseTypes.ares"),       
+        ar: ParamGenerator.createMappingFunc(2, "houseTypes.ares"),  
+        lon: ParamGenerator.createMappingFunc(1, "longitude"),
+        lat: ParamGenerator.createMappingFunc(1, "latitude"),
     };
 
     var ret = {};
