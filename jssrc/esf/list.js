@@ -22,7 +22,7 @@ class ListController extends Controller {
                 "moduleType" : "esf" ,
                 "cityClick" : () => {
                     
-                } ,
+                } ,                
                 "searchResultItemClick" : (data) => {
                     // 与filter中的区域地铁互斥
                     delete self.param.di;// 区域id
@@ -41,13 +41,13 @@ class ListController extends Controller {
 
             self.filter = new Filter($.extend({}, Filter.ESFDEFAULT,{
                 el: ".filter",                
-                cityId: 43,
-                near: false,
-                longitude: 222,
-                latitude: 234,
+                cityId: 43,                
                 BigData: BigData,                
                 controller: self,
+                near: true,
                 filterChanged: function(result){     
+                    console.log("条件变了:", result);
+                    debugger;
                     var param = self.paramGenerator.generateParamObj(result);
                     if(param.di || param.to || param.li || param.st){
                         // do nothing
@@ -65,6 +65,8 @@ class ListController extends Controller {
                     self.goto();
                 }                
             }));
+
+            window.filter = self.filter;
         }) ;
 
         // 从url中解析参数
@@ -77,9 +79,7 @@ class ListController extends Controller {
             if(obj){
                 self.param = obj;
             }
-        }
-                    
-        window.filter = self.filter;
+        }                            
 
         this.bindEvent();
         this.pullload();

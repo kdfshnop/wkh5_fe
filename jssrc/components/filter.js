@@ -381,7 +381,7 @@ define([],function(){
                                 <div class="district-inner">\
                                     <ul class="parent">\
                                         <%if(near){%>\
-                                        <li data-value="near" class="near"><%= latitude && longitude ? "附近" : "定位失败"%></li>\
+                                        <li data-value="near" class="near">定位中...</li>\
                                         <%}%>\
                                         <li>不限</li>\
                                         <%for(var i = 0; i< districts.length; i++){%>\
@@ -389,7 +389,7 @@ define([],function(){
                                         <%}%>\
                                     </ul>\
                                     <div class="child">\
-                                    <%if(longitude && latitude){%>\
+                                    <%if(near){%>\
                                         <ul data-value="near" class="near">\
                                             <%for(var i = 0; distances && i < distances.length; i++){%>\
                                                 <li class="near" data-value="<%=distances[i].value%>"><%= distances[i].text%></li>\
@@ -427,7 +427,8 @@ define([],function(){
                             </div>\
                         </div>\
                         </div></div>';        
-        var html = _template(templateStr)({districts: options.districts, metros: options.metros, longitude: options.longitude, latitude: options.latitude, distances: options.distances, near: options.near, bigDataParams: options.bigDataParams});        
+        var html = _template(templateStr)({districts: options.districts, metros: options.metros, longitude: options.longitude, latitude: options.latitude, distances: options.distances, near: options.near, bigDataParams: options.bigDataParams}); 
+        console.log(options.distances);       
         return html;
     }
 
@@ -456,8 +457,7 @@ define([],function(){
         });
         if(typeof result.price != 'undefined'){
             delete this.result.price;
-        }
-        // TODO:读取自定义总价
+        }        
 
         // 户型        
         $('.house-type-section').each(function(){
@@ -491,6 +491,15 @@ define([],function(){
         });*/
         // 区域地铁的有点复杂，还是在点击选中时直接复制给this.result
         
+
+        // 经纬度
+        if(this.result.longitude){
+            this.result.longitude = this.options.longitude;
+        }
+        if(this.result.latitude){
+            this.result.latitude = this.options.latitude;
+        }
+
         result = $.extend({}, this.result, result);
         this.options.filterChanged && this.options.filterChanged(result);        
     }
@@ -677,7 +686,10 @@ define([],function(){
         // 区域、地铁
         $('.filter .district .parent li').click(function(){
             var $this = $(this);
-            var id = $this.data('value');                  
+            var id = $this.data('value');   
+            if(id=="near" && !self.locationSuccessful){// 点击的附近区块，判断定位成功
+                return;
+            }               
             $this.siblings().removeClass('active');
             $this.addClass('active');
             var $parent = $this.parent();
@@ -703,7 +715,8 @@ define([],function(){
         });
         $('.filter .metro .parent li').click(function(){
             var $this = $(this);
-            var id = $this.data('value');                  
+            var id = $this.data('value');            
+            
             $this.siblings().removeClass('active');
             $this.addClass('active');
             var $parent = $this.parent();
@@ -729,7 +742,7 @@ define([],function(){
         });
 
         // 板块、地铁站
-        $('.filter .district .child li').click(function(){
+        $('.filter .district .child li').click(function(){        
             var $this = $(this);
             $('.district-metro .child li').removeClass('active');
             $this.addClass('active');
@@ -1076,6 +1089,13 @@ define([],function(){
             this.$sortLabel.text('排序').parent().removeClass('active');
         }
 
+        //经纬度
+        if(value.longitude){
+            this.options.longitude = value.longitude;
+        }
+        if(value.latitude){
+            this.options.latitude = value.latitude;
+        }
         //this.result = value || {};
     }
 
@@ -1101,6 +1121,19 @@ define([],function(){
 
     Filter.prototype.getResult = function(){
         return this.result;
+    };
+
+    Filter.prototype.setLocationInfo = function(val){
+        if(val){// 定位成功
+            this.locationSuccessful = true;
+            this.$el.find('.district .parent .near').text('附近');
+            this.options.longitude = val.longitude;
+            this.options.latitude = val.latitude;
+            //this.options.longitude = 111;
+            //this.options.latitude = 33;
+        }else{// 失败
+            this.$el.find('.district .parent .near').text('定位失败');
+        }
     };
 
     Filter.XFDEFAULT = {        
