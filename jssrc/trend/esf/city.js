@@ -58,13 +58,23 @@ class cityController extends Controller {
     -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
     echartFun(echartData){
         let seriesData=[];
-        echartData.seriesData.forEach(function(item){
+        let countNum = 0;
+        let echartShow = true;
+        echartData.seriesData.forEach(function(item,index){
             if(item == 0){
                 seriesData.push(null);
+                countNum += 1;
+                if (countNum == 11 && index == 10){
+                    echartShow = false;
+                }
             }else{
                 seriesData.push(parseFloat(item));
             }
         });
+        if (!echartShow) {
+            $('#estateEchart').hide();
+            return
+        }
         let sortArray = echartData.seriesData.sort(function(a, b) {
             return parseFloat(a) - parseFloat(b);
         });
@@ -221,7 +231,7 @@ class cityController extends Controller {
                 let month = item.date.split('-')[1];
                 if (month.indexOf('0') == 0) {
                     echartData.monthList.push(month.charAt(1))
-                }   else if(index == 11) {
+                }   if(index == 11) {
                     echartData.monthList.push(month+' (月)')
                 } else {
                     echartData.monthList.push(month)
