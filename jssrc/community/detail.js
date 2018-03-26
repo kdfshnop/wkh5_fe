@@ -29,10 +29,6 @@
                 if (data.status == 1){
                     let dataRes = data;
                     let echartData =  that.recombineM(dataRes.data);
-                /*    let dataaa = {
-                          "monthList":["4月", "5月", "6月", "7月", "8月", "9月", "10月", "11月", "12月", "1月", "2月", "3月"],
-                          "seriesData":["10000", "14000", "12000", "15000", "15000", "18000", "15000", "15000", "13000", "0", "15000", "15000"]
-                    };*/
                     that.echartFun(echartData) ;
                 }
             }});
@@ -43,13 +39,23 @@
      -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
      echartFun(echartData){
          let seriesData=[];
-         echartData.seriesData.forEach(function(item){
+         let countNum = 0;
+         let echartShow = true;
+         echartData.seriesData.forEach(function(item,index){
              if(item == 0){
                  seriesData.push(null);
+                 countNum += 1;
+                 if (countNum == 11 && index == 10){
+                     echartShow = false;
+                 }
              }else{
                  seriesData.push(parseFloat(item));
              }
          });
+         if (!echartShow) {
+             $('#estateName').hide();
+             return
+         }
          let sortArray = echartData.seriesData.sort(function(a, b) {
              return parseFloat(a) - parseFloat(b);
          });

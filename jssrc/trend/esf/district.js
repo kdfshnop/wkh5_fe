@@ -51,13 +51,23 @@ class districtController extends Controller {
     -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
     echartFun(echartData){
         let seriesData=[];
-        echartData.seriesData.forEach(function(item){
+        let countNum = 0;
+        let echartShow = true;
+        echartData.seriesData.forEach(function(item,index){
             if(item == 0){
                 seriesData.push(null);
+                countNum += 1;
+                if (countNum == 11 && index == 10){
+                    echartShow = false;
+                }
             }else{
                 seriesData.push(parseFloat(item));
             }
         });
+        if (!echartShow) {
+            $('#estateEchart').hide();
+            return
+        }
         let sortArray = echartData.seriesData.sort(function(a, b) {
             return parseFloat(a) - parseFloat(b);
         });
