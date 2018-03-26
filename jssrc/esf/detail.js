@@ -99,34 +99,30 @@ class DetailController extends Controller {
         });
     }
     /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
-    处理得到的数据的函数  处理月份和数据
+    折线图函数异步操作
     -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
-    recombineM(data) {
-        let echartData = {
-            monthList: [],
-            seriesData: []
-        };
-        if (data) {
-            data.forEach((item) => {
-                let month = item.date.split('-')[1];
-                if (month.indexOf('0') == 0) {
-                    echartData.monthList.push(month.charAt(1)+'月')
-                } else {
-                    echartData.monthList.push(month+'月')
-                }
-                echartData.seriesData.push(item.unitPrice)
-            });
-        }
-        return echartData ;
-    }
-    /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
-   折线图函数异步操作
-   -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
     echartFun(echartData){
+        let seriesData=[];
+        echartData.seriesData.forEach(function(item){
+            if(item == 0){
+                seriesData.push(null);
+            }else{
+                seriesData.push(parseFloat(item));
+            }
+        });
         let sortArray = echartData.seriesData.sort(function(a, b) {
             return parseFloat(a) - parseFloat(b);
         });
-        let maxPrice = Math.ceil((sortArray[sortArray.length - 1] / 10000) + 1) * 10000;
+        let maxPrice = Math.ceil((sortArray[sortArray.length - 1] / 1000)) * 1000;
+        let minPrice = Math.ceil((sortArray[0] / 1000) - 1) * 1000;
+        let avgPrice = 1000 ;
+        if (maxPrice == minPrice ) {
+            minPrice = maxPrice - 2000;
+            avgPrice = 1000
+        }else{
+            avgPrice = (maxPrice - minPrice)/4 < 1000 ? 1000:Math.ceil((maxPrice - minPrice)/4000)*1000;
+        }
+        minPrice =  minPrice < 0 ? 0:minPrice;
         let myChart = echarts.init(document.getElementById('main'),{ width: '88%' });
         let that = this;
         // 给折线图dome增加埋点
@@ -207,10 +203,9 @@ class DetailController extends Controller {
                         }
                     }
                 },
-                min:0,
-                max:maxPrice,
-                splitNumber: 4,
-                interval: maxPrice / 4
+                min:minPrice,
+                max:avgPrice*5,
+                interval:avgPrice,
             },
             series: [{
                 name: '销量',
@@ -231,11 +226,33 @@ class DetailController extends Controller {
                         color: '#92A7C3'
                     }
                 },
-                data: echartData.seriesData,
-
+                connectNulls: true,
+                data: seriesData,
             }],
         };
         myChart.setOption(option);
+    };
+    /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+    处理得到的数据的函数  处理月份和数据
+    -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
+    recombineM(data) {
+        let echartData = {
+            monthList: [],
+            seriesData: []
+        };
+        if (data) {
+            data.forEach((item) => {
+                let month = item.date.split('-')[1];
+                if (month.indexOf('0') == 0) {
+                    echartData.monthList.push(month.charAt(1)+'月')
+                } else {
+                    echartData.monthList.push(month+'月')
+                }
+                echartData.seriesData.push(item.unitPrice)
+            });
+        }
+        console.log(echartData);
+        return echartData ;
     }
     /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
      截取？后面的参数
