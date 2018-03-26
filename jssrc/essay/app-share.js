@@ -355,6 +355,14 @@ class ArticleShareController extends Controller {
         var self = this;
         require(['../components/bigdata.min'], function(BigData){
             BigData.init(self);
+            BigData.bigData({
+                "pageName": "1022",
+                "pageParam":{
+                    "article_id": $.trim($('#articleId').val())
+                },            
+                "type": 1
+            });
+            self.BigData = BigData;
         });
 
         // 设置参数
@@ -532,7 +540,7 @@ class ArticleShareController extends Controller {
             callback: function(pageIndex) {
                 pageIndex = pageIndex || 1
                 var itemIndex = (pageIndex - 1) * 10
-                classSelf.request(classSelf.apiUrl.article.commentList, {
+                classSelf.request(classSelf.apiUrl.essay.commentList, {
                     articleId: classSelf.articleId,
                     pageIndex: itemIndex
                 },{
@@ -636,6 +644,13 @@ class ArticleShareController extends Controller {
             var categoryId = $('#categoryId').val();
             var cityId = $('#cityId').val();
             location.href = "/category/app."+ categoryId +".html?cityId=" + cityId;
+            classSelf.BigData.bigData({
+                "pageName": "1022005",
+                "pageParam":{
+                    "article_id": classSelf.articleId
+                },            
+                "type": 2
+            });
         });
         
         // var myElement = $('.details-container');
@@ -667,7 +682,7 @@ class ArticleShareController extends Controller {
                 // };
                 // lifang.sendWKBigData(classSelf.wkBigDataParams);               
 
-                classSelf.request(classSelf.apiUrl.article.zan, {
+                classSelf.request(classSelf.apiUrl.essay.zan, {
                     articleId: classSelf.articleId
                 },{
                     successCallback: function(data){
@@ -742,7 +757,7 @@ class ArticleShareController extends Controller {
                 'border-color': '#999'
             });
             commiting = true;
-            classSelf.request(classSelf.apiUrl.article.comment, {
+            classSelf.request(classSelf.apiUrl.essay.comment, {
                 articleId: classSelf.articleId,
                 comment: comment
             },{
