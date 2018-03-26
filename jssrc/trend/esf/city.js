@@ -42,6 +42,16 @@ class cityController extends Controller {
 
             }
         }) ;
+        /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+        页面埋点
+        -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
+        require(['../../components/bigdata.min'],function(BigData){
+            BigData.init(that);
+            BigData.bigData({
+                "pageName": "1112",
+                "type": 1
+            });
+        });
     }
     /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
     折线图函数异步操作
@@ -92,9 +102,9 @@ class cityController extends Controller {
                 },
                 formatter:function (params, ticket, callback) {
                     let paramsValue =  params.value + "元";
-                    that.request(that.apiUrl.common.bigData , echartBigData ,function () {
+               /*     that.request(that.apiUrl.common.bigData , echartBigData ,function () {
 
-                    });
+                    });*/
                     return paramsValue;
                 }
             },
