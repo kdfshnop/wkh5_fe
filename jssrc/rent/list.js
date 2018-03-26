@@ -1090,7 +1090,7 @@ class ListController extends Controller {
             houseTagList += '<span class="tag anthert">朝南</span>'
         } if(item.houseTag.isZeroCommission){
             /*houseTag.push("0佣金")*/
-            commision= ' <span>0 佣金</span>'
+            commision= ' <span class="commission">0 佣金</span>'
         }
 
   /*      if (houseTag) {

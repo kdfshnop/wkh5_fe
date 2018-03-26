@@ -355,6 +355,13 @@ class ArticleShareController extends Controller {
        var self = this;
        require(['../components/bigdata.min'], function(BigData){
            BigData.init(self);
+           BigData.bigData({
+            "pageName": "1021",
+            "pageParam":{
+                "article_id": $.trim($('#articleId').val())
+            },            
+            "type": 1
+        });
        });
 
        // 设置参数
@@ -532,7 +539,7 @@ class ArticleShareController extends Controller {
            callback: function(pageIndex) {
                pageIndex = pageIndex || 1
                var itemIndex = (pageIndex - 1) * 10
-               classSelf.request(classSelf.apiUrl.article.commentList, {
+               classSelf.request(classSelf.apiUrl.essay.commentList, {
                    articleId: classSelf.articleId,
                    pageIndex: itemIndex
                },{
@@ -589,39 +596,39 @@ class ArticleShareController extends Controller {
    bindEvent() {
        var classSelf = this;
        // 收藏功能，当前没有登录所以隐去
-       $('.collect').on('click', function() {
-           var _ = $(this);
-           var $icon = _.find('i').first();
-           Login.isLoginCheck(function() {
-               if ($icon.hasClass('icon-shoucang')) {
-                   classSelf.Operation.collect({
-                       articleId: classSelf.articleId
-                   }, function() {
-                       $icon.removeClass('icon-shoucang').addClass('icon-yishoucang');
-                       classSelf.Operation.showMessage('收藏成功，可至APP收藏中查看！');
-                       classSelf.wkBigDataParams.eventName = 1022001;
-                       classSelf.wkBigDataParams.eventParam = {
-                           article_id: classSelf.articleId,
-                           collect: 1
-                       };
-                       lifang.sendWKBigData(classSelf.wkBigDataParams);
-                   });
-               }
-               if ($icon.hasClass('icon-yishoucang')) {
-                   classSelf.Operation.cancelCollection({
-                       articleId: classSelf.articleId
-                   }, function() {
-                       $icon.removeClass('icon-yishoucang').addClass('icon-shoucang');
-                       classSelf.wkBigDataParams.eventName = 1022001;
-                       classSelf.wkBigDataParams.eventParam = {
-                           article_id: classSelf.articleId,
-                           collect: 0
-                       };
-                       lifang.sendWKBigData(classSelf.wkBigDataParams);
-                   });
-               }
-           });
-       });
+    //    $('.collect').on('click', function() {
+    //        var _ = $(this);
+    //        var $icon = _.find('i').first();
+    //        Login.isLoginCheck(function() {
+    //            if ($icon.hasClass('icon-shoucang')) {
+    //                classSelf.Operation.collect({
+    //                    articleId: classSelf.articleId
+    //                }, function() {
+    //                    $icon.removeClass('icon-shoucang').addClass('icon-yishoucang');
+    //                    classSelf.Operation.showMessage('收藏成功，可至APP收藏中查看！');
+    //                    classSelf.wkBigDataParams.eventName = 1022001;
+    //                    classSelf.wkBigDataParams.eventParam = {
+    //                        article_id: classSelf.articleId,
+    //                        collect: 1
+    //                    };
+    //                    lifang.sendWKBigData(classSelf.wkBigDataParams);
+    //                });
+    //            }
+    //            if ($icon.hasClass('icon-yishoucang')) {
+    //                classSelf.Operation.cancelCollection({
+    //                    articleId: classSelf.articleId
+    //                }, function() {
+    //                    $icon.removeClass('icon-yishoucang').addClass('icon-shoucang');
+    //                    classSelf.wkBigDataParams.eventName = 1022001;
+    //                    classSelf.wkBigDataParams.eventParam = {
+    //                        article_id: classSelf.articleId,
+    //                        collect: 0
+    //                    };
+    //                    lifang.sendWKBigData(classSelf.wkBigDataParams);
+    //                });
+    //            }
+    //        });
+    //    });
        
        // var myElement = $('.details-container');
        // var mc = new Hammer(myElement[0]);
@@ -652,7 +659,7 @@ class ArticleShareController extends Controller {
                // };
                // lifang.sendWKBigData(classSelf.wkBigDataParams);               
 
-               classSelf.request(classSelf.apiUrl.article.zan, {
+               classSelf.request(classSelf.apiUrl.essay.zan, {
                    articleId: classSelf.articleId
                },{
                    successCallback: function(data){
@@ -727,7 +734,7 @@ class ArticleShareController extends Controller {
                'border-color': '#999'
            });
            commiting = true;
-           classSelf.request(classSelf.apiUrl.article.comment, {
+           classSelf.request(classSelf.apiUrl.essay.comment, {
                articleId: classSelf.articleId,
                comment: comment
            },{

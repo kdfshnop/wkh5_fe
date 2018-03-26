@@ -8,7 +8,14 @@
         super();
         var self = this;        
         this.paramGenerator = new ParamGenerator();
-        $('.total').slideUp(1000);// 隐藏查询总条数        
+        $('.total').slideUp(1000);// 隐藏查询总条数   
+        
+        /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+        图片懒加载实例化
+        -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/        
+        $(".lazy").lazyload({ 
+            "placeholder" : this.staticDomain + "/wkh5_fe/images/common/loading.jpg"
+        }) ;
         require(['../components/filter.min', '../components/bigdata.min', "../components/conning-tower.min"], function(Filter, BigData){   
             BigData.init(self);         
             new ConningTower({                
@@ -57,7 +64,13 @@
                     // 跳转
                     self.goto();
                 }                
-            }));                     
+            }));   
+            
+            self.BigData = BigData;
+            BigData.bigData({
+                "pageName": "1050",                       
+                "type": 1
+            });
         });
 
         // 从url中解析参数
@@ -106,7 +119,7 @@
                 <div class="info">\
                     <h3>'+item.estateName+'</h3>\
                     <p class="district-town-area">\
-                        <span>'+item.districtName+' '+item.townName+'</span><span>'+item.startSpace+'m-'+item.endSpace+'m</span>\
+                        <span>'+item.districtName+' '+item.townName+'</span><span>'+item.startSpace+'m²-'+item.endSpace+'m²</span>\
                     </p>\
                     <ul class="tags">'
                 + (item.hasActivity && '<li class="yh">有优惠</li>' || "") + (item.isSubwayEstate&&'<li class="dt">近地铁</li>'||'') + (!item.isSoonOpen&&'<li>在售楼盘</li>'||'<li>即将开盘</li>') + (item.hasVideo&&'<li>有视频</li>'||'') +

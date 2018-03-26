@@ -1,10 +1,13 @@
 @import "../mixins.less";
 @import "./wechatAudio.less";
+@import "../components/assistant.less";
+@import "../components/download-app.less";
 @wkcolor: #4081D6;
 html ,
 body {
     background:#F0F0F0;
     color:#4E4E4E;
+    //padding-bottom: 60px;
 }
 
 a:active ,
@@ -15,7 +18,8 @@ a:hover {
 }
 
 .details-container {    
-    background:#F0F0F0;
+    background:#F0F0F0;    
+    padding-bottom: 110px;
     &>div {
         padding:0 15px;
         background:#FFFFFF;
@@ -158,6 +162,17 @@ a:hover {
                 }
                 &>span:first-child {
                     margin-right: 10px;
+                }
+
+                .zan {
+                    .iconfont {
+                        color: #ccc;                        
+                    }
+                    &.active {                        
+                        .iconfont {
+                            color: #4081d6;
+                        }
+                    }
                 }
             }
         }
@@ -347,5 +362,15 @@ a:hover {
                 margin-top: 2.5px;
             }
         }
+    }
+}
+
+// .download-app {    
+//     top: 0;
+// }
+
+.download-app {
+    dl dd:nth-child(2){
+        color: #ccc;
     }
 }
