@@ -78,6 +78,11 @@ class Controller {
             },
             "xf": {
                 "list": this.apiPrefix + "api/xf/list", // 新房列表查询接口
+            },
+            "essay": {
+                "zan": this.apiPrefix + "api/essay/zan",
+                "comment": this.apiPrefix + "api/essay/comment",
+                "commentList": this.apiPrefix + "api/essay/commentList",
             }
         } ;        
     } ;
