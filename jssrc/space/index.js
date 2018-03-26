@@ -113,7 +113,7 @@ class IndexController extends Controller {
                } if(item.houseTag.isSouth){
                    houseTagList += '<span class="tag anthert">朝南</span>'
                } if(item.houseTag.isZeroCommission){
-                   commision= ' <span>0 佣金</span>'
+                   commision= ' <span class="commission">0 佣金</span>'
                }
                domeType=  `<a  class="rent-item box" href=" ${item.url}">
                    <div class="left">
@@ -151,6 +151,38 @@ class IndexController extends Controller {
                                 </dd>                             
                             </dl>
                         </a>`;
+        }else if(type == "xf"){
+             if (item.hasActivity){
+                 houseTagList +=`<li class="yh">有优惠</li>`
+             }else if (item.isSubwayEstate){
+                 houseTagList +=`<li class="dt">近地铁</li>`
+             }else if (!item.isSoonOpen){
+                 houseTagList +=`<li class="">在售楼盘</li>`
+             }else if (item.isSoonOpen){
+                 houseTagList +=`<li class="">即将开盘</li>`
+             }else if (item.hasVideo){
+                 houseTagList +=`<li class="">有视频</li>`
+             }
+             let activitys='';
+            if(item.activitys && item.activitys[0]){
+                activitys= `<div class="yh">${ item.activitys[0].title}</div>`
+              }
+            domeType = `<a class="xf-item" href="${item.url}" data-bigdata="item.bigDataParams">
+            <div class="img">
+                <img src="${item.houseImgUrl}?x-oss-process=image/resize,w_120" data-src="${item.houseImgUrl}" class="lazy">
+                ${activitys}     
+            </div>
+            <div class="info">
+                <h3><%= item.estateName%></h3>
+                <p class="district-town-area">
+                    <span>${ item.districtName}  ${item.townName}</span><span>${item.startSpace}m²-${item.endSpace}m²</span>
+                </p>
+                <ul class="tags">
+                    ${houseTagList}
+                </ul>
+                <p class="unit-price"><span>${ item.unitPrice}</span> <span>元/m</span></p>
+            </div>
+        </a>`;
         }
         return domeType
     }
@@ -160,7 +192,7 @@ class IndexController extends Controller {
     pullload(requestParams,typeHouseList) {
         let self = this ;
         let pinyin = $.cookie('pinyin') || "shanghai";
-        let type = typeHouseList == "secondHouseList" ? "esf": (typeHouseList == "rentHouseList" ? "rent": "new");
+        let type =  typeHouseList == "secondHouseList" ? "esf": (typeHouseList == "rentHouseList" ? "rent": "xf");
         // 房源列表
         $(`.${type}-frame`).pullload({
             apiUrl : eval(`this.apiUrl.space.${typeHouseList}`) ,
@@ -172,9 +204,10 @@ class IndexController extends Controller {
             countKey:"total",
             callback : function(data) {
                 if( ! data.data) return ;
-                $.each(data.data , (index , listItem)=> {
-                    listItem.url = `/${pinyin}/${type}/${ listItem.encryptHouseId}.html` ;
-                    $(`.${type}-frame`).append(self.creatRent(type,listItem)) ;
+                data.data.houseList.forEach((listItem,index)=> {
+                    let listIt = listItem;
+                    listIt['url'] = `/${pinyin}/${type}/${ listItem.encryptHouseId}.html` ;
+                    $(`.${type}-frame`).append(self.creatRent(type,listIt)) ;
                 }) ;
             }
         }) ;
