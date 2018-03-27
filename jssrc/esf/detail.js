@@ -157,9 +157,6 @@ class DetailController extends Controller {
                 },
                 formatter:function (params, ticket, callback) {
                     let paramsValue =  params.value + "元";
-                    that.request(that.apiUrl.common.bigData , echartBigData ,function () {
-
-                    });
                     return paramsValue;
                 }
             },
