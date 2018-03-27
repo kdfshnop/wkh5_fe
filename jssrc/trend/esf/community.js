@@ -6,13 +6,7 @@
 class communityController extends Controller {
     constructor() {
         super();
-        let dataaa = {
-            "monthList":["4月", "5月", "6月", "7月", "8月", "9月", "10月", "11月", "12月", "1月", "2月", "3月"],
-            "seriesData":["10000", "14000", "12000", "15000", "15000", "18000", "15000", "15000", "13000", "0", "15000", "15000"]
-        };
         let echartsData =  $('.echart').attr('data-echart');
-        /*console.log(JSON.parse(echartsData));*/
-       /* console.log(this.recombineM(JSON.parse(echartsData)));*/
         if (echartsData){
             this.echartFun(this.recombineM(JSON.parse(echartsData))) ;
         }
@@ -76,14 +70,6 @@ class communityController extends Controller {
         minPrice =  minPrice < 0 ? 0:minPrice;
         let myChart = echarts.init(document.getElementById('main'),{ width: '92%' });
         let that = this;
-        // 给折线图dome增加埋点
-        let houseId =  $('#estateName').attr('data-houseid');
-        let subestateid =  $('#estateName').attr('data-subestateid') ;
-        let echartBigData = {
-            "eventName": "1067014",
-            "eventParam": { "house_id" : houseId , "estate_id": subestateid },
-            "type": 2
-        };
         // 指定图表的配置项和数据
         let option = {
             tooltip: {      // 提示框
@@ -98,9 +84,6 @@ class communityController extends Controller {
                 },
                 formatter:function (params, ticket, callback) {
                     let paramsValue =  params.value + "元";
-             /*       that.request(that.apiUrl.common.bigData , echartBigData ,function () {
-
-                    });*/
                     return paramsValue;
                 }
             },
@@ -217,14 +200,13 @@ class communityController extends Controller {
                 let month = item.date.split('-')[1];
                 if (month.indexOf('0') == 0) {
                     echartData.monthList.push(month.charAt(1))
-                }   else if(index == 11) {
-                    echartData.monthList.push(month+' (月)')
                 } else {
                     echartData.monthList.push(month)
                 }
                 echartData.seriesData.push(item.unitPrice)
             });
         }
+        echartData.monthList[11]= "     "+echartData.monthList[11]+"   (月)";
         return echartData ;
     }
 }
