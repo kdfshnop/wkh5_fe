@@ -42,14 +42,23 @@
       .border-radius(2px);
   
       // 右下角视频播放图标
-      &::after {
-        position: absolute;
-        content: '';
-        background-image: url('../../images/play.png');
-        bottom: 5px;
-        right: 5px;
-        width: 14px;
-        height: 14px;
+      .play {
+          background-color : rgba( 0 , 0 , 0 , .4 ) ;
+          bottom : 5px ;
+          .border-radius(100px) ;
+          display : block ;
+          height : 14px ;
+          line-height : 14px ;
+          position : absolute ;
+          right : 5px ;
+          width : 14px ;
+          i {
+              display : inline-block ;
+              left : 1px ;             
+              .triangle-next( 4px , #fff ) ;
+              position : absolute ;
+              top : 3px ;
+          }
       }
   
       img {
