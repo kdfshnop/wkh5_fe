@@ -118,8 +118,9 @@
         data.forEach(function(item){
             str += '<a class="xf-item" href="/'+cityPinyin+'/xf/'+item.encryptSubEstateId+'.html' +(channel? '?channel='+channel : "")+'" data-bigdata="'+encodeURIComponent('{"eventName": "1050025", "eventParam": {"new_house_id":"'+item.subEstateId+'"}}')+'">\
                 <div class="img">\
-                    <img src="'+item.imageUrl+'">\
-                    <div class="yh">团购享 20万抵50万</div>\
+                    <img src="'+item.imageUrl+'">'
+                    + (item.hasVideo && '<span class="play"><i></i></span>' || '') +'\
+                    <div class="yh">'+(item.activitys && item.activitys[0] && item.activitys[0].title || '')+'</div>\
                 </div>\
                 <div class="info">\
                     <h3>'+item.estateName+'</h3>\
