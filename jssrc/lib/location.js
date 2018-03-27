@@ -201,9 +201,6 @@ class Location {
                 theRequest[strs[i].split("=")[0]]=strs[i].split("=")[1];
             }
         }
-        // console.log(theRequest);
         return theRequest;
     }
-    
-
 }

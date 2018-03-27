@@ -7,7 +7,6 @@ class cityController extends Controller {
     constructor() {
         super();
          let echartsData =  $('.echart').attr('data-echart');
-         /*console.log(JSON.parse(echartsData));*/
         if (echartsData){
             this.echartFun(this.recombineM(JSON.parse(echartsData))) ;
         }
@@ -90,14 +89,6 @@ class cityController extends Controller {
         minPrice =  minPrice < 0 ? 0:minPrice;
         let myChart = echarts.init(document.getElementById('main'),{ width: '92%' });
         let that = this;
-        // 给折线图dome增加埋点
-        let houseId =  $('#estateName').attr('data-houseid');
-        let subestateid =  $('#estateName').attr('data-subestateid') ;
-        let echartBigData = {
-            "eventName": "1067014",
-            "eventParam": { "house_id" : houseId , "estate_id": subestateid },
-            "type": 2
-        };
         // 指定图表的配置项和数据
         let option = {
             tooltip: {      // 提示框
@@ -112,9 +103,6 @@ class cityController extends Controller {
                 },
                 formatter:function (params, ticket, callback) {
                     let paramsValue =  params.value + "元";
-               /*     that.request(that.apiUrl.common.bigData , echartBigData ,function () {
-
-                    });*/
                     return paramsValue;
                 }
             },
@@ -125,12 +113,6 @@ class cityController extends Controller {
                 containLabel: true,
             },
             xAxis: {
-                name:"(月)",
-                nameGap:15,
-                nameTextStyle:{
-                    position:'relative',
-                    top:20
-                },
                 data: echartData.monthList ,  // X坐标数据
                 splitLine: {show: false}, // 控制网格线是否显示
                 axisTick: {show: false},  // 去除x轴上的刻度线
@@ -231,14 +213,13 @@ class cityController extends Controller {
                 let month = item.date.split('-')[1];
                 if (month.indexOf('0') == 0) {
                     echartData.monthList.push(month.charAt(1))
-                }   if(index == 11) {
-                    echartData.monthList.push(month+' (月)')
-                } else {
+                }  else  {
                     echartData.monthList.push(month)
                 }
                 echartData.seriesData.push(item.unitPrice)
             });
         }
+        echartData.monthList[11]= "     "+echartData.monthList[11]+"   (月)";
         return echartData ;
     }
 }
