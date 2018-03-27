@@ -59,6 +59,7 @@
          let sortArray = echartData.seriesData.sort(function(a, b) {
              return parseFloat(a) - parseFloat(b);
          });
+         /* 按照3.12需求文档走势图数据要求*/
          let maxPrice = Math.ceil((sortArray[sortArray.length - 1] / 1000)) * 1000;
          let minPrice = Math.ceil((sortArray[0] / 1000) - 1) * 1000;
          let avgPrice = 1000 ;

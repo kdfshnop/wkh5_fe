@@ -115,9 +115,14 @@ class IndexController extends Controller {
                } if(item.houseTag.isZeroCommission){
                    commision= ' <span class="commission">0 佣金</span>'
                }
+               let hasVideo='';
+               if(item.houseTag.hasVideo == 1){
+                   hasVideo= `<span class="play"><i></i></span>`;
+               }
                domeType=  `<a  class="rent-item box" href=" ${item.url}">
                    <div class="left">
                        <img src="${item.firstImageUrl}?x-oss-process=image/resize,w_120" alt="${ item.estateName} " class="lazy">
+                       ${hasVideo}
                        ${commision}
                    </div>
                    <div class="right">
@@ -137,9 +142,13 @@ class IndexController extends Controller {
                  else if(tag == "满二" || tag == "满五唯一") { houseTagList+=`<div class="over"><span>${ tag }</span></div>`}
                  else { houseTagList+=`<div><span>${tag}</span></div>`}
                 }) ;
+            let hasVideo='';
+            if(item.hasVideo == 1){
+                hasVideo= `<span class="play"><i></i></span>`;
+            }
             domeType = `<a href=" ${item.url}" class="esf-item" data-bigdata="%7B%22eventName%22%3A1002017%2C%22eventParam%22%3A%7B%7D%7D">
                             <dl>
-                                <dt><img src="${item.houseImgUrl}?x-oss-process=image/resize,w_120" alt="${ item.houseTitle}" class="lazy" style="display: inline;"></dt>
+                                <dt><img src="${item.houseImgUrl}?x-oss-process=image/resize,w_120" alt="${ item.houseTitle}" class="lazy" style="display: inline;">${hasVideo}</dt>
                                 <dd class="title">${item.houseTitle}</dd>
                                 <dd>${item.houseChild} ${item.areaStr} | ${item.district}${item.town}</dd>
                                 <dd class="tags">
@@ -164,12 +173,17 @@ class IndexController extends Controller {
                  houseTagList +=`<li class="">有视频</li>`
              }
              let activitys='';
-            if(item.activitys && item.activitys[0]){
+             let hasVideo='';
+            if(item.hasVideo == 1){
+                hasVideo= `<span class="play"><i></i></span>`;
+            }
+             if(item.activitys && item.activitys[0]){
                 activitys= `<div class="yh">${ item.activitys[0].title}</div>`
               }
             domeType = `<a class="xf-item" href="${item.url}" data-bigdata="item.bigDataParams">
             <div class="img">
                 <img src="${item.houseImgUrl}?x-oss-process=image/resize,w_120" data-src="${item.houseImgUrl}" class="lazy">
+                ${hasVideo}
                 ${activitys}     
             </div>
             <div class="info">
