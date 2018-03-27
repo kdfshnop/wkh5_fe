@@ -21,12 +21,31 @@
         padding : 1.5rem 1.5rem 1.5rem 0 ;        
         dt {
             float : left ;
-            height : 62px ;            
+            height : 62px ;
+            position : relative ;       
             width : 94px ;
             &>img {
                 .border-radius(4px) ;
                 height : 100% ;
                 width : 100% ;
+            }
+            .play {
+                background-color : rgba( 0 , 0 , 0 , .4 ) ;
+                bottom : 5px ;
+                .border-radius(100px) ;
+                display : block ;
+                height : 14px ;
+                line-height : 14px ;
+                position : absolute ;
+                right : 5px ;
+                width : 14px ;
+                i {
+                    display : inline-block ;
+                    left : 1px ;             
+                    .triangle-next( 4px , #fff ) ;
+                    position : absolute ;
+                    top : 3px ;
+                }
             }
         }
         dd {            
