@@ -116,7 +116,7 @@
         var cityPinyin = $('#visitedCityPinyin').val();
         var channel = $('#channel').val();
         data.forEach(function(item){
-            str += '<a class="xf-item" href="/'+cityPinyin+'/xflist/'+item.subEstateId+'.html' +(channel? '?channel='+channel : "")+'" data-bigdata="'+encodeURIComponent('{"eventName": "1050025", "eventParam": {"new_house_id":"'+item.subEstateId+'"}}')+'">\
+            str += '<a class="xf-item" href="/'+cityPinyin+'/xf/'+item.encryptSubEstateId+'.html' +(channel? '?channel='+channel : "")+'" data-bigdata="'+encodeURIComponent('{"eventName": "1050025", "eventParam": {"new_house_id":"'+item.subEstateId+'"}}')+'">\
                 <div class="img">\
                     <img src="'+item.imageUrl+'">\
                     <div class="yh">团购享 20万抵50万</div>\
