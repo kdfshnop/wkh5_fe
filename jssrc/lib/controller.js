@@ -208,7 +208,14 @@ class Controller {
                         "content" : "<p><span class=\"name\">" + $(".assistant .portrait .right .name").html() + "</span> <span class=\"company\">" + $(".assistant .portrait .right .company-name").html() + "</span></p><p class=\"tel\">" + result.data.dial + " 转 " + result.data.digits + "</p><p class=\"memo\">为了保护您的隐私， 已为您隐藏手机号码您可安心拨打</p>" ,
                         "buttons" : [
                             { "text" : "取消"  , "clickCallback" : () => { $.modal.close("callAgentModal") ; } } ,
-                            { "text" : "拨打" , "className" : "phone" ,"href" : "tel:" + result.data.dial + "," + result.data.digits }
+                            { 
+                                "text" : "拨打" , 
+                                "className" : "phone" ,
+                                //"href" : "tel:" + result.data.dial + "," + result.data.digits , 
+                                "clickCallback" : () => {
+                                    window.location.href = "tel:" + result.data.dial + "," + result.data.digits ;
+                                } 
+                            }
                         ]
                     }) ;
                 }
