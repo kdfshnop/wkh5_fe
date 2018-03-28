@@ -49,7 +49,8 @@ class Controller {
                 //"bigData" : this.apiPrefix + "api/common/bigData" ,
                 "bigData" : this.apiPrefix + "buriedPoint/sendData.rest" ,
                 "dial" : this.apiPrefix + "api/common/dial" ,
-                "getCityByLatLon" : this.apiPrefix + "api/common/getCityByLatLon"
+                "getCityByLatLon" : this.apiPrefix + "api/common/getCityByLatLon",
+                "acWord" : this.apiPrefix + "api/common/acWord", // 搜索联想词
             } ,            
             "store" : {
                 "agent" : this.apiPrefix + "api/store/index/agent" ,
@@ -62,9 +63,26 @@ class Controller {
                 "list" : {
                     "cityAreas": this.apiPrefix + "api/rent/list/areas",
                     "citySubway" : this.apiPrefix + "api/rent/list/subway",
-                    "acWord" : this.apiPrefix + "api/rent/list/acWord",
                     "rentHouseList" : this.apiPrefix +"api/rent/list/rentHouseList"
                 }
+            } ,
+            "esf" : {
+                "list" : {
+                    "houselist" : this.apiPrefix + "api/esf/houselist"
+                }
+            },
+            "space": {
+                "secondHouseList": this.apiPrefix + "api/space/secondApiProvider",
+                "rentHouseList": this.apiPrefix + "api/space/rentApiProvider",
+                "newHouseList": this.apiPrefix + "api/space/newApiProvider"
+            },
+            "xf": {
+                "list": this.apiPrefix + "api/xf/list", // 新房列表查询接口
+            },
+            "essay": {
+                "zan": this.apiPrefix + "api/essay/zan",
+                "comment": this.apiPrefix + "api/essay/comment",
+                "commentList": this.apiPrefix + "api/essay/commentList",
             }
         } ;        
     } ;
@@ -143,7 +161,8 @@ class Controller {
                     $.tips(data.message , 2) ;
                     exceptionCallback(data) ;
                 }
-            }
+            },
+            complete: params.completeCallback || function(){}
         } ;        
         try {
             $.ajax(options) ;
