@@ -49,8 +49,7 @@ class Controller {
                 //"bigData" : this.apiPrefix + "api/common/bigData" ,
                 "bigData" : this.apiPrefix + "buriedPoint/sendData.rest" ,
                 "dial" : this.apiPrefix + "api/common/dial" ,
-                "getCityByLatLon" : this.apiPrefix + "api/common/getCityByLatLon",
-                "acWord" : this.apiPrefix + "api/common/acWord", // 搜索联想词
+                "getCityByLatLon" : this.apiPrefix + "api/common/getCityByLatLon"
             } ,            
             "store" : {
                 "agent" : this.apiPrefix + "api/store/index/agent" ,
@@ -63,26 +62,9 @@ class Controller {
                 "list" : {
                     "cityAreas": this.apiPrefix + "api/rent/list/areas",
                     "citySubway" : this.apiPrefix + "api/rent/list/subway",
+                    "acWord" : this.apiPrefix + "api/rent/list/acWord",
                     "rentHouseList" : this.apiPrefix +"api/rent/list/rentHouseList"
                 }
-            } ,
-            "esf" : {
-                "list" : {
-                    "houselist" : this.apiPrefix + "api/esf/houselist"
-                }
-            },
-            "space": {
-                "secondHouseList": this.apiPrefix + "api/space/secondApiProvider",
-                "rentHouseList": this.apiPrefix + "api/space/rentApiProvider",
-                "newHouseList": this.apiPrefix + "api/space/newApiProvider"
-            },
-            "xf": {
-                "list": this.apiPrefix + "api/xf/list", // 新房列表查询接口
-            },
-            "essay": {
-                "zan": this.apiPrefix + "api/essay/zan",
-                "comment": this.apiPrefix + "api/essay/comment",
-                "commentList": this.apiPrefix + "api/essay/commentList",
             }
         } ;        
     } ;
@@ -161,8 +143,7 @@ class Controller {
                     $.tips(data.message , 2) ;
                     exceptionCallback(data) ;
                 }
-            },
-            complete: params.completeCallback || function(){}
+            }
         } ;        
         try {
             $.ajax(options) ;
@@ -208,7 +189,14 @@ class Controller {
                         "content" : "<p><span class=\"name\">" + $(".assistant .portrait .right .name").html() + "</span> <span class=\"company\">" + $(".assistant .portrait .right .company-name").html() + "</span></p><p class=\"tel\">" + result.data.dial + " 转 " + result.data.digits + "</p><p class=\"memo\">为了保护您的隐私， 已为您隐藏手机号码您可安心拨打</p>" ,
                         "buttons" : [
                             { "text" : "取消"  , "clickCallback" : () => { $.modal.close("callAgentModal") ; } } ,
-                            { "text" : "拨打" , "className" : "phone" ,"href" : "tel:" + result.data.dial + "," + result.data.digits }
+                            { 
+                                "text" : "拨打" , 
+                                "className" : "phone" ,
+                                //"href" : "tel:" + result.data.dial + "," + result.data.digits , 
+                                "clickCallback" : () => {
+                                    window.location.href = "tel:" + result.data.dial + "," + result.data.digits ;
+                                } 
+                            }
                         ]
                     }) ;
                 }
