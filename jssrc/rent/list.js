@@ -910,7 +910,7 @@ class ListController extends Controller {
         if (conditionObject['ta']){
            taString = self.objectToString({'ta':conditionObject['ta']}); // 对象转换成字符串
         }
-        if (taString != taStringFlag || conditionObject['ar'] || conditionObject['dt'] || conditionObject['la'] || conditionObject['er'] || conditionObject['fs']){
+        if (taString != "ta-0-ta-0-ta-0-ta-0-ta-0-ta-0" || conditionObject['ar'] || conditionObject['dt'] || conditionObject['la']!= "0" || conditionObject['er'] || conditionObject['fs']){
             $('#type').find('i').addClass('bacchosed');
             $('#type').addClass('chosed');
         }else {
