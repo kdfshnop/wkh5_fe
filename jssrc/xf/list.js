@@ -99,7 +99,11 @@
 
     // 根据查询条件进行相应的跳转
     goto(){
-        location.href = './' +  ParamGenerator.object2QueryString(this.param);                    
+        if(location.href[location.href.length - 1] == '/'){
+            location.href = './' +  ParamGenerator.object2QueryString(this.param);                    
+        }else{
+            location.href = location.href + "/" + ParamGenerator.object2QueryString(this.param);                    
+        }        
     }
 
     bindEvent(){
