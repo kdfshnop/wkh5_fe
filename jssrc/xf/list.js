@@ -98,11 +98,11 @@
     }
 
     // 根据查询条件进行相应的跳转
-    goto(){
-        if(location.href[location.href.length - 1] == '/'){
+    goto(){        
+        if(location.href.indexOf('xflist/')>0){
             location.href = './' +  ParamGenerator.object2QueryString(this.param);                    
         }else{
-            location.href = location.href + "/" + ParamGenerator.object2QueryString(this.param);                    
+            location.href = location.href + "/" + ParamGenerator.object2QueryString(this.param);   
         }        
     }
 

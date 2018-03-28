@@ -928,7 +928,7 @@ class ListController extends Controller {
         if (conditionObject['ta']){
            taString = self.objectToString({'ta':conditionObject['ta']}); // 对象转换成字符串
         }
-        if (taString !="ta-0-ta-0-ta-0-ta-0" || conditionObject['ar'] || conditionObject['dt'] || conditionObject['la']){
+        if (taString !="ta-0-ta-0-ta-0-ta-0" || conditionObject['ar'] || conditionObject['dt'] || conditionObject['la'] || conditionObject['er'] || conditionObject['fs']){
             $('#type').find('i').addClass('bacchosed');
             $('#type').addClass('chosed');
         }else {
@@ -998,6 +998,13 @@ class ListController extends Controller {
             })
         }else {
             $('.decoration> ul >li').removeClass('active-house');
+        }
+        /*租房方式的首次渲染*/
+        if (conditionObject['fs']){
+            $('.rent-way > ul >li:eq(1)').addClass('active-house')
+        }
+        if (conditionObject['er']){
+            $('.rent-way > ul >li:eq(0)').addClass('active-house')
         }
     }
     /*++-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
