@@ -215,7 +215,7 @@ class IndexController extends Controller {
             traditional: true,
             pageSize: 10,
             threshold : 50 ,
-            countKey:"total",
+            countKey:"count",
             callback : function(data) {
                 if( ! data.data) return ;
                 data.data.houseList.forEach((listItem,index)=> {

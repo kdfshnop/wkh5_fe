@@ -613,7 +613,7 @@ class ListController extends Controller {
             $(this).addClass('chosed');
             $('.sort-chose').slideToggle();
             let soString =  $(this).attr('data-so');
-            if(soSting != 'so-0'){
+            if(soString != 'so-0'){
                 $('#sortTop').find('i').addClass('bacchosed');
                 $("#sortTop").removeClass('active-color-top');
                 $("#sortTop").addClass('chosed')
@@ -716,17 +716,11 @@ class ListController extends Controller {
             $(this).children('span').toggleClass('direction');
             let list = $('.rent-list > ul > li > span');  // 获取检索当中的span标签   后面判断指向 （根据class判断指向）
             $('.bac').hide();
-            if(self.GetRequest()['channel']){
-                $('#sort').hide();
-            }else {
-                $('#sort').show();
-            }
+             $('body').removeClass('noscroll');
             list.each(function (index, item) {   //根据span标签的样式指向判断底部罩层是否显示
                 if (item.classList.length == 1) {
                     $('.bac').show();
-                    $('#sort').hide();
-                }else {
-                   /* $('body').css('position','static')*/
+                    $('body').addClass('noscroll');
                 }
             });
             let indexP = $(this).index();
@@ -756,7 +750,6 @@ class ListController extends Controller {
                 $('.house-type').slideUp();
                 $('.sort-chose').slideToggle("fast");
             }
-          /*  $('.sort-chose').hide();*/
             $('.bac').css({'z-index': '10', 'top': '4.5rem'});
             self.firstGivePage(conditionObject);
         });
@@ -809,12 +802,6 @@ class ListController extends Controller {
                 }
             }
         });
-        /*排序点击弹出*/
-        $('#sort').click(function () {
-            $('.bac').css({'z-index': '13', 'top': '0'});
-            $('.bac').show();
-            $('.sort-chose').slideToggle();
-        });
         /*底部罩层点击之后还原*/
         $('.bac').click(function () {
             $('.dic').slideUp();
@@ -823,16 +810,10 @@ class ListController extends Controller {
             $('.more').slideUp();
             $('.rent-list > ul > li').children('span').removeClass('direction');
             $('.rent-list > ul > li').removeClass('active-color-top');
-            $('.bac').css({'z-index': '10', 'top': '4.5rem'});
-            $('.bac').hide();
-            $('.slide-right').animate({right:'-50%'});
-            $('.slide-right').hide();
-            if(self.GetRequest()['channel']){
-                $('#sort').hide();
-            }else {
-                $('#sort').show();
-            }
+            $('.bac').hide().css({'z-index': '10', 'top': '4.5rem'});
+            $('.slide-right').animate({right:'-50%'}).hide();
             $('.sort-chose').hide();
+            $('body').removeClass('noscroll');
         });
         /*更多模块的重置搜索*/
         $('#cancelMore').click(function () {
@@ -924,11 +905,11 @@ class ListController extends Controller {
         }
 
 
-        let taString = "ta-0-ta-0-ta-0-ta-0" ;
+        let taString =  "ta-0-ta-0-ta-0-ta-0-ta-0-ta-0" ;
         if (conditionObject['ta']){
            taString = self.objectToString({'ta':conditionObject['ta']}); // 对象转换成字符串
         }
-        if (taString !="ta-0-ta-0-ta-0-ta-0" || conditionObject['ar'] || conditionObject['dt'] || conditionObject['la'] || conditionObject['er'] || conditionObject['fs']){
+        if (taString != "ta-0-ta-0-ta-0-ta-0-ta-0-ta-0" || conditionObject['ar'] || conditionObject['dt'] || (conditionObject['la'] && conditionObject['la']!= "0") || conditionObject['er'] || conditionObject['fs']){
             $('#type').find('i').addClass('bacchosed');
             $('#type').addClass('chosed');
         }else {
@@ -1155,7 +1136,7 @@ class ListController extends Controller {
         let conditionData={};
         if (condition) {
             let conditionObj =  this.parseCondition({condition:condition});
-            let spaceAreaStart =["0-50","50-70","70-90","90-110","110-130","130-150","150-0"];
+            let spaceAreaStart =["0-50","50-70","70-90","90-110","110-130","130-150","150-200","200-300","300-0"];
             conditionData = {
                 "cityId":cityid,
                 "bedRoomSumLists":[ ],
@@ -1195,10 +1176,12 @@ class ListController extends Controller {
                 conditionData["rentPriceEnd"]= cpArray[1]
             }
             if (conditionObj['ta']){
-                conditionData["isSubWay"] = conditionObj['ta'][0];  // 近地铁 0 任意  1 是
-                conditionData["priceDown"] = conditionObj['ta'][1]; // 降价  0 否  1 是
-                conditionData["isNewOnStore"] = conditionObj['ta'][2]; // 新上 0：否 1：是，
-                conditionData["orientation"] = conditionObj['ta'][3]; // 房屋朝向 1南北通透 0任意
+                conditionData["isZeroCommission"] = conditionObj['ta'][0];  // 0佣金 0 否  1 是
+                conditionData["isSubWay"] = conditionObj['ta'][1];  // 近地铁 0 任意  1 是
+                conditionData["priceDown"] = conditionObj['ta'][2]; // 降价  0 否  1 是
+                conditionData["isNewOnStore"] = conditionObj['ta'][3]; // 新上 0：否 1：是，
+                conditionData["isShortRent"] = conditionObj['ta'][4]; // 新上 0：否 1：是，
+                conditionData["orientation"] = conditionObj['ta'][5]; // 房屋朝向 1南北通透 0任意
             }
             if (conditionObj['ar']) {   // 面积选择
                 if(conditionObj['ar'].constructor == Array) {
