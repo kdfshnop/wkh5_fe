@@ -18,11 +18,12 @@
             @identical : 如果反查到的城市和cookie中的城市是一致的情况下的回调，如果不一致就组织新路由跳转，所以不需要回调处理
 -----------------------------------------------------------------------------------------------------------------------------------------------------------------------++*/
 class Location {
-    constructor({ businessType , cityApiUrl , identical }) {
+    constructor({ businessType , cityApiUrl , identical ,investmentFlag}) {
         this.businessType = businessType || "old" ;
         this.cityApiUrl = cityApiUrl || "" ;
         this.cookieKeyPrefix = "location_" ;  //cookie里面位置信息缓存的前缀
         this.identical = identical || $.noop ;  //拿到位置信息后的回调函数
+        this.investmentFlag = investmentFlag || $.noop ; //
         /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
         onPageShow的时候去检查用户点击了城市选择页面但是没有选择任何城市
         -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
@@ -106,14 +107,13 @@ class Location {
                             2. 页面异步的话就调数据接口渲染页面
                             -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/                            
                             this.identical({ "latitude" : latitude , "longitude" : longitude }) ;
-                        }
-                        else {                            
+                        } else {
                             /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
                             如果不同，就组织新的路由跳转
                             -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
-                            let newCityId = city[this.businessType + "Business"] ? city.cityId : 43 ;
-                            let newPinyin = city[this.businessType + "Business"] ? city.cityPinyin : "shanghai" ;                            
-                            window.location.href = this.route( newPinyin , newCityId ) ;
+                            let newCityId =  city.cityId ;
+                            let newPinyin =  city.cityPinyin  ;
+                            city[this.businessType + "Business"] ?  window.location.href = this.route( newPinyin , newCityId ) : this.investmentFlag({"investment" : true})
                         }
                     }
                     else {
