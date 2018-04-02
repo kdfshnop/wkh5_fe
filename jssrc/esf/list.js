@@ -49,6 +49,9 @@ class ListController extends Controller {
                         self.param[key] = data.value;
                         self.goto();
                     }
+                },
+                "locationCallback": (data)=>{
+                    self.filter.setLocationInfo(data);
                 }
             }) ;
 
