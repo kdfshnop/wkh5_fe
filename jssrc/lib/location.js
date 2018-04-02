@@ -141,6 +141,7 @@ class Location {
                 break ;
 
                 case error.TIMEOUT :  //定位超时
+                   /* console.log(error.TIMEOUT+"error.TIMEOUT");*/
                 this.timeout() ;
                 break ;
 
