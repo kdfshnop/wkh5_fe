@@ -22,6 +22,13 @@ class ListController extends Controller {
             cityApiUrl : this.apiUrl.common.getCityByLatLon ,
             identical : (position)=> {
 
+            },
+            investmentFlag:(Flag)=>{
+              if (Flag.investment){
+                 $('notopen-investment').show();
+              }else {
+                  $('notopen-investment').hide();
+              }
             }
         });
         this.readyFun();
@@ -905,12 +912,11 @@ class ListController extends Controller {
         }
 
 
-        let taStringFlag = "ta-0-ta-0-ta-0-ta-0-ta-0-ta-0" ;
-        let taString = '';
+        let taString =  "ta-0-ta-0-ta-0-ta-0-ta-0-ta-0" ;
         if (conditionObject['ta']){
            taString = self.objectToString({'ta':conditionObject['ta']}); // 对象转换成字符串
         }
-        if (taString != taStringFlag || conditionObject['ar'] || conditionObject['dt'] || conditionObject['la'] || conditionObject['er'] || conditionObject['fs']){
+        if (taString != "ta-0-ta-0-ta-0-ta-0-ta-0-ta-0" || conditionObject['ar'] || conditionObject['dt'] || (conditionObject['la'] && conditionObject['la']!= "0") || conditionObject['er'] || conditionObject['fs']){
             $('#type').find('i').addClass('bacchosed');
             $('#type').addClass('chosed');
         }else {
@@ -1081,16 +1087,19 @@ class ListController extends Controller {
             /*houseTag.push("0佣金")*/
             commision= ' <span class="commission">0 佣金</span>'
         }
-
-  /*      if (houseTag) {
-            houseTag.forEach(function (item, index) {
-                houseTagList += `<span class="tag">${item}</span>`
-            })
-        }*/
+        let hasVideo='';
+        if(item.houseTag.hasVideo == 1){
+            hasVideo= `<span class="play"><i></i></span>`;
+        }
+        let distanceSubway = '';
+        if (item.distanceSubway != null){
+            distanceSubway = `<p class="base-info">${item.distanceSubway}</p>`
+        }
         let bigdata = encodeURIComponent(JSON.stringify({ eventName:'1202039',eventParam:{rent_house_id:item.houseId }, channel:channel || "", type: 2}));
         let domeRent=  `<a  class="rent-item box" href=" ${item.url}" data-bigdata="${bigdata}">
             <div class="left">
                 <img src="${item.firstImageUrl}?x-oss-process=image/resize,w_120" alt="${ item.estateName} " class="lazy">
+                ${hasVideo}
                 ${commision}
             </div>
             <div class="right">
@@ -1098,7 +1107,7 @@ class ListController extends Controller {
                 <p class="base-info">                    
                    ${item.houseTypeStr} ${item.spaceArea}㎡ | ${item.districtAndTownName}
                 </p>
-                <p class="base-info">${item.distanceSubway}</p>
+                ${distanceSubway}
                 <p class="tags">${houseTagList}</p>
                 <p class="unit-price"> ${item.rentPriceStr} 元/月</p>
             </div>

@@ -119,6 +119,10 @@ class IndexController extends Controller {
                if(item.houseTag.hasVideo == 1){
                    hasVideo= `<span class="play"><i></i></span>`;
                }
+               let distanceSubway = '';
+               if (item.distanceSubway != null){
+                   distanceSubway = `<p class="base-info">${item.distanceSubway}</p>`
+               }
                domeType=  `<a  class="rent-item box" href=" ${item.url}">
                    <div class="left">
                        <img src="${item.firstImageUrl}?x-oss-process=image/resize,w_120" alt="${ item.estateName} " class="lazy">
@@ -130,7 +134,7 @@ class IndexController extends Controller {
                        <p class="base-info">                    
                           ${item.houseTypeStr} ${item.spaceArea}㎡ | ${item.districtAndTownName}
                        </p>
-                        <p class="base-info">${item.distanceSubway}</p>
+                        ${distanceSubway}
                        <p class="tags">${houseTagList}</p>
                        <p class="unit-price"> ${item.rentPriceStr} 元/月</p>
                    </div>
@@ -146,7 +150,8 @@ class IndexController extends Controller {
             if(item.hasVideo == 1){
                 hasVideo= `<span class="play"><i></i></span>`;
             }
-            domeType = `<a href=" ${item.url}" class="esf-item" data-bigdata="%7B%22eventName%22%3A1002017%2C%22eventParam%22%3A%7B%7D%7D">
+            let bigdata = encodeURIComponent(JSON.stringify({ eventName:'1002017',eventParam:{house_id:item.houseId }, type: 2}));
+            domeType = `<a href=" ${item.url}" class="esf-item" data-bigdata="${bigdata}">
                             <dl>
                                 <dt><img src="${item.houseImgUrl}?x-oss-process=image/resize,w_120" alt="${ item.houseTitle}" class="lazy" style="display: inline;">${hasVideo}</dt>
                                 <dd class="title">${item.houseTitle}</dd>
@@ -180,7 +185,8 @@ class IndexController extends Controller {
              if(item.activitys && item.activitys[0]){
                 activitys= `<div class="yh">${ item.activitys[0].title}</div>`
               }
-            domeType = `<a class="xf-item" href="${item.url}" data-bigdata="item.bigDataParams">
+            let bigdata = encodeURIComponent(JSON.stringify({ "eventName" : 1002010 , "eventParam" : { "new_house_id" : item.subEstateId }}));
+            domeType = `<a class="xf-item" href="${item.url}" data-bigdata="${bigdata}">
             <div class="img">
                 <img src="${item.houseImgUrl}?x-oss-process=image/resize,w_120" data-src="${item.houseImgUrl}" class="lazy">
                 ${hasVideo}
@@ -215,7 +221,7 @@ class IndexController extends Controller {
             traditional: true,
             pageSize: 10,
             threshold : 50 ,
-            countKey:"total",
+            countKey:"count",
             callback : function(data) {
                 if( ! data.data) return ;
                 data.data.houseList.forEach((listItem,index)=> {

@@ -23,6 +23,13 @@ class cityController extends Controller {
             cityApiUrl : this.apiUrl.common.getCityByLatLon ,
             identical : (position)=> {
 
+            },
+            investmentFlag:(Flag)=>{
+                if (Flag.investment){
+                    $('notopen-investment').show();
+                }else {
+                    $('notopen-investment').hide();
+                }
             }
         }) ;
         /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
