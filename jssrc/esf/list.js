@@ -43,6 +43,7 @@ class ListController extends Controller {
                             }
                         });                        
                     }
+                    
 
                     self.param = param;
                     // 跳转
