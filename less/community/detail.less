@@ -8,6 +8,9 @@
 @import "../components/subestate-comments.less";
 @import "../components/map.less";
 
+ body{
+     background-color:  #F0F0F0;
+ }
 .icon-back {
     position: absolute;
     left: 1.5rem; 
@@ -24,4 +27,51 @@
         .flex-shrink(0);
         .flex-basis(5.6rem);
     }
+    .subway-school {
+        dd {
+            line-height : 150% ;
+            padding-top : 5px ;
+        }
+    }
+
 }
+
+ .echart{
+     margin-top: 6px;
+     padding-bottom: 0;
+     #main{
+         width: 100%;
+         height:20rem;
+         margin-top: -2rem;
+         /* margin-bottom: -3rem;*/
+     }
+     >.onsell{
+         margin-right: 1.5rem;
+        >span{
+          display: inline-block;
+          float: right;
+          font-size: 1.4rem;
+          color: @primary-color;
+          >a{
+            font-size: 1.4rem;
+            color: @primary-color;
+          }
+        }
+         clear: both;
+       position: relative;
+       &:before{
+         content: '';
+         height: 1px;
+         width: 100%;
+         position: absolute;
+         top: 0;
+         left: 0;
+         border-top: 1px solid @light-line-gray-color;
+         -webkit-transform: scaleY(0.5);
+         -moz-transform: scaleY(0.5);
+         -ms-transform: scaleY(0.5);
+         -o-transform: scaleY(0.5);
+         transform: scaleY(0.5);
+       }
+     }
+ }

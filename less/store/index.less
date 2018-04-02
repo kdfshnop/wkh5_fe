@@ -9,6 +9,7 @@
  载入控件样式
  -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
  @import "../components/esf-items.less" ;
+@import "../components/store-nodata.less" ;
 
  body {
      background-color : #fff ;
@@ -37,10 +38,87 @@
             background-image : url("../../images/store/banner.jpg") ; 
             background-repeat : no-repeat ;
             background-position : 0 center ;
-            background-size : 100% auto ;            
-            padding : 0 30px ;
+            background-size : 100% 100% ;
+            padding-left: 30px ;
             overflow : hidden ;
-            dt , dd  {
+          >h3{
+            font-size : 2.4rem ;
+            .text-ellipsis() ;
+            color: #FFFFFF;
+            letter-spacing: 1.71px;
+            line-height: 2.4rem;
+            margin-top: 1.5rem;
+            font-weight: 400;
+          }
+          >.market{
+            margin-top: 1rem;
+            margin-bottom: 1rem;
+            .flex();
+            flex-direction: row;
+            >div{
+              color: #FFFFFF;
+              >.hd{
+                font-size: 1.4rem;
+                letter-spacing: 1px;
+                line-height: 1.4rem;
+              }
+              >.bd{
+                font-size: 2.4rem;
+                line-height: 2.1rem;
+                display: block;
+                >span{
+                  display: none;
+                }
+              }
+            }
+            >.left{
+              .flex(3);
+            }
+            >.right{
+              .flex(2);
+              > .hd {
+                > .icon-asc {
+                  font-size: 1rem;
+                  color: #FC4C5A;
+                }
+                >.icon-desc{
+                  font-size: 1rem;
+                  color: #0EA800;
+                }
+              }
+            }
+          }
+          >.market-small{
+            margin-top: 2rem;
+            margin-bottom: 2rem;
+            >div{
+              .flex(1) !important;
+              >.hd{
+                display: none;
+              }
+              >.bd{
+                font-size: 1.5rem;
+                >span{
+                  display: inline-block;
+                  font-size: 1.1rem;
+                  margin-left: 0.5rem;
+                  font-weight: 300;
+                  position: relative;
+                  bottom: 2px;
+                  >i{
+                    font-size: 0.7rem;
+                    &.icon-asc{
+                      color: #FC4C5A;
+                    }
+                    &.icon-desc{
+                      color: #0EA800;
+                    }
+                  }
+                }
+              }
+            }
+          }
+           /* dt , dd  {
                 color : #fff ;
                 line-height : 40px ;
                 &.store-name {
@@ -58,7 +136,7 @@
                         font-size : 2.4rem ;
                     }
                 }
-            }
+            }*/
         }
     }
     .tabs-frame {
@@ -126,6 +204,14 @@
             }
             
         }
+      >.list-container{
+        padding-right: 1.5rem;
+        >a{
+          >dl{
+            padding: 1.5rem 0 1.5rem 0;
+          }
+        }
+      }
     }
     /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
     经纪人样式结束

@@ -1,0 +1,34 @@
+@import "../variables.less";
+@import "../mixins.less" ;
+body {
+    background-color : #fff ;
+}
+header {    
+    box-shadow : 0 0.1rem 0.3rem 0 rgba( 0 , 0 , 0 , .15 ) ;
+   position : relative ;
+    div {        
+        text-align : center ;
+        font-size : 18px ;
+        line-height : 52px ;
+    }
+    .iconfont {
+        font-size : 1.4rem ;
+        left : 15px ;
+        position : absolute ;
+        top : 19px ;
+    }
+}
+dl {
+    .clearfix() ;
+    padding : 10px 0 ;
+    margin : 0 15px ;
+    font-size : 15px ;
+    dt {        
+        float : left ;
+    }
+    dd {        
+        margin-left : 30% ;
+        color : #999 ;
+        text-align : right ;
+    }    
+}

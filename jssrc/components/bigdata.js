@@ -96,6 +96,21 @@ define(function(){
             let total = getTotal();
             data.pNum = total;
             setTotal(total+1);
+            // 尝试从url中获取channel,从cookie中获取经纬度，还有当前url和之前url
+            data.current_url = location.href;
+            data.previous_url = document.referrer;
+            var longitude = $.cookie('locationLongitude');
+            var latitude = $.cookie('locationLatitude');
+            if(longitude){
+                data.longitude = longitude;
+            }
+            if(latitude){
+                data.latitude = latitude;
+            }
+            var channel = location.href.match(/channel=([^&]*)/i);
+            if(channel){
+                data.channel = channel[1];
+            }
             send(data);
         });        
     };
@@ -114,9 +129,11 @@ define(function(){
             
             if($parents.length>0){					
                 data = $parents.data('bigdata');
-                data = JSON.parse(decodeURIComponent(data));
-                data.type = 2;
-                bigData(data);
+                if(data){
+                    data = JSON.parse(decodeURIComponent(data));
+                    data.type = 2;
+                    bigData(data);
+                }
             }
         }
     },true);

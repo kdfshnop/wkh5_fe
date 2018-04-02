@@ -1,56 +1,215 @@
 /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
  1. 项目名称：yfyk2h5
  2. 文件名称：xfSources.less (新房源)
- 3. 作者：zhaohuagang@lifang.com
+ 3. 作者：tangxuyang@lifang.com
  -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
 @import "../variables.less" ;
 @import "../mixins.less" ;
+
 .xf-item {
-    border-bottom : 1px dotted @light-line-gray-color ;
-    color : @default-font-color ;
-    display : block ;
-    &:last-child {
-        border : none ;
+    position: relative;    
+    padding: 15px 0 5px 0;
+    display: block;    
+  
+    // 移除点击a标签时出现的类似选中效果
+    &:active {
+      background-color: transparent;
     }
-    dl {        
-        .clearfix() ;
-        padding : 1.5rem 1.5rem 1.5rem 0 ;
-        dt {
-            float : left ;
-            height : 87px ;            
-            overflow : hidden ;
-            width : 131px ;
-            img {
-                height : 185px ;  
-                width : 100% ;              
-            }
-        }
-        dd {
-            margin-left : 141px ;
-            &.title {
-                font-size : 1.6rem ;                
-                .text-ellipsis() ;
-            }
-            &.summary {
-                color : @light-font-color ;
-                font-size : 1.1rem ; 
-                line-height : 22px ;
-            }
-            &.tags {                
-                span {
-                    background-color : @light-gay-background-color ;
-                    color : @light-font-color ;
-                    .border-radius(3px) ;
-                    display : inline-block ;
-                    margin : 0 2px 2px 0 ;
-                    padding : 2px 5px ;
-                }
-            }
-            &.price {                
-                color : @danger-color ;
-                font-size : 1.6rem ;                
-                font-weight : 600 ;
-            }          
-        }
+    -webkit-tap-highlight-color: transparent;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+  
+    // 底部border，1像素问题
+    &::after{
+      position:  absolute;
+      content: '';      
+      border-top: 1px solid #e8e8e8;
+      height: 1px;
+      bottom: -1px;      
+      transform: scaleY(.5);
+      -webkit-transform: scaleY(.5);
+      left: 0;
+      width: 100%;
     }
-}
+  
+    // 左边图片
+    .img {
+      position: relative;
+      float: left;
+      width: 94px;
+      height: 62px;
+      overflow: hidden;
+      .border-radius(2px);
+  
+      // 右下角视频播放图标
+      .play {
+          background-color : rgba( 0 , 0 , 0 , .4 ) ;
+          bottom : 5px ;
+          .border-radius(100px) ;
+          display : block ;
+          height : 14px ;
+          line-height : 14px ;
+          position : absolute ;
+          right : 5px ;
+          width : 14px ;
+          i {
+              display : inline-block ;
+              left : 1px ;             
+              .triangle-next( 4px , #fff ) ;
+              position : absolute ;
+              top : 3px ;
+          }
+      }
+  
+      img {
+        width: 100%;        
+        height: 100%;
+      }
+  
+      .yh {// 团购优惠信息
+        position: absolute;
+        color: #fff;
+        font-size: 10px;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        padding-left: 3px;
+        height: 12px;
+        line-height: 12px;
+        background: rgba(0,0,0,.4);      
+  
+        &:empty {
+          display: none;
+        }
+      }    
+    }
+  
+    // 右边
+    .info {
+      margin-left: 109px;
+  
+      // 房子标题
+      h3 {
+        color: #000;
+        .text-ellipsis();
+        font-size: 16px;
+        font-weight: normal;
+      }
+  
+      // 区域板块面积行
+      .district-town-area {
+        color: #7c7c7c;
+        font-size: 11px;
+        line-height: 28px;
+        height: 28px;
+        .text-ellipsis();
+  
+        &:empty::after{
+          content: " ";
+        }
+  
+        span + span::before {
+          margin-left: 5px;
+          margin-right: 5px;        
+          content: '|';
+        }
+      }
+  
+      // 标签
+      .tags {
+        &:empty::after{
+          content: " ";
+        }
+        list-style: none;
+        overflow: hidden;
+        height: 18px;      
+  
+        // 每个标签
+        // note: display是inline-block，要保证使用时，li之间不要有任何空隙，否则浏览器会多出空白，跟UI上就不一致了
+        li {
+          display: inline-block;
+          padding: 0 6px;
+          padding-top: 1px;
+          font-size: 10px;
+          line-height: 14px;
+          color: #79a6e2;
+          border: 1px solid #79a6e2;
+          .border-radius(2px);
+          background-color: #fff;
+          margin-bottom: 2px;
+  
+          &.yh {// 有优惠
+            color: #fff;
+            border-color: transparent;
+            background: linear-gradient(-90deg, #FA7A6B 0%, #FC4C5A 100%);
+          }
+  
+          &.dt {// 近地铁
+            color: #fff;
+            border-color: transparent;
+            background: linear-gradient(-90deg, #3B9FFF 0%, #4081D6 100%);
+          }
+  
+          & + li {
+            margin-left: 5px;
+          }
+        }
+      }
+  
+      // 单价
+      .unit-price {
+        color: #FC4C5A;
+        font-size: 16px;
+        height: 36px;
+        line-height: 36px;
+  
+        // 单价金额
+        span:first-child {
+          font-weight: bolder;
+        }
+      }
+    }
+  
+    // 场景连篇中的房源走势和城市房价项
+    &.house-price, &.house {
+      background-color: #f7f7f7;
+      &::after {
+        border-color: transparent;
+      }
+      h3 {
+        margin-top: 5px;
+        font-size: 16px;
+        line-height: 22.5px;
+      }    
+      .detail {
+        margin-top: 10px;
+        color: #4081d6;
+        .border-radius(100px);
+        font-size: 14px;
+        line-height: 20px;
+        width: 64px;
+        text-align: center;
+        display: inline-block;
+        border: 1px solid;
+        margin-bottom: 15px;
+      }
+    }
+  
+    &.house {// 二手房图片
+      .img {
+        background-image: url("../../images/house.png");
+        background-size: cover;
+      }    
+    }
+  
+    &.house-price {// 房价图片
+      .img {
+        background-image: url("../../images/house-price.png");
+        background-size: cover;
+      }
+    }
+  
+    // &:last-child::after {
+    //   display: none;
+    // }
+  }

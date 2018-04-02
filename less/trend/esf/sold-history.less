@@ -1,0 +1,60 @@
+/*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+1. 项目名称：悟空找房h5
+2. 文件名称：trend -> esf -> sold-history.less (二手房价格行情，小区)
+3. 作者：liyang@lifang.com
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
+@import "../../variables.less" ;
+@import "../../mixins.less" ;
+body{
+  background: #fff;
+}
+.top-header-name{
+  width: 100%;
+  height: 48px;
+  line-height: 48px;
+  text-align: center;
+  font-size: 18px;
+  position: relative;
+  background: #FFF;
+  box-shadow: 0 1px 1.5px 0 rgba(0,0,0,.09);
+}
+.history-list{
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+  >.single-item{
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+    position: relative;
+    >h3{
+      font-size: 16px;
+      color: #333;
+    }
+    >p{
+      font-size: 14px;
+      color: #999;
+      margin-top: 0.4rem;
+      >span{
+        display: inline-block;
+        float: right;
+        color: #F95355;
+        font-size: 18px;
+        position: relative;
+        bottom:2px;
+      }
+    }
+    &:after {
+      content: '';
+      width: 100%;
+      height: 1px;
+      border-top: 1px solid #e8e8e8;
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      -webkit-transform: scaleY(0.5);
+      -moz-transform: scaleY(0.5);
+      -ms-transform: scaleY(0.5);
+      -o-transform: scaleY(0.5);
+      transform: scaleY(0.5);
+    }
+  }
+}

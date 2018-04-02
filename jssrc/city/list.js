@@ -14,7 +14,7 @@ class cityListController extends Controller {
         if($.cookie('location_cityName')){
             $('.location').html( $.cookie('location_cityName'));
         }else {
-            $('.inside-city').hide();
+            $('.location').html( "定位失败");
         }
         /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
         动态渲染高度 和头部的置顶
@@ -56,37 +56,26 @@ class cityListController extends Controller {
             let cityName =  $(this).html();
             self.backOrigin(pinyin,cityId,cityName)
         });
+    }
 
-    }
     /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
-    截取？后面的参数
-    -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
-    GetRequest() {
-        let url = location.search;
-        let theRequest = {};
-        if (url.indexOf("?") !== -1) {
-            let str = url.substr(1);
-            let strs = str.split("&");
-            for(let i = 0; i < strs.length; i ++) {
-                theRequest[strs[i].split("=")[0]] = strs[i].split("=")[1];
-            }
-        }
-        return theRequest;
-    }
-    /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
-    返回最终的来源   @businessType : 业务类型，可以是old (二手房) | new (新房) | rent (租房) | xfPrice (新房价格行情) | esfPrice (新房价格行情)，只当前模块是哪个业务
+    返回最终的来源   @businessType : 业务类型，可以是old (二手房) | new (新房) | rent (租房) | xfPrice,newTrend (新房价格行情) | esfPrice ,esfTrend(新房价格行情)，只当前模块是哪个业务
     -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
     backOrigin(pinyin,cityId,cityName) {
-        if (this.GetRequest()['businessType'] == "old") {
+        if (url('?businessType') == "old") {
             window.location.href = '/' + pinyin + "/esf"
-        } else if (this.GetRequest()['businessType'] == "new") {
+        } else if (url('?businessType') == "new") {
             window.location.href = '/' + pinyin + "/xflist"
-        } else if (this.GetRequest()['businessType'] == "rent") {
-            window.location.href = '/' + pinyin + "/rent/?channel="+this.GetRequest()['channel']
-        } else if(this.GetRequest()['businessType'] == "xfPrice") {
+        } else if (url('?businessType') == "rent") {
+            window.location.href = '/' + pinyin + "/rent/?channel="+url('?channel')
+        } else if(url('?businessType') == "xfPrice") {
             window.location.href = "/xfPrice/price.html?regionId="+cityId+"&regionType=1"
-        }else if(this.GetRequest()['businessType'] == "esfPrice") {
+        }else if(url('?businessType') == "esfPrice") {
             window.location.href = "/esfPrice/price.html?regionId="+cityId+"&regionType=1"
+        } else if (url('?businessType') == "esfTrend"){
+            window.location.href = "/"+pinyin+"/trend/esf"
+        } else if (url('?businessType') == "newTrend"){
+            window.location.href = "/"+pinyin+"/trend/new"
         }
         $.cookie('userSelectedCity',pinyin,{path: '/',});
         $.cookie('userSelectedCityId',cityId,{path: '/',});

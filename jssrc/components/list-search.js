@@ -72,10 +72,9 @@ define(function(){
                         "id": $(this).attr('data-value'),
                         "address": $(this).attr('data-address'),
                         "type":$(this).attr('data-type'),
-
                     };
                     saveLocalStorage.forEach(function (item,index) {
-                        if (item.id == singleData.id){
+                        if (item.id == singleData.id && item.type == singleData.type){
                             saveLocalStorage.splice(index,1)
                         }
                     });
@@ -114,7 +113,7 @@ define(function(){
                     channel:channelFlag ,
                     type: 2
                 }));
-                that.request(that.apiUrl.rent.list.acWord,sendData,{successCallback(data){
+                that.request(that.apiUrl.common.acWord,sendData,{successCallback(data){
                         let renthouselistData = data.data;
                         acWordHouseList = renthouselistData.secondHouseList;
                         if (renthouselistData.secondHouseList) {
@@ -127,24 +126,20 @@ define(function(){
                             renthouselistData.secondHouseList.forEach(function (item,index) {  // 循环出搜索结果
                                 titleName = item.estateDesc.replace(item.markname,`<span>${item.markname}</span>`);
                                 addreName = item.address.replace(item.markname,`<span>${item.markname}</span>`);
-                                if (index == 0){
-                                    searchaAcWord = `<li data-bigdata="${bigdata} " data-type="${item.type}" data-value="${item.value}" data-name="${item.estateDesc}" data-address="${item.address}"><p>${titleName}</p><span>${addreName}</span></li>`
-                                }else {
-                                    searchaAcWord = searchaAcWord +`<li data-bigdata="${bigdata} " data-type="${item.type}" data-value="${item.value}" data-name="${item.estateDesc}" data-address="${item.address}"><p>${titleName}</p><span>${addreName}</span></li>`
-                                }
+                                searchaAcWord += `<li data-bigdata="${bigdata} " data-type="${item.type}" data-value="${item.value}" data-name="${item.estateDesc}" data-address="${item.address}"><p>${titleName}</p><span>${addreName}</span></li>`
                             }) ;
-                            $('#showResult').empty();
-                            $('#showResult').append(searchaAcWord);
+                            $('#showResult').empty().append(searchaAcWord);
                             $('body').css('background-color','#F0F0F0');
                         } else {
                             $('.no-result').show();
+                            $('.have-result').hide();
                             $('.show-result').hide();
                             $('body').css('background-color','#FFF');
                         }
                         // 搜索条目点击跳转 和储存
                         $('#showResult >li').click(function () {
                             JSON.parse( localStorage.getItem('searchHistory')) ?  saveLocalStorage = JSON.parse( localStorage.getItem('searchHistory')) : saveLocalStorage = [];
-                            let singleData={
+                            let singleData = {
                                 "key":$(this).attr('data-name'),
                                 "id": $(this).attr('data-value'),
                                 "address": $(this).attr('data-address'),
@@ -154,7 +149,7 @@ define(function(){
                                 saveLocalStorage.reverse().splice(4)
                             }
                             saveLocalStorage.forEach(function (item,index) {
-                                if (item.id == singleData.id){
+                                if (item.id == singleData.id && item.type == singleData.type){
                                     saveLocalStorage.splice(index,1)
                                 }
                             });
@@ -192,7 +187,10 @@ define(function(){
                         window.location.href = url + conditionString + checkType(typeS,valueSearch);
                     }
                 }
-
+            }else {
+                $('.show-result').hide();
+                localStorage.getItem('searchHistory') ? $('.have-result').show(): $('.have-result').hide();
+                $('#showResult').empty();
             }
         });
 
@@ -255,6 +253,7 @@ define(function(){
                 $('.no-result').hide();
                 $('.back').hide();
                 $('.show-result').hide();
+                $('#showResult').empty();
                 $('#searchInput').val('');
                 $('.location-all').show();
                 $('#searchInput').css({"background-color":"#F8F8F8",'width':"52%"});
