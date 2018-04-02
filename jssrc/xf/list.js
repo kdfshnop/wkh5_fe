@@ -41,7 +41,10 @@
                         self.param[key] = data.value;
                         self.goto();
                     }
-                }
+                },
+                // "locationCallback": (data) => {
+                //     self.filter.setLocationInfo(data);
+                // }
             }) ;
 
             self.filter = new Filter($.extend({},Filter.XFDEFAULT,{
