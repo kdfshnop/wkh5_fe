@@ -334,7 +334,7 @@
         -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
         navigator.geolocation.getCurrentPosition( (position) => {
             let latitude = position.coords.latitude ;
-            let longitude = position.coords.longitude ;            
+            let longitude = position.coords.longitude ; 
             /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
             往cookie里面写经纬度
             -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
@@ -474,7 +474,9 @@
         /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
         3. 如果先前用户选择过城市就直接跳转到选择的城市，否则就根据tips来决定是否需要弹框选择
         -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
-        if( $.cookie(this.moduleType + "SelectedCityPinyin")) window.location.href = this.combineUrl($.cookie(this.moduleType + "SelectedCityPinyin")) ;
+        if( $.cookie(this.moduleType + "SelectedCityPinyin")) {
+            if( $.cookie(this.moduleType + "SelectedCityPinyin") !== $("#visitedCityPinyin").val() ) window.location.href = this.combineUrl($.cookie(this.moduleType + "SelectedCityPinyin")) ;
+        }
         else {
             if( ! tips) this.popCitySelector() ;
             else {

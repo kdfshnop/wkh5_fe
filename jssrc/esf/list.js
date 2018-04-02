@@ -25,6 +25,30 @@ class ListController extends Controller {
         -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
         require([ "../components/bigdata.min" , "../components/filter.min", "../components/conning-tower.min" ] , (BigData, Filter) => {
             BigData.init(this) ;
+            self.filter = new Filter($.extend({}, Filter.ESFDEFAULT,{
+                el: ".filter",                
+                cityId: 43,                
+                BigData: BigData,                
+                controller: self,
+                near: true,
+                filterChanged: function(result){                         
+                    var param = self.paramGenerator.generateParamObj(result);
+                    if(param.di || param.to || param.li || param.st){
+                        // do nothing
+                    }else{// 判断是否有sid,sli,sst,sdi,sto
+                        var mapping = ["sdi","sto","sli","sst","sid"];
+                        mapping.forEach(function(item){
+                            if(self.param[item]){
+                                param[item] = self.param[item];
+                            }
+                        });                        
+                    }
+
+                    self.param = param;
+                    // 跳转
+                    self.goto();
+                }                
+            }));
             new ConningTower({                
                 "bigDataUtil" : BigData ,               
                 "moduleType" : "esf" ,
@@ -55,30 +79,7 @@ class ListController extends Controller {
                 }
             }) ;
 
-            self.filter = new Filter($.extend({}, Filter.ESFDEFAULT,{
-                el: ".filter",                
-                cityId: 43,                
-                BigData: BigData,                
-                controller: self,
-                near: true,
-                filterChanged: function(result){                         
-                    var param = self.paramGenerator.generateParamObj(result);
-                    if(param.di || param.to || param.li || param.st){
-                        // do nothing
-                    }else{// 判断是否有sid,sli,sst,sdi,sto
-                        var mapping = ["sdi","sto","sli","sst","sid"];
-                        mapping.forEach(function(item){
-                            if(self.param[item]){
-                                param[item] = self.param[item];
-                            }
-                        });                        
-                    }
-
-                    self.param = param;
-                    // 跳转
-                    self.goto();
-                }                
-            }));
+            
 
             window.filter = self.filter;
             self.BigData = BigData;
