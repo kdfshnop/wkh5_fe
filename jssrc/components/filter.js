@@ -463,7 +463,7 @@ define([],function(){
                 result.price = $(this).data('value');
             }
         });
-        if(typeof result.price != 'undefined'){
+        if(typeof result.price == 'undefined'){
             delete this.result.price;
         }        
 
@@ -471,7 +471,7 @@ define([],function(){
         $('.house-type-section').each(function(){
             var key = $(this).data('key');
             result[key] = [];
-            delete self[key];
+            self.result && delete self.result[key];
             $(this).find('.active').each(function(){
                 var value = $(this).data('value');
                 if(value != null && value != undefined && value != ''){
