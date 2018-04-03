@@ -91,7 +91,8 @@ class ListController extends Controller {
         }) ;
 
         // 从url中解析参数
-        var pageUrl = location.href;
+        //var pageUrl = location.href;
+        var pageUrl = location.origin + location.pathname;
         pageUrl = pageUrl.replace('//','');
         var tmpArr = pageUrl.split('/');
         self.param = {};
@@ -109,11 +110,18 @@ class ListController extends Controller {
 
     // 根据查询条件进行相应的跳转
     goto(){
-        if(location.href.indexOf('esf/')>0){
-            location.href = './' +  ParamGenerator.object2QueryString(this.param);                    
-        }else{
-            location.href = location.href + "/" + ParamGenerator.object2QueryString(this.param);                    
-        }                
+        var cityPinyin = $('#visitedCityPinyin').val();
+        var url = location.origin + "/" + cityPinyin + "/esf/" +ParamGenerator.object2QueryString(this.param);          
+        //var url = location.href;
+        // if(url.indexOf('esf/')>0){            
+        //     url += ParamGenerator.object2QueryString(this.param);                    
+        //     //location.href = "./" + ParamGenerator.object2QueryString(this.param);                    
+        // }else{
+        //     //location.href += "/" + ParamGenerator.object2QueryString(this.param);  
+        //     url += '/' + ParamGenerator.object2QueryString(this.param);                     
+        // }         
+
+        location.href = url + location.search;               
     }
 
     bindEvent(){
