@@ -934,7 +934,8 @@ define([],function(){
 
         //--- 读取url 并分析初始条件-----------------
         this.initValue = {};
-        var pageUrl = location.href;
+        //var pageUrl = location.href;
+        var pageUrl = location.origin + location.pathname;
         pageUrl = pageUrl.replace('//','');
         var tmpArr = pageUrl.split('/');
         if(tmpArr[3]){// 有查询条件
