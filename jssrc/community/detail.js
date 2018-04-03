@@ -61,7 +61,13 @@
          });
          /* 按照3.12需求文档走势图数据要求*/
          let maxPrice = Math.ceil((sortArray[sortArray.length - 1] / 1000)) * 1000;
-         let minPrice = Math.ceil((sortArray[0] / 1000) - 1) * 1000;
+         let minPrice = null;  //Math.ceil((sortArray[0] / 1000) - 1) * 1000;
+         sortArray.forEach(function (item,index) {
+             if (item !=0){
+                 minPrice =   Math.ceil((item / 1000) - 1) * 1000;
+                 return minPrice
+             }
+         });
          let avgPrice = 1000 ;
          if (maxPrice == minPrice ) {
              minPrice = maxPrice - 2000;
@@ -151,7 +157,7 @@
                      }
                  },
                  min:minPrice,
-                 max:avgPrice*5,
+                 max:minPrice+avgPrice*5,
                  interval:avgPrice,
              },
              series: [{
