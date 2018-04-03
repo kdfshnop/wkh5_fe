@@ -52,6 +52,7 @@ class districtController extends Controller {
     折线图函数异步操作
     -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
     echartFun(echartData){
+
         let seriesData=[];
         let countNum = 0;
         let echartShow = true;
@@ -74,7 +75,13 @@ class districtController extends Controller {
             return parseFloat(a) - parseFloat(b);
         });
         let maxPrice = Math.ceil((sortArray[sortArray.length - 1] / 1000)) * 1000;
-        let minPrice = Math.ceil((sortArray[0] / 1000) - 1) * 1000;
+        let minPrice = null;  //Math.ceil((sortArray[0] / 1000) - 1) * 1000;
+        sortArray.forEach(function (item,index) {
+            if (item !=0){
+                minPrice =   Math.ceil((item / 1000) - 1) * 1000;
+                return minPrice
+            }
+        });
         let avgPrice = 1000 ;
         if (maxPrice == minPrice ) {
             minPrice = maxPrice - 2000;
@@ -109,12 +116,6 @@ class districtController extends Controller {
                 containLabel: true,
             },
             xAxis: {
-                name:"(月)",
-                nameGap:15,
-                nameTextStyle:{
-                    position:'relative',
-                    top:20
-                },
                 data: echartData.monthList ,  // X坐标数据
                 splitLine: {show: false}, // 控制网格线是否显示
                 axisTick: {show: false},  // 去除x轴上的刻度线
@@ -161,7 +162,7 @@ class districtController extends Controller {
                 },
                 position:'right',
                 min:minPrice,
-                max:avgPrice*5,
+                max:minPrice+avgPrice*5,
                 interval:avgPrice,
             },
             series: [{

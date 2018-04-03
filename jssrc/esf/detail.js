@@ -125,13 +125,19 @@ class DetailController extends Controller {
         });
         /* 按照3.12需求文档走势图数据要求*/
         let maxPrice = Math.ceil((sortArray[sortArray.length - 1] / 1000)) * 1000;
-        let minPrice = Math.ceil((sortArray[0] / 1000) - 1) * 1000;
+        let minPrice = null;  //Math.ceil((sortArray[0] / 1000) - 1) * 1000;
+        sortArray.forEach(function (item,index) {
+            if (item !=0){
+                minPrice =   Math.ceil((item / 1000) - 1) * 1000;
+                return minPrice
+            }
+        });
         let avgPrice = 1000 ;
         if (maxPrice == minPrice ) {
             minPrice = maxPrice - 2000;
             avgPrice = 1000
         }else{
-            avgPrice = (maxPrice - minPrice)/4 < 1000 ? 1000:Math.ceil((maxPrice - minPrice)/4000)*1000;
+            avgPrice = ((maxPrice - minPrice)/4) < 1000 ? 1000:Math.ceil((maxPrice - minPrice)/4000)*1000;
         }
         minPrice =  minPrice < 0 ? 0:minPrice;
         let myChart = echarts.init(document.getElementById('main'),{ width: '88%' });
@@ -158,6 +164,9 @@ class DetailController extends Controller {
                 },
                 formatter:function (params, ticket, callback) {
                     let paramsValue =  params.value + "元";
+                    that.request(that.apiUrl.common.bigData , echartBigData ,function () {
+
+                    });
                     return paramsValue;
                 }
             },
@@ -212,7 +221,7 @@ class DetailController extends Controller {
                     }
                 },
                 min:minPrice,
-                max:avgPrice*5,
+                max:minPrice+avgPrice*5,
                 interval:avgPrice,
             },
             series: [{
