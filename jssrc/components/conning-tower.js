@@ -437,11 +437,8 @@
                 绘制tabs-frame
                 -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/                    
                 let $domesticFrame = $(document.createElement("DIV")).addClass("tabs-frame domestic") ;
-                if( ! $.cookie("locationCityName") ) {
-                    //如果定位失败，就固定将定位城市绘制在国内城市frame中
-                    $domesticFrame.append("<span>定位城市</span><a class=\"location-city\">定位失败</a>") ;
-                }
-                else if($.cookie("locationCityName") && $.cookie("locationCityChina")) $domesticFrame.append("<span>定位城市</span><a class=\"location-city\" data-cityid=\"" + $.cookie("locationCityId") + "\" data-pinyin=\"" + $.cookie("locationCityPinyin") + "\" data-china=\"" + $.cookie("locationCityChina") + "\">" + $.cookie("locationCityName") + "</a>") ;
+                if( ! $.cookie("locationCityName") ) $domesticFrame.append("<span>定位城市</span><a class=\"location-city\">定位失败</a>") ;
+                else $domesticFrame.append("<span>定位城市</span><a class=\"location-city\" data-cityid=\"" + $.cookie("locationCityId") + "\" data-pinyin=\"" + $.cookie("locationCityPinyin") + "\" data-china=\"" + $.cookie("locationCityChina") + "\">" + $.cookie("locationCityName") + "</a>") ;
                 if( Object.keys(cities.domestic).length ) {
                     for( let key in cities.domestic ) {
                         $domesticFrame.append("<span>" + key + "</span>") ;
@@ -453,7 +450,8 @@
                 $(".city-selector").append($domesticFrame) ;
 
                 let $overseasFrame = $(document.createElement("DIV")).addClass("tabs-frame overseas") ;
-                if($.cookie("locationCityName") && ! $.cookie("locationCityChina")) $domesticFrame.append("<span>定位城市</span><a class=\"location-city\" data-cityid=\"" + $.cookie("locationCityId") + "\" data-pinyin=\"" + $.cookie("locationCityPinyin") + "\"  data-china=\"" + $.cookie("locationCityChina") + "\">" + $.cookie("locationCityName") + "</a>") ;
+                if( ! $.cookie("locationCityName")) $overseasFrame.append("<span>定位城市</span><a class=\"location-city\">定位失败</a>") ;
+                else $overseasFrame.append("<span>定位城市</span><a class=\"location-city\" data-cityid=\"" + $.cookie("locationCityId") + "\" data-pinyin=\"" + $.cookie("locationCityPinyin") + "\"  data-china=\"" + $.cookie("locationCityChina") + "\">" + $.cookie("locationCityName") + "</a>") ;
                 if( Object.keys(cities.overseas).length ) {
                     for( let key in cities.overseas ) {
                         $overseasFrame.append("<span>" + key + "</span>") ;
