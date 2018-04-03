@@ -146,7 +146,7 @@
                          if (value == 0) {
                              return "";
                          } else {
-                             return value / 10000 + '万';
+                             return (value / 10000).toFixed(1) + '万';
                          }
                      }
                  },
