@@ -254,6 +254,7 @@
         -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
         $(".city-selector .tabs-frame a").click((event) => {
             let $handler = $(event.currentTarget) ;
+            if( ! $handler.attr("data-cityid")) return ;
             $.cookie( this.moduleType + "SelectedCityId" , $handler.data("cityid") ,  { "path" : "/" } ) ; 
             $.cookie( this.moduleType + "SelectedCityName" , $handler.text() ,  { "path" : "/" } ) ;
             $.cookie( this.moduleType + "SelectedCityPinyin" , $handler.data("pinyin") ,  { "path" : "/" } ) ;
@@ -438,7 +439,7 @@
                 let $domesticFrame = $(document.createElement("DIV")).addClass("tabs-frame domestic") ;
                 if( ! $.cookie("locationCityName") ) {
                     //如果定位失败，就固定将定位城市绘制在国内城市frame中
-                    $domesticFrame.append("<span>定位城市</span><p>定位失败</p>") ;
+                    $domesticFrame.append("<span>定位城市</span><a class=\"location-city\">定位失败</a>") ;
                 }
                 else if($.cookie("locationCityName") && $.cookie("locationCityChina")) $domesticFrame.append("<span>定位城市</span><a class=\"location-city\" data-cityid=\"" + $.cookie("locationCityId") + "\" data-pinyin=\"" + $.cookie("locationCityPinyin") + "\" data-china=\"" + $.cookie("locationCityChina") + "\">" + $.cookie("locationCityName") + "</a>") ;
                 if( Object.keys(cities.domestic).length ) {
@@ -489,7 +490,8 @@
         /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------        
         3. 改写城市选择弹层中定位城市占位符信息   
         -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
-        $(".city-selector .tabs-frame .location-city").text("定位失败") ;
+        let failMessage = tips ? "定位失败" : "定位服务暂未开启" ;
+        $(".city-selector .tabs-frame .location-city").text(failMessage) ;
         /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
         4. 如果先前用户选择过城市就直接跳转到选择的城市，否则就根据tips来决定是否需要弹框选择
         -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
