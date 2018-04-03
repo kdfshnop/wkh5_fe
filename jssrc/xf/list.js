@@ -8,7 +8,7 @@
         super();
         var self = this;        
         this.paramGenerator = new ParamGenerator();
-        $('.total').slideUp(1000);// 隐藏查询总条数   
+        $(function(){$('.total').slideUp(1000);});// 隐藏查询总条数   
         
         /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
         图片懒加载实例化
@@ -187,6 +187,7 @@
         var cityPinyin = $('#visitedCityPinyin').val();
         var channel = $('#channel').val();
         var $list = $('#list .xf-item');
+        var oldBusiness = $('#oldBusiness').val();
         if($('#list .scene.house-price').length == 0 && $list.length>9){
             $('<a href="/'+cityPinyin+'/trend/new'+(channel? "?channel=" + channel:"")+'" class="scene house-price">\
                 <div class="img"></div>\
@@ -196,7 +197,7 @@
                 </div>\
             </a>').insertAfter($($list[9]));
         }
-        if($('#list .scene.house').length == 0 && $list.length>19){
+        if(oldBusiness && $('#list .scene.house').length == 0 && $list.length>19){
             $('<a href="/'+cityPinyin+'/esf/'+(channel? "?channel=" + channel:"")+'" class="scene house">\
                 <div class="img"></div>\
                 <div class="info">\

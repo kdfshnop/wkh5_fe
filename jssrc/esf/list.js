@@ -11,7 +11,7 @@ class ListController extends Controller {
         super() ;        
         var self = this;        
         this.paramGenerator = new ParamGenerator();
-        $('.total').slideUp(1000);// 隐藏查询总条数   
+        $(function(){$('.total').slideUp(1000);});// 隐藏查询总条数   
         
         /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
         图片懒加载实例化
@@ -111,17 +111,8 @@ class ListController extends Controller {
     // 根据查询条件进行相应的跳转
     goto(){
         var cityPinyin = $('#visitedCityPinyin').val();
-        var url = location.origin + "/" + cityPinyin + "/esf/" +ParamGenerator.object2QueryString(this.param);          
-        //var url = location.href;
-        // if(url.indexOf('esf/')>0){            
-        //     url += ParamGenerator.object2QueryString(this.param);                    
-        //     //location.href = "./" + ParamGenerator.object2QueryString(this.param);                    
-        // }else{
-        //     //location.href += "/" + ParamGenerator.object2QueryString(this.param);  
-        //     url += '/' + ParamGenerator.object2QueryString(this.param);                     
-        // }         
-
-        location.href = url + location.search;               
+        var url = location.origin + "/" + cityPinyin + "/esf/" +ParamGenerator.object2QueryString(this.param);
+        location.href = url + location.search;
     }
 
     bindEvent(){
@@ -221,6 +212,7 @@ class ListController extends Controller {
         var cityPinyin = $('#visitedCityPinyin').val();
         var channel = $('#channel').val();
         var $list = $('#list .esf-item');
+        var newBusiness = $('#newBusiness').val();
         if($('#list .scene.house-price').length == 0 && $list.length>9){
             $('<a href="/'+cityPinyin+'/trend/esf'+(channel?"?channel="+channel:"")+'" class="scene house-price">\
                 <div class="img"></div>\
@@ -230,7 +222,7 @@ class ListController extends Controller {
                 </div>\
             </a>').insertAfter($($list[9]));
         }
-        if($('#list .scene.house').length == 0 && $list.length>19){
+        if(newBusiness && $('#list .scene.house').length == 0 && $list.length>19){
             $('<a href="/'+cityPinyin+'/xflist/'+(channel?"?channel="+channel:"")+'" class="scene house">\
                 <div class="img"></div>\
                 <div class="info">\
