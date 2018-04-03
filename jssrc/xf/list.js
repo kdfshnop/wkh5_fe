@@ -42,17 +42,12 @@
                         self.goto();
                     }
                 },
-                // "locationCallback": (data) => {
-                //     self.filter.setLocationInfo(data);
-                // }
             }) ;
 
             self.filter = new Filter($.extend({},Filter.XFDEFAULT,{
                 el: ".filter",                
-                cityId: 43,
-                near: false,
-                longitude: 222,
-                latitude: 234,                
+                cityId: $('#visitedCityId').val(),
+                near: false,               
                 controller: self,
                 BigData: BigData,
                 filterChanged: function(result){   
@@ -190,9 +185,11 @@
 
     insertTrendAndOldHouse(){// 场景连篇        
         var cityName = $('#visitedCityName').val();
+        var cityPinyin = $('#visitedCityPinyin').val();
+        var channel = $('#channel').val();
         var $list = $('#list .xf-item');
         if($('#list .scene.house-price').length == 0 && $list.length>9){
-            $('<a href="#" class="scene house-price">\
+            $('<a href="/'+cityPinyin+'/trend/new'+(channel? "?channel=" + channel:"")+'" class="scene house-price">\
                 <div class="img"></div>\
                 <div class="info">\
                     <h3>'+cityName+'房价涨了还是跌了？</h3>\
@@ -201,7 +198,7 @@
             </a>').insertAfter($($list[9]));
         }
         if($('#list .scene.house').length == 0 && $list.length>19){
-            $('<a href="#" class="scene house">\
+            $('<a href="/'+cityPinyin+'/esf/'+(channel? "?channel=" + channel:"")+'" class="scene house">\
                 <div class="img"></div>\
                 <div class="info">\
                     <h3>火爆高性价比二手房</h3>\
