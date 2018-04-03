@@ -42,17 +42,12 @@
                         self.goto();
                     }
                 },
-                // "locationCallback": (data) => {
-                //     self.filter.setLocationInfo(data);
-                // }
             }) ;
 
             self.filter = new Filter($.extend({},Filter.XFDEFAULT,{
                 el: ".filter",                
-                cityId: 43,
-                near: false,
-                longitude: 222,
-                latitude: 234,                
+                cityId: $('#visitedCityId').val(),
+                near: false,               
                 controller: self,
                 BigData: BigData,
                 filterChanged: function(result){   
@@ -82,7 +77,8 @@
         });
 
         // 从url中解析参数
-        var pageUrl = location.href;
+        //var pageUrl = location.href;
+        var pageUrl = location.origin + location.pathnam;
         pageUrl = pageUrl.replace('//','');
         var tmpArr = pageUrl.split('/');
         self.param = {};
@@ -101,12 +97,10 @@
     }
 
     // 根据查询条件进行相应的跳转
-    goto(){        
-        if(location.href.indexOf('xflist/')>0){
-            location.href = './' +  ParamGenerator.object2QueryString(this.param);                    
-        }else{
-            location.href = location.href + "/" + ParamGenerator.object2QueryString(this.param);   
-        }        
+    goto(){    
+        var cityPinyin = $('#visitedCityPinyin').val();
+        var url = location.origin + "/" + cityPinyin + "/xflist/" +ParamGenerator.object2QueryString(this.param);
+        location.href = url + location.search;
     }
 
     bindEvent(){
@@ -190,9 +184,11 @@
 
     insertTrendAndOldHouse(){// 场景连篇        
         var cityName = $('#visitedCityName').val();
+        var cityPinyin = $('#visitedCityPinyin').val();
+        var channel = $('#channel').val();
         var $list = $('#list .xf-item');
         if($('#list .scene.house-price').length == 0 && $list.length>9){
-            $('<a href="#" class="scene house-price">\
+            $('<a href="/'+cityPinyin+'/trend/new'+(channel? "?channel=" + channel:"")+'" class="scene house-price">\
                 <div class="img"></div>\
                 <div class="info">\
                     <h3>'+cityName+'房价涨了还是跌了？</h3>\
@@ -201,7 +197,7 @@
             </a>').insertAfter($($list[9]));
         }
         if($('#list .scene.house').length == 0 && $list.length>19){
-            $('<a href="#" class="scene house">\
+            $('<a href="/'+cityPinyin+'/esf/'+(channel? "?channel=" + channel:"")+'" class="scene house">\
                 <div class="img"></div>\
                 <div class="info">\
                     <h3>火爆高性价比二手房</h3>\
