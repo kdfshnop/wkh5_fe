@@ -305,8 +305,7 @@
         if($.cookie(this.moduleType + "VisitedCityId")) {
             if(parseInt( $.cookie(this.moduleType + "VisitedCityId") , 10 ) !== parseInt( $("#visitedCityId").val() , 10 )) {
                 //如果当前城市不是用户选择的城市才会要跳转
-                if( $.cookie(this.moduleType + "SelectedCityId") && parseInt( $.cookie(this.moduleType + "SelectedCityId") , 10 ) !== parseInt( $("#visitedCityId").val() , 10 ) ) {
-                    //alert("之前有访问过当前列表页且不是当前城市！而是当前城市也不是用户选择过的城市，所以将要跳转到先前访问过的城市......") ;
+                if( $.cookie(this.moduleType + "SelectedCityId") && parseInt( $.cookie(this.moduleType + "SelectedCityId") , 10 ) !== parseInt( $("#visitedCityId").val() , 10 ) ) {                    
                     window.location.href = this.combineUrl($.cookie(this.moduleType + "VisitedCityPinyin")) ;
                 }
             }
@@ -381,21 +380,25 @@
                     }                
                 } 
             }) ;                       
-        } , ( error ) => {
+        } , ( error ) => {            
             switch(error.code) {
                 case error.PERMISSION_DENIED :  // 用户阻止了授权
+                alert("error.PERMISSION_DENIED") ;
                 this.localtionFail(false) ;               
                 break ;
 
-                case error.POSITION_UNAVAILABLE :  //定位信息无效                
+                case error.POSITION_UNAVAILABLE :  //定位信息无效
+                alert("error.POSITION_UNAVAILABLE") ;            
                 this.localtionFail(true) ;
                 break ;
 
-                case error.TIMEOUT :  //定位超时                
+                case error.TIMEOUT :  //定位超时
+                alert("error.TIMEOUT") ;                  
                 this.localtionFail(true) ;
                 break ;
 
-                case error.UNKNOWN_ERROR :  //其他不可预知的错误                
+                case error.UNKNOWN_ERROR :  //其他不可预知的错误  
+                alert("error.UNKNOWN_ERROR") ;                
                 this.localtionFail(true) ;
                 break ;
             }
