@@ -161,19 +161,15 @@ class cityController extends Controller {
                 axisTick: {show: false },  // 去除y轴上的刻度线
                 axisLabel:{
                     inside: false,
-                    textStyle: {
-                        color: '#999',
-                    },
+                    textStyle:{
+                        color:'#999'
+                    } ,
                     formatter: function(value, index) {
-                        if (value == 0) {
+                        if (value == (minPrice-avgPrice)) {
                             return "";
                         } else {
                             return (value / 10000).toFixed(1) + ' 万';
                         }
-                    },
-                    interval:(index, value) => {
-
-                            return false
                     }
                 },
                 boundaryGap : false,

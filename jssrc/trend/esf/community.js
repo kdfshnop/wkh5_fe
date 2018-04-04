@@ -147,15 +147,17 @@ class communityController extends Controller {
                         color: '#999',
                     },
                     formatter: function(value, index) {
-                        if (value == 0) {
+                        if (value == (minPrice-avgPrice)) {
                             return "";
                         } else {
-                            return (value / 10000).toFixed(1) + '万';
+                            return (value / 10000).toFixed(1) + ' 万';
                         }
                     }
                 },
-                min:minPrice,
-                max:minPrice+avgPrice*5,
+                boundaryGap : false,
+                position:'right',
+                min:minPrice-avgPrice,
+                max:minPrice+avgPrice*4,
                 interval:avgPrice,
             },
             series: [{
