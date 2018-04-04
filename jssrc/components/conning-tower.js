@@ -4,10 +4,9 @@
  3. 作者：zhaohuagang@lifang.com
  4. 备注：
     这里面定位需要用到的几个缓存key及缓存类型：
-    1). this.moduleType +"VisitedCityId" , this.moduleType +"VisitedCityName" , this.moduleType +"VisitedCityPinyin"，this.moduleType +"VisitedCityChina"，表示用户最后一次访问的当前moduleType的城市  使用cookie
-    2). this.moduleType +"SelectedCityId" , this.moduleType +"SelectedCityName" , this.moduleType +"SelectedCityPinyin"，this.moduleType +"SelectedCityChina"，表示用户选择的城市  使用cookie
-    2). locationCityId , locationCityName , locationCityPinyin , locationCityChina  , locationLongitude , locationLatitude，表示定位到的城市及经纬度  使用sessionStorage，因为会话
-        结束后这个定位信息用处就不大了    
+    1). "visitedCityId" , "visitedCityName" , "visitedCityPinyin"，"visitedCityChina"，表示用户最后一次访问的当前moduleType的城市  使用cookie
+    2). "selectedCityId" , "selectedCityName" , "selectedCityPinyin"，"selectedCityChina"，表示用户选择的城市  使用cookie
+    3). locationLongitude , locationLatitude 定位的经纬度，这个一定要用cookie，因为埋点里面传递的值是从这里取的      
 5. 待完成任务：
     1). setSearchCache方法写好了，判重还没有验证，在用户点击搜索结果项或者搜索表单提交的时候需要执行，只不过搜索表单提交相当于选择了搜索出来的第一条记录
     2). 搜索框获得焦点或者keyup但是keywords为空的时候需要将搜索历史绘制出来
@@ -36,6 +35,18 @@
          this.cityClick = cityClick ;  //城市选择器中城市点击接口事件
          this.searchResultItemClick = searchResultItemClick ;  //搜索结果选项点击
          this.locationCallback = locationCallback ;
+         /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+        几个状态值
+        -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
+        this.states = {
+            "locationStage" : 0 ,  //定位阶段： 0:还没有发起定位 | 1:开始定位 | 2:定位结束
+            "locationMessage" : null ,  //定位提示语，{城市}/正在定位中.../定位失败/定位服务暂未开启
+            "locationFailCause" : null , //定位失败原因
+            "locationCityId" : null ,
+            "locationCityName" : null ,
+            "locationCityPinyin" : null ,
+            "locationCityChina" : null
+        } ;
          /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
         侦测是否有过搜索结果点击行为
         -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
@@ -255,10 +266,10 @@
         $(".city-selector .tabs-frame a").click((event) => {
             let $handler = $(event.currentTarget) ;
             if( ! $handler.attr("data-cityid")) return ;
-            $.cookie( this.moduleType + "SelectedCityId" , $handler.data("cityid") ,  { "path" : "/" } ) ; 
-            $.cookie( this.moduleType + "SelectedCityName" , $handler.text() ,  { "path" : "/" } ) ;
-            $.cookie( this.moduleType + "SelectedCityPinyin" , $handler.data("pinyin") ,  { "path" : "/" } ) ;
-            $.cookie( this.moduleType + "SelectedCityChina" , $handler.data("china") ,  { "path" : "/" } ) ;          
+            $.cookie( "selectedCityId" , $handler.data("cityid") ,  { "path" : "/" } ) ; 
+            $.cookie( "selectedCityName" , $handler.text() ,  { "path" : "/" } ) ;
+            $.cookie( "selectedCityPinyin" , $handler.data("pinyin") ,  { "path" : "/" } ) ;
+            $.cookie( "selectedCityChina" , $handler.data("china") ,  { "path" : "/" } ) ;          
             this.cityClick() ;
             $(".city-selector").hide() ;
             if(parseInt( $handler.data("cityid") , 10 ) !== parseInt($("#visitedCityId").val() , 10 )) window.location.href = this.combineUrl( $handler.data("pinyin") ) ;
@@ -300,13 +311,13 @@
     -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
     location() {        
         /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
-        首先要去判断是否有过浏览当前moduleType的页面，如果
+        首先要去判断是否有过浏览H5的页面，如果
         -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
-        if($.cookie(this.moduleType + "VisitedCityId")) {
-            if(parseInt( $.cookie(this.moduleType + "VisitedCityId") , 10 ) !== parseInt( $("#visitedCityId").val() , 10 )) {
+        if($.cookie("visitedCityId")) {
+            if(parseInt( $.cookie("visitedCityId") , 10 ) !== parseInt( $("#visitedCityId").val() , 10 )) {
                 //如果当前城市不是用户选择的城市才会要跳转
-                if( $.cookie(this.moduleType + "SelectedCityId") && parseInt( $.cookie(this.moduleType + "SelectedCityId") , 10 ) !== parseInt( $("#visitedCityId").val() , 10 ) ) {                    
-                    window.location.href = this.combineUrl($.cookie(this.moduleType + "VisitedCityPinyin")) ;
+                if( $.cookie("selectedCityId") && parseInt( $.cookie("selectedCityId") , 10 ) !== parseInt( $("#visitedCityId").val() , 10 ) ) {                    
+                    window.location.href = this.combineUrl($.cookie("visitedCityPinyin")) ;
                 }
             }
             else {
@@ -325,6 +336,11 @@
             return ;
         }
         /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+        改写状态
+        -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
+        this.states.locationStage = 1 ;
+        this.states.locationMessage = "正在定位中" ;        
+        /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
         定义定位选项
         -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
         let geoOpts = {
@@ -339,6 +355,10 @@
             let latitude = position.coords.latitude ;
             let longitude = position.coords.longitude ; 
             /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+            改写状态
+            -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
+            this.states.locationStage = 2 ;
+            /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
             往cookie里面写经纬度
             -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
             $.cookie("locationLatitude" , latitude , { path : "/" , expires : 365 * 24 * 60 } ) ;
@@ -346,7 +366,7 @@
             /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
             执行定位回调
             -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
-            this.locationCallback({ "latitude" : latitude , "longitude" : longitude }) ;      
+            this.locationCallback({ "latitude" : latitude , "longitude" : longitude }) ;              
             /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
             根据经纬度反查城市信息
             -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
@@ -354,21 +374,22 @@
                 apiUrl : this.apiUrl.getCityByLola , 
                 requestData : { "latitude" : latitude , "longitude" : longitude } , 
                 success : (result) => {
+                    this.states.locationMessage = result.data.cityName ;
                     /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
-                    写入几个缓存
+                    写入几个状态值
                     -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
-                    $.cookie("locationCityId" , result.data.cityId , { path : "/" , expires : 365 * 24 * 60 } ) ;
-                    $.cookie("locationCityName" , result.data.cityName , { path : "/" , expires : 365 * 24 * 60 } ) ;
-                    $.cookie("locationCityPinyin" , result.data.cityPinyin , { path : "/" , expires : 365 * 24 * 60 } ) ; 
-                    $.cookie("locationCityChina" , result.data.china , { path : "/" , expires : 365 * 24 * 60 } ) ;                    
+                    this.states.locationCityId = result.data.cityId ;
+                    this.states.locationCityName = result.data.cityName ;
+                    this.states.locationCityPinyin = result.data.cityPinyin ;
+                    this.states.locationCityChina = result.data.china ;                                 
                     /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
                     城市选择弹层定位城市改写
                     -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
-                    $(".city-selector .tabs-frame .location-city").text(result.data.cityName) ;
+                    $(".city-selector .tabs-frame .location-city").replaceWith("<a class=\"location-city\" data-cityid=\"" + this.states.locationCityId + "\" data-pinyin=\"" + this.states.locationCityPinyin + "\" data-china=\"" + this.states.locationCityChina + "\">" + this.states.locationCityName + "</a>") ;
                     /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
                     如果用户没有选择城市并且定位到的城市不是当前路由城市才会跳转到定位城市
                     -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
-                    if(  ! $.cookie(this.moduleType + "SelectedCityPinyin") && parseInt( result.data.cityId , 10 ) !== parseInt( $("#visitedCityId").val() , 10 ) ) {
+                    if(  ! $.cookie("selectedCityPinyin") && parseInt( result.data.cityId , 10 ) !== parseInt( $("#visitedCityId").val() , 10 ) ) {
                         //alert("定位成功！将要直接跳转到定位城市！") ;
                         window.location.href = this.combineUrl(result.data.cityPinyin) ;
                     }
@@ -380,25 +401,30 @@
                     }                
                 } 
             }) ;                       
-        } , ( error ) => {            
+        } , ( error ) => {
+            this.states.locationStage = 2 ;  //标识定位已结束            
             switch(error.code) {
-                case error.PERMISSION_DENIED :  // 用户阻止了授权
-                //alert("error.PERMISSION_DENIED") ;
+                case error.PERMISSION_DENIED :  // 用户阻止了授权                
+                this.states.locationMessage = "定位服务暂未开启" ;
+                this.states.locationFailCause = "PERMISSION_DENIED" ;                
                 this.localtionFail(false) ;               
                 break ;
 
                 case error.POSITION_UNAVAILABLE :  //定位信息无效
-                //alert("error.POSITION_UNAVAILABLE") ;            
+                this.states.locationMessage = "定位失败" ;
+                this.states.locationFailCause = "POSITION_UNAVAILABLE" ;                   
                 this.localtionFail(true) ;
                 break ;
 
                 case error.TIMEOUT :  //定位超时
-                //alert("error.TIMEOUT") ;                  
+                this.states.locationMessage = "定位失败" ;
+                this.states.locationFailCause = "TIMEOUT" ;                
                 this.localtionFail(true) ;
                 break ;
 
                 case error.UNKNOWN_ERROR :  //其他不可预知的错误  
-                //alert("error.UNKNOWN_ERROR") ;                
+                this.states.locationMessage = "定位失败" ;
+                this.states.locationFailCause = "UNKNOWN_ERROR" ;                          
                 this.localtionFail(true) ;
                 break ;
             }
@@ -438,10 +464,11 @@
                 $(".city-selector .caption").append($ul) ;
                 /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
                 绘制tabs-frame
-                -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/                    
-                let $domesticFrame = $(document.createElement("DIV")).addClass("tabs-frame domestic") ;
-                if( ! $.cookie("locationCityName") ) $domesticFrame.append("<span>定位城市</span><a class=\"location-city\">定位失败</a>") ;
-                else $domesticFrame.append("<span>定位城市</span><a class=\"location-city\" data-cityid=\"" + $.cookie("locationCityId") + "\" data-pinyin=\"" + $.cookie("locationCityPinyin") + "\" data-china=\"" + $.cookie("locationCityChina") + "\">" + $.cookie("locationCityName") + "</a>") ;
+                -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/ 
+                let $status = ( this.states.locationStage == 2 && ! this.states.locationFailCause && this.states.locationCityName ) ? "<a class=\"location-city\" data-cityid=\"" + this.states.locationCityId + "\" data-pinyin=\"" + this.states.locationCityPinyin + "\" data-china=\"" + this.states.locationCityChina + "\">" + this.states.locationCityName + "</a>" : "<a class=\"location-city\">" + this.states.locationMessage + "</a>" ;
+
+                let $domesticFrame = $(document.createElement("DIV")).addClass("tabs-frame domestic") ;                
+                $domesticFrame.append( "<span>定位城市</span>" + $status ) ;
                 if( Object.keys(cities.domestic).length ) {
                     for( let key in cities.domestic ) {
                         $domesticFrame.append("<span>" + key + "</span>") ;
@@ -453,8 +480,7 @@
                 $(".city-selector").append($domesticFrame) ;
 
                 let $overseasFrame = $(document.createElement("DIV")).addClass("tabs-frame overseas") ;
-                if( ! $.cookie("locationCityName")) $overseasFrame.append("<span>定位城市</span><a class=\"location-city\">定位失败</a>") ;
-                else $overseasFrame.append("<span>定位城市</span><a class=\"location-city\" data-cityid=\"" + $.cookie("locationCityId") + "\" data-pinyin=\"" + $.cookie("locationCityPinyin") + "\"  data-china=\"" + $.cookie("locationCityChina") + "\">" + $.cookie("locationCityName") + "</a>") ;
+                $overseasFrame.append( "<span>定位城市</span>" + $status ) ;
                 if( Object.keys(cities.overseas).length ) {
                     for( let key in cities.overseas ) {
                         $overseasFrame.append("<span>" + key + "</span>") ;
@@ -463,7 +489,7 @@
                         }) ;
                     }
                 }
-                $(".city-selector").append($overseasFrame) ;
+                $(".city-selector").append($overseasFrame) ;                
                 /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
                 最后给dom节点绑定事件
                 -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
@@ -478,12 +504,12 @@
         /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------        
         1. 将定位cookie系列全部置空       
         -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
+        this.states.locationCityId = null ;
+        this.states.locationCityName = null ;
+        this.states.locationCityPinyin = null ;
+        this.states.locationCityChina = null ;
         $.cookie("locationLatitude" , null , { path : "/" , expires : 365 * 24 * 60 } ) ;
-        $.cookie("locationLongitude" , null , { path : "/" , expires : 365 * 24 * 60 } ) ; 
-        $.cookie("locationCityId" , null , { path : "/" , expires : 365 * 24 * 60 } ) ;
-        $.cookie("locationCityName" , null , { path : "/" , expires : 365 * 24 * 60 } ) ;
-        $.cookie("locationCityPinyin" , null , { path : "/" , expires : 365 * 24 * 60 } ) ; 
-        $.cookie("locationCityChina" , null , { path : "/" , expires : 365 * 24 * 60 } ) ;
+        $.cookie("locationLongitude" , null , { path : "/" , expires : 365 * 24 * 60 } ) ;         
         /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------        
         2. 先执行定位回调       
         -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
@@ -496,22 +522,22 @@
         /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
         4. 如果先前用户选择过城市就直接跳转到选择的城市，否则就根据tips来决定是否需要弹框选择
         -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
-        if( $.cookie(this.moduleType + "SelectedCityPinyin")) {            
-            if( $.cookie(this.moduleType + "SelectedCityPinyin") !== $("#visitedCityPinyin").val() ) {
+        if( $.cookie("selectedCityPinyin")) {            
+            if( $.cookie("selectedCityPinyin") !== $("#visitedCityPinyin").val() ) {
                 //alert("定位失败！而且用户选择过跟当前不同的城市，将要跳转到用户选择的城市...") ;
-                window.location.href = this.combineUrl($.cookie(this.moduleType + "SelectedCityPinyin")) ;
+                window.location.href = this.combineUrl($.cookie("selectedCityPinyin")) ;
             }
         }
         else {
             if( ! tips) this.popCitySelector() ;
             else {
                 $.modal({
-                    "id" : "localtionFailDialog" ,
+                    "id" : "orientateTimeoutDialog" ,
                     "title" : "" ,      
                     "content" : "定位失败<br>请手动选择您的城市" ,
                     "buttons" : [
                         { "text" : "去选择" , "className" : "goto-select-city" , "clickCallback" : () => {
-                                $.modal.close("localtionFailDialog") ;
+                                $.modal.close("orientateTimeoutDialog") ;
                                 this.popCitySelector() ;
                             } 
                         } 
@@ -525,10 +551,10 @@
     这个cookie的作用是为了满足prd里面要求的：有上次浏览城市信息就不要定位了
     -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
     setVisitedCityCache() {        
-        $.cookie(this.moduleType + "VisitedCityId" , $("#visitedCityId").val() , { "path" : "/" , expires : 365 * 24 * 60 } ) ;
-        $.cookie(this.moduleType + "VisitedCityName" , $("#visitedCityName").val() , { "path" : "/" , expires : 365 * 24 * 60 } ) ;
-        $.cookie(this.moduleType + "VisitedCityPinyin" , $("#visitedCityPinyin").val() , { "path" : "/" , expires : 365 * 24 * 60 } ) ;
-        $.cookie(this.moduleType + "VisitedCityChina" , $("#visitedCityChina").val() , { "path" : "/" , expires : 365 * 24 * 60 } ) ;
+        $.cookie("visitedCityId" , $("#visitedCityId").val() , { "path" : "/" , expires : 365 * 24 * 60 } ) ;
+        $.cookie("visitedCityName" , $("#visitedCityName").val() , { "path" : "/" , expires : 365 * 24 * 60 } ) ;
+        $.cookie("visitedCityPinyin" , $("#visitedCityPinyin").val() , { "path" : "/" , expires : 365 * 24 * 60 } ) ;
+        $.cookie("visitedCityChina" , $("#visitedCityChina").val() , { "path" : "/" , expires : 365 * 24 * 60 } ) ;
     }
     /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
     通过城市拼音和模块类型组织列表页面跳转地址
