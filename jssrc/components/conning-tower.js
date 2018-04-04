@@ -47,6 +47,34 @@
             "locationCityPinyin" : null ,
             "locationCityChina" : null
         } ;
+        /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+        页面常量
+        -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
+        this.consts = {
+            "visitedCityId" : $("#visitedCityId").val() ,
+            "visitedCityName" : $("#visitedCityName").val() ,
+            "visitedCityPinyin" : $("#visitedCityPinyin").val() ,
+            "visitedCityChina" : $("#visitedCityChina").val() ,
+
+            "$conningTowerCitySelectEntrance" : $(".conning-tower dl dt") ,  //点击城市选择入口
+            "$investment" : $(".notopen-investment") ,  //未开通及招商弹层
+            "$investmentCitySwitch" : $(".notopen-investment .change") ,  //未开通及招商场景中切换城市链接
+            "$hamburgMenu" : $(".conning-tower .hamburg-menu") ,  //汉堡菜单
+            "$appDownload" : $(".navigator-pop .app-download") ,   //点击汉堡菜单弹出的菜单中app下载按钮
+            "$navigatorMask" : $(".navigator-mask") ,  //pop菜单遮罩
+            "$navigatorPop" : $(".navigator-pop") ,  //点击汉堡菜单弹出的菜单
+            "$conningTowerBack" : $(".conning-tower .back") ,  //司令塔假的搜索区域返回按钮
+            "$substituteMask" : $(".substitute-mask") ,  //搜索替身遮罩
+            "$searchInputBox" : $(".substitute-mask .search-substitute .input-section input") ,  //真搜索区域的搜索框
+            "$searchBack" : $(".substitute-mask .search-substitute .back") ,  //真搜索区域返回按钮
+            "$clearKeywords" : $(".substitute-mask .search-substitute .input-section .icon-close") , //清除搜索关键词
+            "$clearHistory" : $(".substitute-mask .list-container .clear-history") ,  //清除搜索历史按钮
+            "$searchResultList" : $(".substitute-mask .list-container .list") ,  //搜索结果列表
+            "$searchResultListAssistant" : $(".substitute-mask .list-container div") ,  //搜索结果列表助手，包括上面的"搜索历史"title和下面的清除历史按钮
+            "$searchForm" : $(".substitute-mask .search-substitute form") ,  //搜索表单
+            "$citySelector" : $(".city-selector")  //城市选择弹层
+        } ;
+
          /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
         侦测是否有过搜索结果点击行为
         -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
@@ -67,73 +95,73 @@
          /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
         点击城市选择入口弹出城市选择器并根据是否有了数据来决定是否需要请求接口渲染
         -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
-        $(".conning-tower dl dt").click(() => {
+        this.consts.$conningTowerCitySelectEntrance.click(() => {
             this.popCitySelector() ;
         }) ;
         /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
         未开通及招商场景中切换城市链接点击
         -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
-        $(".notopen-investment .change").click(() => {
-            $(".notopen-investment").addClass("hidden").removeClass("visible") ;
+        this.consts.$investmentCitySwitch.click(() => {
+            this.consts.$investment.addClass("hidden").removeClass("visible") ;
             this.popCitySelector() ;
         }) ;
          /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
         点击汉堡菜单弹出子菜单
         -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
-        $(".conning-tower .hamburg-menu").click(() => {
+        this.consts.$hamburgMenu.click(() => {
             $(document.body).css({ "overflow-y" : "hidden" }) ;  //滚动条隐藏
-            $(".navigator-mask").fadeIn(100) ;
-            $(".navigator-pop").animate( {
+            this.consts.$navigatorMask.fadeIn(100) ;
+            this.consts.$navigatorPop.animate( {
                 right : 0
             } , 100 ) ;
         }) ;
         /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
         点击子菜单遮罩关闭子菜单
         -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
-        $(".navigator-mask").click(() => {
+        this.consts.$navigatorMask.click(() => {
             $(document.body).css({ "overflow-y" : "auto" }) ;  //如果有滚动条就显示  
-            $(".navigator-mask").fadeOut(100) ;
-            $(".navigator-pop").animate( {
+            this.consts.$navigatorMask.fadeOut(100) ;
+            this.consts.$navigatorPop.animate( {
                 right : "-200px"
             } , 100 ) ;              
         }) ;
         /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
-        点击返回按钮回到假的搜索场景
+        点击司令塔家搜索返回按钮回退
         -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
-        $(".conning-tower .back").click(() => {
+        this.consts.$conningTowerBack.click(() => {
             history.back() ;
         }) ;
         /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
         点击假的搜索区域出现真的搜索并将真的搜索框 focus
         -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
         $(".conning-tower dl dd").click(() => {
-            $(".substitute-mask").show(50) ;
-            $(".substitute-mask .input-section input").trigger("focus") ;
+            this.consts.$substituteMask.show(50) ;
+            this.consts.$searchInputBox.trigger("focus") ;
         }) ;
         /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
         真搜索区域返回按钮事件监听
         -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
-        $(".substitute-mask .search-substitute .back").click(() => {
-            $(".substitute-mask").hide(50) ;
+        this.consts.$searchBack.click(() => {
+            this.consts.$substituteMask.hide(50) ;
         }) ;
         /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
         真搜索区域清除输入图标事件监听
         -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
-        $(".substitute-mask .search-substitute .input-section .icon-close").click(() => {
-            $(".substitute-mask .search-substitute .input-section input").val("").trigger("focus") ;            
+        this.consts.$clearKeywords.click(() => {
+            this.consts.$searchInputBox.val("").trigger("focus") ;            
         }) ;
         /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
         清除搜索历史按钮事件监听       
         -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/ 
-        $(".substitute-mask .list-container .clear-history").click(() => {            
-            $(".substitute-mask .list-container .list").empty() ;
-            $(".substitute-mask .list-container div").hide(100) ;
+        this.consts.$clearHistory.click(() => {            
+            this.consts.$searchResultList.empty() ;
+            this.consts.$searchResultListAssistant.hide(100) ;
             delete window.localStorage[this.moduleType + "SearchHistory" ] ;
         }) ;
         /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
         pop菜单中的下载APP菜单事件监听
         -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
-        $(".navigator-pop .app-download").click(() => {
+        this.consts.$appDownload.click(() => {
             nativeSchema.loadSchema({               
                 schema : "external_call"  ,  // 通过NN打开某个链接
                 protocal : "wkzf" , //schema头协议，实际情况填写
@@ -149,23 +177,22 @@
         }) ;
         /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
         真搜索区域输入监听以及focus监听，如果没有输入值就应该出搜索历史
-        -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
-        let $input = $(".substitute-mask .search-substitute .input-section input") ;
-        $input.on("keyup focus" , () => {
+        -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/        
+        this.consts.$searchInputBox.on("keyup focus" , () => {
             /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
             取得关键词内容
             -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
-            let currentValue = $input.val() ? $.trim($input.val()) : "" ;            
+            let currentValue = this.consts.$searchInputBox.val() ? $.trim(this.consts.$searchInputBox.val()) : "" ;            
             /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
             如果关键词没有改变什么也不做
             -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
-            if( currentValue && currentValue == $input.attr("data-last")) return ;
+            if( currentValue && currentValue == this.consts.$searchInputBox.attr("data-last")) return ;
             else {
                 /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
                 先清除结果
                 -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
-                $(".substitute-mask .list-container .list").empty() ;
-                $(".substitute-mask .list-container div").hide() ;
+                this.consts.$searchResultList.empty() ;
+                this.consts.$searchResultListAssistant.hide(100) ;
                 /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
                 如果关键词为空就要绘制搜索历史并直接返回
                 -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
@@ -173,7 +200,7 @@
                     let searchHistory = window.localStorage[this.moduleType + "SearchHistory" ] ;
                     searchHistory = searchHistory ? JSON.parse(searchHistory) : [] ;
                     searchHistory && this.renderSearchResult( { items : searchHistory , history : true }) ;
-                    $input.attr("data-last" , currentValue) ; 
+                    this.consts.$searchInputBox.attr("data-last" , currentValue) ; 
                     return ;
                 }
                 /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -182,7 +209,7 @@
                 let paramsMapper = { "xf" : "newhouselist" , "esf" : "oldhouselist" , "rent" : "renthouselist" } ;            
                 this.request({ 
                     apiUrl : this.apiUrl.search , 
-                    requestData : { "key" : currentValue , "pageName" :  paramsMapper[this.moduleType] , "cityId" : parseInt( $("#visitedCityId").val() , 10 ) } , 
+                    requestData : { "key" : currentValue , "pageName" :  paramsMapper[this.moduleType] , "cityId" : parseInt( this.consts.visitedCityId , 10 ) } , 
                     success : (result) => {                    
                         /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
                         如果搜索无结果绘制相应节点
@@ -196,14 +223,14 @@
                         else this.renderSearchResult({ "items" : result.data["secondHouseList"] , "history" : false }) ;   
                     } 
                 }) ; 
-                $input.attr("data-last" , currentValue) ;  //最后将当前值记录到最后一次搜索关键词里面
+                this.consts.$searchInputBox.attr("data-last" , currentValue) ;  //最后将当前值记录到最后一次搜索关键词里面
             }    
             
         }) ;
         /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
         搜索表单提交相当于点击了第一个搜索结果项并阻止默认表单提交行为
         -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
-        $(".substitute-mask .search-substitute form").submit((event) => {
+        this.consts.$searchForm.submit((event) => {
             $(".substitute-mask .list-container .list li").eq(0).trigger("click") ;
             event.preventDefault() ;
         }) ;
@@ -271,8 +298,8 @@
             $.cookie( "selectedCityPinyin" , $handler.data("pinyin") ,  { "path" : "/" } ) ;
             $.cookie( "selectedCityChina" , $handler.data("china") ,  { "path" : "/" } ) ;          
             this.cityClick() ;
-            $(".city-selector").hide() ;
-            if(parseInt( $handler.data("cityid") , 10 ) !== parseInt($("#visitedCityId").val() , 10 )) window.location.href = this.combineUrl( $handler.data("pinyin") ) ;
+            this.consts.$citySelector.hide() ;
+            if( $handler.data("cityid") != this.consts.visitedCityId ) window.location.href = this.combineUrl( $handler.data("pinyin") ) ;
         }) ;
      }
      /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -309,25 +336,18 @@
     /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
     发起定位
     -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
-    location() {        
+    location() {              
         /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
         首先要去判断是否有过浏览H5的页面，如果
         -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
-        if($.cookie("visitedCityId")) {
-            if(parseInt( $.cookie("visitedCityId") , 10 ) !== parseInt( $("#visitedCityId").val() , 10 )) {
-                //如果当前城市不是用户选择的城市才会要跳转
-                if( $.cookie("selectedCityId") && parseInt( $.cookie("selectedCityId") , 10 ) !== parseInt( $("#visitedCityId").val() , 10 ) ) {                    
-                    window.location.href = this.combineUrl($.cookie("visitedCityPinyin")) ;
-                }
-            }
-            else {
-                /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
-                为了保证cookie的统一写入口，页面同步渲染的时候将城市信息放到页面隐藏域中，然后由FE来写到 cookie中
-                -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
-                this.setVisitedCityCache() ;
-            }
-            //return ;  //现在改为始终要定位
+        if( $.cookie("visitedCityId") && $.cookie("visitedCityId") != this.consts.visitedCityId && $.cookie("selectedCityId") && $.cookie("selectedCityId") != this.consts.visitedCityId ) {            
+            window.location.href = this.combineUrl($.cookie("visitedCityPinyin")) ;
+            return ;
         }
+        /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+        为了保证cookie的统一写入口，页面同步渲染的时候将城市信息放到页面隐藏域中，然后由FE来写到 cookie中
+        -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
+        this.setVisitedCityCache() ;
         /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
         检查浏览器是否支持地理定位
         -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
@@ -339,7 +359,7 @@
         改写状态
         -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
         this.states.locationStage = 1 ;
-        this.states.locationMessage = "正在定位中" ;        
+        this.states.locationMessage = "正在定位中..." ;        
         /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
         定义定位选项
         -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
@@ -389,16 +409,10 @@
                     /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
                     如果用户没有选择城市并且定位到的城市不是当前路由城市才会跳转到定位城市
                     -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
-                    if(  ! $.cookie("selectedCityPinyin") && parseInt( result.data.cityId , 10 ) !== parseInt( $("#visitedCityId").val() , 10 ) ) {
+                    if(  ! $.cookie("selectedCityPinyin") && result.data.cityId != this.consts.visitedCityId ) {
                         //alert("定位成功！将要直接跳转到定位城市！") ;
                         window.location.href = this.combineUrl(result.data.cityPinyin) ;
-                    }
-                    else {
-                        /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
-                        为了保证cookie的统一写入口，页面同步渲染的时候将城市信息放到页面隐藏域中，然后由FE来写到 cookie中
-                        -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
-                        this.setVisitedCityCache() ;
-                    }                
+                    }                                  
                 } 
             }) ;                       
         } , ( error ) => {
@@ -436,7 +450,7 @@
     弹出城市选择器
     -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
     popCitySelector() {        
-        $(".city-selector").slideDown(200) ;
+        this.consts.$citySelector.slideDown(200) ;
         /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
         埋点
         -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
@@ -452,15 +466,16 @@
             apiUrl : this.apiUrl.businessCity , 
             requestData : { } , 
             success : (result) => {                    
-                let cities = this.filterBusinessCity(result.data) ;  //取出所有满足条件的城市清单                    
+                let cities = this.filterBusinessCity(result.data) ;  //取出所有满足条件的城市清单   
+                //console.log(cities) ;                 
                 /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
                 绘制tabs-handle
                 -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
                 let $ul = "<ul class=\"tabs-handle\"><li class=\"on\" data-sign=\"domestic\">国内</li><li data-sign=\"overseas\">国际</li></ul>" ;
-                if( ! Object.keys(cities.domestic).length || ! Object.keys(cities.overseas).length) {                        
-                    if( Object.keys(cities.domestic).length ) $ul = "<ul class=\"tabs-handle\" style=\"display : none\"><li class=\"on\" data-sign=\"domestic\">国内</li><li data-sign=\"overseas\">国际</li></ul>" ;
+                if( $.isEmptyObject(cities.domestic) || $.isEmptyObject(cities.overseas) ) {
+                    if( ! $.isEmptyObject(cities.domestic) ) $ul = "<ul class=\"tabs-handle\" style=\"display : none\"><li class=\"on\" data-sign=\"domestic\">国内</li><li data-sign=\"overseas\">国际</li></ul>" ;
                     else $ul = "<ul class=\"tabs-handle\" style=\"display : none\"><li data-sign=\"domestic\">国内</li><li class=\"on\" data-sign=\"overseas\">国际</li></ul>" ;
-                }                   
+                }                                
                 $(".city-selector .caption").append($ul) ;
                 /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
                 绘制tabs-frame
@@ -469,7 +484,7 @@
 
                 let $domesticFrame = $(document.createElement("DIV")).addClass("tabs-frame domestic") ;                
                 $domesticFrame.append( "<span>定位城市</span>" + $status ) ;
-                if( Object.keys(cities.domestic).length ) {
+                if(  ! $.isEmptyObject(cities.domestic) ) {
                     for( let key in cities.domestic ) {
                         $domesticFrame.append("<span>" + key + "</span>") ;
                         cities.domestic[key].forEach((city) => {
@@ -477,11 +492,11 @@
                         }) ;
                     }
                 }
-                $(".city-selector").append($domesticFrame) ;
+                this.consts.$citySelector.append($domesticFrame) ;
 
                 let $overseasFrame = $(document.createElement("DIV")).addClass("tabs-frame overseas") ;
                 $overseasFrame.append( "<span>定位城市</span>" + $status ) ;
-                if( Object.keys(cities.overseas).length ) {
+                if(  ! $.isEmptyObject(cities.overseas) ) {
                     for( let key in cities.overseas ) {
                         $overseasFrame.append("<span>" + key + "</span>") ;
                         cities.overseas[key].forEach((city) => {
@@ -489,7 +504,7 @@
                         }) ;
                     }
                 }
-                $(".city-selector").append($overseasFrame) ;                
+                this.consts.$citySelector.append($overseasFrame) ;                
                 /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
                 最后给dom节点绑定事件
                 -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
@@ -523,7 +538,7 @@
         4. 如果先前用户选择过城市就直接跳转到选择的城市，否则就根据tips来决定是否需要弹框选择
         -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
         if( $.cookie("selectedCityPinyin")) {            
-            if( $.cookie("selectedCityPinyin") !== $("#visitedCityPinyin").val() ) {
+            if( $.cookie("selectedCityPinyin") != this.consts.visitedCityPinyin ) {
                 //alert("定位失败！而且用户选择过跟当前不同的城市，将要跳转到用户选择的城市...") ;
                 window.location.href = this.combineUrl($.cookie("selectedCityPinyin")) ;
             }
@@ -551,10 +566,10 @@
     这个cookie的作用是为了满足prd里面要求的：有上次浏览城市信息就不要定位了
     -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
     setVisitedCityCache() {        
-        $.cookie("visitedCityId" , $("#visitedCityId").val() , { "path" : "/" , expires : 365 * 24 * 60 } ) ;
-        $.cookie("visitedCityName" , $("#visitedCityName").val() , { "path" : "/" , expires : 365 * 24 * 60 } ) ;
-        $.cookie("visitedCityPinyin" , $("#visitedCityPinyin").val() , { "path" : "/" , expires : 365 * 24 * 60 } ) ;
-        $.cookie("visitedCityChina" , $("#visitedCityChina").val() , { "path" : "/" , expires : 365 * 24 * 60 } ) ;
+        $.cookie("visitedCityId" , this.consts.visitedCityId , { "path" : "/" , expires : 365 * 24 * 60 } ) ;
+        $.cookie("visitedCityName" , this.consts.visitedCityName , { "path" : "/" , expires : 365 * 24 * 60 } ) ;
+        $.cookie("visitedCityPinyin" , this.consts.visitedCityPinyin , { "path" : "/" , expires : 365 * 24 * 60 } ) ;
+        $.cookie("visitedCityChina" , this.consts.visitedCityChina , { "path" : "/" , expires : 365 * 24 * 60 } ) ;
     }
     /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
     通过城市拼音和模块类型组织列表页面跳转地址
@@ -588,7 +603,7 @@
             绘制单条搜索结果
             -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/                              
             $li.append("<dl><dt>" + source.estateDesc.replace( source.markname , "<span>" + source.markname + "</span>" ) + "</dt><dd>" + source.address.replace( source.markname , "<span>" + source.markname + "</span>" ) + "</dd></dl>") ;
-            $(".substitute-mask .list-container .list").append($li) ;
+            this.consts.$searchResultList.append($li) ;
         }) ; 
         /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
         如果是渲染搜索历史，就要加上显示历史的按钮以及历史记录title        
