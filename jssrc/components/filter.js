@@ -461,11 +461,9 @@ define([],function(){
         $('.total-price .active').each(function(){
             if($(this).data('value')){
                 result.price = $(this).data('value');
+                delete this.result.price;
             }
-        });
-        if(typeof result.price == 'undefined'){
-            delete this.result.price;
-        }        
+        });               
 
         // 户型        
         $('.house-type-section').each(function(){
@@ -851,7 +849,7 @@ define([],function(){
 
     // 设置弹层的高度
     function setMaxHeight(){
-        var winHeight = $(window).height();
+        var winHeight = $(window).height() - 80;
         this.$districtMetro.find('.parent,.child').css('max-height', winHeight * .7 + "px");
         this.$price.find('ul').css('max-height', winHeight * .7 + "px");
         this.$houseType.find('.house-type-inner').css('max-height', winHeight * .7 + "px");
@@ -959,6 +957,9 @@ define([],function(){
         this.setValue(this.initValue);
         bindEvent.apply(this);
         setMaxHeight.apply(this);
+        $(window).on('resize',()=>{            
+            setMaxHeight.apply(this);
+        });
     }
 
     function Filter(options) {                
