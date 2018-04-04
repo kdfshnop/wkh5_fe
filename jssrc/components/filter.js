@@ -461,11 +461,9 @@ define([],function(){
         $('.total-price .active').each(function(){
             if($(this).data('value')){
                 result.price = $(this).data('value');
+                delete this.result.price;
             }
-        });
-        if(typeof result.price == 'undefined'){
-            delete this.result.price;
-        }        
+        });               
 
         // 户型        
         $('.house-type-section').each(function(){
@@ -851,7 +849,7 @@ define([],function(){
 
     // 设置弹层的高度
     function setMaxHeight(){
-        var winHeight = $(window).height();
+        var winHeight = $(window).height() - 80;
         this.$districtMetro.find('.parent,.child').css('max-height', winHeight * .7 + "px");
         this.$price.find('ul').css('max-height', winHeight * .7 + "px");
         this.$houseType.find('.house-type-inner').css('max-height', winHeight * .7 + "px");
@@ -959,6 +957,9 @@ define([],function(){
         this.setValue(this.initValue);
         bindEvent.apply(this);
         setMaxHeight.apply(this);
+        $(window).on('resize',()=>{            
+            setMaxHeight.apply(this);
+        });
     }
 
     function Filter(options) {                
@@ -1396,6 +1397,38 @@ define([],function(){
             },            
 
         }
+    };
+
+    // 低价位城市价格选择项（二手房和新房）
+    Filter.LOWPRICES = {
+        prices: [{
+            id: "",
+            text: "不限"
+        },{
+            id: "21",
+            text: "50万以下"
+        },{
+            id: "22",
+            text: "50-80万"
+        },{
+            id: "23",
+            text: "80-100万"
+        },{
+            id: "24",
+            text: "100-150万"
+        },{
+            id: "25",
+            text: "150-200万"
+        },{
+            id: "26",
+            text: "200-300万"
+        },{
+            id: "27",
+            text: "300-500万"
+        },{
+            id: "28",
+            text: "500万以上"
+        }]
     };
 
     return Filter;

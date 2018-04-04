@@ -25,6 +25,24 @@ class ListController extends Controller {
         -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
         require([ "../components/bigdata.min" , "../components/filter.min", "../components/conning-tower.min" ] , (BigData, Filter) => {
             BigData.init(this) ;
+
+            // 城市不同总价选项不同，XFDEFAULT中prices是北京、上海、广州、深圳、杭州、苏州、廊坊、南京的价格选项，比较高，
+            // 因此需要区分
+            /*
+            *   北京	3
+                上海	43
+                广州	1873
+                深圳	1950
+                杭州	873
+                苏州	771
+                廊坊	221
+                南京	741
+            */
+
+            var visitedCityId = $('#visitedCityId').val();
+            var highPriceCityIds = [3,43,1873,1950,873,771,221,741];
+            var prices = highPriceCityIds.filter(function(cityId){return cityId == visitedCityId }).length == 0 ? Filter.LOWPRICES : null;
+
             self.filter = new Filter($.extend({}, Filter.ESFDEFAULT,{
                 el: ".filter",                
                 cityId: $('#visitedCityId').val(),                
@@ -49,7 +67,7 @@ class ListController extends Controller {
                     // 跳转
                     self.goto();
                 }                
-            }));
+            },prices));
             new ConningTower({                
                 "bigDataUtil" : BigData ,               
                 "moduleType" : "esf" ,
@@ -240,9 +258,9 @@ class ListController extends Controller {
     // 上拉加载
     pullload(){
         let self = this ;
-        var cityId = $.cookie("xfSelectedCityId");
-        var cityPinyin = $.cookie("xfSelectedCityPinyin");
-        var cityName = $.cookie("xfSelectedCityName");
+        // var cityId = $.cookie("xfSelectedCityId");
+        // var cityPinyin = $.cookie("xfSelectedCityPinyin");
+        // var cityName = $.cookie("xfSelectedCityName");
         
         //二手房
         $("#list").pullload({
