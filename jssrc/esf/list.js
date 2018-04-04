@@ -258,9 +258,9 @@ class ListController extends Controller {
     // 上拉加载
     pullload(){
         let self = this ;
-        var cityId = $.cookie("xfSelectedCityId");
-        var cityPinyin = $.cookie("xfSelectedCityPinyin");
-        var cityName = $.cookie("xfSelectedCityName");
+        // var cityId = $.cookie("xfSelectedCityId");
+        // var cityPinyin = $.cookie("xfSelectedCityPinyin");
+        // var cityName = $.cookie("xfSelectedCityName");
         
         //二手房
         $("#list").pullload({
