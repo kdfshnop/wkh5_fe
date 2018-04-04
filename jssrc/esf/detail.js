@@ -213,15 +213,15 @@ class DetailController extends Controller {
                         color: '#999',
                     },
                     formatter: function(value, index) {
-                        if (value == (minPrice-avgPrice)) {
+                        if (value == minPrice-avgPrice || value == 0) {
                             return "";
                         } else {
                             return (value / 10000).toFixed(1) + ' 万';
                         }
                     }
                 },
-                min:minPrice-avgPrice,
-                max:minPrice+avgPrice*4,
+                min:minPrice-avgPrice > 0 ? minPrice-avgPrice : 0,
+                max:minPrice-avgPrice > 0 ? minPrice+ avgPrice * 4:avgPrice * 5,
                 interval:avgPrice,
             },
             series: [{
