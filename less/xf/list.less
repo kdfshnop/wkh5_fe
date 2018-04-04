@@ -15,12 +15,12 @@ body {
 }
 
 .total {
+  position: relative;
   line-height: 30px;
   font-size: 14px;
   text-align: center;
   color: #4081d6;
-  border-bottom: 1px solid #e4e4e4;
-
+  //border-bottom: 1px solid #e4e4e4;  
   .count {
     color: #fc4c5a;
   }
@@ -58,6 +58,19 @@ body {
 }
 
 #list {
+  position: relative;
   padding-left: 15px;
   padding-right: 15px;
+
+  &::before {
+    position:  absolute;
+    content: '';      
+    border-bottom: 1px solid #e8e8e8;
+    height: 1px;
+    top: -2px;      
+    transform: scaleY(.5);
+    -webkit-transform: scaleY(.5);
+    left: 0;
+    width: 100%;
+  }
 }
