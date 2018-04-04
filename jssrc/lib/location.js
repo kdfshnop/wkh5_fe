@@ -97,6 +97,7 @@ class Location {
                         $.cookie( this.cookieKeyPrefix + "cityName" , city.cityName , { path : "/" } ) ;
                         $.cookie( this.cookieKeyPrefix + "cityPinyin" , city.cityPinyin , { path : "/" } ) ;
                         $.cookie( this.cookieKeyPrefix + "cityId" , city.cityId , { path : "/" } ) ;
+                        $.cookie( this.cookieKeyPrefix + "deniedName" , "" , { path : "/" } ) ;
                          /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
                         用拿到的cityId和cookie里面的值做对比
                         -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/                  
@@ -124,6 +125,7 @@ class Location {
                             $.cookie( this.cookieKeyPrefix + "cityName" , "" , { path : "/" } ) ;
                             $.cookie( this.cookieKeyPrefix + "cityPinyin" , "" , { path : "/" } ) ;
                             $.cookie( this.cookieKeyPrefix + "cityId" , "" , { path : "/" } ) ;
+                            $.cookie( this.cookieKeyPrefix + "deniedName" , "" , { path : "/" } ) ;
                             $.tips( result.message , 3 ) ;
                             window.location.href = this.route( "shanghai" , 43 ) ;
                         }
@@ -133,6 +135,7 @@ class Location {
         } , ( error ) => {
             switch(error.code) {
                 case error.PERMISSION_DENIED :  // 用户阻止了授权
+                 $.cookie( this.cookieKeyPrefix + "deniedName" , "定位服务暂未开启" , { path : "/" } ) ;
                 this.fail() ;
                 break ;
 
