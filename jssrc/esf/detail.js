@@ -156,7 +156,7 @@ class DetailController extends Controller {
                 trigger: 'item',
                 triggerOn: 'click',
                 position: 'top',
-                backgroundColor: '#92A7C3',
+                backgroundColor: '#4081D6',
                 padding: 4,
                 textStyle: {
                     color: '#fff',
@@ -213,15 +213,15 @@ class DetailController extends Controller {
                         color: '#999',
                     },
                     formatter: function(value, index) {
-                        if (value == 0) {
+                        if (value == (minPrice-avgPrice)) {
                             return "";
                         } else {
-                            return (value / 10000).toFixed(1) + '万';
+                            return (value / 10000).toFixed(1) + ' 万';
                         }
                     }
                 },
-                min:minPrice,
-                max:minPrice+avgPrice*5,
+                min:minPrice-avgPrice,
+                max:minPrice+avgPrice*4,
                 interval:avgPrice,
             },
             series: [{
@@ -229,20 +229,21 @@ class DetailController extends Controller {
                 type: 'line',
                 lineStyle:{
                     normal:{
-                        color:'#92A7C3', // 折线条颜色
+                        color:'#4081D6', // 折线条颜色
                     }
 
                 },
                 itemStyle:{
                     normal:{
-                        color: "#92A7C3" //图标颜色
+                        color: "#4081D6", //图标颜色
                     },
                     emphasis: { //重点，强调时候的样式，即当鼠标悬停或点击上去的时候的拐点的样式
-                        borderColor: '#92A7C3',
+                        borderColor: '#4081D6',
                         borderWidth: 2,
-                        color: '#92A7C3'
+                        color: '#4081D6'
                     }
                 },
+                symbolSize: 5,
                 connectNulls: true,
                 data: seriesData,
             }],

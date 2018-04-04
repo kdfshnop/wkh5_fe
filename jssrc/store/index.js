@@ -110,7 +110,15 @@ class IndexController extends Controller{
         dlNode.append( "<dd>" + esf.houseChild +" " + esf.areaStr + " | " +  esf.district + " " + esf.town + "</dd>" ) ;              
         let tagNode = $(document.createElement("DD")).addClass("tags") ;
         esf.tagList && esf.tagList.forEach((tag) => {
-            tagNode.append( "<span>" + tag + "</span>" ) ;
+            if(tag == "降价") {
+                tagNode.append( `<div class="promotion"><span>${ tag }</span></div>`) ;
+            }else if (tag == "新上"){
+                tagNode.append( `<div class="new"><span>${ tag }</span></div>`) ;
+            }else if(tag == "满二" || tag == "满五唯一"){
+                tagNode.append( `<div class="over"><span>${ tag }</span></div>`) ;
+            }else  {
+                tagNode.append( `<div><span>${ tag }</span></div>`) ;
+            }
         }) ;        
         dlNode.append(tagNode) ;
         dlNode.append( "<dd><span class=\"money\">" + esf.totalPrice+ "万</span> <span class=\"price\">" + esf.unitPrice + " 元/㎡</span></dd>" ) ;  

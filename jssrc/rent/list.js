@@ -833,6 +833,7 @@ class ListController extends Controller {
             $('.more-spec > ul >li').removeClass('active-house');
             $('.area > ul >li').removeClass('active-house');
             $('.decoration > ul >li').removeClass('active-house');
+            $('.rent-way > ul >li').removeClass('active-house');
             $(`.house-list>ul>li:eq(0)`).addClass('active-house');
             $(`.house-list>ul>li:eq(0)`).siblings().removeClass('active-house')
         });
