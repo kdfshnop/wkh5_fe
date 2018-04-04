@@ -305,8 +305,7 @@
         if($.cookie(this.moduleType + "VisitedCityId")) {
             if(parseInt( $.cookie(this.moduleType + "VisitedCityId") , 10 ) !== parseInt( $("#visitedCityId").val() , 10 )) {
                 //如果当前城市不是用户选择的城市才会要跳转
-                if( $.cookie(this.moduleType + "SelectedCityId") && parseInt( $.cookie(this.moduleType + "SelectedCityId") , 10 ) !== parseInt( $("#visitedCityId").val() , 10 ) ) {
-                    //alert("之前有访问过当前列表页且不是当前城市！而是当前城市也不是用户选择过的城市，所以将要跳转到先前访问过的城市......") ;
+                if( $.cookie(this.moduleType + "SelectedCityId") && parseInt( $.cookie(this.moduleType + "SelectedCityId") , 10 ) !== parseInt( $("#visitedCityId").val() , 10 ) ) {                    
                     window.location.href = this.combineUrl($.cookie(this.moduleType + "VisitedCityPinyin")) ;
                 }
             }
@@ -381,21 +380,25 @@
                     }                
                 } 
             }) ;                       
-        } , ( error ) => {
+        } , ( error ) => {            
             switch(error.code) {
                 case error.PERMISSION_DENIED :  // 用户阻止了授权
+                //alert("error.PERMISSION_DENIED") ;
                 this.localtionFail(false) ;               
                 break ;
 
-                case error.POSITION_UNAVAILABLE :  //定位信息无效                
+                case error.POSITION_UNAVAILABLE :  //定位信息无效
+                //alert("error.POSITION_UNAVAILABLE") ;            
                 this.localtionFail(true) ;
                 break ;
 
-                case error.TIMEOUT :  //定位超时                
+                case error.TIMEOUT :  //定位超时
+                //alert("error.TIMEOUT") ;                  
                 this.localtionFail(true) ;
                 break ;
 
-                case error.UNKNOWN_ERROR :  //其他不可预知的错误                
+                case error.UNKNOWN_ERROR :  //其他不可预知的错误  
+                //alert("error.UNKNOWN_ERROR") ;                
                 this.localtionFail(true) ;
                 break ;
             }
@@ -437,11 +440,8 @@
                 绘制tabs-frame
                 -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/                    
                 let $domesticFrame = $(document.createElement("DIV")).addClass("tabs-frame domestic") ;
-                if( ! $.cookie("locationCityName") ) {
-                    //如果定位失败，就固定将定位城市绘制在国内城市frame中
-                    $domesticFrame.append("<span>定位城市</span><a class=\"location-city\">定位失败</a>") ;
-                }
-                else if($.cookie("locationCityName") && $.cookie("locationCityChina")) $domesticFrame.append("<span>定位城市</span><a class=\"location-city\" data-cityid=\"" + $.cookie("locationCityId") + "\" data-pinyin=\"" + $.cookie("locationCityPinyin") + "\" data-china=\"" + $.cookie("locationCityChina") + "\">" + $.cookie("locationCityName") + "</a>") ;
+                if( ! $.cookie("locationCityName") ) $domesticFrame.append("<span>定位城市</span><a class=\"location-city\">定位失败</a>") ;
+                else $domesticFrame.append("<span>定位城市</span><a class=\"location-city\" data-cityid=\"" + $.cookie("locationCityId") + "\" data-pinyin=\"" + $.cookie("locationCityPinyin") + "\" data-china=\"" + $.cookie("locationCityChina") + "\">" + $.cookie("locationCityName") + "</a>") ;
                 if( Object.keys(cities.domestic).length ) {
                     for( let key in cities.domestic ) {
                         $domesticFrame.append("<span>" + key + "</span>") ;
@@ -453,7 +453,8 @@
                 $(".city-selector").append($domesticFrame) ;
 
                 let $overseasFrame = $(document.createElement("DIV")).addClass("tabs-frame overseas") ;
-                if($.cookie("locationCityName") && ! $.cookie("locationCityChina")) $domesticFrame.append("<span>定位城市</span><a class=\"location-city\" data-cityid=\"" + $.cookie("locationCityId") + "\" data-pinyin=\"" + $.cookie("locationCityPinyin") + "\"  data-china=\"" + $.cookie("locationCityChina") + "\">" + $.cookie("locationCityName") + "</a>") ;
+                if( ! $.cookie("locationCityName")) $overseasFrame.append("<span>定位城市</span><a class=\"location-city\">定位失败</a>") ;
+                else $overseasFrame.append("<span>定位城市</span><a class=\"location-city\" data-cityid=\"" + $.cookie("locationCityId") + "\" data-pinyin=\"" + $.cookie("locationCityPinyin") + "\"  data-china=\"" + $.cookie("locationCityChina") + "\">" + $.cookie("locationCityName") + "</a>") ;
                 if( Object.keys(cities.overseas).length ) {
                     for( let key in cities.overseas ) {
                         $overseasFrame.append("<span>" + key + "</span>") ;

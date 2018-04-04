@@ -11,7 +11,7 @@ class ListController extends Controller {
         super() ;        
         var self = this;        
         this.paramGenerator = new ParamGenerator();
-        $('.total').slideUp(1000);// 隐藏查询总条数   
+        $(function(){$('.total').slideUp(1000);});// 隐藏查询总条数   
         
         /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
         图片懒加载实例化
@@ -25,6 +25,24 @@ class ListController extends Controller {
         -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
         require([ "../components/bigdata.min" , "../components/filter.min", "../components/conning-tower.min" ] , (BigData, Filter) => {
             BigData.init(this) ;
+
+            // 城市不同总价选项不同，XFDEFAULT中prices是北京、上海、广州、深圳、杭州、苏州、廊坊、南京的价格选项，比较高，
+            // 因此需要区分
+            /*
+            *   北京	3
+                上海	43
+                广州	1873
+                深圳	1950
+                杭州	873
+                苏州	771
+                廊坊	221
+                南京	741
+            */
+
+            var visitedCityId = $('#visitedCityId').val();
+            var highPriceCityIds = [3,43,1873,1950,873,771,221,741];
+            var prices = highPriceCityIds.filter(function(cityId){return cityId == visitedCityId }).length == 0 ? Filter.LOWPRICES : null;
+
             self.filter = new Filter($.extend({}, Filter.ESFDEFAULT,{
                 el: ".filter",                
                 cityId: $('#visitedCityId').val(),                
@@ -49,7 +67,7 @@ class ListController extends Controller {
                     // 跳转
                     self.goto();
                 }                
-            }));
+            },prices));
             new ConningTower({                
                 "bigDataUtil" : BigData ,               
                 "moduleType" : "esf" ,
@@ -111,17 +129,8 @@ class ListController extends Controller {
     // 根据查询条件进行相应的跳转
     goto(){
         var cityPinyin = $('#visitedCityPinyin').val();
-        var url = location.origin + "/" + cityPinyin + "/esf/" +ParamGenerator.object2QueryString(this.param);          
-        //var url = location.href;
-        // if(url.indexOf('esf/')>0){            
-        //     url += ParamGenerator.object2QueryString(this.param);                    
-        //     //location.href = "./" + ParamGenerator.object2QueryString(this.param);                    
-        // }else{
-        //     //location.href += "/" + ParamGenerator.object2QueryString(this.param);  
-        //     url += '/' + ParamGenerator.object2QueryString(this.param);                     
-        // }         
-
-        location.href = url + location.search;               
+        var url = location.origin + "/" + cityPinyin + "/esf/" +ParamGenerator.object2QueryString(this.param);
+        location.href = url + location.search;
     }
 
     bindEvent(){
@@ -221,6 +230,7 @@ class ListController extends Controller {
         var cityPinyin = $('#visitedCityPinyin').val();
         var channel = $('#channel').val();
         var $list = $('#list .esf-item');
+        var newBusiness = $('#newBusiness').val();
         if($('#list .scene.house-price').length == 0 && $list.length>9){
             $('<a href="/'+cityPinyin+'/trend/esf'+(channel?"?channel="+channel:"")+'" class="scene house-price">\
                 <div class="img"></div>\
@@ -230,7 +240,7 @@ class ListController extends Controller {
                 </div>\
             </a>').insertAfter($($list[9]));
         }
-        if($('#list .scene.house').length == 0 && $list.length>19){
+        if(newBusiness && $('#list .scene.house').length == 0 && $list.length>19){
             $('<a href="/'+cityPinyin+'/xflist/'+(channel?"?channel="+channel:"")+'" class="scene house">\
                 <div class="img"></div>\
                 <div class="info">\
