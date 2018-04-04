@@ -98,6 +98,9 @@ class communityController extends Controller {
                 },
                 formatter:function (params, ticket, callback) {
                     let paramsValue =  params.value + "元";
+                    that.request(that.apiUrl.common.bigData , echartBigData ,function () {
+
+                    });
                     return paramsValue;
                 }
             },
@@ -116,7 +119,7 @@ class communityController extends Controller {
                 boundaryGap: false,
                 axisLine: {
                     lineStyle: {
-                        color: '#fff', // x轴颜色
+                        color: '#979797', // x轴颜色
                     }
                 },
                 axisLabel: {
@@ -134,27 +137,27 @@ class communityController extends Controller {
                 splitLine: {
                     show: true,  // 控制网格线是否显示
                     lineStyle: {
-                        color: ['#979797'], // y刻度颜色
-                        type:'dotted'
+                        color: ['#979797'] // y刻度颜色
                     }
                 },
-                axisTick: {show: false },  // 去除y轴上的刻度线
+                axisTick: {show: false},// 去除y轴上的刻度线
                 axisLabel:{
                     inside: false,
                     textStyle: {
                         color: '#999',
                     },
                     formatter: function(value, index) {
-                        if (value == 0) {
+                        if (value == (minPrice-avgPrice)) {
                             return "";
                         } else {
                             return (value / 10000).toFixed(1) + ' 万';
                         }
                     }
                 },
+                boundaryGap : false,
                 position:'right',
-                min:minPrice,
-                max:minPrice+avgPrice*5,
+                min:minPrice-avgPrice,
+                max:minPrice+avgPrice*4,
                 interval:avgPrice,
             },
             series: [{
@@ -163,14 +166,12 @@ class communityController extends Controller {
                 lineStyle:{
                     normal:{
                         color:'#4081D6', // 折线条颜色
-                        width:3
                     }
 
                 },
                 itemStyle:{
                     normal:{
                         color: "#4081D6", //图标颜色
-                        borderWidth:2
                     },
                     emphasis: { //重点，强调时候的样式，即当鼠标悬停或点击上去的时候的拐点的样式
                         borderColor: '#4081D6',
@@ -178,17 +179,7 @@ class communityController extends Controller {
                         color: '#4081D6'
                     }
                 },
-                areaStyle:{ //区域填充样式
-                    normal:{
-                        //线性渐变
-                        color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
-                            offset: 1, color: 'rgba(64,129,214,0.15)'  // 0% 处的颜色'#b1e3fe'
-                        }, {
-                            offset: 1, color: '#fff' // 100% 处的颜色
-                        }], false)
-                    }
-                },
-                symbolSize: 10,
+                symbolSize: 5,
                 connectNulls: true,
                 data: seriesData,
             }],
