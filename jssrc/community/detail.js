@@ -98,7 +98,7 @@
                      color: '#fff',
                      fontSize: '12'
                  },
-                 formatter:function (params, ticket, callback) {
+                 formatter:function (params) {
                      let paramsValue =  params.value + "元";
                      that.request(that.apiUrl.common.bigData , echartBigData ,function () {
 
@@ -156,7 +156,7 @@
                          }
                      }
                  },
-                 min:minPrice,
+                 min:minPrice-avgPrice,
                  max:minPrice+avgPrice*5,
                  interval:avgPrice,
              },

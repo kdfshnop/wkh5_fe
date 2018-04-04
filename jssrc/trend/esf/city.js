@@ -137,7 +137,7 @@ class cityController extends Controller {
                 axisLine: {
                     lineStyle: {
                         color: '#fff', // x轴颜色
-                    }
+                    },
                 },
                 axisLabel: {
                     interval: 0,
@@ -150,7 +150,7 @@ class cityController extends Controller {
                 },
             },
             yAxis: {
-                axisLine: {show: false},   // y轴是否显示
+                axisLine: {show: false,onZero: true},   // y轴是否显示
                 splitLine: {
                     show: true,  // 控制网格线是否显示
                     lineStyle: {
@@ -170,11 +170,16 @@ class cityController extends Controller {
                         } else {
                             return (value / 10000).toFixed(1) + ' 万';
                         }
+                    },
+                    interval:(index, value) => {
+
+                            return false
                     }
                 },
+                boundaryGap : false,
                 position:'right',
-                min:minPrice,
-                max:minPrice+avgPrice*5,
+                min:minPrice-avgPrice,
+                max:minPrice+avgPrice*4,
                 interval:avgPrice,
             },
             series: [{
