@@ -383,22 +383,22 @@
         } , ( error ) => {            
             switch(error.code) {
                 case error.PERMISSION_DENIED :  // 用户阻止了授权
-                alert("error.PERMISSION_DENIED") ;
+                //alert("error.PERMISSION_DENIED") ;
                 this.localtionFail(false) ;               
                 break ;
 
                 case error.POSITION_UNAVAILABLE :  //定位信息无效
-                alert("error.POSITION_UNAVAILABLE") ;            
+                //alert("error.POSITION_UNAVAILABLE") ;            
                 this.localtionFail(true) ;
                 break ;
 
                 case error.TIMEOUT :  //定位超时
-                alert("error.TIMEOUT") ;                  
+                //alert("error.TIMEOUT") ;                  
                 this.localtionFail(true) ;
                 break ;
 
                 case error.UNKNOWN_ERROR :  //其他不可预知的错误  
-                alert("error.UNKNOWN_ERROR") ;                
+                //alert("error.UNKNOWN_ERROR") ;                
                 this.localtionFail(true) ;
                 break ;
             }
