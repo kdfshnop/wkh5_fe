@@ -557,6 +557,8 @@ class ListController extends Controller {
             });
 
             if(rentWayString){
+                delete(conditionObject['er']);
+                delete(conditionObject['fs']);
                 rentWayObj = that.parseCondition({condition: rentWayString});
             }else{
                 delete(conditionObject['er']);
