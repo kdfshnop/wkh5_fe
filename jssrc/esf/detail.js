@@ -125,13 +125,13 @@ class DetailController extends Controller {
         });
         /* 按照3.12需求文档走势图数据要求*/
         let maxPrice = Math.ceil((sortArray[sortArray.length - 1] / 1000)) * 1000;
-        let minPrice = null;  //Math.ceil((sortArray[0] / 1000) - 1) * 1000;
+        let notZroArray = [];
         sortArray.forEach(function (item,index) {
-            if (item !=0){
-                minPrice =   Math.ceil((item / 1000) - 1) * 1000;
-                return minPrice
+            if (item != 0){
+                notZroArray.push(item)
             }
         });
+        let minPrice = Math.ceil((notZroArray[0] / 1000) - 1) * 1000;
         let avgPrice = 1000 ;
         if (maxPrice == minPrice ) {
             minPrice = maxPrice - 2000;
