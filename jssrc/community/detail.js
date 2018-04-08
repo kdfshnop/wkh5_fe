@@ -24,7 +24,7 @@
         -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
         let that = this;
         // 获取小区加密Id
-        let  encryptsubestateid = $('#estateName').attr('data-encryptsubestateid');
+        let  encryptsubestateid = $('#estateNameEcharts').attr('data-encryptsubestateid');
         this.request(this.apiUrl.community.chart,{subEstateId:encryptsubestateid},{successCallback(data){
                 if (data.status == 1){
                     let dataRes = data;
@@ -53,7 +53,7 @@
              }
          });
          if (!echartShow) {
-             $('#estateName').hide();
+             $('#estateNameEcharts').hide();
              return
          }
          let sortArray = echartData.seriesData.sort(function(a, b) {
@@ -69,8 +69,8 @@
          });
          let minPrice = Math.ceil((notZroArray[0] / 1000) - 1) * 1000;
          let avgPrice = 1000 ;
-         if (maxPrice == minPrice ) {
-             minPrice = maxPrice - 2000;
+         if (sortArray[sortArray.length - 1] == notZroArray[0] ) {
+             minPrice = minPrice - 2000;
              avgPrice = 1000
          }else{
              avgPrice = (maxPrice - minPrice)/4 < 1000 ? 1000:Math.ceil((maxPrice - minPrice)/4000)*1000;
@@ -92,13 +92,13 @@
                  trigger: 'item',
                  triggerOn: 'click',
                  position: 'top',
-                 backgroundColor: '#92A7C3',
+                 backgroundColor: '#4081D6',
                  padding: 4,
                  textStyle: {
                      color: '#fff',
                      fontSize: '12'
                  },
-                 formatter:function (params) {
+                 formatter:function (params, ticket, callback) {
                      let paramsValue =  params.value + "元";
                      that.request(that.apiUrl.common.bigData , echartBigData ,function () {
 
@@ -149,15 +149,15 @@
                          color: '#999',
                      },
                      formatter: function(value, index) {
-                         if (value == (minPrice-avgPrice)) {
+                         if (value == minPrice-avgPrice || value == 0) {
                              return "";
                          } else {
                              return (value / 10000).toFixed(1) + ' 万';
                          }
                      }
                  },
-                 min:minPrice-avgPrice,
-                 max:minPrice+avgPrice*4,
+                 min:minPrice-avgPrice > 0 ? minPrice-avgPrice : 0,
+                 max:minPrice-avgPrice > 0 ? minPrice+ avgPrice * 4:avgPrice * 5,
                  interval:avgPrice,
              },
              series: [{
@@ -165,20 +165,21 @@
                  type: 'line',
                  lineStyle:{
                      normal:{
-                         color:'#92A7C3', // 折线条颜色
+                         color:'#4081D6', // 折线条颜色
                      }
 
                  },
                  itemStyle:{
                      normal:{
-                         color: "#92A7C3" //图标颜色
+                         color: "#4081D6", //图标颜色
                      },
                      emphasis: { //重点，强调时候的样式，即当鼠标悬停或点击上去的时候的拐点的样式
-                         borderColor: '#92A7C3',
+                         borderColor: '#4081D6',
                          borderWidth: 2,
-                         color: '#92A7C3'
+                         color: '#4081D6'
                      }
                  },
+                 symbolSize: 5,
                  connectNulls: true,
                  data: seriesData,
              }],

@@ -82,9 +82,10 @@ class townController extends Controller {
             }
         });
         let minPrice = Math.ceil((notZroArray[0] / 1000) - 1) * 1000;
+
         let avgPrice = 1000 ;
-        if (maxPrice == minPrice ) {
-            minPrice = maxPrice - 2000;
+        if (sortArray[sortArray.length - 1] == notZroArray[0] ) {
+            minPrice = minPrice - 2000;
             avgPrice = 1000
         }else{
             avgPrice = (maxPrice - minPrice)/4 < 1000 ? 1000:Math.ceil((maxPrice - minPrice)/4000)*1000;
@@ -153,7 +154,7 @@ class townController extends Controller {
                         color: '#999',
                     },
                     formatter: function(value, index) {
-                        if (value == (minPrice-avgPrice)) {
+                        if (value == minPrice-avgPrice || value == 0) {
                             return "";
                         } else {
                             return (value / 10000).toFixed(1) + ' 万';
@@ -162,8 +163,8 @@ class townController extends Controller {
                 },
                 boundaryGap : false,
                 position:'right',
-                min:minPrice-avgPrice,
-                max:minPrice+avgPrice*4,
+                min:minPrice-avgPrice > 0 ? minPrice-avgPrice : 0,
+                max:minPrice-avgPrice > 0 ? minPrice+ avgPrice * 4:avgPrice * 5,
                 interval:avgPrice,
             },
             series: [{

@@ -81,9 +81,9 @@ class cityListController extends Controller {
             } else if (url('?businessType') == "newTrend"){
                 window.location.href = "/"+pinyin+"/trend/new"
             }
-            $.cookie('userSelectedCity',pinyin,{path: '/',});
-            $.cookie('userSelectedCityId',cityId,{path: '/',});
-            $.cookie('userSelectedCityName',cityName,{path: '/',});
+            $.cookie('selectedCityPinyin',pinyin,{path: '/',});
+            $.cookie('selectedCityId',cityId,{path: '/',});
+            $.cookie('selectedCityName',cityName,{path: '/',});
         }
     }
 }
