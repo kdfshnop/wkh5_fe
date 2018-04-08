@@ -82,8 +82,8 @@ class cityListController extends Controller {
                 window.location.href = "/"+pinyin+"/trend/new"
             }
             $.cookie('selectedCityPinyin',pinyin,{path: '/',});
-            $.cookie('userSelectedCityId',cityId,{path: '/',});
-            $.cookie('userSelectedCityName',cityName,{path: '/',});
+            $.cookie('selectedCityId',cityId,{path: '/',});
+            $.cookie('selectedCityName',cityName,{path: '/',});
         }
     }
 }
