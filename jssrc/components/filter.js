@@ -561,6 +561,10 @@ define([],function(){
                 break;
             }
             self.$body.addClass('noscroll');
+
+            var top = self.$content.position().top;
+            var winHeight = $(window).height();
+            self.$content.height(winHeight - top);            
         }
 
         // 点击区域、总价、户型、排序，展示详情筛选条件
@@ -602,6 +606,13 @@ define([],function(){
             self.$maxPrice.val('');
             calcCondition.apply(self);
         });
+
+        // 点击总价中输入框
+        // $('.filter .total-price input').click(function(e){
+        //     alert("click input...");
+        //     $(this).focus();
+        //     e.stopPropagation();
+        // });
 
         // 自定义价格区间确定按钮
         $('.filter .total-price button').click(function(){
@@ -851,7 +862,9 @@ define([],function(){
     function setMaxHeight(){
         var winHeight = $(window).height() - 80;
         this.$districtMetro.find('.parent,.child').css('max-height', winHeight * .7 + "px");
-        this.$price.find('ul').css('max-height', winHeight * .7 + "px");
+        this.$price.css('max-height', winHeight * .8 + "px");
+        this.$price.find('ul').css('max-height', (winHeight * .8 - 84) + "px");
+        //this.$price.find('ul').css('max-height', winHeight * .7 + "px");
         this.$houseType.find('.house-type-inner').css('max-height', winHeight * .7 + "px");
         this.$sort.css('max-height', winHeight * .7 + "px");
         this.$content.height(winHeight);
@@ -957,9 +970,17 @@ define([],function(){
         this.setValue(this.initValue);
         bindEvent.apply(this);
         setMaxHeight.apply(this);
-        $(window).on('resize',()=>{            
-            setMaxHeight.apply(this);
-        });
+        // 只用于android        
+        var u = navigator.userAgent;
+        var android = u.indexOf('Android') > -1|| u.indexOf('Linux') > -1;
+        if(android){
+            $(window).on('resize',()=>{            
+                setMaxHeight.apply(this);
+            });
+            
+        }        
+
+        // new $.Drag({elem: ".total-price ul"});
     }
 
     function Filter(options) {                

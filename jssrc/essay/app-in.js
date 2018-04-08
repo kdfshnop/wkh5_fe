@@ -590,7 +590,8 @@ class ArticleShareController extends Controller {
        //     //$(ele).css('font-size', $(ele).css('font-size').replace('px', '') * dpr + 'px')
        //     })
        // }
-       $('.article-content').show()
+       $('.article-content [style]').removeAttr('style').removeAttr('class');
+       $('.article-content').show();
    }
 
    bindEvent() {
