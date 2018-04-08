@@ -53,7 +53,7 @@
              }
          });
          if (!echartShow) {
-             $('#estateName').hide();
+             $('#estateNameEcharts').hide();
              return
          }
          let sortArray = echartData.seriesData.sort(function(a, b) {
