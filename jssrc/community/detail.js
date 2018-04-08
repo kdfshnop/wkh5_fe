@@ -92,13 +92,13 @@
                  trigger: 'item',
                  triggerOn: 'click',
                  position: 'top',
-                 backgroundColor: '#92A7C3',
+                 backgroundColor: '#4081D6',
                  padding: 4,
                  textStyle: {
                      color: '#fff',
                      fontSize: '12'
                  },
-                 formatter:function (params) {
+                 formatter:function (params, ticket, callback) {
                      let paramsValue =  params.value + "元";
                      that.request(that.apiUrl.common.bigData , echartBigData ,function () {
 
@@ -165,20 +165,21 @@
                  type: 'line',
                  lineStyle:{
                      normal:{
-                         color:'#92A7C3', // 折线条颜色
+                         color:'#4081D6', // 折线条颜色
                      }
 
                  },
                  itemStyle:{
                      normal:{
-                         color: "#92A7C3" //图标颜色
+                         color: "#4081D6", //图标颜色
                      },
                      emphasis: { //重点，强调时候的样式，即当鼠标悬停或点击上去的时候的拐点的样式
-                         borderColor: '#92A7C3',
+                         borderColor: '#4081D6',
                          borderWidth: 2,
-                         color: '#92A7C3'
+                         color: '#4081D6'
                      }
                  },
+                 symbolSize: 5,
                  connectNulls: true,
                  data: seriesData,
              }],
