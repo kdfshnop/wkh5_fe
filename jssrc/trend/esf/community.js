@@ -75,8 +75,8 @@ class communityController extends Controller {
         });
         let minPrice = Math.ceil((notZroArray[0] / 1000) - 1) * 1000;
         let avgPrice = 1000 ;
-        if (maxPrice == minPrice ) {
-            minPrice = maxPrice - 2000;
+        if (sortArray[sortArray.length - 1] == notZroArray[0] ) {
+            minPrice = minPrice - 2000;
             avgPrice = 1000
         }else{
             avgPrice = (maxPrice - minPrice)/4 < 1000 ? 1000:Math.ceil((maxPrice - minPrice)/4000)*1000;
