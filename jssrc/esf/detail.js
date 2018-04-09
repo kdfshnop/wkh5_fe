@@ -177,6 +177,7 @@ class DetailController extends Controller {
                 containLabel: true,
             },
             xAxis: {
+                show:true,
                 data: echartData.monthList ,  // X坐标数据
                 splitLine: {show: false}, // 控制网格线是否显示
                 axisTick: {show: false},  // 去除x轴上的刻度线
@@ -185,7 +186,7 @@ class DetailController extends Controller {
                 boundaryGap: false,
                 axisLine: {
                     lineStyle: {
-                        color: '#979797', // x轴颜色
+                        color: '#fff', // x轴颜色
                     }
                 },
                 axisLabel: {
@@ -202,11 +203,8 @@ class DetailController extends Controller {
                 axisLine: {show: false},   // y轴是否显示
                 splitLine: {
                     show: true,  // 控制网格线是否显示
-                    interval:(index, value) => {
-                        console.log(232131);
-                        if (minPrice - avgPrice < 0 && index ==1){
-                            return false
-                        }
+                    interval: function(index, value) {
+
                     },
                     lineStyle: {
                         color: ['#979797'] // y刻度颜色
@@ -221,19 +219,10 @@ class DetailController extends Controller {
                     formatter: function(value, index) {
                         if ( index == 0) {
                             return "";
-                        } else if(index  == 1){
-                            return (minPrice / 10000).toFixed(1) + ' 万';
-                        }else {
-                            return ((value+minPrice-avgPrice) / 10000).toFixed(1) + ' 万';
-                        }
-                    }
-                /*    formatter: function(value, index) {
-                        if (value == minPrice-avgPrice || value == 0) {
-                            return "";
                         } else {
                             return (value / 10000).toFixed(1) + ' 万';
                         }
-                    }*/
+                    }
                 },
                 min: minPrice - avgPrice,
                 max: avgPrice * 5,

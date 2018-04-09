@@ -164,7 +164,7 @@ class cityController extends Controller {
                         color:'#999'
                     } ,
                     formatter: function(value, index) {
-                        if (value == minPrice-avgPrice || value == 0) {
+                        if (index == 0) {
                             return "";
                         } else {
                             return (value / 10000).toFixed(1) + ' 万';
