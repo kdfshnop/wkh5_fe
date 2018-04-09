@@ -76,6 +76,7 @@
              avgPrice = (maxPrice - minPrice)/4 < 1000 ? 1000:Math.ceil((maxPrice - minPrice)/4000)*1000;
          }
          minPrice =  minPrice < 0 ? 0:minPrice;
+         let colorChang = minPrice-avgPrice > 0 ? '#979797':'#fff';
          let myChart = echarts.init(document.getElementById('main'),{ width: '88%' });
          let that = this;
          // 给折线图dome增加埋点
@@ -121,7 +122,7 @@
                  boundaryGap: false,
                  axisLine: {
                      lineStyle: {
-                         color: '#fff', // x轴颜色
+                         color: colorChang, // x轴颜色
                      }
                  },
                  axisLabel: {
@@ -157,7 +158,7 @@
                      }
                  },
                  min: minPrice - avgPrice,
-                 max: avgPrice * 5,
+                 max: minPrice+avgPrice * 4,
                  interval:avgPrice,
              },
              series: [{
