@@ -730,10 +730,13 @@ class ListController extends Controller {
             let list = $('.rent-list > ul > li > span');  // 获取检索当中的span标签   后面判断指向 （根据class判断指向）
             $('.bac').hide();
              $('body').removeClass('noscroll');
+             let scrollTop = $(window).scrollTop();
+             console.log(scrollTop);
             list.each(function (index, item) {   //根据span标签的样式指向判断底部罩层是否显示
                 if (item.classList.length == 1) {
                     $('.bac').show();
                     $('body').addClass('noscroll');
+                    $(window).scrollTop(scrollTop)
                 }
             });
             let indexP = $(this).index();
