@@ -24,7 +24,7 @@
         -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
         let that = this;
         // 获取小区加密Id
-        let  encryptsubestateid = $('#estateName').attr('data-encryptsubestateid');
+        let  encryptsubestateid = $('#estateNameEcharts').attr('data-encryptsubestateid');
         this.request(this.apiUrl.community.chart,{subEstateId:encryptsubestateid},{successCallback(data){
                 if (data.status == 1){
                     let dataRes = data;
@@ -53,7 +53,7 @@
              }
          });
          if (!echartShow) {
-             $('#estateName').hide();
+             $('#estateNameEcharts').hide();
              return
          }
          let sortArray = echartData.seriesData.sort(function(a, b) {

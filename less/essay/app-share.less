@@ -134,13 +134,21 @@ a:hover {
                 1、无论后台大家怎么编辑文字，前台显示的格式都一样为：16号字， 黑色，行距1.75.段落和段落之间空行。
                 2、后台关闭字体大小调解，前台显示的格式都一样为：16号字， 黑色，行距1.75.段落和段落之间空行。
             */
-            p, div, a, span{
+            address, article, aside, footer, header, h1, h2, h3, h4, h5, h6, hgroup, nav, section, blockquote, dd, div, dl, dt, figcaption, figure, hr, li, main, ol, p, pre, ul, a, abbr, b, bdi, bdo, br, cite, code, data, dfn, em, i, kbd, mark, q, rp, rt, rtc, ruby, s, samp, small, span, strong, sub, sup, time, u, var, wbr, area, audio, img, map, track, video, video, embed, object, param, source, canvas, noscript, script, del, ins, caption, col, colgroup, table, tbody, td, tfoot, th, thead, tr, button, datalist, fieldset, form, input, label, legend, meter, optgroup, option, output, progress, select, textarea, details, dialog, menu, menuitem, summary, content, element, shadow, slot, template, acronym, applet, basefont, big, blink, center, command, center, command, dir, element, font, frame, frameset, image, isindex, keygen, listing, marquee, multicol, nextid, noembed, plaintext, shadow, spacer, strike, tt, xmp {
                 font-size: 16px !important;
                 color: #000 !important;
                 line-height: 1.75 !important; 
-            }
-
-            font-size: 16px !important;
+                font-weight: normal !important;
+                font-style: normal !important;  
+                background-color: transparent !important;
+                border: none !important;   
+                text-decoration: none !important;   
+                vertical-align: baseline !important;                        
+            }      
+            font-size: 16px !important;    
+            div, p {
+                margin-bottom: 28px;
+            }  
         }
         &>.operation {
             .clearfix();
