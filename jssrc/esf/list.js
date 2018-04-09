@@ -11,7 +11,9 @@ class ListController extends Controller {
         super() ;        
         var self = this;        
         this.paramGenerator = new ParamGenerator();
-        $(function(){$('.total').slideUp(1000);});// 隐藏查询总条数   
+        setTimeout(function(){
+            $('.total').slideUp();// 隐藏查询总条数   
+        },3000);   
         
         /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
         图片懒加载实例化
