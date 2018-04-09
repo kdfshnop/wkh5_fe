@@ -202,6 +202,12 @@ class DetailController extends Controller {
                 axisLine: {show: false},   // y轴是否显示
                 splitLine: {
                     show: true,  // 控制网格线是否显示
+                    interval:(index, value) => {
+                        console.log(232131);
+                        if (minPrice - avgPrice < 0 && index ==1){
+                            return false
+                        }
+                    },
                     lineStyle: {
                         color: ['#979797'] // y刻度颜色
                     }
@@ -213,16 +219,27 @@ class DetailController extends Controller {
                         color: '#999',
                     },
                     formatter: function(value, index) {
+                        if ( index == 0) {
+                            return "";
+                        } else if(index  == 1){
+                            return (minPrice / 10000).toFixed(1) + ' 万';
+                        }else {
+                            return ((value+minPrice-avgPrice) / 10000).toFixed(1) + ' 万';
+                        }
+                    }
+                /*    formatter: function(value, index) {
                         if (value == minPrice-avgPrice || value == 0) {
                             return "";
                         } else {
                             return (value / 10000).toFixed(1) + ' 万';
                         }
-                    }
+                    }*/
                 },
-                min:minPrice-avgPrice > 0 ? minPrice-avgPrice : 0,
-                max:minPrice-avgPrice > 0 ? minPrice+ avgPrice * 4:avgPrice * 5,
-                interval:avgPrice,
+                min: minPrice - avgPrice,
+                max: avgPrice * 5,
+            /*    min:minPrice-avgPrice > 0 ? minPrice-avgPrice : 0,
+                max:minPrice-avgPrice > 0 ? minPrice+ avgPrice * 4:avgPrice * 5,*/
+                interval: avgPrice ,
             },
             series: [{
                 name: '销量',
