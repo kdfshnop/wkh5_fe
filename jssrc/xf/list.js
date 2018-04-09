@@ -28,28 +28,25 @@
                 } ,
                 "searchResultItemClick" : (data) => {                    
                     // 与filter中的区域地铁互斥
-                    // delete self.param.di;// 区域id
-                    // delete self.param.to;// 板块id
-                    // delete self.param.li;// 地铁线id
-                    // delete self.param.st;// 地铁站id
-                    // delete self.param.id;// 小区id
-                    // delete self.param.sdi;// 区域id
-                    // delete self.param.sto;// 板块id
-                    // delete self.param.sli;// 地铁线id
-                    // delete self.param.sst;// 地铁站id
-                    // delete self.param.sid;// 小区id
-                    // var mapping = ["","sdi","sto","sli","sst","sid"];
-                    // var key = mapping[data.type];
-                    // if(key){
-                    //     self.param[key] = data.value;
-                    //     self.goto();
-                    // }
+                    delete self.param.di;// 区域id
+                    delete self.param.to;// 板块id
+                    delete self.param.li;// 地铁线id
+                    delete self.param.st;// 地铁站id
+                    delete self.param.id;// 小区id
+                    delete self.param.sdi;// 区域id
+                    delete self.param.sto;// 板块id
+                    delete self.param.sli;// 地铁线id
+                    delete self.param.sst;// 地铁站id
+                    delete self.param.sid;// 小区id
+                    var mapping = ["","sdi","sto","sli","sst","sid"];
+                    var key = mapping[data.type];
+                    if(key){
+                        self.param[key] = data.value;
+                        self.goto();
+                    }
                     // 跳转到新房详情
-                    location.href = "/" + $('#visitedCityPinyin').val() + "/xf/";
+                    //location.href = "/" + $('#visitedCityPinyin').val() + "/xf/";
                 },
-                "": () => {
-
-                }
             }) ;
 
             // 城市不同总价选项不同，XFDEFAULT中prices是北京、上海、广州、深圳、杭州、苏州、廊坊、南京的价格选项，比较高，
@@ -154,7 +151,7 @@
                         <span>'+item.districtName+' '+item.townName+'</span><span>'+item.startSpace+'m²-'+item.endSpace+'m²</span>\
                     </p>\
                     <ul class="tags">'
-                + (item.hasActivity && '<li class="yh">有优惠</li>' || "") + (item.isSubwayEstate&&'<li class="dt">近地铁</li>'||'') + (!item.isSoonOpen&&'<li>在售楼盘</li>'||'<li>即将开盘</li>') + (item.hasVideo&&'<li>有视频</li>'||'') +
+                + (item.hasActivity =='1' && '<li class="yh">有优惠</li>' || "") + (item.isSubwayEstate == '1'&&'<li class="dt">近地铁</li>'||'') + (!item.isSoonOpen == '1'&&'<li>在售楼盘</li>'||'<li>即将开盘</li>') + (item.hasVideo == '1' &&'<li>有视频</li>'||'') +
                     '</ul>\
                     <p class="unit-price"><span>'+item.unitPrice+'</span> <span>元/m²</span></p>\
                 </div>\

@@ -461,7 +461,7 @@ define([],function(){
         $('.total-price .active').each(function(){
             if($(this).data('value')){
                 result.price = $(this).data('value');
-                delete this.result.price;
+                self.result && delete self.result.price;
             }
         });               
 
@@ -782,6 +782,7 @@ define([],function(){
                 str = $this.text();
                 if(str.indexOf('不限')> -1){
                     str = "附近";
+                    //self.result.meter = 5000;
                 }
             }else{
                 self.result.district = $this.parent().data('value');
@@ -1040,7 +1041,17 @@ define([],function(){
                        
             this.$district.hide();
             this.$metro.show();
-        }else{// 清空选中的区域地铁
+        } else if(value.longitude || value.latitude){
+            str = "附近";
+            this.$district.find('.parent .near').addClass('active');
+            this.$district.find('.child ul.near').show();
+            if(value.meter){// 具体范围
+                str = value.meter + "米";
+                this.$district.find('.child li.near').removeClass('active').filter('[data-value=' +value.meter+']').addClass('active');
+            }else if(value.meter != undefined){// 不限
+                this.$district.find('.child li.near:eq(0)').addClass('active');
+            }
+        } else{// 清空选中的区域地铁
             this.$districtMetro.find('ul, li').removeClass('active');
             this.$districtMetro.find('.child ul').hide();
             this.$districtLabel.text('区域').parent().removeClass('active');
@@ -1160,8 +1171,6 @@ define([],function(){
             this.$el.find('.district .parent .near').text('附近');
             this.options.longitude = val.longitude;
             this.options.latitude = val.latitude;            
-            //this.options.longitude = 111;
-            //this.options.latitude = 33;
         }else{// 失败
             this.$el.find('.district .parent .near').text('定位失败');
             this.locationSuccessful = false;
@@ -1193,7 +1202,7 @@ define([],function(){
     };
 
     Filter.ESFDEFAULT = {
-        distances: [{value: "5000", text: "不限（智能范围）"},{value: "500", text: "500米"},{value: "1000", text: "1000米"},{value: "2000", text: "2000米"},{value: "5000", text: "5000米"}],// 二手房才有附近筛选功能
+        distances: [{value: "", text: "不限（智能范围）"},{value: "500", text: "500米"},{value: "1000", text: "1000米"},{value: "2000", text: "2000米"},{value: "5000", text: "5000米"}],// 二手房才有附近筛选功能
         sorts: [{                    
             text: "默认排序",
             bigDataParam: encodeURIComponent('{"eventName": "1068007"}')

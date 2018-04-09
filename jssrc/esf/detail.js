@@ -140,6 +140,7 @@ class DetailController extends Controller {
             avgPrice = ((maxPrice - minPrice)/4) < 1000 ? 1000:Math.ceil((maxPrice - minPrice)/4000)*1000;
         }
         minPrice =  minPrice < 0 ? 0:minPrice;
+        let colorChang = minPrice-avgPrice > 0 ? '#979797':'#fff';
         let myChart = echarts.init(document.getElementById('main'),{ width: '88%' });
         let that = this;
         // 给折线图dome增加埋点
@@ -177,6 +178,7 @@ class DetailController extends Controller {
                 containLabel: true,
             },
             xAxis: {
+                show:true,
                 data: echartData.monthList ,  // X坐标数据
                 splitLine: {show: false}, // 控制网格线是否显示
                 axisTick: {show: false},  // 去除x轴上的刻度线
@@ -185,7 +187,7 @@ class DetailController extends Controller {
                 boundaryGap: false,
                 axisLine: {
                     lineStyle: {
-                        color: '#979797', // x轴颜色
+                        color: colorChang, // x轴颜色
                     }
                 },
                 axisLabel: {
@@ -202,6 +204,9 @@ class DetailController extends Controller {
                 axisLine: {show: false},   // y轴是否显示
                 splitLine: {
                     show: true,  // 控制网格线是否显示
+                    interval: function(index, value) {
+
+                    },
                     lineStyle: {
                         color: ['#979797'] // y刻度颜色
                     }
@@ -213,16 +218,18 @@ class DetailController extends Controller {
                         color: '#999',
                     },
                     formatter: function(value, index) {
-                        if (value == minPrice-avgPrice || value == 0) {
+                        if ( index == 0) {
                             return "";
                         } else {
                             return (value / 10000).toFixed(1) + ' 万';
                         }
                     }
                 },
-                min:minPrice-avgPrice > 0 ? minPrice-avgPrice : 0,
-                max:minPrice-avgPrice > 0 ? minPrice+ avgPrice * 4:avgPrice * 5,
-                interval:avgPrice,
+                min: minPrice - avgPrice,
+                max: minPrice + avgPrice * 4,
+             /*   min:minPrice-avgPrice > 0 ? minPrice-avgPrice : 0,
+                max:minPrice-avgPrice > 0 ? minPrice+ avgPrice * 4:avgPrice * 5,*/
+                interval: avgPrice ,
             },
             series: [{
                 name: '销量',
