@@ -1219,6 +1219,17 @@ class ListController extends Controller {
             if (conditionObj['so']) {  // 排序
                 conditionData["orderType"] = conditionObj['so'];
             }
+            if (conditionObj['ne']) { // 附近
+                conditionData["endMetres"] = conditionObj['ne'];
+                conditionData["localLon"] = $.cookies('location_longitude');
+                conditionData["localLat"] = $.cookies('location_latitude');
+            }
+            if (conditionObj['er']) { // 租赁方式 整租
+                conditionData["isEntire"] = conditionObj['er'];
+            }
+            if (conditionObj['fs']) { // 租赁方式 合租
+                conditionData["isShared"] = conditionObj['fs'];
+            }
         }else {
             conditionData = {
                 "cityId":cityid,
