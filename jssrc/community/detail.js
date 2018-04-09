@@ -121,7 +121,7 @@
                  boundaryGap: false,
                  axisLine: {
                      lineStyle: {
-                         color: '#979797', // x轴颜色
+                         color: '#fff', // x轴颜色
                      }
                  },
                  axisLabel: {
@@ -149,15 +149,15 @@
                          color: '#999',
                      },
                      formatter: function(value, index) {
-                         if (value == minPrice-avgPrice || value == 0) {
+                         if ( index == 0) {
                              return "";
                          } else {
                              return (value / 10000).toFixed(1) + ' 万';
                          }
                      }
                  },
-                 min:minPrice-avgPrice > 0 ? minPrice-avgPrice : 0,
-                 max:minPrice-avgPrice > 0 ? minPrice+ avgPrice * 4:avgPrice * 5,
+                 min: minPrice - avgPrice,
+                 max: avgPrice * 5,
                  interval:avgPrice,
              },
              series: [{
