@@ -135,7 +135,7 @@ class Location {
         } , ( error ) => {
             switch(error.code) {
                 case error.PERMISSION_DENIED :  // 用户阻止了授权
-                 $.cookie( this.cookieKeyPrefix + "deniedName" , "定位服务暂未开启" , { path : "/" } ) ;
+                $.cookie( this.cookieKeyPrefix + "deniedName" , "定位服务暂未开启" , { path : "/" } ) ;
                 this.fail() ;
                 break ;
 
@@ -144,7 +144,6 @@ class Location {
                 break ;
 
                 case error.TIMEOUT :  //定位超时
-                   /* console.log(error.TIMEOUT+"error.TIMEOUT");*/
                 this.timeout() ;
                 break ;
 
