@@ -461,7 +461,7 @@ define([],function(){
         $('.total-price .active').each(function(){
             if($(this).data('value')){
                 result.price = $(this).data('value');
-                delete this.result.price;
+                self.result && delete self.result.price;
             }
         });               
 

@@ -123,34 +123,48 @@
             //}
         }
     }
-
-    .activity {        
-        padding: 10px 0;
-        margin-bottom: -15px;
-        hr {
-            margin : 5px 0 ;
-        }      
-
-        li {
-            margin-left: -8px;
-            &::before {
-                width: 32px;
-                height: 32px;
-                border-radius: 50%;
-                line-height: 32px;
-                font-size: 18px;
-                color: #f95355;
-                transform: scale(.5);
-                border: 1px solid #f95355;
-                content: "惠";
-                display: inline-block;
-                text-align: center;
+    hr {
+        margin : 15px 0 0 0 ;
+     }
+    /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+    优惠活动部分
+    -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
+    .activity {
+        margin-bottom : -15px ;     
+        padding : 5px 0 ;
+        position : relative ; 
+        ul {
+            margin-right : 20px ;   
+            li {
+                font-size : 14px ;
+                line-height : 20px ;
+                margin-left : -8px ;
+                .text-ellipsis() ;
+                &::before {
+                    width : 32px ;
+                    height : 32px ;
+                    border-radius : 50% ;
+                    line-height : 32px ;
+                    font-size : 18px ;
+                    color : #f95355 ;
+                    transform : scale(.5) ;
+                    border : 1px solid #f95355 ;
+                    content : "惠";
+                    display : inline-block ;
+                    text-align : center ;
+                }                
             }
-            font-size: 14px;
-            line-height: 20px;
-            .text-ellipsis() ;
         }
+        i {
+            color : #7c7c7c ;
+            font-size : 1.8rem ;
+            margin-top : -8px ;
+            position : absolute ;
+            right : 0 ;
+            top : 50% ;
+        }       
     }
+
  }
 
  .xf-dynamics {
