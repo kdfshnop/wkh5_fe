@@ -340,7 +340,8 @@
         /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
         首先要去判断是否有过浏览H5的页面，如果
         -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
-        if( $.cookie("visitedCityId") && $.cookie("visitedCityId") != this.consts.visitedCityId && $.cookie("selectedCityId") && $.cookie("selectedCityId") != this.consts.visitedCityId ) {            
+        if( $.cookie("visitedCityId") && $.cookie("visitedCityId") != this.consts.visitedCityId && $.cookie("selectedCityId") && $.cookie("selectedCityId") != this.consts.visitedCityId ) {
+            //alert("先前访问过H5城市，并且选择过城市，这两个城市值都不等于路由城市，所以跳转到先前访问城市") ;           
             window.location.href = this.combineUrl($.cookie("visitedCityPinyin")) ;
             return ;
         }
@@ -410,7 +411,7 @@
                     如果用户没有选择城市并且定位到的城市不是当前路由城市才会跳转到定位城市
                     -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
                     if(  ! $.cookie("selectedCityPinyin") && result.data.cityId != this.consts.visitedCityId ) {
-                        //alert("定位成功！将要直接跳转到定位城市！") ;
+                        //alert("定位成功！没有用户选择的城市，而且定位城市不同于路由城市，将要直接跳转到定位城市！") ;
                         window.location.href = this.combineUrl(result.data.cityPinyin) ;
                     }                                  
                 } 
