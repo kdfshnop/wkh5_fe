@@ -17,24 +17,17 @@ class IndexController extends Controller{
         -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/         
         $(".wk-tabs .tabs-handle li").eq(0).addClass("on") ;
         let self = this;
-        this.byIdGetPosition();
-        let locationPo ={
-            longitude:this.getLocation().longitude  ,
-            latitude: this.getLocation().latitude
-        };
-        this.request(this.apiUrl.store.house,{ "storeId" : $("#storeId").val() , "pageIndex" : 0 , 'pageSize' : 20 ,lon:locationPo.longitude,lat:locationPo.latitude},{
-            successCallback(result){
-                if (result.data && result.data.length >0){
-                    result.data.forEach((item,index)=>{
-                        item.bigDataParams = encodeURIComponent(JSON.stringify( { "eventName" : 1222001 , "eventParam" : { "store_id" : $("#storeId").val() , "house_id" : item.houseId } } )) ;
-                        item.url = "/" + $("#cityPinYin").val() + "/esf/" + item.encryptHouseId + ".html"+"?storeId="+$("#storeId").val() ;
-                        $(".tabs-frame.esf-items .list-container").append(self.createEsf(item)) ;
-                    })
-                }else {
-                    $('.nodata-store').show()
-                }
-            }
+        /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+        定位加载实例化
+        -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
+        this.getLocation((locationPo)=>{
+           this.getHoustList({"latitude":locationPo.latitude,"longitude":locationPo.longitude});
+            /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+             上拉加载实例化
+             -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
+            this.pullload(locationPo.latitude,locationPo.longitude) ;
         });
+
         /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
         载入组件逻辑
         -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/ 
@@ -70,10 +63,7 @@ class IndexController extends Controller{
         给dom节点绑定事件
         -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
         this.addEventListener() ;
-        /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
-        上拉加载实例化
-        -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
-        this.pullload() ;
+
     }
     /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
     给dom节点绑定事件
@@ -147,12 +137,12 @@ class IndexController extends Controller{
     /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
     上拉加载实例化
     -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
-    pullload() {
+    pullload(latitude,longitude) {
         let self = this ;
         //二手房
         $(".tabs-frame.esf-items .list-container").pullload({
             apiUrl : this.apiUrl.store.house ,
-            queryStringObject : { "storeId" : $("#storeId").val() } ,   
+            queryStringObject : { "storeId" : $("#storeId").val() , lon :longitude, lat :latitude} ,
             threshold : 50 ,       
             callback : function(data) {
                 if( ! data.data) return ;          
@@ -165,60 +155,65 @@ class IndexController extends Controller{
        
     } ;
     /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
-   根据门店id获取经纬度
+   请求房源数据
    -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
-   byIdGetPosition(){
-       console.log('进入函数');
-       this.request(this.apiUrl.store.wxmpStore,{ "storeId" : $("#storeId").val() },{
-           successCallback(result){
-               console.log(JSON.stringify(result))
-           }
-       })
-   }
-
-
+    getHoustList(position){
+        let self = this;
+        this.request(this.apiUrl.store.house,{ "storeId" : $("#storeId").val() , "pageIndex" : 0 , 'pageSize' : 20 ,lon:position.longitude,lat:position.latitude},{
+            successCallback(result){
+                if (result.data && result.data.length >0){
+                    result.data.forEach((item,index)=>{
+                        item.bigDataParams = encodeURIComponent(JSON.stringify( { "eventName" : 1222001 , "eventParam" : { "store_id" : $("#storeId").val() , "house_id" : item.houseId } } )) ;
+                        item.url = "/" + $("#cityPinYin").val() + "/esf/" + item.encryptHouseId + ".html"+"?storeId="+$("#storeId").val() ;
+                        $(".tabs-frame.esf-items .list-container").append(self.createEsf(item)) ;
+                    })
+                }else {
+                    $('.nodata-store').show()
+                }
+            }
+        });
+    }
     /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
    定位服务
    -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
-    getLocation(){
+    getLocation(callBack){
         if( ! navigator.geolocation ) {
             $.tips( "您的浏览器不支持定位地理位置" , 3 ) ;
+            callBack({"latitude":null,"longitude":null});
             return ;
         }
+        let self = this;
         let geoOpts = {
             enableHighAccuracy : false ,
             maximumAge : 0 ,
             timeout : 10 * 1000
         } ;
-        let  locationPo={
-            latitude:null,
-            longitude:null
-        };
-        console.log('没有进去定位');
         navigator.geolocation.getCurrentPosition( (position) => {
+            let  locationPo = {};
             locationPo.latitude = position.coords.latitude;
             locationPo.longitude = position.coords.longitude;
             console.log('进入定位');
             console.log(locationPo);
+            callBack(locationPo)
         }, ( error ) => {
+            callBack({"latitude":null,"longitude":null});
             switch(error.code) {
                 case error.PERMISSION_DENIED :  // 用户阻止了授权
-
+                    console.log("用户阻止了授权");
                     break ;
                 case error.POSITION_UNAVAILABLE :  //定位信息无效
-                    $.tips( "定位信息无效" , 3 ) ;
+                    console.log("定位信息无效");
                     break ;
 
                 case error.TIMEOUT :  //定位超时
-                    $.tips( "定位超时" , 3 ) ;
+                    console.log("定位超时");
                     break ;
 
                 case error.UNKNOWN_ERROR :  //其他不可预知的错误
-
+                    console.log("其他不可预知的错误");
                     break ;
             }
         } , geoOpts );
-        return locationPo
     }
 }
 /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
