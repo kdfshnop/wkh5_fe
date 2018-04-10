@@ -153,7 +153,7 @@
                     <ul class="tags">'
                 + (item.hasActivity =='1' && '<li class="yh">有优惠</li>' || "") + (item.isSubwayEstate == '1'&&'<li class="dt">近地铁</li>'||'') + (item.isOnSale == '1' && item.isSoonOpen != '2' &&'<li>在售楼盘</li>'||'<li>即将开盘</li>') + (item.hasVideo == '1' &&'<li>有视频</li>'||'') +
                     '</ul>\
-                    <p class="unit-price"><span>'+item.unitPrice+'</span> <span>元/m²</span></p>\
+                    <p class="unit-price"><span>'+item.avgPriceWou+'</span> '+ (item.avgPriceWou!='0' && '<span>元/m²</span>' || '') +'</p>\
                 </div>\
             </a>';
         });
