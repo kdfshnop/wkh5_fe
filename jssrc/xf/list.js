@@ -38,6 +38,9 @@
                     delete self.param.sli;// 地铁线id
                     delete self.param.sst;// 地铁站id
                     delete self.param.sid;// 小区id
+                    delete self.param.lat;
+                    delete self.param.lon;
+                    delete self.param.m;
                     var mapping = ["","sdi","sto","sli","sst","sid"];
                     var key = mapping[data.type];
                     if(key){
@@ -74,7 +77,7 @@
                 BigData: BigData,
                 filterChanged: function(result){   
                     var param = self.paramGenerator.generateParamObj(result);
-                    if(param.di || param.to || param.li || param.st){
+                    if(param.di || param.to || param.li || param.st || param.lat || param.lon){
                         // do nothing
                     }else{// 判断是否有sid,sli,sst,sdi,sto
                         var mapping = ["sdi","sto","sli","sst","sid"];
@@ -100,7 +103,7 @@
 
         // 从url中解析参数
         //var pageUrl = location.href;
-        var pageUrl = location.origin + location.pathnam;
+        var pageUrl = location.origin + location.pathname;
         pageUrl = pageUrl.replace('//','');
         var tmpArr = pageUrl.split('/');
         self.param = {};
@@ -153,7 +156,7 @@
                     <ul class="tags">'
                 + (item.hasActivity =='1' && '<li class="yh">有优惠</li>' || "") + (item.isSubwayEstate == '1'&&'<li class="dt">近地铁</li>'||'') + (item.isOnSale == '1' && item.isSoonOpen != '2' &&'<li>在售楼盘</li>'||'<li>即将开盘</li>') + (item.hasVideo == '1' &&'<li>有视频</li>'||'') +
                     '</ul>\
-                    <p class="unit-price"><span>'+item.avgPriceWou+'</span> '+ (item.avgPriceWou!='0' && '<span>元/m²</span>' || '') +'</p>\
+                    <p class="unit-price"><span>'+(item.avgPriceWou!='0'?item.avgPriceWou:'价格待定')+'</span> '+ (item.avgPriceWou!='0' && '<span>元/m²</span>' || '') +'</p>\
                 </div>\
             </a>';
         });
@@ -253,6 +256,7 @@
         //二手房
         $("#list").pullload({
             apiUrl : self.apiUrl.xf.list ,
+            itemClass: ".xf-item",
             queryStringObject : function(){
                 self.param && delete self.param.pa;
                 if(!self.param){
