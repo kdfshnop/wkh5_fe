@@ -15,7 +15,26 @@ class IndexController extends Controller{
         /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
         给第一个tabs-handle选项添加on样式
         -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/         
-        $(".wk-tabs .tabs-handle li").eq(0).addClass("on") ;        
+        $(".wk-tabs .tabs-handle li").eq(0).addClass("on") ;
+        let self = this;
+        let locationPo ={
+            longitude:this.getLocation().longitude,
+            latitude: this.getLocation().latitude
+        };
+        console.log(locationPo);
+        this.request(this.apiUrl.store.house,{ "storeId" : $("#storeId").val() , "pageIndex" : 0 , 'pageSize' : 20 ,lon:locationPo.longitude,lat:locationPo.latitude},{
+            successCallback(result){
+                if (result.data && result.data.length >0){
+                    result.data.forEach((item,index)=>{
+                        item.bigDataParams = encodeURIComponent(JSON.stringify( { "eventName" : 1222001 , "eventParam" : { "store_id" : $("#storeId").val() , "house_id" : item.houseId } } )) ;
+                        item.url = "/" + $("#cityPinYin").val() + "/esf/" + item.encryptHouseId + ".html"+"?storeId="+$("#storeId").val() ;
+                        $(".tabs-frame.esf-items .list-container").append(self.createEsf(item)) ;
+                    })
+                }else {
+                    $('.nodata-store').show()
+                }
+            }
+        });
         /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
         载入组件逻辑
         -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/ 
@@ -138,13 +157,53 @@ class IndexController extends Controller{
             callback : function(data) {
                 if( ! data.data) return ;          
                 $.each(data.data , (index , esf)=> {
-                    esf.url = "/shanghai/esf/" + esf.encryptHouseId + ".html?storeId="+$("#storeId").val() ;
+                    esf.url = "/"+$("#cityPinYin").val()+"/esf/" + esf.encryptHouseId + ".html?storeId="+$("#storeId").val() ;
                     $(".tabs-frame.esf-items .list-container").append(self.createEsf(esf)) ;
                 }) ;
             }
         }) ;
        
     } ;
+    /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+   定位服务
+   -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
+    getLocation(){
+        if( ! navigator.geolocation ) {
+            $.tips( "您的浏览器不支持定位地理位置" , 3 ) ;
+            return ;
+        }
+        let geoOpts = {
+            enableHighAccuracy : false ,   //表示是否高精度可用，为Boolean类型，默认为false，如果开启，响应时间会变慢，同时，在手机设备上会用掉更多的流量，也就是money了。
+            maximumAge : 0 , //表示应用程序的缓存时间。单位毫秒，默认是0，意味着每次请求都是立即去获取一个全新的对象内容。
+            timeout : 10 * 1000  //表示等待响应的最大时间，默认是0毫秒，表示无穷时间。
+        } ;
+        let  locationPo={
+            latitude:null,
+            longitude:null
+        };
+        navigator.geolocation.getCurrentPosition( (position) => {
+            locationPo.latitude = position.coords.latitude;
+            locationPo.longitude = position.coords.longitude;
+        }, ( error ) => {
+            switch(error.code) {
+                case error.PERMISSION_DENIED :  // 用户阻止了授权
+
+                    break ;
+                case error.POSITION_UNAVAILABLE :  //定位信息无效
+                    $.tips( "定位信息无效" , 3 ) ;
+                    break ;
+
+                case error.TIMEOUT :  //定位超时
+                    $.tips( "定位超时" , 3 ) ;
+                    break ;
+
+                case error.UNKNOWN_ERROR :  //其他不可预知的错误
+
+                    break ;
+            }
+        } , geoOpts );
+        return locationPo
+    }
 }
 /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
 类的初始化
