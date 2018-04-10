@@ -79,7 +79,12 @@
                 requestParams = opts.queryStringObject;
             }
         }
-        requestParams[opts.pageIndexKey] = $(container).children().size() ;
+        if(opts.itemClass){
+            requestParams[opts.pageIndexKey] = $(container).children(opts.itemClass).size() ;
+        }else{
+            requestParams[opts.pageIndexKey] = $(container).children().size() ;    
+        }
+        //requestParams[opts.pageIndexKey] = $(container).children().size() ;
         requestParams[opts.pageSizeKey] = opts.pageSize ;
 
         /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -241,5 +246,9 @@
         post请求在数组中深度序列化的问题   可以通过设置traditional 为true阻止深度序列化
         -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
         traditional: false,
+        /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+        每个元素的类
+        -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
+        itemClass: ""//比如.esf-item,.xf-item
     } ;
 })(jQuery) ;

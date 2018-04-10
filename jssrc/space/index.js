@@ -226,7 +226,11 @@ class IndexController extends Controller {
                 if( ! data.data) return ;
                 data.data.houseList.forEach((listItem,index)=> {
                     let listIt = listItem;
-                    listIt['url'] = `/${pinyin}/${type}/${ listItem.encryptHouseId}.html` ;
+                    if(type == "xf"){
+                        listIt['url'] = `/${pinyin}/${type}/${ listItem.encryptHouseId}.html`;
+                    }else {
+                        listIt['url'] = `/${pinyin}/${type}/${ listItem.encryptHouseId}.html?agentId=`+ $("#agentId").val();
+                    }
                     $(`.${type}-frame`).append(self.creatRent(type,listIt)) ;
                 }) ;
             }
