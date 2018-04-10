@@ -54,7 +54,8 @@ class Controller {
             } ,            
             "store" : {
                 "agent" : this.apiPrefix + "api/store/index/agent" ,
-                "house" : this.apiPrefix + "api/store/index/house"
+                "house" : this.apiPrefix + "api/store/index/house",
+                "wxmpStore":this.apiPrefix +"api/store/index/wxmpStore" //根据门店id获取经纬度
             } ,
             "community" : {
                 "chart" : this.apiPrefix + "api/community/detail/chart"
