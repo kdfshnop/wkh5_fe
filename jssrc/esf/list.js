@@ -88,6 +88,9 @@ class ListController extends Controller {
                     delete self.param.sli;// 地铁线id
                     delete self.param.sst;// 地铁站id
                     delete self.param.sid;// 小区id
+                    delete self.param.lat;
+                    delete self.param.lon;
+                    delete self.param.m;
                     var mapping = ["","sdi","sto","sli","sst","sid"];
                     var key = mapping[data.type];
                     if(key){
@@ -267,6 +270,7 @@ class ListController extends Controller {
         //二手房
         $("#list").pullload({
             apiUrl : self.apiUrl.esf.list.houselist ,
+            itemClass: ".esf-item",
             queryStringObject : function(){
                 self.param && delete self.param.pa;
                 if(!self.param){
