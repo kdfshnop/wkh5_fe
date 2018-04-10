@@ -712,6 +712,7 @@ class ListController extends Controller {
     -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
     choseFun(conditionObject) {
         let self = this;
+        let scrollTop = $(window).scrollTop();
         /* 检索选择点击事件*/
         $('.rent-list > ul > li').click(function () {
             $(this).siblings().removeClass('active-color-top');
@@ -730,13 +731,14 @@ class ListController extends Controller {
             let list = $('.rent-list > ul > li > span');  // 获取检索当中的span标签   后面判断指向 （根据class判断指向）
             $('.bac').hide();
              $('body').removeClass('noscroll');
-             let scrollTop = $(window).scrollTop();
-             console.log(scrollTop);
+            $(window).scrollTop(scrollTop);
             list.each(function (index, item) {   //根据span标签的样式指向判断底部罩层是否显示
                 if (item.classList.length == 1) {
+                    scrollTop = $(window).scrollTop();
                     $('.bac').show();
                     $('body').addClass('noscroll');
-                    $(window).scrollTop(scrollTop)
+                    console.log('dasjh'+scrollTop);
+                  /*  $(window).scrollTop(scrollTop)*/
                 }
             });
             let indexP = $(this).index();
@@ -830,6 +832,7 @@ class ListController extends Controller {
             $('.slide-right').animate({right:'-50%'}).hide();
             $('.sort-chose').hide();
             $('body').removeClass('noscroll');
+            $(window).scrollTop(scrollTop)
         });
         /*更多模块的重置搜索*/
         $('#cancelMore').click(function () {
