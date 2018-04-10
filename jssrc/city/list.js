@@ -11,14 +11,6 @@ class cityListController extends Controller {
         /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
         根据定位是否成功显示或隐藏定位的信息
         -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
-        if($.cookie('location_cityName')){
-            $('.location').html( $.cookie('location_cityName'));
-        }else {
-            $('.location').html( "定位失败");
-        }
-        if ($.cookie('location_deniedName')){
-            $('.location').html( $.cookie('location_deniedName'));
-        }
         if ($.cookie('locationLatitude') && $.cookie('locationLongitude')){
                 this.request(this.apiUrl.common.getCityByLatLon, { "latitude" : $.cookie('locationLatitude') , "longitude" : $.cookie('locationLongitude') } ,{
                     successCallback(data){
@@ -26,6 +18,15 @@ class cityListController extends Controller {
                         $('.location').html( city.cityName);
                     }
                 })
+        }else {
+            if($.cookie('location_cityName')){
+                $('.location').html( $.cookie('location_cityName'));
+            }else {
+                $('.location').html( "定位失败");
+            }
+            if ($.cookie('location_deniedName')){
+                $('.location').html( $.cookie('location_deniedName'));
+            }
         }
         /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
         动态渲染高度 和头部的置顶
