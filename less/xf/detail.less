@@ -428,3 +428,74 @@
     background-color : #4081d6 ;
     width : 100% ;
 }
+
+/*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+点击优惠弹出的图层
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
+.activity-pop {
+    background-color : #fff ;
+    display : none ;
+    height : 100% ;
+    left : 0 ;
+    padding : 50px 30px ;
+    position : fixed ;
+    top : 0 ;
+    width : 100% ;
+    z-index : 20000 ;
+    h2 {
+        font-weight : 400 ;
+        font-size : 1.6rem ;
+        line-height : 60px ;
+        margin-top : 50px ;
+        text-align : center ;
+    }
+    ul {
+        height : 50% ;
+        overflow-y : auto ;
+        li {
+            .clearfix() ;            
+            span {
+                background-color : #f35704 ;
+                .border-radius(50%) ;
+                color : #fff ;
+                display : block ;
+                float : left ;
+                font-size : 1.2rem ;
+                height : 20px ;
+                line-height : 20px ;
+                text-align : center ;
+                width : 20px ;
+            }
+            h3 {
+                font-weight : 400 ;
+                font-size : 1.4rem ;
+                margin-left : 30px ;
+            }
+            p {
+                font-size : 1.4rem ;
+                margin : 10px 0 10px 30px ;
+            }
+            hr {
+                margin : 0 0 10px 30px ;
+            }
+        }
+    }
+    .close {
+        margin-top : 50px ;
+        text-align : center ;
+        span {
+            border : 1px solid #ccc ;
+            .border-radius(50%) ;
+            display : inline-block ;
+            height : 60px ;
+            line-height : 60px ;
+            text-align : center ;
+            width : 60px ;
+            i {            
+                color : #999 ;
+                font-size : 2.5rem ;
+                font-weight : 200 ;
+            }
+        }        
+    }
+}
