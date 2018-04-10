@@ -164,7 +164,7 @@ class IndexController extends Controller{
                 if (result.data && result.data.length >0){
                     result.data.forEach((item,index)=>{
                         item.bigDataParams = encodeURIComponent(JSON.stringify( { "eventName" : 1222001 , "eventParam" : { "store_id" : $("#storeId").val() , "house_id" : item.houseId } } )) ;
-                        item.url = "/" + $("#cityPinYin").val() + "/esf/" + item.encryptHouseId + ".html"+"?storeId="+$("#storeId").val() ;
+                        item.url = "/" + $("#cityPinYin").val() + "/esf/" + item.encryptHouseId + ".html?storeId="+$("#storeId").val() ;
                         $(".tabs-frame.esf-items .list-container").append(self.createEsf(item)) ;
                     })
                 }else {
