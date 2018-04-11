@@ -141,9 +141,6 @@ class DetailController extends Controller {
         }
         minPrice =  minPrice < 0 ? 0:minPrice;
         let colorChang = (minPrice-avgPrice > 0  ||  minPrice == 0)? '#979797':'#fff';
-        console.log(minPrice);
-        console.log(avgPrice);
-        console.log(minPrice-avgPrice >= 0);
         let myChart = echarts.init(document.getElementById('main'),{ width: '88%' });
         let that = this;
         // 给折线图dome增加埋点

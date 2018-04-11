@@ -223,6 +223,7 @@ class ListController extends Controller {
                             $('#dic > p').html(dataAreasName);
                             let dataAreasDiObj =  that.parseCondition({condition:dataAreasDi});  // 转换成对象
                             $.extend(conditionObject,dataAreasDiObj); // 合并对象
+                            delete(conditionObject['ne']);  // 删除附近
                             delete(conditionObject['to']);  // 删除town的对象
                             let conditionString = that.objectToString(conditionObject); // 转换成字符串
                             console.log(conditionString);
@@ -242,6 +243,7 @@ class ListController extends Controller {
                         } else {
                             $('#dic > p').html(dataTownName);
                             let areasTownString = dataAreasDi + '-' + dataTownTo;  // 字符串链接
+                            delete(conditionObject['ne']);  // 删除附近
                             let areasTownObj = that.parseCondition({condition: areasTownString}); // 转换成对象
                             $.extend(conditionObject, areasTownObj);   // 合并对象
                             let conditionString = that.objectToString(conditionObject); // 转换成字符串
@@ -343,6 +345,7 @@ class ListController extends Controller {
                         let dataStationName = $(this).html();  // 获取中文地铁站点名称
                         delete(conditionObject['di']);  // 删除areas的对象
                         delete(conditionObject['to']);  // 删除town的对象
+                        delete(conditionObject['ne']);  // 删除附近
                         if ($(this).html() == "不限") {
                             $('#dic > p').html(dataLineName);  // 判断赋值给检索title
                             let dataLineLiObj = that.parseCondition({condition: dataLineLi}); // 转换成对象
