@@ -31,6 +31,9 @@ header {
         left: 1.5rem;    
         font-size: 1.5rem;            
     }
+  >span{
+    color: #000;
+  }
 }
 .highlight {
   padding-top: 1rem;
@@ -83,6 +86,7 @@ header {
           line-height: 1.6rem;
           display: inline-block;
           margin-left: 0.4rem;
+          vertical-align: baseline;
         }
         >a{
           font-size: 1.4rem;
@@ -109,7 +113,7 @@ header {
         font-size: 1.8rem;
         color: @primary-color;
         line-height: 2rem;
-        margin-top: 0.5rem;
+        margin-top: 0.8rem;
       }
     }
   }
@@ -232,4 +236,10 @@ header {
         background-color : #fff ;
         flex : 1 ;
     }
+}
+.assistant{
+  box-shadow: 0 -2px 6px 0 rgba(0,0,0,0.10);
+  &:before{
+    content: none;
+  }
 }
