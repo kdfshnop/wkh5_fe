@@ -82,6 +82,7 @@ define(function(){
                     localStorage.setItem("searchHistory",JSON.stringify(saveLocalStorage));
                     delete (conditionObject['di']); delete (conditionObject['to']);
                     delete (conditionObject['li']); delete (conditionObject['st']);
+                    delete(conditionObject['ne']);  // 删除附近
                     let conditionString = that.objectToString(conditionObject); // 转换成字符串
                     let valueSearch = $(this).attr('data-value');
                     let typeS = $(this).attr('data-type');
@@ -158,6 +159,7 @@ define(function(){
                             localStorage.setItem("searchHistory",JSON.stringify(saveLocal));
                             delete (conditionObject['di']); delete (conditionObject['to']);
                             delete (conditionObject['li']); delete (conditionObject['st']);
+                            delete(conditionObject['ne']);  // 删除附近
                             let conditionString = that.objectToString(conditionObject); // 转换成字符串
                             valueSearch = $(this).attr('data-value');
                             let typeS = $(this).attr('data-type');
@@ -181,6 +183,7 @@ define(function(){
                         localStorage.setItem("searchHistory",JSON.stringify(saveLocal));
                         delete (conditionObject['di']); delete (conditionObject['to']);
                         delete (conditionObject['li']); delete (conditionObject['st']);
+                        delete(conditionObject['ne']);  // 删除附近
                         let conditionString = that.objectToString(conditionObject); // 转换成字符串
                         valueSearch = $('#showResult>li:eq(0)').attr('data-value');
                         let typeS = $('#showResult>li:eq(0)').attr('data-type');

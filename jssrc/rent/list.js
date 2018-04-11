@@ -49,22 +49,25 @@ class ListController extends Controller {
         cityid = ($.cookie('cityId') ?  $.cookie('cityId') : 43);  // 取cityId 默认为上海
         let url =  location.href.slice(0,location.href.lastIndexOf('/')+1);
         let conditionQuery = location.href.slice(location.href.lastIndexOf('/')+1,location.href.length);
+        let conditionPath = location.pathname.slice(location.pathname.lastIndexOf('/')+1,location.pathname.length);
         let condition ='';  // condition字符串
 
         let queryString = '';// ?后面的参数
         let areasLineSting ='';  // ?后面参数 区域用到互斥
         let  conditionstr = "la-0"; // 默认的 condition 参数
-        if (conditionQuery == "") { // 判断路由后面的参数值  /rent , /rent/
+        if (conditionPath == "") { // 判断路由后面的参数值  /rent , /rent/
             url = url
-        } else if (conditionQuery == "rent"){
+        } else if (conditionPath == "rent"){
             url = url+"rent/";
-            conditionQuery = "";
+            conditionQuery = conditionQuery.slice(conditionQuery.indexOf('?'));
         }
         if (conditionQuery.indexOf('?') < 0) {  // ?后面没有参数的赋值
             condition = conditionQuery;
+            console.log(condition+"meiyou?")
         }else {   // ?后面有参数的赋值
             condition = conditionQuery.slice(0,conditionQuery.indexOf('?'));
             queryString = conditionQuery.slice(conditionQuery.indexOf('?'));
+           /* console.log(queryString+"231231");*/
             let queryObj = this.GetRequest();
             if (queryObj['districtId']){  // 查询？后面参数产出  后面区域板块用到（需要互斥）
                 delete (queryObj['districtId'])
@@ -128,6 +131,8 @@ class ListController extends Controller {
                         });
                         $('#dic').find('i').addClass('bacchosed');
                         $('#dic').addClass('chosed')
+                    }else if (conditionObject["ne"]){
+                        $('.location-name').addClass('areas-subway')
                     }else {
                          dicAreas = "<li class='areas-subway'>不限</li>";
                          dataDic.forEach(function (item) {   // 循环渲染城市
@@ -223,6 +228,7 @@ class ListController extends Controller {
                             $('#dic > p').html(dataAreasName);
                             let dataAreasDiObj =  that.parseCondition({condition:dataAreasDi});  // 转换成对象
                             $.extend(conditionObject,dataAreasDiObj); // 合并对象
+                            delete(conditionObject['ne']);  // 删除附近
                             delete(conditionObject['to']);  // 删除town的对象
                             let conditionString = that.objectToString(conditionObject); // 转换成字符串
                             console.log(conditionString);
@@ -242,10 +248,12 @@ class ListController extends Controller {
                         } else {
                             $('#dic > p').html(dataTownName);
                             let areasTownString = dataAreasDi + '-' + dataTownTo;  // 字符串链接
+                            delete(conditionObject['ne']);  // 删除附近
                             let areasTownObj = that.parseCondition({condition: areasTownString}); // 转换成对象
                             $.extend(conditionObject, areasTownObj);   // 合并对象
                             let conditionString = that.objectToString(conditionObject); // 转换成字符串
                             console.log(conditionString);
+                            /*console.log(url + conditionString + areasLineSting)*/
                             window.location.href = url + conditionString + areasLineSting;  // 跳转的URL
                         }
                         $('.bac').hide();
@@ -343,6 +351,7 @@ class ListController extends Controller {
                         let dataStationName = $(this).html();  // 获取中文地铁站点名称
                         delete(conditionObject['di']);  // 删除areas的对象
                         delete(conditionObject['to']);  // 删除town的对象
+                        delete(conditionObject['ne']);  // 删除附近
                         if ($(this).html() == "不限") {
                             $('#dic > p').html(dataLineName);  // 判断赋值给检索title
                             let dataLineLiObj = that.parseCondition({condition: dataLineLi}); // 转换成对象
@@ -1240,8 +1249,8 @@ class ListController extends Controller {
             }
             if (conditionObj['ne']) { // 附近
                 conditionData["endMetres"] = conditionObj['ne'];
-                conditionData["localLon"] = $.cookies('location_longitude');
-                conditionData["localLat"] = $.cookies('location_latitude');
+                conditionData["localLon"] = $.cookie('location_longitude');
+                conditionData["localLat"] = $.cookie('location_latitude');
             }
             if (conditionObj['er']) { // 租赁方式 整租
                 conditionData["isEntire"] = conditionObj['er'];
