@@ -205,7 +205,7 @@ class Controller {
                     $.modal({
                         "id" : "callAgentModal" ,
                         "title" : "<img src=\"" + $(".assistant .portrait .left img").attr("src") + "\">" ,
-                        "content" : "<p><span class=\"name\">" + $(".assistant .portrait .right .name").html() + "</span> <span class=\"company\">" + $(".assistant .portrait .right .company-name").html() + "</span></p><p class=\"tel\">" + result.data.dial + " 转 " + result.data.digits + "</p><p class=\"memo\">为了保护您的隐私， 已为您隐藏手机号码您可安心拨打</p>" ,
+                        "content" : "<p><span class=\"name\">" + $(".assistant .portrait .right .name").html() + "</span> <span class=\"company\">" + $(".assistant .portrait .right .company-name").html() + "</span></p><p class=\"tel\">" + result.data.dial + " 转 " + result.data.digits + "</p><p class=\"memo\">为了保护您的隐私， 已为您隐藏手机号码<br>您可安心拨打</p>" ,
                         "buttons" : [
                             { "text" : "取消"  , "clickCallback" : () => { $.modal.close("callAgentModal") ; } } ,
                             { 
