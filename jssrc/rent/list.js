@@ -48,12 +48,13 @@ class ListController extends Controller {
         localStorage.cookieId = $.cookie('cookieId');
         cityid = ($.cookie('cityId') ?  $.cookie('cityId') : 43);  // 取cityId 默认为上海
         let url =  location.href.slice(0,location.href.lastIndexOf('/')+1);
-        let conditionQuery = location.href.slice(location.href.lastIndexOf('/')+1,location.href.length);
+        let conditionQuery = location.pathname.slice(location.pathname.lastIndexOf('/')+1,location.pathname.length);
         let condition ='';  // condition字符串
 
         let queryString = '';// ?后面的参数
         let areasLineSting ='';  // ?后面参数 区域用到互斥
         let  conditionstr = "la-0"; // 默认的 condition 参数
+        console.log(conditionQuery);
         if (conditionQuery == "") { // 判断路由后面的参数值  /rent , /rent/
             url = url
         } else if (conditionQuery == "rent"){
@@ -128,6 +129,8 @@ class ListController extends Controller {
                         });
                         $('#dic').find('i').addClass('bacchosed');
                         $('#dic').addClass('chosed')
+                    }else if (conditionObject["ne"]){
+                        $('.location-name').addClass('areas-subway')
                     }else {
                          dicAreas = "<li class='areas-subway'>不限</li>";
                          dataDic.forEach(function (item) {   // 循环渲染城市
@@ -248,6 +251,7 @@ class ListController extends Controller {
                             $.extend(conditionObject, areasTownObj);   // 合并对象
                             let conditionString = that.objectToString(conditionObject); // 转换成字符串
                             console.log(conditionString);
+                            /*console.log(url + conditionString + areasLineSting)*/
                             window.location.href = url + conditionString + areasLineSting;  // 跳转的URL
                         }
                         $('.bac').hide();
