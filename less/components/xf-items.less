@@ -31,6 +31,12 @@
       left: 0;
       width: 100%;
     }
+
+    &.remove-baseline {// 隐藏底部的线
+      &::after {
+        display: none;
+      }
+    }
   
     // 左边图片
     .img {
@@ -73,10 +79,11 @@
         left: 0;
         right: 0;
         bottom: 0;
-        padding-left: 3px;
-        height: 12px;
-        line-height: 12px;
-        background: rgba(0,0,0,.4);      
+        // padding-left: 3px;
+        height: 14px;
+        line-height: 14px;
+        background: rgba(0,0,0,.4);  
+        text-align: center;    
   
         &:empty {
           display: none;
@@ -102,6 +109,7 @@
         font-size: 11px;
         line-height: 28px;
         height: 28px;
+        margin-top: -4px;
         .text-ellipsis();
   
         &:empty::after{
@@ -166,6 +174,13 @@
         // 单价金额
         span:first-child {
           font-weight: bolder;
+          &.normal {
+            font-weight: lighter;
+          }
+        }
+
+        span:last-child {
+          font-weight: lighter;
         }
       }
     }
