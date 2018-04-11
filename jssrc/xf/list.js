@@ -158,7 +158,7 @@
                     <ul class="tags">'
                 + (item.hasActivity =='1' && '<li class="yh">有优惠</li>' || "") + (item.isSubwayEstate == '1'&&'<li class="dt">近地铁</li>'||'') + (item.isOnSale == '1' && item.isSoonOpen != '2' &&'<li>在售楼盘</li>'||'<li>即将开盘</li>') + (item.hasVideo == '1' &&'<li>有视频</li>'||'') +
                     '</ul>\
-                    <p class="unit-price"><span>'+(item.avgPriceWou!='0'?item.avgPriceWou:'价格待定')+'</span> '+ (item.avgPriceWou!='0' && '<span>元/m²</span>' || '') +'</p>\
+                    <p class="unit-price"><span'+(item.avgPriceWou=="0"&&" class='normal'"||'' )+'>'+(item.avgPriceWou!='0'?item.avgPriceWou:'价格待定')+'</span> '+ (item.avgPriceWou!='0' && '<span>元/m²</span>' || '') +'</p>\
                 </div>\
             </a>';
         });
@@ -222,7 +222,7 @@
                     <h3>'+cityName+'房价涨了还是跌了？</h3>\
                     <span class="detail">去看看</span>\
                 </div>\
-            </a>').insertAfter($($list[9]));
+            </a>').insertAfter($($list[9]).addClass('remove-baseline'));
         }
         if(oldBusiness && $('#list .scene.house').length == 0 && $list.length>19){
             $('<a data-bigdata="'+encodeURIComponent(JSON.stringify({eventName: "1050057", eventParam: {city_id: cityId}}))+'" href="/'+cityPinyin+'/esf/'+(channel? "?channel=" + channel:"")+'" class="scene house">\
@@ -231,7 +231,7 @@
                     <h3>火爆高性价比二手房</h3>\
                     <span class="detail">去看看</span>\
                 </div>\
-            </a>').insertAfter($list[19]);
+            </a>').insertAfter($($list[19]).addClass('remove-baseline'));
         }
     }
 

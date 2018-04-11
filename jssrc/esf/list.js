@@ -248,16 +248,16 @@ class ListController extends Controller {
                     <h3>'+cityName+'房价涨了还是跌了？</h3>\
                     <span class="detail">去看看</span>\
                 </div>\
-            </a>').insertAfter($($list[9]));
+            </a>').insertAfter($($list[9]).addClass('remove-baseline'));
         }
-        if(newBusiness && $('#list .scene.house').length == 0 && $list.length>19){
-            $('<a data-bigdata="'+encodeURIComponent(JSON.stringify({eventName: "1068075", eventParam:{city_id: cityId}}))+'" href="/'+cityPinyin+'/xflist/'+(channel?"?channel="+channel:"")+'" class="scene house">\
+        if(newBusiness && $('#list .scene.new-house').length == 0 && $list.length>19){
+            $('<a data-bigdata="'+encodeURIComponent(JSON.stringify({eventName: "1068075", eventParam:{city_id: cityId}}))+'" href="/'+cityPinyin+'/xflist/'+(channel?"?channel="+channel:"")+'" class="scene new-house">\
                 <div class="img"></div>\
                 <div class="info">\
                     <h3>火爆高性价比新房</h3>\
                     <span class="detail">去看看</span>\
                 </div>\
-            </a>').insertAfter($list[19]);
+            </a>').insertAfter($($list[19]).addClass('remove-baseline'));
         }
     }
 
