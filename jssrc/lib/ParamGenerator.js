@@ -142,7 +142,7 @@ ParamGenerator.convert2FilterParam = function(obj){
         ta: ParamGenerator.createMappingFunc(2, "houseTypes.features"),        
         ty: ParamGenerator.createMappingFunc(2, "houseTypes.propertyTypes"),
         ht: ParamGenerator.createMappingFunc(2, "houseTypes.houseTypes"),        
-        ht: ParamGenerator.createMappingFunc(2, "houseTypes.decorations"),
+        dt: ParamGenerator.createMappingFunc(2, "houseTypes.decorations"),
         ag: ParamGenerator.createMappingFunc(2, "houseTypes.houseAges"),
         ar: ParamGenerator.createMappingFunc(2, "houseTypes.ares"),  
         lon: ParamGenerator.createMappingFunc(1, "longitude"),

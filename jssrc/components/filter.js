@@ -514,16 +514,16 @@ define([],function(){
         var self = this;
         
         // 监听页面滚动，适时的调整filter和列表的样式
-        $(window).on('scroll.filter', function(event){            
-            var top = $(window).scrollTop();
-            if(top>42){
-                $('.filter').addClass('fixed');
-                $('#list').addClass('has-margin');// 好尴尬，这里竟然硬编码了列表的id
-            }else{
-                $('.filter').removeClass('fixed');
-                $('#list').removeClass('has-margin');
-            }
-        });
+        // $(window).on('scroll.filter', function(event){            
+        //     var top = $(window).scrollTop();
+        //     if(top>42){
+        //         $('.filter').addClass('fixed');
+        //         $('#list').addClass('has-margin');// 好尴尬，这里竟然硬编码了列表的id
+        //     }else{
+        //         $('.filter').removeClass('fixed');
+        //         $('#list').removeClass('has-margin');
+        //     }
+        // });
 
         // 关闭筛选弹层
         function hide(){            
@@ -612,14 +612,7 @@ define([],function(){
             self.$maxPrice.val('');
             delete self.result.price;
             calcCondition.apply(self);
-        });
-
-        // 点击总价中输入框
-        // $('.filter .total-price input').click(function(e){
-        //     alert("click input...");
-        //     $(this).focus();
-        //     e.stopPropagation();
-        // });
+        });        
 
         // 自定义价格区间确定按钮
         $('.filter .total-price button').click(function(){
@@ -681,7 +674,6 @@ define([],function(){
         // 户型中重置和确定按钮
         self.$houseTypeResetBtn.click(function(){
             self.$houseType.find('.house-type-section li:not(.placeholder)').removeClass('active');
-            //$('.filter .house-type-section li:not(.placeholder)').removeClass('active');
         });
         self.$houseTypeConfirmBtn.click(function(){
             if(self.$houseType.find('.active').length > 0){
@@ -946,14 +938,10 @@ define([],function(){
         this.$priceConfirmBtn = this.$price.find('button');
         this.$houseTypeResetBtn = this.$houseType.find('.reset');
         this.$houseTypeConfirmBtn = this.$houseType.find('.confirm');
-
         
-        //this.result = {};
-        //this.initValue = this.$el.data('init');//不从dom节点上读了，这样加大了node端对条件的解析，filter本身直接读取url，分析
 
         //--- 读取url 并分析初始条件-----------------
         this.initValue = {};
-        //var pageUrl = location.href;
         var pageUrl = location.origin + location.pathname;
         pageUrl = pageUrl.replace('//','');
         var tmpArr = pageUrl.split('/');
@@ -963,14 +951,8 @@ define([],function(){
                 this.initValue = ParamGenerator.convert2FilterParam(obj);
             }
         }
-
         //--- end-----------------------------------
 
-        // if(this.initValue){
-        //     this.initValue = JSON.parse(decodeURIComponent(this.initValue));
-        // }else{
-        //     this.initValue = {};
-        // }
         if(this.$el.length == 0) {
             throw "挂载点不存在";
         }
@@ -986,9 +968,7 @@ define([],function(){
                 setMaxHeight.apply(this);
             });
             
-        }        
-
-        // new $.Drag({elem: ".total-price ul"});
+        }                
     }
 
     function Filter(options) {                
@@ -1064,13 +1044,7 @@ define([],function(){
             this.$districtLabel.text('区域').parent().removeClass('active');
             this.$district.show();
             this.$metro.hide();
-            this.$districtMetro.find('>ul li:eq(0)').addClass('active');
-            // delete this.result.district;
-            // delete this.result.districtPinyin;
-            // delete this.result.town;
-            // delete this.result.metro;
-            // delete this.result.metroKey;
-            // delete this.result.station;
+            this.$districtMetro.find('>ul li:eq(0)').addClass('active');            
         }
         if(str){// 设置选中区域或地铁站到区域内容中
             this.$districtLabel.text(str).parent().addClass('active');
@@ -1132,8 +1106,7 @@ define([],function(){
                 this.$sortLabel.text(str).parent().addClass('active');
             }
             this.result.sort = value.sort;
-        }else{
-            //delete this.result.sort;
+        }else{            
             this.$sort.find('li').removeClass('active');
             this.$sortLabel.text('排序').parent().removeClass('active');
         }
@@ -1144,8 +1117,7 @@ define([],function(){
         }
         if(value.latitude){
             this.options.latitude = value.latitude;
-        }
-        //this.result = value || {};
+        }        
     }
 
     Filter.prototype.clear = function() {
