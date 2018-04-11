@@ -65,9 +65,11 @@ class IndexController extends Controller{
         this.addEventListener() ;
 
         $('.goEsf').click(function () {
-            $.cookie('selectedCityPinyin',$("#cityPinYin").val(),{path: '/',});
-            $.cookie('selectedCityId',$("#cityId").val(),{path: '/',});
-            $.cookie('selectedCityName',$("#cityName").val(),{path: '/',});
+            if($("#cityPinYin").val() &&  $("#cityId").val() && $("#cityName").val()){
+                $.cookie('selectedCityPinyin',$("#cityPinYin").val(),{path: '/',});
+                $.cookie('selectedCityId',$("#cityId").val(),{path: '/',});
+                $.cookie('selectedCityName',$("#cityName").val(),{path: '/',});
+            }
             if ($(this).attr('data-href')){
                 window.location.href= $(this).attr('data-href')
             }
