@@ -27,9 +27,9 @@
         require([ '../components/album.min','../components/bigdata.min', '../components/preview-image.min'],function(album, BigData, PreviewImage){        
             BigData.init(self) ;
             BigData.bigData({
-                pageName: '1204',
+                pageName: '1227',
                 pageParam: {
-                    rent_house_id: $('#houseId').val()
+                    new_house_id: $('#houseId').val()
                 },
                 channel:self.GetRequest()['channel'] || "",
                 type: 1
