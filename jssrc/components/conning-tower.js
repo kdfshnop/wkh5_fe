@@ -561,7 +561,7 @@
         -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
         if( $.cookie("selectedCityPinyin")) {            
             if( $.cookie("selectedCityPinyin") != this.consts.visitedCityPinyin ) {
-                //alert("定位失败！而且用户选择过跟当前不同的城市，将要跳转到用户选择的城市...") ;
+                //alert("定位失败！而且用户选择过跟当前不同的城市，将要跳转到用户选择的城市..." + this.combineUrl($.cookie("selectedCityPinyin")) ) ;
                 window.location.href = this.combineUrl($.cookie("selectedCityPinyin")) ;
             }
         }
