@@ -48,18 +48,18 @@ class ListController extends Controller {
         localStorage.cookieId = $.cookie('cookieId');
         cityid = ($.cookie('cityId') ?  $.cookie('cityId') : 43);  // 取cityId 默认为上海
         let url =  location.href.slice(0,location.href.lastIndexOf('/')+1);
-        let conditionQuery = location.pathname.slice(location.pathname.lastIndexOf('/')+1,location.pathname.length);
+        let conditionQuery = location.href.slice(location.href.lastIndexOf('/')+1,location.href.length);
+        let conditionPath = location.pathname.slice(location.pathname.lastIndexOf('/')+1,location.pathname.length);
         let condition ='';  // condition字符串
 
         let queryString = '';// ?后面的参数
         let areasLineSting ='';  // ?后面参数 区域用到互斥
         let  conditionstr = "la-0"; // 默认的 condition 参数
-        console.log(conditionQuery);
-        if (conditionQuery == "") { // 判断路由后面的参数值  /rent , /rent/
+        if (conditionPath == "") { // 判断路由后面的参数值  /rent , /rent/
             url = url
-        } else if (conditionQuery == "rent"){
+        } else if (conditionPath == "rent"){
             url = url+"rent/";
-            conditionQuery = "";
+            conditionQuery = conditionQuery.slice(conditionQuery.indexOf('?'));
         }
         if (conditionQuery.indexOf('?') < 0) {  // ?后面没有参数的赋值
             condition = conditionQuery;
