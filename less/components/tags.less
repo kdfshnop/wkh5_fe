@@ -18,9 +18,12 @@
       div {
             border : 1px solid #79a6e2 ;
             .border-radius(2px) ;
-            float : left ;       
+            float : left ;
+            .flex() ;
+            .justify-content(center) ;
+            .align-items(center) ;
             height : 15px ;
-            line-height : 100% ;
+            line-height : 13px ;
             margin : 0 5px 2px 0 ;
             padding : 2px 3px ;
             &.promotion {
@@ -33,7 +36,7 @@
                 background : linear-gradient(-90deg , #3B9FFF 0% , #4081D6 100%) ;
             }
             &.promotion ,  &.new , &.over {
-                border : none ;
+                border-color : transparent ;
                 span {
                     color : #fff ;
                 }
