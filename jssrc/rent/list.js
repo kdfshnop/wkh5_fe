@@ -67,7 +67,7 @@ class ListController extends Controller {
         }else {   // ?后面有参数的赋值
             condition = conditionQuery.slice(0,conditionQuery.indexOf('?'));
             queryString = conditionQuery.slice(conditionQuery.indexOf('?'));
-            console.log(queryString+"231231");
+           /* console.log(queryString+"231231");*/
             let queryObj = this.GetRequest();
             if (queryObj['districtId']){  // 查询？后面参数产出  后面区域板块用到（需要互斥）
                 delete (queryObj['districtId'])
