@@ -132,7 +132,11 @@ class ListController extends Controller {
                         $('#dic').find('i').addClass('bacchosed');
                         $('#dic').addClass('chosed')
                     }else if (conditionObject["ne"]){
-                        $('.location-name').addClass('areas-subway')
+                        $('.location-name').addClass('areas-subway');
+                        dicAreas = "<li>不限</li>";
+                        dataDic.forEach(function (item) {   // 循环渲染城市
+                            dicAreas += `<li data-id ="${item.id}" data-di="di-${item.id}">${item.name}</li>`
+                        });
                     }else {
                          dicAreas = "<li class='areas-subway'>不限</li>";
                          dataDic.forEach(function (item) {   // 循环渲染城市
