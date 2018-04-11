@@ -9,8 +9,12 @@
         var self = this;        
         this.paramGenerator = new ParamGenerator();
         setTimeout(function(){
-            $('.total').slideUp();// 隐藏查询总条数   
-        },3000);
+            $('.total').slideDown(function(){
+                setTimeout(function(){
+                    $('.total').slideUp();
+                },2000);
+            });// 隐藏查询总条数   
+        },100);
         
         
         /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -46,9 +50,7 @@
                     if(key){
                         self.param[key] = data.value;
                         self.goto();
-                    }
-                    // 跳转到新房详情
-                    //location.href = "/" + $('#visitedCityPinyin').val() + "/xf/";
+                    }                    
                 },
             }) ;
 
@@ -195,8 +197,7 @@
 
     showNoData(){// 显示没有数据，并显示新房楼盘推荐
         $('.no-data').show();
-        $('.total + div').html('');
-        $('.recommendation').show();// TODO:显示推荐楼盘
+        $('.total + div').html('');        
     }
 
     hideNoData(){
@@ -238,22 +239,10 @@
 
     }
 
-    // 金箍棒loading效果，现在第一屏用同步输出 ，已经用不到了，先保留，后续删掉
-    // showLoading(){
-    //     $('.page-loading').show();
-    // }
-
-    // hideLoading(){
-    //     $('.page-loading').hide();
-    // }
-
     // 上拉加载
     pullload(){
         let self = this ;
-        // var cityId = $.cookie("xfSelectedCityId");
-        // var cityPinyin = $.cookie("xfSelectedCityPinyin");
-        // var cityName = $.cookie("xfSelectedCityName");
-        
+
         //二手房
         $("#list").pullload({
             apiUrl : self.apiUrl.xf.list ,

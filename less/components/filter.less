@@ -7,13 +7,15 @@
  @import "../mixins.less";
 
 .filter {
-    &.fixed {
-        position: fixed;
-        top: 0;
-        width: 100%;
-    }
-    //position: fixed;
-    position: relative;
+    // &.fixed {
+    //     position: fixed;
+    //     top: 0;
+    //     width: 100%;
+    // }
+    position: fixed;
+    top: 41px;
+    width: 100%;
+    // position: relative;
     z-index: 2;    
     background-color: #fff;
     .filter-items {
@@ -368,8 +370,8 @@ html, body {
 }
 
 body {
-    -webkit-overflow-scrolling: touch;    
-    border-top: 1px solid transparent;
+    // -webkit-overflow-scrolling: touch;    
+    // border-top: 1px solid transparent;
 }
 
 .noscroll {
@@ -383,9 +385,9 @@ body {
     height: 100%;
     margin: 0;
     overflow: hidden;
-    .filter {
-        position: absolute;
-        width: 100%;
-        top: 0;
-    }    
+    // .filter {
+    //     position: absolute;
+    //     width: 100%;
+    //     top: 0;
+    // }    
 }

@@ -12,8 +12,12 @@ class ListController extends Controller {
         var self = this;        
         this.paramGenerator = new ParamGenerator();
         setTimeout(function(){
-            $('.total').slideUp();// 隐藏查询总条数   
-        },3000);   
+            $('.total').slideDown(function(){
+                setTimeout(function(){
+                    $('.total').slideUp();
+                },2000);
+            });// 隐藏查询总条数   
+        },100);   
         
         /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
         图片懒加载实例化
