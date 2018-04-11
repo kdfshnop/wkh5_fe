@@ -136,7 +136,7 @@ class IndexController extends Controller {
                        </p>
                         ${distanceSubway}
                        <p class="tags">${houseTagList}</p>
-                       <p class="unit-price"> ${item.rentPriceStr} 元/月</p>
+                       <p class="unit-price"> <span>${item.rentPriceStr}</span> 元/月</p>
                    </div>
                </a>`;
         }else if(type == "esf"){
