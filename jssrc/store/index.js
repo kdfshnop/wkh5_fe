@@ -63,7 +63,14 @@ class IndexController extends Controller{
         给dom节点绑定事件
         -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
         this.addEventListener() ;
-
+        $('#goEsf').click(function () {
+            $.cookie('selectedCityPinyin',$("#cityPinYin").val(),{path: '/',});
+            $.cookie('selectedCityId',$("#cityId").val(),{path: '/',});
+            $.cookie('selectedCityName',$("#cityName").val(),{path: '/',});
+            if ($(this).attr('data-href')){
+                window.location.href= $(this).attr('data-href')
+            }
+        })
     }
     /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
     给dom节点绑定事件
