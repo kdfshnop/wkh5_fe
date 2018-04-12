@@ -151,6 +151,8 @@ class ListController extends Controller {
                             }
                         });
                         $('#town').empty().append(locationList);
+                        $('#dic').find('i').addClass('bacchosed');
+                        $('#dic').addClass('chosed')
                     }else {
                          dicAreas = "<li class='areas-subway'>不限</li>";
                          dataDic.forEach(function (item) {   // 循环渲染城市
