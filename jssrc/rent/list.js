@@ -137,6 +137,20 @@ class ListController extends Controller {
                         dataDic.forEach(function (item) {   // 循环渲染城市
                             dicAreas += `<li data-id ="${item.id}" data-di="di-${item.id}">${item.name}</li>`
                         });
+                        let locationData=["不限（智能范围)","500","1000","2000","5000"];
+                        let locationList='';
+                        locationData.forEach(function(item,index){
+                            if(index == 0){
+                                locationList = `<li data-ne='ne-5000'>${item}</li>`
+                            }else{
+                                if (conditionObject["ne"] == item){
+                                    locationList+=`<li class="chosed" data-ne="ne-${item}">${item}米</li>`
+                                }else {
+                                    locationList+=`<li data-ne="ne-${item}">${item}米</li>`
+                                }
+                            }
+                        });
+                        $('#town').empty().append(locationList);
                     }else {
                          dicAreas = "<li class='areas-subway'>不限</li>";
                          dataDic.forEach(function (item) {   // 循环渲染城市
@@ -164,6 +178,7 @@ class ListController extends Controller {
                             delete(conditionObject['to']);  // 删除town的对象
                             delete(conditionObject['li']);  // 删除地铁线路的对象
                             delete(conditionObject['st']);  // 删除地铁线路的对象
+                            delete(conditionObject['ne']);  // 删除附近
                             let conditionString = that.objectToString(conditionObject);
                             window.location.href = url + conditionString + areasLineSting;
                         }else if ($(this).attr("data-location") == "location"){
