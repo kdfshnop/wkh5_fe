@@ -1131,8 +1131,11 @@ class ListController extends Controller {
             hasVideo= `<span class="play"><i></i></span>`;
         }
         let distanceSubway = '';
+        let styleNo = '';
         if (item.distanceSubway != null){
             distanceSubway = `<p class="base-info">${item.distanceSubway}</p>`
+        }else {
+            styleNo=`style="margin-top: 0.75rem"`
         }
         let bigdata = encodeURIComponent(JSON.stringify({ eventName:'1202039',eventParam:{rent_house_id:item.houseId }, channel:channel || "", type: 2}));
         let domeRent=  `<a  class="rent-item box" href=" ${item.url}" data-bigdata="${bigdata}">
@@ -1147,7 +1150,7 @@ class ListController extends Controller {
                    ${item.houseTypeStr} ${item.spaceArea}㎡ | ${item.districtAndTownName}
                 </p>
                 ${distanceSubway}
-                <p class="tags">${houseTagList}</p>
+                <p class="tags" ${styleNo}>${houseTagList}</p>
                 <p class="unit-price"> <span>${item.rentPriceStr}</span> 元/月</p>
             </div>
         </a>`;
