@@ -296,19 +296,24 @@
         2. 接着执行接口方法
         3. 如果是当前城市就什么都不做，否则就然后直接跳转新城市
         -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
-        $(".city-selector .tabs-frame a").click((event) => {
-            let $handler = $(event.currentTarget) ;
-            if( ! $handler.attr("data-cityid")) return ;
-            $.cookie( "selectedCityId" , $handler.data("cityid") ,  { "path" : "/" } ) ; 
-            $.cookie( "selectedCityName" , $handler.text() ,  { "path" : "/" } ) ;
-            $.cookie( "selectedCityPinyin" , $handler.data("pinyin") ,  { "path" : "/" } ) ;
-            $.cookie( "selectedCityChina" , $handler.data("china") ,  { "path" : "/" } ) ;          
-            this.cityClick() ;
-            this.retractCitySelector() ;
-            if( $handler.data("cityid") != this.consts.visitedCityId ) window.location.href = this.combineUrl( $handler.data("pinyin") ) ;
+        $(".city-selector .tabs-frame a").click((event) => {            
+            this.swapCity($(event.currentTarget)) ;
         }) ;
      }
      /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+    对接口拿到的业务开通城市进行处理
+    -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
+    swapCity($handler) {
+        if( ! $handler.attr("data-cityid")) return ;        
+        $.cookie( "selectedCityId" , $handler.data("cityid") ,  { "path" : "/" } ) ; 
+        $.cookie( "selectedCityName" , $handler.text() ,  { "path" : "/" } ) ;
+        $.cookie( "selectedCityPinyin" , $handler.data("pinyin") ,  { "path" : "/" } ) ;
+        $.cookie( "selectedCityChina" , $handler.data("china") ,  { "path" : "/" } ) ;          
+        this.cityClick() ;
+        this.retractCitySelector() ;
+        if( $handler.data("cityid") != this.consts.visitedCityId ) window.location.href = this.combineUrl( $handler.data("pinyin") ) ;
+    }
+    /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
     对接口拿到的业务开通城市进行处理
     -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
     filterBusinessCity(data) {
@@ -412,7 +417,12 @@
                     /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
                     城市选择弹层定位城市改写
                     -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
-                    $(".city-selector .tabs-frame .location-city").replaceWith("<a class=\"location-city\" data-cityid=\"" + this.states.locationCityId + "\" data-pinyin=\"" + this.states.locationCityPinyin + "\" data-china=\"" + this.states.locationCityChina + "\">" + this.states.locationCityName + "</a>") ;
+                    let $locationCity = $(document.createElement("A")).addClass("location-city").attr("data-cityid" , this.states.locationCityId).attr("data-pinyin" , this.states.locationCityPinyin).attr("data-china" , this.states.locationCityChina).text(this.states.locationCityName) ;
+                    $locationCity.click((event) => {
+                        this.swapCity($(event.currentTarget)) ;
+                    }) ;
+                    //$(".city-selector .tabs-frame .location-city").replaceWith("<a class=\"location-city\" data-cityid=\"" + this.states.locationCityId + "\" data-pinyin=\"" + this.states.locationCityPinyin + "\" data-china=\"" + this.states.locationCityChina + "\">" + this.states.locationCityName + "</a>") ;
+                    $(".city-selector .tabs-frame .location-city").replaceWith($locationCity) ;
                     /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
                     如果用户没有选择城市并且定位到的城市不是当前路由城市才会跳转到定位城市
                     -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
