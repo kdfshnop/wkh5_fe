@@ -56,3 +56,25 @@
         width : 1px ;
      }
  }
+
+ .pixel-borders(@color, @border-radius : 1px){
+    position: relative;
+    border: none;
+
+    &:after{
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        border: 1px solid @color;
+        -webkit-box-sizing: border-box;
+        box-sizing: border-box;
+        width: 200%;
+        height: 200%;
+        -webkit-transform: scale(0.5);
+        transform: scale(0.5);
+        -webkit-transform-origin: left top;
+        transform-origin: left top;
+        .border-radius(@border-radius);
+      }
+ }
