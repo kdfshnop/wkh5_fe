@@ -143,12 +143,13 @@
           padding: 0 6px;
           padding-top: 1px;
           font-size: 10px;
-          line-height: 14px;
+          line-height: 16px;
           color: #79a6e2;
           border: 1px solid #79a6e2;
           .border-radius(2px);
           background-color: #fff;
           // margin-bottom: 2px;
+          
   
           &.yh {// 有优惠
             color: #fff;
@@ -156,6 +157,9 @@
             background: linear-gradient(90deg, #FA7A6B 0%, #FC4C5A 100%);
             line-height: 16px;
             border: none;
+            &:after {
+              display: none;
+            }
           }
   
           &.dt {// 近地铁
@@ -164,13 +168,16 @@
             background: linear-gradient(90deg, #3B9FFF 0%, #4081D6 100%);
             line-height: 16px;
             border: none;
+            &:after {
+              display: none;
+            }
           }
   
           & + li {
             margin-left: 5px;
-          }
+          }          
 
-          .pixel-borders(#79a6e2);
+          .pixel-borders(#79a6e2, 2px);
         }
       }
   

@@ -77,12 +77,21 @@
                     padding : 0 3px ;
                     &.promotion {
                         background : linear-gradient(90deg , #FBD059 0% , #FFB33C 99%) ;                        
+                        &::after {
+                            display: none;
+                        }
                     }
                     &.new {
                         background : linear-gradient(90deg , #FA7A6B 0% , #FC4C5A 100%) ;
+                        &::after {
+                            display: none;
+                        }
                     }
                     &.over {
                         background : linear-gradient(90deg , #3B9FFF 0% , #4081D6 100%) ;
+                        &::after {
+                            display: none;
+                        }
                     }
                     &.promotion ,  &.new , &.over {
                         border-color : transparent ;
@@ -96,6 +105,8 @@
                         font-size : 12px ;               
                         .scale(0.83 , 0.83) ;                                     
                     }
+
+                    .pixel-borders(#79a6e2, 2px);
                 }                
             }
             .money , .unit , .price {
