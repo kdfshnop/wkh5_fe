@@ -208,7 +208,8 @@ class DetailController extends Controller {
 
                     },
                     lineStyle: {
-                        color: ['#979797'] // y刻度颜色
+                        color: ['#979797'], // y刻度颜色
+                        width:1
                     }
                 },
                 axisTick: {show: false},// 去除y轴上的刻度线

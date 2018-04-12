@@ -27,7 +27,7 @@
         require([ '../components/album.min','../components/bigdata.min', '../components/preview-image.min'],function(album, BigData, PreviewImage){        
             BigData.init(self) ;
             BigData.bigData({
-                pageName: '1227',
+                pageName: '1045',
                 pageParam: {
                     new_house_id: $('#houseId').val()
                 },
