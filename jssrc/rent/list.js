@@ -131,7 +131,7 @@ class ListController extends Controller {
                         });
                         $('#dic').find('i').addClass('bacchosed');
                         $('#dic').addClass('chosed')
-                    }/*else if (conditionObject["ne"]){
+                    }else if (conditionObject["ne"]){
                         $('.location-name').addClass('areas-subway');
                         dicAreas = "<li>不限</li>";
                         dataDic.forEach(function (item) {   // 循环渲染城市
@@ -143,10 +143,15 @@ class ListController extends Controller {
                             if(index == 0){
                                 locationList = `<li data-ne='ne-5000'>${item}</li>`
                             }else{
-                                locationList+=`<li data-ne="ne-${item}">${item}米</li>`
+                                if (conditionObject["ne"] == item){
+                                    locationList+=`<li class="chosed" data-ne="ne-${item}">${item}米</li>`
+                                }else {
+                                    locationList+=`<li data-ne="ne-${item}">${item}米</li>`
+                                }
                             }
                         });
-                    }*/else {
+                        $('#town').empty().append(locationList);
+                    }else {
                          dicAreas = "<li class='areas-subway'>不限</li>";
                          dataDic.forEach(function (item) {   // 循环渲染城市
                                 dicAreas += `<li data-id ="${item.id}" data-di="di-${item.id}">${item.name}</li>`
