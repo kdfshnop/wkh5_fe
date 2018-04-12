@@ -57,7 +57,7 @@ class ListController extends Controller {
                 near: true,
                 filterChanged: function(result){                         
                     var param = self.paramGenerator.generateParamObj(result);
-                    if(param.di || param.to || param.li || param.st){
+                    if(param.di || param.to || param.li || param.st || result.DistrictAndMetroUnlimited){
                         // do nothing
                     }else{// 判断是否有sid,sli,sst,sdi,sto
                         var mapping = ["sdi","sto","sli","sst","sid"];
