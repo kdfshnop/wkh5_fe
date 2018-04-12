@@ -718,8 +718,13 @@ define([],function(){
                 delete self.result.districtPinyin;
                 delete self.result.metroKey;
                 hide();
+                /*
+                * 为了解决区域和地铁中选择了不限跟查询条件互斥的问题
+                */
+                self.result.DistrictAndMetroUnlimited = true; 
                 calcCondition.apply(self);    
-                self.$districtLabel.text("区域").parent().removeClass('active');           
+                self.$districtLabel.text("区域").parent().removeClass('active'); 
+                         
             }
 
             if(id && self.options.bigDataParams && self.options.bigDataParams.districtAndMetro && self.options.bigDataParams.districtAndMetro.clickDistrict){
@@ -745,8 +750,10 @@ define([],function(){
                 delete self.result.districtPinyin;
                 delete self.result.metroKey;
                 hide();
+                self.result.DistrictAndMetroUnlimited = true; 
                 calcCondition.apply(self);    
-                self.$districtLabel.text("区域").parent().removeClass('active');           
+                self.$districtLabel.text("区域").parent().removeClass('active');   
+                       
             }
 
             if(id && self.options.bigDataParams && self.options.bigDataParams.districtAndMetro && self.options.bigDataParams.districtAndMetro.clickMetro){

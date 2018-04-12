@@ -79,8 +79,8 @@
                 BigData: BigData,
                 filterChanged: function(result){   
                     var param = self.paramGenerator.generateParamObj(result);
-                    if(param.di || param.to || param.li || param.st || param.lat || param.lon){
-                        // do nothing
+                    if(param.di || param.to || param.li || param.st || param.lat || param.lon || result.DistrictAndMetroUnlimited){
+                        
                     }else{// 判断是否有sid,sli,sst,sdi,sto
                         var mapping = ["sdi","sto","sli","sst","sid"];
                         mapping.forEach(function(item){
