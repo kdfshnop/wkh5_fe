@@ -30,22 +30,15 @@
                 width : 100% ;
             }
             .play {
-                background-color : rgba( 0 , 0 , 0 , .3 ) ;
-                bottom : 5px ;
-                .border-radius(100px) ;
+                background-image : url(../../images/common/play.png) ;
+                background-size : 100% 100% ;
+                background-repeat : no-repeat ;
+                bottom : 5px ;                
                 display : block ;
-                height : 14px ;
-                line-height : 14px ;
+                height : 14px ;               
                 position : absolute ;
                 right : 5px ;
                 width : 14px ;
-                i {
-                    display : inline-block ;
-                    left : 1px ;             
-                    .triangle-next( 4px , #fff ) ;
-                    position : absolute ;
-                    top : 3px ;
-                }
             }
         }
         dd {            
@@ -57,6 +50,7 @@
                 line-height : 100% ;
                 & + dd {  //就是下面户型、面积、区域、板块这一行
                     color : #7c7c7c ;
+                    font-size : 11px ;
                     height : 21px ;
                     line-height : 21px ;
                 }
@@ -71,8 +65,7 @@
                     .flex() ;
                     .justify-content(center) ;
                     .align-items(center) ;
-                    height : 15px ;
-                    line-height : 13px ;       
+                    height : 15px ;                       
                     margin : 0 5px 2px 0 ;
                     padding : 0 3px ;
                     &.promotion {
@@ -107,6 +100,10 @@
             }
             .money {
                 font-weight : 600 ;
+            }
+            .price {
+                color : #7c7c7c ;
+                font-size : 11px ;
             }
             
         }
