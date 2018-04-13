@@ -839,6 +839,10 @@ class ListController extends Controller {
         $('.decoration > ul >li').click(function () {
             $(this).toggleClass('active-house');
         });
+        $('.rent-way > ul >li').click(function () {
+            $(this).siblings().removeClass('active-house');
+            $(this).toggleClass('active-house');
+        });
         /* 房型选择点击事件*/
         $('.house-list > ul > li').click(function () {
             let indexP = $(this).index();
@@ -886,11 +890,11 @@ class ListController extends Controller {
             $(`.house-list>ul>li:eq(0)`).addClass('active-house');
             $(`.house-list>ul>li:eq(0)`).siblings().removeClass('active-house')
         });
-        /*租赁方式的点击样式*/
+     /*   /!*租赁方式的点击样式*!/
         $('.rent-way > ul > li').click(function(){
             $(this).addClass('active-house');
             $(this).siblings().removeClass('active-house')
-        })
+        })*/
     }
 
     /*++-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
