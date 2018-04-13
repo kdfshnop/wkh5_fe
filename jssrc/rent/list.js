@@ -1156,7 +1156,7 @@ class ListController extends Controller {
         if (item.distanceSubway){
             distanceSubway = `<p class="base-info">${item.distanceSubway}</p>`
         }else {
-            styleNo=`style="margin-top: 12px"`
+            styleNo=`style=""`
         }
         let bigdata = encodeURIComponent(JSON.stringify({ eventName:'1202039',eventParam:{rent_house_id:item.houseId }, channel:channel || "", type: 2}));
         let domeRent=  `<a  class="rent-item box" href=" ${item.url}" data-bigdata="${bigdata}">
