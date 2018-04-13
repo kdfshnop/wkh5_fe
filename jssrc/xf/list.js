@@ -23,7 +23,7 @@
         $(".lazy").lazyload({ 
             "placeholder" : this.staticDomain + "/wkh5_fe/images/common/loading.jpg"
         }) ;
-        require(['../components/filter.min', '../components/bigdata.min', "../components/conning-tower.min"], function(Filter, BigData){   
+        require(['../components/filter.min', '../components/bigdata.min', "../components/conning-tower.min" , "./ads.min"], function(Filter, BigData){   
             BigData.init(self);         
             new ConningTower({                
                 "bigDataUtil" : BigData ,               
