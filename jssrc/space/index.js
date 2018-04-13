@@ -120,9 +120,12 @@ class IndexController extends Controller {
                    hasVideo= `<span class="play"><i></i></span>`;
                }
                let distanceSubway = '';
-               if (item.distanceSubway != null){
-                   distanceSubway = `<p class="base-info">${item.distanceSubway}</p>`
-               }
+            let styleNo = '';
+            if (item.distanceSubway){
+                distanceSubway = `<p class="base-info">${item.distanceSubway}</p>`
+            }else {
+                styleNo=`style="margin-top: 12px"`
+            }
                domeType=  `<a  class="rent-item box" href=" ${item.url}">
                    <div class="left">
                        <img src="${item.firstImageUrl}?x-oss-process=image/resize,w_120" alt="${ item.estateName} " class="lazy">
@@ -135,7 +138,7 @@ class IndexController extends Controller {
                           ${item.houseTypeStr} ${item.spaceArea}㎡ | ${item.districtAndTownName}
                        </p>
                         ${distanceSubway}
-                       <div class="tags">${houseTagList}</div>
+                      <div class="tags" ${styleNo}>${houseTagList}</div>
                        <p class="unit-price"> <span>${item.rentPriceStr}</span> 元/月</p>
                    </div>
                </a>`;
