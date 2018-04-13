@@ -43,6 +43,8 @@
             position: relative;
             float: left;
             .clearfix();
+            width: 94px;
+            height: 62px;
             .play {
                 background-image : url(../../images/common/play.png) ;
                 background-size : 100% 100% ;
@@ -55,8 +57,8 @@
                 width : 14px ;
             }
             img {
-                width: 9.35rem;
-                height: 6.2rem;
+                width: 100%;
+                height: 100%;
                 border-radius: 3px;
             }
             >span.commission{
@@ -89,69 +91,82 @@
             }*/
         }
         .right {                      
-            margin-left: 10.5rem;
+            margin-left: 109px;
            /* width: 70%;*/
             //.text-ellipsis();
+            position: relative;
+            bottom: 2px;
             h4 {
                 font-weight: 400;
                 color: #000;
-                font-size: 1.6rem;
-                margin-bottom: .5rem;
-                line-height: 1.7rem;
+                font-size: 16px;
+                margin-bottom: 4px;
+              /*  line-height: 1.7rem;*/
                 overflow: hidden;
-                height: 1.6rem;
+                /*height: 1.6rem;*/
                 .text-ellipsis();
-                padding-left: 4px;
+
             }
             .base-info {                
                 color: #7C7C7C;
-                font-size: 1.1rem;
-                height: 1.5rem;
+                font-size: 11px;
+               /* height: 1.5rem;*/
                 //line-height: 1;
-                //.text-ellipsis() ;
+                .text-ellipsis() ;
                 overflow: hidden;
-                margin-bottom: 0.5rem;
-                padding-left: 4px;
+                margin-bottom: 5px;
+                padding-top: 0 !important;
+               /* padding-left: 4px;*/
             }
             .tags {
-                margin-top: 0;
+                .clearfix() ;
+                margin-top: 0 ;
                 margin-bottom: .7rem;
-                min-height : 21px ;
-                white-space: normal;
-                .tag {
-                    font-size : 14px ;
-                    .scale(0.83 , 0.83) ;
-                    padding: 0 5px;
-                    /*line-height: 15px;*/
-                    color: #000000;
-                    display: inline-block;
-                    border-radius: 2px;
-                    margin-right: 1px !important;
+                //min-height : 21px ;
+                white-space: normal ;
+                div {
+                    border : 1px solid #79a6e2 ;
+                    .border-radius(1px) ;
+                    float : left ;
+                    .flex() ;
+                    .justify-content(center) ;
+                    .align-items(center) ;
+                    height : 15px ;                       
+                    margin : 0 5px 2px 0 ;
+                    padding : 0 3px ;
+                    &.nears,&.priced,&.newup {
+                        span {
+                            color : #fff ;
+                        }
+                    }
                     &.nears{
-                        background-image: linear-gradient(90deg, #3B9FFF 0%, #4081D6 100%);
-                        color: #FFFFFF;
-                       /* border: 1px solid #3B9FFF;*/
+                        background-image: linear-gradient(90deg, #3B9FFF 0%, #4081D6 100%);                                            
                         .pixel-borders(#3B9FFF);
                     }
                     &.priced{
-                        background-image: linear-gradient(90deg, #FBD059 0%, #FFB33C 99%);
-                        color: #FFFFFF;
-                      /*  border: 1px solid #FBD059;*/
+                        background-image: linear-gradient(90deg, #FBD059 0%, #FFB33C 99%);                                      
                         .pixel-borders(#FBD059);
                     }
                     &.newup{
-                        background-image: linear-gradient(90deg, #FA7A6B 0%, #FC4C5A 100%);
-                        color: #FFFFFF;
-                       /* border: 1px solid #FA7A6B;*/
+                        background-image: linear-gradient(90deg, #FA7A6B 0%, #FC4C5A 100%);                                
                         .pixel-borders(#FA7A6B);
                     }
                     &.anthert{
-                        background: #FFFFFF;
-                        /*border: 1px solid #79A6E2;*/
-                        color: #79A6E2;
-                        .pixel-borders(#79A6E2);
+                        background: #FFFFFF ;  
+                         .pixel-borders(#79A6E2);                      
+                        span {
+                            color: #79A6E2;
+                        }
+                       
                     }
-                }
+                    span {                                    
+                        color : #79a6e2 ;
+                        display : inline-block ;
+                        font-size : 12px ;               
+                        .scale(0.83 , 0.83) ;                                                      
+                    }               
+                }    
+                
             }
             .unit-price {                
                 color: #FC4C5A;

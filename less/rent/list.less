@@ -591,7 +591,7 @@ body{
   opacity: 0;
 }
 .tags{
-  height: 2.1rem;
+  height: 17px ;
   overflow: hidden;
   >span{
     display: inline-block;
@@ -708,18 +708,23 @@ body的禁用滚动*/
       .clearfix() ;
       dt {
         float : left ;
-        width : 50px ;
+        width : 55px ;
+        text-align: left;
         .iconfont {
           color : @primary-color ;
-          font-size : 3.2rem ;
+          font-size : 40px ;
         }
       }
-      dd {
-        color : #7c7c7c ;
-        margin-left : 50px ;
-        text-align : left ;
+      div{
         position: relative;
         top: 2px;
+        dd {
+          color : #7c7c7c ;
+          margin-left : 55px ;
+          text-align : left ;
+          line-height: 20px;
+          font-size: 14px;
+        }
       }
     }
   }

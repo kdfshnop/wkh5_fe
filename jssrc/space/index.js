@@ -98,31 +98,34 @@ class IndexController extends Controller {
         let commision =''; // 租房零佣金
         let domeType='';   // dome 的拼装
         if (type == "rent"){
-               if (item.houseTag.isSubwayHouse) {
-                   houseTagList += '<span class="tag nears">近地铁</span>'
-               }  if (item.houseTag.isPriceDown) {
-                   houseTagList += '<span class="tag priced">降价</span>'
-               }  if (item.houseTag.isNewHouse) {
-                   houseTagList += '<span class="tag newup">新上</span>'
-               }   if (item.houseTag.isShortRent) {
-                   houseTagList += '<span class="tag anthert">可短租</span>'
-               }   if(item.houseTag.isHardcover == 1){
-                   houseTagList += '<span class="tag anthert">精装</span>'
-               } if(item.houseTag.isHardcover == 2){
-                   houseTagList += '<span class="tag anthert">豪装</span>'
-               } if(item.houseTag.isSouth){
-                   houseTagList += '<span class="tag anthert">朝南</span>'
-               } if(item.houseTag.isZeroCommission){
-                   commision= ' <span class="commission">0 佣金</span>'
-               }
+            if (item.houseTag.isSubwayHouse) {
+                houseTagList += '<div class="nears"><span >近地铁</span></div>'
+            }  if (item.houseTag.isPriceDown) {
+                houseTagList += '<div class="priced"><span >降价</span></div>'
+            }  if (item.houseTag.isNewHouse) {
+                houseTagList += '<div class="newup"><span>新上</span></div>'
+            }   if (item.houseTag.isShortRent) {
+                houseTagList += '<div class="anthert"><span >可短租</span></div>'
+            }   if(item.houseTag.isHardcover == 1){
+                houseTagList += '<div class="anthert"><span >精装</span></div>'
+            } if(item.houseTag.isHardcover == 2){
+                houseTagList += '<div  class="anthert"><span>豪装</span></div>'
+            } if(item.houseTag.isSouth){
+                houseTagList += '<div class="anthert"><span >朝南</span></div>'
+            } if(item.houseTag.isZeroCommission){
+                commision= ' <span class="commission">0 佣金</span>'
+            }
                let hasVideo='';
                if(item.houseTag.hasVideo == 1){
                    hasVideo= `<span class="play"><i></i></span>`;
                }
                let distanceSubway = '';
-               if (item.distanceSubway != null){
-                   distanceSubway = `<p class="base-info">${item.distanceSubway}</p>`
-               }
+            let styleNo = '';
+            if (item.distanceSubway){
+                distanceSubway = `<p class="base-info">${item.distanceSubway}</p>`
+            }else {
+                styleNo=`style="margin-top: 10px"`
+            }
                domeType=  `<a  class="rent-item box" href=" ${item.url}">
                    <div class="left">
                        <img src="${item.firstImageUrl}?x-oss-process=image/resize,w_120" alt="${ item.estateName} " class="lazy">
@@ -135,7 +138,7 @@ class IndexController extends Controller {
                           ${item.houseTypeStr} ${item.spaceArea}㎡ | ${item.districtAndTownName}
                        </p>
                         ${distanceSubway}
-                       <p class="tags">${houseTagList}</p>
+                      <div class="tags" ${styleNo}>${houseTagList}</div>
                        <p class="unit-price"> <span>${item.rentPriceStr}</span> 元/月</p>
                    </div>
                </a>`;
