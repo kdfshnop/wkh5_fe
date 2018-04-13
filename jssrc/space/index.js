@@ -124,7 +124,7 @@ class IndexController extends Controller {
             if (item.distanceSubway){
                 distanceSubway = `<p class="base-info">${item.distanceSubway}</p>`
             }else {
-                styleNo=`style="margin-top: 12px"`
+                styleNo=`style="margin-top: 10px"`
             }
                domeType=  `<a  class="rent-item box" href=" ${item.url}">
                    <div class="left">
