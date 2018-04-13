@@ -1124,25 +1124,25 @@ class ListController extends Controller {
         let commision ='';
         if (item.houseTag.isSubwayHouse) {
            /* houseTag.push("近地铁");*/
-            houseTagList += '<span class="tag nears">近地铁</span>'
+            houseTagList += '<div class="nears"><span >近地铁</span></div>'
         }  if (item.houseTag.isPriceDown) {
           /*  houseTag.push("降价")*/
-            houseTagList += '<span class="tag priced">降价</span>'
+            houseTagList += '<div class="priced"><span >降价</span></div>'
         }  if (item.houseTag.isNewHouse) {
            /* houseTag.push("新上")*/
-            houseTagList += '<span class="tag newup">新上</span>'
+            houseTagList += '<div class="newup"><span>新上</span></div>'
         }   if (item.houseTag.isShortRent) {
             /*houseTag.push("可短租")*/
-            houseTagList += '<span class="tag anthert">可短租</span>'
+            houseTagList += '<div class="anthert"><span >可短租</span></div>'
         }   if(item.houseTag.isHardcover == 1){
             /*houseTag.push("精装")*/
-            houseTagList += '<span class="tag anthert">精装</span>'
+            houseTagList += '<div class="anthert"><span >精装</span></div>'
         } if(item.houseTag.isHardcover == 2){
             /*houseTag.push("豪装")*/
-            houseTagList += '<span class="tag anthert">豪装</span>'
+            houseTagList += '<div  class="anthert"><span>豪装</span></div>'
         } if(item.houseTag.isSouth){
             /*houseTag.push("朝南")*/
-            houseTagList += '<span class="tag anthert">朝南</span>'
+            houseTagList += '<div class="anthert"><span >朝南</span></div>'
         } if(item.houseTag.isZeroCommission){
             /*houseTag.push("0佣金")*/
             commision= ' <span class="commission">0 佣金</span>'
@@ -1171,7 +1171,7 @@ class ListController extends Controller {
                    ${item.houseTypeStr} ${item.spaceArea}㎡ | ${item.districtAndTownName}
                 </p>
                 ${distanceSubway}
-                <p class="tags" ${styleNo}>${houseTagList}</p>
+                <div class="tags" ${styleNo}>${houseTagList}</div>
                 <p class="unit-price"> <span>${item.rentPriceStr}</span> 元/月</p>
             </div>
         </a>`;
