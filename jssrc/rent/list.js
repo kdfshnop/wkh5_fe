@@ -1153,7 +1153,7 @@ class ListController extends Controller {
         }
         let distanceSubway = '';
         let styleNo = '';
-        if (item.distanceSubway != null){
+        if (item.distanceSubway){
             distanceSubway = `<p class="base-info">${item.distanceSubway}</p>`
         }else {
             styleNo=`style="margin-top: 6px"`
