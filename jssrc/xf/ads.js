@@ -11,6 +11,7 @@
         this.consts = {
             "$adsContainer" : $(".xf-ads") ,
             "$xfItemsContainer" : $(".container") ,
+            "$conningTower" : $(".conning-tower") ,
             "duration" : 100
         } ;
         /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -44,10 +45,12 @@
             let st = $(window).scrollTop() ;
             if( st <= 50 && ! this.consts.$adsContainer.is(":visible")) {
                 this.consts.$adsContainer.slideDown(this.consts.duration) ;
+                this.consts.$conningTower.css({ "padding-bottom" : "10px" }) ;
                 this.consts.$xfItemsContainer.animate( { paddingTop : "313px" } , this.consts.duration ) ;
             }
             else if(st > 50 && this.consts.$adsContainer.is(":visible")) {
                 this.consts.$adsContainer.slideUp(this.consts.duration) ;
+                this.consts.$conningTower.css({ "padding-bottom" : 0 }) ;
                 this.consts.$xfItemsContainer.animate( { paddingTop : ( 97 + st ) +"px" } , this.consts.duration ) ;
             }
         }) ;
