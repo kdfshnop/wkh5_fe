@@ -553,6 +553,7 @@ define([],function(){
             if(event.isDefaultPrevented()){
                 return;
             }
+            setMaxHeight.apply(self);
             // 先隐藏
             self.$districtMetro.hide();
             self.$price.hide();
