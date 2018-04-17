@@ -6,22 +6,23 @@
     
  -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
  class AsyncItem {
-     constructor() {
-         this.appPath = "/wkh5_fe" ;
-         this.appStatic = {
-            "dev" : "//dev01.fe.wkzf" + this.appPath ,
-            "test" : "//test01.fe.wkzf" + this.appPath ,
-            "sim" : "//sim01.fe.wkzf" + this.appPath ,
-            "prod" : "//cdn01.wkzf.com" + this.appPath
-         } ;
-     }
+     constructor({controller}) {
+        //  this.appPath = "/wkh5_fe" ;
+        //  this.appStatic = {
+        //     "dev" : "//dev01.fe.wkzf" + this.appPath ,
+        //     "test" : "//test01.fe.wkzf" + this.appPath ,
+        //     "sim" : "//sim01.fe.wkzf" + this.appPath ,
+        //     "prod" : "//cdn01.wkzf.com" + this.appPath
+        //  } ;
+        this.controller = controller;
+     }     
      /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
     绘制新房条目
     -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
-    static xf(item) {
+    xf(item) {
         let result = "<a class=\"xf-item\" href=\"" + item.url + "\" data-bigdata=\"" + item.bigDataParams + "\">" ;
         result += "<div class=\"img\">" ;
-        result += "<img src=\"" + this.appStatic + "/images/common/loading.jpg\" class=\"lazy\" data-src=\"" + item.imageUrl + "\">" ;
+        result += "<img src=\"" + this.controller.staticDomain + "/wkh5_fe/images/common/loading.jpg\" class=\"lazy\" data-src=\"" + item.imageUrl + "\">" ;
         if( item.hasVideo  == 1) result += "<span class=\"play\"></span>" ;
         if( item.activitys && item.activitys[0] ) result += "<div class=\"yh\">" + item.activitys[0].title + "</div>" ;
         if(item.isHot) result += "<div class=\"hot\"><span>热销</span></div>" ;
@@ -50,12 +51,12 @@
     /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
     绘制二手房条目
     -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
-    static esf(item) {
+    esf(item) {
         let result = "<a href=\"" + item.url + "\" class=\"esf-item\" data-bigdata=\"" + item.bigDataParams + "\">" ;
         result += "<dl><dt>" ;
-        result += "<img src=\"" + this.appStatic + "/images/common/loading.jpg\" data-src=\"" + item.houseImgUrl + "?x-oss-process=image/resize,w_150\" alt=\"" + item.estateName + "\" class=\"lazy\">" ;
+        result += "<img src=\"" + item.houseImgUrl + "?x-oss-process=image/resize,w_150\" alt=\"" + item.estateName + "\" class=\"lazy\">" ;
         if( item.hasVideo == 1 ) result += "<span class=\"play\"></span>" ;
-        result = "</dt>" ;
+        result += "</dt>" ;
         result += "<dd class=\"title\">" + item.houseTitle + "</dd>" ;
         result += "<dd>" + item.houseChild + " " + item.areaStr + " | " + item.district + " " + item.town + "</dd>" ;
         result += "<dd class=\"tags\"><div class=\"wk-tags\">" ;
@@ -67,13 +68,13 @@
         }) ;
         result += "</div></dd>" ;
         result += "<dd><span class=\"money\">" + item.totalPrice + "</span> <span class=\"unit\">万</span>&nbsp;<span class=\"price\">" + item.unitPrice + " 元/㎡</span></dd>" ;
-        result = "</dl></a>" ;
+        result += "</dl></a>" ;
         return result ;
     }
     /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
     绘制租房条目
     -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
-    static rent(item) {
+    rent(item) {
         let result = "<a data-bigdata=\"" + item.bigDataParams + "\" class=\"rent-item box\" href=\"" + item.url + "\">" ;
         result += "<div class=\"left\">" ;
         result += "<img data-src=\"" + item.firstImageUrl + "\" alt=\"" + item.estateName + "\" class=\"lazy\">" ;
@@ -104,3 +105,16 @@
     整个组件定义结束
     -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
  }
+
+//  AsyncItem.appPath = "/wkh5_fe" ;
+//  AsyncItem.appStatic = {
+//     "dev" : "//dev01.fe.wkzf" + AsyncItem.appPath ,
+//     "test" : "//test01.fe.wkzf" + AsyncItem.appPath ,
+//     "sim" : "//sim01.fe.wkzf" + AsyncItem.appPath ,
+//     "prod" : "//cdn01.wkzf.com" + AsyncItem.appPath
+//  } ;
+
+
+ define([],function(){
+     return AsyncItem;
+ });

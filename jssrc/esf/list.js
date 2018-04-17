@@ -29,7 +29,7 @@ class ListController extends Controller {
         /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
         加载相关页面组件逻辑
         -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
-        require([ "../components/bigdata.min" , "../components/filter.min", "../components/conning-tower.min" ] , (BigData, Filter) => {
+        require([ "../components/bigdata.min" , "../components/filter.min", "../components/async-item.min", "../components/conning-tower.min" ] , (BigData, Filter, AsyncItem) => {
             BigData.init(this) ;
 
             // 城市不同总价选项不同，XFDEFAULT中prices是北京、上海、广州、深圳、杭州、苏州、廊坊、南京的价格选项，比较高，
@@ -107,9 +107,8 @@ class ListController extends Controller {
                 }
             }) ;
 
-            
+            self.AsyncItem = new AsyncItem({controller: self});
 
-            window.filter = self.filter;
             self.BigData = BigData;
             BigData.bigData({
                 "pageName": "1068",                       
@@ -161,17 +160,17 @@ class ListController extends Controller {
                 <dt><img src="'+item.houseImgUrl + '?x-oss-process=image/resize,w_150" alt="'+item.estateName+'" class="lazy">'+(item.hasVideo == '1' && '<span class="play"><i></i></span>' || '')+'</dt>\
                 <dd class="title">'+item.houseTitle+'</dd>\
                 <dd>'+item.houseChild + " " + item.areaStr +' | ' + item.district + " " + item.town +' </dd>\
-                <dd class="tags">'
+                <dd class="tags"><div class="wk-tags">'
                 + (!item.tagList?"":item.tagList.map(function(tag){
                     switch(tag){
                         case "降价":
-                        return '<div class="promotion"><span>降价</span></div>';
+                        return '<div class="highlight promotion"><span>降价</span></div>';
                         case "新上":
-                        return '<div class="new"><span>新上</span></div>';
+                        return '<div class="highlight new"><span>新上</span></div>';
                         case "满二":
-                        return '<div class="over"><span>满二</span></div>';
+                        return '<div class="highlight over"><span>满二</span></div>';
                         case "满五唯一":
-                        return '<div class="over"><span>满五唯一</span></div>';
+                        return '<div class="highlight over"><span>满五唯一</span></div>';
                         default:
 
                         return '<div><span>'+tag+'</span></div>';
@@ -179,7 +178,7 @@ class ListController extends Controller {
                     
                 }).join('') )
                 +                                  
-                '</dd>\
+                '</div></dd>\
                 <dd>\
                      <span class="money">' + item.totalPrice + '</span> <span class="unit">万</span>&nbsp;<span class="price">' + item.unitPrice + ' 元/㎡</span>\
                 </dd>\
@@ -190,33 +189,45 @@ class ListController extends Controller {
         return str;
     }    
 
-    createHouseList(data,count){// 生成房源列表
-        this.hideNoData();
-        if(data && data.length){
-            $('.no-data').hide();
-            var str = this.createHouseItems(data);
+    // createHouseList(data,count){// 生成房源列表
+    //     this.hideNoData();
+    //     if(data && data.length){
+    //         $('.no-data').hide();
+    //         var str = this.createHouseItems(data);
 
-            $('#list').html(str);
-            $('.total .count').text(count);
-            $('.total').slideDown();
-            setTimeout(function(){
-                $('.total').slideUp();
-            }, 1500);
+    //         $('#list').html(str);
+    //         $('.total .count').text(count);
+    //         $('.total').slideDown();
+    //         setTimeout(function(){
+    //             $('.total').slideUp();
+    //         }, 1500);
 
-            this.insertTrendAndOldHouse();
-        }else{// 没数据
-            this.showNoData();
-        }
-    }
+    //         this.insertTrendAndOldHouse();
+    //     }else{// 没数据
+    //         this.showNoData();
+    //     }
+    // }
 
     appendHouseList(data){// 上拉滚动时加载数据
-        if(data&&data.length){
-            var str = this.createHouseItems(data);
-            $('#list').append(str);
-            this.insertTrendAndOldHouse();
-        }else{// 没有更多数据了
-            //this.showNoMore();
-        }
+        let self = this;
+        //require(['../components/async-item.min'], function(AsyncItem){
+            if(data&&data.length){
+                var str = "";
+                var cityPinyin = $('#visitedCityPinyin').val();
+                var channel = $('#channel').val();
+                data.forEach(function(item){
+                    item.url = "/" + cityPinyin + "/esf/" + item.encryptHouseId + ".html" + (channel?'?channel='+channel:'');             
+                    item.bigDataParams = encodeURIComponent('{"eventName": "1068028", "eventParam": { "house_id": "'+item.houseId+'" }}');
+
+                    str += self.AsyncItem.esf(item);
+                });
+                //var str = this.createHouseItems(data);
+                $('#list').append(str);
+                self.insertTrendAndOldHouse();
+            }else{// 没有更多数据了
+                //this.showNoMore();
+            }
+        //});        
     }
 
     showNoData(){// 显示没有数据，并显示新房楼盘推荐
@@ -267,10 +278,7 @@ class ListController extends Controller {
     // 上拉加载
     pullload(){
         let self = this ;
-        // var cityId = $.cookie("xfSelectedCityId");
-        // var cityPinyin = $.cookie("xfSelectedCityPinyin");
-        // var cityName = $.cookie("xfSelectedCityName");
-        
+
         //二手房
         $("#list").pullload({
             apiUrl : self.apiUrl.esf.list.houselist ,
