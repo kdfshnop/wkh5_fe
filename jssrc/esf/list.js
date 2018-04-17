@@ -131,7 +131,7 @@ class ListController extends Controller {
 
         this.bindEvent();
         this.pullload();
-        this.insertTrendAndOldHouse();
+        this.insertTrendAndOldHouse();        
     }        
 
     // 根据查询条件进行相应的跳转
