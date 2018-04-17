@@ -78,45 +78,8 @@
         }       
     }
 
-    .tags {
-        margin-top : 15px ;
-        .clearfix() ;
-        div {
-            border : 1px solid #79a6e2 ;
-            .border-radius(1px) ;
-            float : left ;
-            .flex() ;
-            .justify-content(center) ;
-            .align-items(center) ;
-            height : 15px ;
-            line-height : 13px ;
-            margin : 0 5px 2px 0 ;
-            padding : 2px 3px ;
-            &.yh, &.dt {                
-                border : 1px solid transparent;
-                span {
-                    color: #fff ;
-                }
-
-                &::after {
-                    display: none;
-                }
-            }
-            &.yh {
-                background-image: linear-gradient(90deg, rgba(249,85,65,0.78) 0%, #FC4C5A 100%);                
-            }
-            &.dt {
-                background-image: linear-gradient(90deg, #3B9FFF 0%, #4081D6 100%);                
-            }       
-            span {                       
-                color : #79a6e2 ;
-                display : inline-block ;
-                font-size : 12px ;                        
-                .scale(0.83 , 0.83) ;                                 
-            }
-
-            .pixel-borders(#79a6e2, 1px);
-        }              
+    .wk-tags {
+        margin-top : 15px ;                
     }
 
     .time {        

@@ -55,52 +55,8 @@
                     line-height : 21px ;
                 }
             }            
-            &.tags {
-                .clearfix() ;
-                height : 17px;
-                div {
-                    border : 1px solid #79a6e2 ;
-                    .border-radius(1px) ;
-                    float : left ;
-                    .flex() ;
-                    .justify-content(center) ;
-                    .align-items(center) ;
-                    height : 15px ;                       
-                    margin : 0 5px 2px 0 ;
-                    padding : 0 3px ;
-                    &.promotion {
-                        background : linear-gradient(90deg , #FBD059 0% , #FFB33C 99%) ;                        
-                        &::after {
-                            display: none;
-                        }
-                    }
-                    &.new {
-                        background : linear-gradient(90deg , #FA7A6B 0% , #FC4C5A 100%) ;
-                        &::after {
-                            display: none;
-                        }
-                    }
-                    &.over {
-                        background : linear-gradient(90deg , #3B9FFF 0% , #4081D6 100%) ;
-                        &::after {
-                            display: none;
-                        }
-                    }
-                    &.promotion ,  &.new , &.over {
-                        border-color : transparent ;
-                        span {
-                            color : #fff ;
-                        }
-                    }
-                    span {                                    
-                        color : #79a6e2 ;
-                        display : inline-block ;
-                        font-size : 12px ;               
-                        .scale(0.83 , 0.83) ;                                     
-                    }
-
-                    .pixel-borders(#79a6e2, 1px);
-                }                
+            &.wk-tags {                
+                height : 17px ;                    
             }
             .money , .unit , .price {
                 vertical-align : baseline ;
